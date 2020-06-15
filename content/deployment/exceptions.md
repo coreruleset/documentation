@@ -23,14 +23,14 @@ you\'re an administrator) to your blog posts. Now Wordpress has rules
 around which tags can be used and their whitelist of tags has generally
 been studied pretty heavily by the security community. However,
 ModSecurity will only has visibility akin to
-www.mywordpressblog.com?wp\_post=\<h1\>Welcome+To+My+Blog\</h1\>. In
-this instance OWASP CRS sees HTML Injection, because that is what\'s
+`www.mywordpressblog.com?wp_post=<h1>Welcome+To+My+Blog</h1>`. In
+this instance OWASP CRS sees HTML Injection, because that is what's
 there. ModSecurity will have no knowledge that this problem is mitigated
 server side and as a result may block the request. It is therefore
 necessary sometimes to add an exception.
 
 The most common issues when adding exceptions to OWASP CRS is that if
-done \'inline\' it will be clobbered by the next update. The ModSecurity
+done 'inline' it will be clobbered by the next update. The ModSecurity
 team has developed sophisticated methods for dealing with this problem
 that are quite versatile.
 
@@ -45,12 +45,12 @@ comes in.
 
 Within CRS 3.x two files are provided to help you add these different
 rule modifications, they are:
-rules/REQUEST-00-LOCAL-WHITELIST.conf.example and
+`rules/REQUEST-00-LOCAL-WHITELIST.conf.example` and
 rules/RESPONSE-99-EXCEPTIONS.conf.example. As is noted in the
-`install`{.interpreted-text role="doc"} documentation, the .example
+[install](install.md) documentation, the .example
 extension is provided specifically so that when these files are renamed,
 future updates will not overwrite these files. As is listed within the
-`install`{.interpreted-text role="doc"} documentation, before adding a
+[install](install.md) documentation, before adding a
 whitelist or exception modification you should rename these files to end
 in the .conf exception.
 
@@ -78,9 +78,9 @@ touching the actual rule:
 -   [SecRuleUpdateTargetByMsg](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleUpdateTargetByMsg)
 -   [SecRuleUpdateTargetByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleUpdateTargetByTag)
 
-You\'ll notice that there are two types of exceptions, those that
+You'll notice that there are two types of exceptions, those that
 remove, and those that change (or update) rules. General usage of the
-SecRuleRemove\* rules is fairly straight forward:
+`SecRuleRemove*` rules is fairly straight forward:
 
 ```apache
 SecRule ARGS "@detectXSS" "id:123,deny,status:403"
@@ -89,17 +89,17 @@ SecRuleRemoveById 123
 
 The above rule will remove rule 123. When ModSecurity starts up it will
 add rule 123 into its internal data structures and when it processes
-SecRuleRemoveById it will then remove it from it\'s internal data
+SecRuleRemoveById it will then remove it from it's internal data
 structures. The rule will not be processed for any transaction as by the
-time ModSecurity reaches the point where it\'s processing requests, the
+time ModSecurity reaches the point where it's processing requests, the
 rule simply no longer exists.
 
-The SecRuleUpdate\* modifications are a bit more complicated. They have
+The `SecRuleUpdate*` modifications are a bit more complicated. They have
 the capability to update a target or action based on some identifier.
 The update target rule is perhaps the simpler of the two to use.
 Modifying Targets (Variables) is easy, you can either append or replace.
 To append you simply only list one argument after
-SecRuleUpdateTargetBy\*. This is great for adding exceptions as you can
+`SecRuleUpdateTargetBy*`. This is great for adding exceptions as you can
 restrict a certain index of a collection from being inspected
 
 ```apache
@@ -110,7 +110,7 @@ SecRuleUpdateTargetById 123 !ARGS:wp_post
 It is also possible to replace a target (variable). To do this you must
 first list the variable you want to replace with, followed by the
 variable you want to replace. So in the below example we replace the
-ARGS variable with ARGS\_POST.
+ARGS variable with ARGS_POST.
 
 ```apache
 SecRule ARGS "@detectXSS" "id:123,deny,status:403"
@@ -190,8 +190,8 @@ according to a scheme such that rule IDs can be used to quickly remove
 entire unwanted configurations files by using
 [SecRuleRemoveById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleRemoveById).
 The following example removes all XSS rules which are located in the
-REQUEST-41-APPLICATION-ATTACK-XSS.conf file. Notice that all OWASP CRS
-rules are prefixed with \'9\' and then the next two digits represent the
+`REQUEST-941-APPLICATION-ATTACK-XSS.conf` file. Notice that all OWASP CRS
+rules are prefixed with '9' and then the next two digits represent the
 rules file.
 
 ```apache

@@ -124,7 +124,7 @@ SecRule ARGS|REQUEST_COOKIES|QUERY_STRING|REQUEST_FILENAME "@detectSQLi" \
 
 Each rule has a severity level specified. We have updated the rules to
 allow for the anomaly score collection incrementation to use macro
-expansion. Below is a snippet from the above rule (id:942100) where that
+expansion. Below is a snippet from the above rule *(id:942100)* where that
 occurs:
 
 ```apache
@@ -132,7 +132,7 @@ setvar:tx.anomaly_score=+%{tx.critical_anomaly_score},\
 setvar:tx.sql_injection_score=+%{tx.critical_anomaly_score},\
 ```
 
-This adds a variable amount, tx.critical\_anomaly\_score, to the current
+This adds a variable amount, *tx.critical_anomaly_score*, to the current
 anomaly scores. The user can configure what each score represents from
 within the csr-setup.conf file and these scores will be propagated out
 for use in the rules by using macro expansion. The following is an
@@ -165,9 +165,9 @@ setvar:tx.notice_anomaly_score=2"
 ```
 
 This configuration would mean that every CRS rule that has a Severity
-rating of \"Critical\" would increase the transactional anomaly score by
+rating of "Critical" would increase the transactional anomaly score by
 5 points per rule match. When we have a rule match, you can see how the
-anomaly scoring works from within the modsec\_debug.log file:
+anomaly scoring works from within the `modsec_debug.log` file:
 
 ```text
 ...
@@ -190,10 +190,10 @@ transactional score is above, it will be denied. We have various
 different anomaly scoring thresholds to set for both specific
 vulnerability types and generic requests/response levels. These will be
 evaluated in two different files. Inbound request are evaluated at the
-end of phase:2 in the rules/REQUEST-49-BLOCKING-EVALUATION.conf file and
-outbound responses are evaluated at the end of phase:4 in the
-rules/RESPONSE-59-BLOCKING-EVALUATION.conf file. The thresholds are
-configured in the csr-setup.conf file.
+end of `phase:2` in the `rules/REQUEST-949-BLOCKING-EVALUATION.conf` file and
+outbound responses are evaluated at the end of `phase:4` in the
+`rules/RESPONSE-959-BLOCKING-EVALUATION.conf` file. The thresholds are
+configured in the `csr-setup.conf` file.
 
 ```apache
 SecAction \
@@ -222,7 +222,7 @@ critical level rules increase the anomaly score by 5 points, this means
 that even 1 critical level rule match will cause a block. If you want to
 adjust the anomaly score so that you have a lower chance of blocking
 non-malicious clients (false positives) you could raise the
-tx.inbound\_anomaly\_score\_level settings to something higher like 10
+tx.inbound_anomaly_score_level settings to something higher like 10
 or 15. This would mean that two or more critical severity rules have
 matched before you decide to block. Another advantage of this approach
 is that you could aggregate multiple lower severity rule matches and
@@ -249,8 +249,8 @@ SecAction \
 ```
 
 When this rule is enabled, The rule within the
-rules/REQUEST-49-BLOCKING-EVALUATION.conf and
-rules/RESPONSE-59-BLOCKING-EVALUATION.conf files will evaluate the
+`rules/REQUEST-949-BLOCKING-EVALUATION.conf` and
+`rules/RESPONSE-959-BLOCKING-EVALUATION.conf` files will evaluate the
 anomaly scores at the end of the request/response phases and will block
 the request if it exceeds a given anomaly threshold. An example of such
 a rule is as follows:

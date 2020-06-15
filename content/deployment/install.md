@@ -14,7 +14,7 @@ CRS. If you are having problems feel free to reach out to our [Google Group](htt
 
 Installing the CRS isn't very hard but it does have one major
 requirement, ModSecurity. If ModSecurity isn't working properly you
-will likely run into problems running the CRS. 
+will likely run into problems running the CRS.
 {{% notice warning %}}
 In order to run the 3. xbranch you require AT MINIMUM ModSecurity 2.8 or above, preferably
 version 3.x or above.
@@ -179,7 +179,7 @@ determine if there are any more relevant branches in development that
 can take advantage of the version of ModSecurity you are using. You can
 do this by checking the different branches on the site and looking
 throughout this documentation. To download a repository you can either
-click the [Download Zip](https://github.com/coreruleset/coreruleset/archive/master.zip)`
+click the {{% button href="https://github.com/coreruleset/coreruleset/archive/master.zip" icon="fas fa-download" %}}Download Zip{{% /button %}}
 button or your can use git clone. For instance,
 
 ```bash
