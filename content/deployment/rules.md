@@ -7,10 +7,10 @@ pre = "<b>3. </b>"
 
 # What's In The Rules
 
-| File                                                    | Description |
-| --------------------------------------------------------| ------------|
-| **REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example** | Configuration Path:   `rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example`.
-| | This file is used to add LOCAL exceptions for your site. Often in this
+| **REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example**
+|  Configuration Path:
+  `rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example`
+| This file is used to add LOCAL exceptions for your site. Often in this
   file we would see rules that short-circuit inspection and allow
   certain transactions to skip through inspection.
  `Example: SecRule REMOTE_ADDR "@ipMatch 192.168.1.100" "phase:1,id:'981033',t:none,nolog,pass,ctl:ruleEngine=Off"`|
@@ -22,6 +22,16 @@ pre = "<b>3. </b>"
   REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf
   REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf** | TODO |
 
+  **REQUEST-901-INITIALIZATION.conf**
+  TODO
+
+  **REQUEST-903.9001-DRUPAL-EXCLUSION-RULES.conf
+  REQUEST-903.9002-WORDPRESS-EXCLUSION-RULES.conf
+  REQUEST-903.9003-NEXTCLOUD-EXCLUSION-RULES.conf
+  REQUEST-903.9004-DOKUWIKI-EXCLUSION-RULES.conf
+  REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf
+  REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf**
+  TODO
 
 | **REQUEST-905-COMMON-EXCEPTIONS**
 | Configuration Path:
