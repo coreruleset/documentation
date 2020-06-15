@@ -41,7 +41,7 @@ greater than 1 will have a \'paranoia-level\' tag. We use a forward
 slash to deliminate this tag. Anything after the slash should represent
 the paranoia level of that rule. For instance:
 
-``` {.bash}
+```bash
 tag:'paranoia-level/2'
 ```
 
@@ -62,7 +62,7 @@ through the string where the third section will always be the most
 specific. The following are a list of all the current CRS 2.x type tags
 that are used in CRS.
 
-``` {.bash}
+```bash
 tag:'OWASP_CRS/WEB_ATTACK/XSS'
 tag:'OWASP_CRS/AUTOMATION/SECURITY_SCANNER'
 tag:'OWASP_CRS/WEB_ATTACK/SQL_INJECTION'
@@ -113,7 +113,7 @@ category is general for a given rule the tag will have the data
 \'multi\' an example would be a vulnerability that affects many
 different platforms. In this case the tag would look as follows:
 
-``` {.bash}
+```bash
 tag:'platform-multi'
 ```
 

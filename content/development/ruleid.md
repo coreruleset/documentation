@@ -81,13 +81,12 @@ on these existing rules. For these people we provide the following
 table:
 
 See
-`2.x to 3.x Rule ID Transition Table <_downloads/IdNumbering.csv>`{.interpreted-text
-role="download"}.
+[2.x to 3.x Rule ID Transition Table](data/IdNumbering.csv).
 
 You can use the above file along with a script similar to the one below
 to update exclusions or rule changes:
 
-``` {.python}
+```python
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
