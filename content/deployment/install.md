@@ -14,9 +14,11 @@ CRS. If you are having problems feel free to reach out to our [Google Group](htt
 
 Installing the CRS isn't very hard but it does have one major
 requirement, ModSecurity. If ModSecurity isn't working properly you
-will likely run into problems running the CRS. In order to run the 3.x
-branch you require AT MINIMUM ModSecurity 2.8 or above, preferably
+will likely run into problems running the CRS. 
+{{% notice warning %}}
+In order to run the 3. xbranch you require AT MINIMUM ModSecurity 2.8 or above, preferably
 version 3.x or above.
+{{% /notice %}}
 
 ## Finding where to edit in your configuration
 
