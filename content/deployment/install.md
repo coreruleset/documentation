@@ -1,12 +1,11 @@
 +++
 title = "Installing CoreRuleSet"
-menuTitle = "Install"
+menuTitle = "Extended Install"
 chapter = false
-weight = 1
-pre = "<b>1. </b>"
+weight = 2
+pre = "<b>2. </b>"
 +++
 
-We are glad you chose OWASP CRS the premier free ModSecurity ruleset.
 Below you should find all the information you need to properly install
 CRS. If you are having problems feel free to reach out to our [Google Group](https://groups.google.com/a/owasp.org/forum/#!forum/modsecurity-core-rule-set-project).
 

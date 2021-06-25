@@ -39,3 +39,20 @@ home = [ "HTML", "RSS", "JSON"]
   themeVariant = "blue"
   # Provide a list of custom css files to load relative from the `static/` folder in the site root.
   custom_css = ["css/foo.css", "css/bar.css"]
+
+[[menu.shortcuts]] 
+name = "<i class='fab fa-github'></i> Github repo"
+identifier = "ds"
+url = "https://github.com/coreruleset/corerulesetn"
+weight = 10
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-bookmark'></i> Hugo Documentation"
+identifier = "hugodoc"
+url = "https://gohugo.io/"
+weight = 20
+
+[[menu.shortcuts]]
+name = "<i class='fas fa-bullhorn'></i> Credits"
+url = "/credits"
+weight = 30

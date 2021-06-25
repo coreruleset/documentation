@@ -2,8 +2,8 @@
 title = "Still need help?"
 menuTitle = "Support"
 chapter = false
-weight = 8
-pre = "<b>8. </b>"
+weight = 3
+pre = "<b>3. </b>"
 +++
 
 Open Source/Free Help
@@ -30,7 +30,7 @@ Books about ModSecurity
 
 - ModSecurity Handbook
 
-    *ModSecurity Handbook is "The definitive guide to the popular
+    * ModSecurity Handbook is "The definitive guide to the popular
     open source web application firewall", written by Ivan Ristic
     (original author of ModSecurity). The book is available from
     Feisty Duck in hard copy or with immediate access to the digital
@@ -38,7 +38,7 @@ Books about ModSecurity
 
 - Web Application Defender's Cookbook: Battling Hackers and Defending Users
 
-    *The Web Application Defender's Cookbook: Battling Hackers and
+    * The Web Application Defender's Cookbook: Battling Hackers and
     Protecting Users is a book written by the ModSecurity Project
     Lead and OWASP ModSecurity Project Lead Ryan Barnett. The book
     outlines critical defensive techniques to protect web
@@ -46,13 +46,13 @@ Books about ModSecurity
 
 - ModSecurity 2.5
 
-    *ModSecurity 2.5 is "A complete guide to using ModSecurity",
+    * ModSecurity 2.5 is "A complete guide to using ModSecurity",
     written by Magnus Mischel. The book is available from Packt
     Publishing in both hard copy and digital forms.*
 
 - Apache Security
 
-    *Apache Security is a comprehensive Apache Security resource,
+    * Apache Security is a comprehensive Apache Security resource,
     written by Ivan Ristic for O'Reilly. Two chapters (Apache
     Installation and Configuration and PHP) are available as free
     download, as are the Apache security tools created for the
@@ -60,7 +60,7 @@ Books about ModSecurity
 
 - Preventing Web Attacks with Apache
 
-    *Preventing Web Attacks with Apache. Building on his
+    * Preventing Web Attacks with Apache. Building on his
     groundbreaking SANS presentations on Apache security, Ryan C.
     Barnett reveals why your Web servers represent such a compelling
     target, how significant exploits are performed, and how they can

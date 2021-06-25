@@ -1,9 +1,9 @@
 +++
 title = "Anomaly Scoring Mode"
-menuTitle = "Anomaly"
+menuTitle = "Basics"
 chapter = false
-weight = 6
-pre = "<b>6. </b>"
+weight = 1
+pre = "<b>1. </b>"
 +++
 
 OWASP CRS version 3.x allows users to quickly switch between Traditional

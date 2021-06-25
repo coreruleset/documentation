@@ -2,8 +2,8 @@
 title = "Adding Exceptions and Tuning CRS"
 menuTitle = "Exceptions"
 chapter = false
-weight = 4
-pre = "<b>4. </b>"
+weight = 1
+pre = "<b>1. </b>"
 +++
 
 Modifying Rules

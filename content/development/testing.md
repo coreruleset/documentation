@@ -2,8 +2,8 @@
 title = "Testing the Rule Set"
 menuTitle = "Testing"
 chapter = false
-weight = 5
-pre = "<b>5. </b>"
+weight = 2
+pre = "<b>2. </b>"
 +++
 
 Shipped with the ruleset are a number of different tools. One of these
