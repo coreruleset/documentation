@@ -3,18 +3,18 @@ name: test syntax
 on:
   pull_request:
     branches:
-    - master
+    - main
 
 jobs:
   syntax-check:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@master
 
     - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2.3.0
+      uses: peaceiris/actions-hugo@v2
       with:
-        hugo-version: '0.71.1'
+        hugo-version: '0.85.5'
         extended: true
 
     - name: Build
