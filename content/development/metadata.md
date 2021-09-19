@@ -5,15 +5,13 @@ weight = 10
 pre = "<b>10. </b>"
 +++
 
-OWASP CRS Metadata
-==================
+## OWASP CRS Metadata
 
 OWASP CRS 3.x includes several pieces of metadata within rules. Not
 every rule features all metadata but it is a continuing project where
 possible to update this information to the best possible level. If you
 see a rule without a piece of metadata that you think is warranted
-please open either an issue request at
-<https://github.com/SpiderLabs/owasp-modsecurity-crs/issues> or a pull
+please open either an [issue](https://github.com/coreruleset/coreruleset/issues) or a pull
 request.
 
 Tags about standards
@@ -23,7 +21,7 @@ We try our best to outline information about the vulnerability when each
 rule triggers. To that end we include metadata about where that
 vulnerability type can be found in various standards. These tags are
 currently prefixed with the standard type and will be capitalized. They
-will NOT start with OWASP\_CRS. They consist of a the standard and then
+will NOT start with OWASP_CRS. They consist of a the standard and then
 a slash to indicate the start of the data. The following standards are
 supported:
 
@@ -31,22 +29,20 @@ supported:
 -   OWASP\_TOP\_10
 -   PCI
 
-Tags about paranoia level
--------------------------
+### Tags about paranoia level
 
-Starting with version 3.0 we reintroduced the paranoia level concept.
+Starting with version 3 we reintroduced the paranoia level concept.
 For tuning purposes we wanted it to be very clear which rules are from
 higher paranoia levels. As a result, any rule in a paranoia level
-greater than 1 will have a \'paranoia-level\' tag. We use a forward
+greater than 1 will have a `'paranoia-level'` tag. We use a forward
 slash to deliminate this tag. Anything after the slash should represent
 the paranoia level of that rule. For instance:
 
-```bash
+```apache
 tag:'paranoia-level/2'
 ```
 
-Tags about rule classification
-------------------------------
+### Tags about rule classification
 
 There are two different types of tags regarding rule classification. One
 type of tag carries over from CRS 2.x and one type has been added to CRS
@@ -62,7 +58,7 @@ through the string where the third section will always be the most
 specific. The following are a list of all the current CRS 2.x type tags
 that are used in CRS.
 
-```bash
+```apache
 tag:'OWASP_CRS/WEB_ATTACK/XSS'
 tag:'OWASP_CRS/AUTOMATION/SECURITY_SCANNER'
 tag:'OWASP_CRS/WEB_ATTACK/SQL_INJECTION'
@@ -117,8 +113,7 @@ different platforms. In this case the tag would look as follows:
 tag:'platform-multi'
 ```
 
-Additional rule information
----------------------------
+###  Additional rule information
 
 Often we will generate rules based on some presentation or article. In
 fact, sometimes the construction of the rule is done in such a way that

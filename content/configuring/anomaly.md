@@ -1,67 +1,21 @@
-+++
-title = "Anomaly Scoring Mode"
-menuTitle = "Basics"
-chapter = false
-weight = 1
-pre = "<b>1. </b>"
-+++
+---
+title: "Anomaly Scoring Mode"
+menuTitle: "Basics"
+chapter: false
+weight: 10
+---
 
-OWASP CRS version 3.x allows users to quickly switch between Traditional
-and Anomaly Scoring detection modes. The default starting with CRS 3.x
-is Anomaly Scoring mode. Within the csr-setup.conf.example file there
-are two settings to control which mode your CRS instance will work in.
-Within this file, you can also control the following related CRS items:
+{{% notice warning %}}
+From version 3.0 onwards, Anomaly Scoring is the default detection mode. Traditional detection mode is discouraged.
+{{% /notice %}}
+
+Within the `csr-setup.conf.example` you can control the following related CRS items:
 
 -   Anomaly Scoring Severity Levels
 -   Anomaly Scoring Threshold Levels (Blocking)
 -   Enable/Disable Blocking
 -   Choose the default logging actions
 -   and much more!
-
-Traditional Detection Mode
---------------------------
-
-Traditional Detection Mode (or IDS/IPS mode) is the old default
-operating mode. This is the most basic operating mode where all of the
-rules are "self-contained". In this mode there is no intelligence is
-shared between rules and each rule has no information about any previous
-rule matches. That is to say, in this mode, if a rule triggers, it will
-execute any disruptive/logging actions specified on the current rule.
-
-### Configuring Traditional Mode
-
-If you want to run the CRS in Traditional mode, you can do this easily
-by modifying the SecDefaultAction directive in the csr-setup.conf file
-to use a disruptive action other than the default \'pass\', such as
-deny:
-
-```apache
-# Default (Anomaly Mode)
-SecDefaultAction "phase:2,pass,log"
-```
-
-```apache
-# Updated To Enable Traditional Mode
-SecDefaultAction "phase:2,deny,status:403,log"
-```
-
-### Pros and Cons of Traditional Detection Mode
-
-Pros
-
-- The functionality of this mode is much easier for a new user to
-  understand.
-- Better performance (lower latency/resources) as the first disruptive
-  match will stop further processing.
-
-Cons
-
-- Not all rules that could have triggered will be logged, only the
-  first
-- Not every site has the same risk tolerance
-- Lower severity alerts may not trigger traditional mode
-- Single low severity alerts may not be deemed critical enough to
-  block, but multiple lower severity alerts in aggregate could be
 
 Anomaly Scoring Mode
 --------------------
@@ -298,3 +252,51 @@ Pros
 Cons
 - More complex for the average user.
 - Log monitoring scripts may need to be updated for proper analysis
+
+### Traditional Detection Mode (deprecated)
+
+{{% notice warning %}}
+Don't use this mode unless you have a ver specific need. You've been warned.
+{{% /notice %}}
+
+Traditional Detection Mode (or IDS/IPS mode) is the old default
+operating mode. This is the most basic operating mode where all of the
+rules are "self-contained". In this mode there is no intelligence is
+shared between rules and each rule has no information about any previous
+rule matches. That is to say, in this mode, if a rule triggers, it will
+execute any disruptive/logging actions specified on the current rule.
+
+### Configuring Traditional Mode
+
+If you want to run the CRS in Traditional mode, you can do this easily
+by modifying the SecDefaultAction directive in the csr-setup.conf file
+to use a disruptive action other than the default \'pass\', such as
+deny:
+
+```apache
+# Default (Anomaly Mode)
+SecDefaultAction "phase:2,pass,log"
+```
+
+```apache
+# Updated To Enable Traditional Mode
+SecDefaultAction "phase:2,deny,status:403,log"
+```
+
+### Pros and Cons of Traditional Detection Mode
+
+Pros
+
+- The functionality of this mode is much easier for a new user to
+  understand.
+- Better performance (lower latency/resources) as the first disruptive
+  match will stop further processing.
+
+Cons
+
+- Not all rules that could have triggered will be logged, only th
+  first
+- Not every site has the same risk tolerance
+- Lower severity alerts may not trigger traditional mode
+- Single low severity alerts may not be deemed critical enough to
+  block, but multiple lower severity alerts in aggregate could be

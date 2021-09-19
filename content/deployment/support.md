@@ -1,48 +1,34 @@
-+++
-title = "Still need help?"
-menuTitle = "Support"
-chapter = false
-weight = 3
-pre = "<b>3. </b>"
-+++
+---
+title: "Still need help?"
+menuTitle: "Support"
+chapter: false
+weight: 40
+---
 
-Open Source/Free Help
----------------------
+### Open Source/Free Help
 
--   ModSecurity Users Mail-list (SourceForge) -
-    <http://lists.sourceforge.net/lists/listinfo/mod-security-users>
--   ModSecurity Developers Mail-list (SourceForge) -
-    <http://lists.sourceforge.net/lists/listinfo/mod-security-developers>
--   OWASP ModSecurity Core Rules Mail-list (OWASP) -
-    <https://lists.owasp.org/mailman/listinfo/owasp-modsecurity-core-rule-set>
--   You can also join the #modsecurity channel on irc.freenode.net.
+- [ModSecurity Users Mail-list (SourceForge)](https://lists.sourceforge.net/lists/listinfo/mod-security-users)
+- [ModSecurity Developers Mail-list (SourceForge)](https://lists.sourceforge.net/lists/listinfo/mod-security-developers)
+- [Core Ruleset Slack channel](https://owasp.slack.com/archives/CBKGH8A5P). If you don't have access yet, [get your invite here](https://owasp.org/slack/invite).
 
-Commercial Help
----------------
+### Commercial Help
 
 -   Commercial Support through Trustwave\'s Technical Assistance Center
     (TAC) - <https://www3.trustwave.com/modsecurity-rules-support.php>
 -   Professional Services offer by Trustwave SpiderLabs Research Team
 -   ModSecurity Training
 
-Books about ModSecurity
------------------------
+### Books about ModSecurity
 
 - ModSecurity Handbook
 
-    * ModSecurity Handbook is "The definitive guide to the popular
-    open source web application firewall", written by Ivan Ristic
-    (original author of ModSecurity). The book is available from
-    Feisty Duck in hard copy or with immediate access to the digital
-    version which is continually updated.*
+    * [ModSecurity Handbook](https://www.feistyduck.com/books/modsecurity-handbook/) is "The definitive guide to the popular
+    open source web application firewall", by Christian Folini and Ivan Ristić. The book is available from Feisty Duck in hard copy or with immediate access to the digital version which is continually updated.
 
 - Web Application Defender's Cookbook: Battling Hackers and Defending Users
 
-    * The Web Application Defender's Cookbook: Battling Hackers and
-    Protecting Users is a book written by the ModSecurity Project
-    Lead and OWASP ModSecurity Project Lead Ryan Barnett. The book
-    outlines critical defensive techniques to protect web
-    applications and includes example ModSecurity rules/scripts.*
+    * [The Web Application Defender's Cookbook: Battling Hackers and Protecting Users](https://www.oreilly.com/library/view/web-application-defenders/9781118417058/) is a book written by previous ModSecurity Project Lead and OWASP ModSecurity Project Lead Ryan Barnett. The book outlines critical defensive techniques to protect web
+    applications and includes example ModSecurity rules/scripts.
 
 - ModSecurity 2.5
 
@@ -56,7 +42,7 @@ Books about ModSecurity
     written by Ivan Ristic for O'Reilly. Two chapters (Apache
     Installation and Configuration and PHP) are available as free
     download, as are the Apache security tools created for the
-    book.*
+    book.
 
 - Preventing Web Attacks with Apache
 
@@ -64,4 +50,4 @@ Books about ModSecurity
     groundbreaking SANS presentations on Apache security, Ryan C.
     Barnett reveals why your Web servers represent such a compelling
     target, how significant exploits are performed, and how they can
-    be defended against.*
+    be defended against.

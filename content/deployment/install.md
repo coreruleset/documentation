@@ -1,22 +1,21 @@
-+++
-title = "Installing CoreRuleSet"
-menuTitle = "Extended Install"
-chapter = false
-weight = 2
-pre = "<b>2. </b>"
-+++
+---
+title: "Installing CoreRuleSet"
+menuTitle: "Extended Install"
+chapter: false
+weight: 20
+---
+
+If you need mode information than the one in the [quickstart guide]({{< ref "quickstart.md" >}}), here we extend with additional details so keep reading.
 
 Below you should find all the information you need to properly install
-CRS. If you are having problems feel free to reach out to our [Google Group](https://groups.google.com/a/owasp.org/forum/#!forum/modsecurity-core-rule-set-project).
+CRS. If you are having problems feel free to reach out to our [Google Group](https://groups.google.com/a/owasp.org/forum/#!forum/modsecurity-core-rule-set-project), or our [Slack Channel](https://owasp.slack.com/archives/CBKGH8A5P). If you don't have access yet, [get your invite here](https://owasp.org/slack/invite).
 
 ## Prerequisites
 
-Installing the CRS isn't very hard but it does have one major
-requirement, ModSecurity. If ModSecurity isn't working properly you
-will likely run into problems running the CRS.
+Installing the CRS isn't very hard but it does have one major requirement, ModSecurity. If ModSecurity isn't working properly you will likely run into problems running the CRS.
+
 {{% notice warning %}}
-In order to run the 3. xbranch you require AT MINIMUM ModSecurity 2.8 or above, preferably
-version 3.x or above.
+In order to run the CRS `3.x` branch you require AT MINIMUM ModSecurity 2.8 or above, preferably version `3.x` or above.
 {{% /notice %}}
 
 ## Finding where to edit in your configuration
@@ -25,42 +24,6 @@ ModSecurity comes in MANY different version with support for a multitude
 of Operating Systems (OS) and Web Servers. The installation locations
 may differ greatly between these different options so please be aware
 that the following are just some of the more common configurations.
-
-### Microsoft IIS with ModSecurity 2.x
-
-The most common deployment of ModSecurity for IIS is via the
-pre-packaged MSI installer, available at <https://www.modsecurity.org/download.html>. If you compiled or are looking to compile ModSecurity for IIS this documentation isn't for
-you. If you used this package to install ModSecurity 2.x on IIS (tested
-on IIS 7-10), than your configuration files are located within`C:\Program Files\ModSecurity IIS\` (or Program Files(x86) depending on your configuration). The inital configuration file, that is the one that the remainder are included from, is `modsecurity_iis.conf`. This file will be parsed by the ModSecurity for both ModSecurity and `'Include'` directives.
-
-By default all installations of ModSecurity without
-[SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleEngine)
-declared will start in DetectionOnly mode. IIS, by default, explitcly
-declares
-[SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleEngine)
-to be DetectionOnly within the included modsecurity.conf file. As a
-result any rule we make will only show up in the Windows Event Viewer by
-default. For our example we're going to turn on disruptive actions. To
-test we should add the following to the end of our
-`modsecurity_iis.conf`:
-
-```bash
-SecRuleEngine On
-SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403,msg:'Our test rule has triggered'"
-```
-
-This rule will be triggered when you go to your web page and pass the
-testparam (via either GET or POST) with the test value. This typically
-will looks similar to the following: <http://localhost/?testparam=test>.
-If all went well you should see an HTTP 403 Forbidden in your browser
-when you navigate to the site in question. Additionally, in your Event
-Viewer, under 'Windows Logs'-\>'Application', we should see a new
-log that looks like the following:
-
-\<Log.png\>
-
-If you have gotten to this step ModSecurity is functioning on IIS and
-you now know where to place new directives.
 
 ### Apache 2.x with ModSecurity 2.x Compiled
 
@@ -72,7 +35,7 @@ have compiled from source you would have needed to include `LoadModule security2
 Anywhere after you load your module you may add the following
 ModSecurity directives.
 
-```bash
+```apache
 SecRuleEngine On
 SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403,msg:'Our test rule has triggered'"
 ```
@@ -140,69 +103,68 @@ look similar to below.
 
 ```nginx
 location / {
-           ModSecurityEnabled on;
-           ModSecurityConfig modsec_includes.conf;
-       }
+    ModSecurityEnabled on;
+    ModSecurityConfig modsec_includes.conf;
+}
 ```
 
-Within this modsec\_includes you may use the Include directive to
+Within this `modsec_includes.conf` you may use the `Include` directive to
 include other files or any ModSecurity directives. For our testing
-purpose we will add the following to our modsec\_includes.conf:
+purpose we will add the following to our `modsec_includes.conf`:
 
-```bash
+```Apache
 SecRuleEngine On
 SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403,msg:'Our test rule has triggered'"
 ```
 
-Upon saving and restarting Nginx (./nginx -s reload) you should be able
+Upon saving and restarting Nginx (`./nginx -s reload`) you should be able
 to navigate to a your local webserver. Once this is accomplished try
 passing the 'testparam' paramater with the value 'test' such as via
-the following URL:<http://localhost/?testparam=test>. You should receive
+the following URL: `http://localhost/?testparam=test`. You should receive
 a 403 Forbidden status. If you do congratulations, ModSecurity is ready
-for the OWASP CRS rules.
+for the OWASP CRS rules 🚀.
 
 ### Nginx with ModSecurity 3.x (libmodsecurity) Compiled
 
-At current time of writing ModSecurity v3 is still in development.
-Please stay tuned for more information or visit the ModSecurity v3
-repository at
-<https://github.com/SpiderLabs/ModSecurity/tree/libmodsecurity>
 
-Downloading OWASP CRS
----------------------
 
-Now that you know where your rules belong typically we'll want to
-download the OWASP CRS. The best place to get the latest copy of the
-ruleset will be from [our Github](https://github.com/coreruleset/coreruleset). Be careful to
-determine if there are any more relevant branches in development that
-can take advantage of the version of ModSecurity you are using. You can
-do this by checking the different branches on the site and looking
-throughout this documentation. To download a repository you can either
-click the {{% button href="https://github.com/coreruleset/coreruleset/archive/master.zip" icon="fas fa-download" %}}Download Zip{{% /button %}}
-button or your can use git clone. For instance,
+### Microsoft IIS with ModSecurity 2.x
+
+The most common deployment of ModSecurity for IIS is via the
+pre-packaged MSI installer, available at <https://www.modsecurity.org/download.html>. If you compiled or are looking to compile ModSecurity for IIS this documentation isn't for
+you. 
+
+If you used this package to install ModSecurity 2.x on IIS (tested
+on IIS 7-10), than your configuration files are located within`C:\Program Files\ModSecurity IIS\` (or Program Files(x86) depending on your configuration). The inital configuration file, that is the one that the remainder are included from, is `modsecurity_iis.conf`. This file will be parsed by the ModSecurity for both ModSecurity and `'Include'` directives.
+
+By default all installations of ModSecurity without [SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine) declared will start in DetectionOnly mode. IIS, by default, explicitly declares [SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine) to be DetectionOnly within the included modsecurity.conf file. As a result any rule we make will only show up in the Windows Event Viewer by default. For our example we're going to turn on disruptive actions. To test we should add the following to the end of our `modsecurity_iis.conf`:
+
+```apache
+SecRuleEngine On
+SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403,msg:'Our test rule has triggered'"
+```
+
+This rule will be triggered when you go to your web page and pass the testparam (via either GET or POST) with the test value. This typically will looks similar to the following: `http://localhost/?testparam=test`.
+
+If all went well you should see an HTTP 403 Forbidden in your browser when you navigate to the site in question. Additionally, in your Event Viewer, under 'Windows Logs'-\>'Application', we should see a new log that looks like the following:
+
+\<Log.png\>
+
+If you have gotten to this step ModSecurity is functioning on IIS and you now know where to place new directives.
+
+## Downloading OWASP CRS
+
+Now that you know where your rules belong typically we'll want to download the OWASP CRS. The best place to get the latest copy of the ruleset will be from [our Github](https://github.com/coreruleset/coreruleset). Be careful to determine if there are any more relevant branches in development that can take advantage of the version of ModSecurity you are using. You can do this by checking the different branches on the site and looking throughout this documentation. To download a repository you can either click the {{% button href="https://github.com/coreruleset/coreruleset/archive/master.zip" icon="fas fa-download" %}}Download Zip{{% /button %}} button or your can use git clone. For instance,
 
 ```bash
 git clone https://github.com/coreruleset/coreruleset.git
 ```
 
-Typically you'll end up with a folder named something similar to
-`owasp-modsecurity-crs`. From here the process is surprisingly simple.
-Because OWASP CRS is, at its core, a set of ModSecurity configuration
-files (`*.conf` files) all you have to do is tell ModSecurity where these
-CRS configuration files reside and it will do MOST of the remaining
-work. To do this you must use the `'Include'` directive. This include
-directive can be used in similar places to where we used our SecRule
-earlier. It should be noted that OWASP CRS should be included AFTER the
-ModSecurity configuration rules which are available via the ModSecurity
-repo (at
-`https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended`)
-which should have been configured during your inital installation. These
-rules will configure ModSecurity options, such as SecRuleEngine that we
-used earlier. This configuration file should be reveiwed and modified as
-desired.
+Typically you'll end up with a folder named something similar to `owasp-modsecurity-crs`. From here the process is surprisingly simple.
+Because OWASP CRS is, at its core, a set of ModSecurity configuration files (`*.conf` files) all you have to do is tell ModSecurity where these CRS configuration files reside and it will do MOST of the remaining work. To do this you must use the `'Include'` directive. This include directive can be used in similar places to where we used our SecRule
+earlier. It should be noted that OWASP CRS should be included AFTER the ModSecurity configuration rules which are available via the [ModSecurity repo](https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended) which should have been configured during your inital installation. These rules will configure ModSecurity options, such as SecRuleEngine that we used earlier. This configuration file should be reviewed and modified as desired.
 
-Setup OWASP CRS
----------------
+### Setup OWASP CRS
 
 OWASP CRS contains one setup file that should be reviewed prior to
 completing setup. The setup file is the only configuration file within
@@ -214,17 +176,14 @@ HIGHLY recommended. At minimum you should keep in mind the following.
 -   CRS does not configure ModSecurity features such as the rule engine,
     the audit engine, logging etc. This task is part of the ModSecurity
     initial setup.If you haven't done this yet please check out the
-    recommended ModSecurity configuration at
-    <https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended>
--   By default
-    ([SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecDefaultAction))
-    CRS will redirect to your local domain when an alert is triggered.
+    [recommended ModSecurity configuration](https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended)
+-   By default [SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-%28v2.x%29#SecDefaultAction) CRS will redirect to your local domain when an alert is triggered.
     This may cause redirect loops depending on your configuration. Take
     some time to decide what you want ModSecurity it do (drop the
     packet, return a status:403, go to a custom page etc.) when it
     detects malicious activity.
 -   Make sure to configure your anomaly scoring thresholds for more
-    information see `anomaly`{.interpreted-text role="doc"}
+    information see [Anomaly]({{< ref "anomaly.md" >}} "Anomaly")
 -   By default ModSecurity looks for lots of issues with different
     databases and languages, if you are running a specific environment,
     you probably want to limit this behaviour for performance reasons.
@@ -236,7 +195,7 @@ HIGHLY recommended. At minimum you should keep in mind the following.
     listed.
 
 For more information please see the page on
-[configuration](configuration.md). Once you have reviewed
+[configuration]({{< ref "crs.md" >}} "configuration"). Once you have reviewed
 and configured CRS you should rename the file suffix from `.example` to
 `.conf`:
 
@@ -502,9 +461,9 @@ files present within the OWASP CRS instead of using the `'*'`.
 This is likley due to a rule triggering. For instance in some cases a
 rule is enabled that prohibits access via an IP address. Depending on
 your
-[SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecDefaultAction)
+[SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecDefaultAction)
 and
-[SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleEngine)
+[SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine)
 configurations, this may result in a redirect loop or a status code. If
 this is the problem you are experiencing you should consult your
 error.log (or event viewer for IIS). From this location you can

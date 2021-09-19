@@ -1,27 +1,26 @@
-+++
-title = "OWASP CRS Quickstart"
-menuTitle = "Quickstart"
-chapter = false
-weight = 1
-pre = "<b>1. </b>"
-+++
+---
+title: "OWASP CRS Quickstart"
+menuTitle: "Quickstart"
+chapter: false
+weight: 10
+---
 
 Welcome to the OWASP Core RuleSet (CRS) quickstart guide. We will
 attempt to get you up and running with CRS as quick as possible. This
 guide assumes ModSecurity is already working. If you are unsure see the
-{{< ref "install.md" >}} page. Otherwise, lets jump in.
+[extended install]({{< ref "install.md" >}}) page. Otherwise, lets jump in.
 
 You'll first need to download the ruleset. Using a browser (or
 equivalent) visit the following URL:
 
-```bash
+```sh
 wget https://github.com/coreruleset/coreruleset/archive/master.zip
 ```
 
 Once this is installed extract it somewhere well known on your server.
 Typically this will be in the webserver directory. We are demonstrating
-with Apache below For information on configuring Nginx or IIS see
-[install](install.md). Additionally, while it is a
+with Apache below. For information on configuring Nginx or IIS see
+[install]({{< ref "install.md" >}}). Additionally, while it is a
 successful practice to make a new `modsecurity.d` folder as outlined
 below, it isn't strictly necessary. The path scheme outlined is the
 common to RHEL based operating systems, you may have to adjust the
@@ -36,9 +35,12 @@ unzip coreruleset-master.zip -d owasp-modsecurity-crs
 
 After extracting the rule set we have to set up the main OWASP
 configuration file. We provide an example configuration file as part of
-the package (Note: Other aspects of ModSecurity are controlled by the
+the package located in the main directory: `csr-setup.conf.example`. 
+
+(Note: Other aspects of ModSecurity are controlled by the
 recommended ModSecurity configuration rules, packaged with ModSecurity)
-located in the main directory: `csr-setup.conf.example`. For many people
+
+For many people
 this will be a good enough starting point but you should take the time
 to look through this file before deploying it to make sure it's right
 for your environment. For more information see [configuration](configuration.md).
@@ -64,7 +66,7 @@ echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/rules/*.conf' >> /etc/htt
 Now that we have configured everything you should be able to restart and
 enjoy using the OWASP Core Rule Set. Typically these rules will require
 a bit of exception tuning, depending on your site. For more information
-see [exceptions](exceptions.md). Enjoy!
+see [exceptions]({{< ref "exceptions.md" >}}). Enjoy!
 
 ```bash
 systemctl restart httpd.service

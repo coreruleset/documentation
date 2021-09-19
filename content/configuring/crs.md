@@ -1,8 +1,7 @@
 ---
 title: "Configuration"
 chapter: false
-weight: 2
-pre: "<b>2. </b>"
+weight: 20
 ---
 
 # Configuring OWASP CRS

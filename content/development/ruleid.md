@@ -5,8 +5,7 @@ weight = 1
 pre = "<b>1. </b>"
 +++
 
-Why do rule IDs matter?
------------------------
+## Why do rule IDs matter?
 
 Each rule added to a ModSecurity instance must have a unique ID (in
 recent versions of modsec). As a result of this it is important that IDs
@@ -46,27 +45,25 @@ of IDs for you thank you.
 -   4,100,000-4,199,999; reserved in use by Fastly
 -   4,200,000 and above; unused (available for reservation)
 
-IDs in the OWASP CRS
---------------------
+### IDs in the OWASP CRS
 
-ID\'s within the OWASP Core Rule Set (CRS) have special meaning. Rules
+ID's within the OWASP Core Rule Set (CRS) have special meaning. Rules
 are assigned an ID based on their location within the ruleset. As the
-list above notes, the OWASP Core Rule Set is assigned ID\'s from 900,000
+list above notes, the OWASP Core Rule Set is assigned ID's from 900,000
 to 999,999. This means that each rule file in CRS 3.x has 1000 IDs
 reserved for it. Currently, this is more than enough space, however, if
-at some point this becomes a problem we\'ll cross that bridge when we
+at some point this becomes a problem we'll cross that bridge when we
 come to it. By design rules will always be separated by 10 IDs from the
-ID before it. The first 10 ID\'s (000
+ID before it. The first 10 ID's (000
 010,020,030,040,050,060,070,080,090) are designated for control flow
 related rules, that is typically rules that will trigger a skip action
 (these will be at the beginning of a file or rules that pass). As a
 result of this structure most rule files will start with ID
-9\[File\_ID\]100. As new rules are developed they should be added at the
+9\[File_ID\]100. As new rules are developed they should be added at the
 end. If it becomes necessary to add a rule in-between existing rules
 this must be noted in the comments.
 
-Mapping 3.0.0-dev(2.x) IDs to 3.0.0-rc1 IDs
--------------------------------------------
+### Mapping 3.0.0-dev(2.x) IDs to 3.0.0-rc1 IDs
 
 When we started developing CRS 3 we started with our old ModSecurity 2.x
 rules and used our experience to redesign the layout of the ruleset,
@@ -80,8 +77,7 @@ However, this is problematic for people who have made exceptions based
 on these existing rules. For these people we provide the following
 table:
 
-See
-[2.x to 3.x Rule ID Transition Table](data/IdNumbering.csv).
+See [2.x to 3.x Rule ID Transition Table](data/IdNumbering.csv).
 
 You can use the above file along with a script similar to the one below
 to update exclusions or rule changes:

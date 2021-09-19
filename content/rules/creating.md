@@ -5,21 +5,18 @@ weight = 9
 pre = "<b>9. </b>"
 +++
 
-Making Rules
-============
+## Making Rules
 
-The Basic Synatax
------------------
+### The Basic Synatax
 
-A [SecRule](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRule)
+A [SecRule](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRule)
 is a directive like any other understood by ModSecurity. The difference
 is that this directive is way more powerful in what it is capable of
-representing. Generally, a SecRule is made up of 4 parts: \* Variables -
-Instructs ModSecurity *where* to look (sometimes called Targets) \*
-Operators - Instructs ModSecurity *when* to trigger a match \*
-Transformations - Instructs ModSecurity *how* it should normalize
-variable data \* Actions - Instructs ModSecurity *what* to do if a rule
-matches
+representing. Generally, a SecRule is made up of 4 parts:
+- Variables - Instructs ModSecurity *where* to look (sometimes called Targets) 
+- Operators - Instructs ModSecurity *when* to trigger a match 
+- Transformations - Instructs ModSecurity *how* it should normalize variable data 
+- Actions - Instructs ModSecurity *what* to do if a rule matches
 
 The structure of the rule is as follows:
 
@@ -47,7 +44,7 @@ ModSecurity directives are only evaluated at startup.
 Clearly, if this was all there was to SecRules it wouldn't be very
 powerful. In fact, there is a lot more. So much more that it is in fact
 a full fledged language. The best place to find out about all the
-possible capabilities is via the [ModSecurity Manual](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual).
+possible capabilities is via the [ModSecurity Manual](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)).
 The following is just a glimpse of its capabilities:
 
 There are ~105 **variables** in 6 different categories, some examples

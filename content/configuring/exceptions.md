@@ -1,13 +1,11 @@
-+++
-title = "Adding Exceptions and Tuning CRS"
-menuTitle = "Exceptions"
-chapter = false
-weight = 1
-pre = "<b>1. </b>"
-+++
+---
+title: "Adding Exceptions and Tuning CRS"
+menuTitle: "Exceptions"
+chapter: false
+weight: 30
+---
 
-Modifying Rules
----------------
+## Modifying Rules
 
 OWASP Core Rule Set (CRS) as a rule set for ModSecurity has no context
 into what your web application is doing and how it is designed. As a
@@ -47,10 +45,9 @@ Within CRS 3.x two files are provided to help you add these different
 rule modifications, they are:
 `rules/REQUEST-00-LOCAL-WHITELIST.conf.example` and
 rules/RESPONSE-99-EXCEPTIONS.conf.example. As is noted in the
-[install](install.md) documentation, the .example
+[install]({{< ref "install.md" >}}) documentation, the .example
 extension is provided specifically so that when these files are renamed,
-future updates will not overwrite these files. As is listed within the
-[install](install.md) documentation, before adding a
+future updates will not overwrite these files. Before adding a
 whitelist or exception modification you should rename these files to end
 in the .conf exception.
 
@@ -65,18 +62,17 @@ store the rules are populated and it can modify them.
 ### Writing Exceptions
 
 Exceptions come in a few different forms which are all outlined in
-detail within the [Reference
-Manual](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual).
+detail within the [Reference Manual](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)).
 The following directives can be used to modify a rule at startup without
 touching the actual rule:
 
--   [SecRuleRemoveById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleRemoveById)
--   [SecRuleRemoveByMsg](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleRemoveByMsg)
--   [SecRuleRemoveByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleRemoveByTag)
--   [SecRuleUpdateActionById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleUpdateTargetById)
--   [SecRuleUpdateTargetById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleUpdateTargetById)
--   [SecRuleUpdateTargetByMsg](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleUpdateTargetByMsg)
--   [SecRuleUpdateTargetByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleUpdateTargetByTag)
+-   [SecRuleRemoveById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveById)
+-   [SecRuleRemoveByMsg](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveByMsg)
+-   [SecRuleRemoveByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveByTag)
+-   [SecRuleUpdateActionById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetById)
+-   [SecRuleUpdateTargetById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetById)
+-   [SecRuleUpdateTargetByMsg](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetByMsg)
+-   [SecRuleUpdateTargetByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetByTag)
 
 You'll notice that there are two types of exceptions, those that
 remove, and those that change (or update) rules. General usage of the
@@ -125,7 +121,7 @@ disruptive actions (pass, deny, etc) will always replace each other,
 there may only ever be one disruptive action. Additionally, certain
 logging actions will replace each other, for instance nolog would
 overwrite the log action. This functionality has the same rules as using
-[SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecDefaultAction).
+[SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecDefaultAction).
 
 ```apache
 SecRule "@detectXSS" attack "phase:2,id:12345,t:lowercase,log,pass,msg:'Message text'"
@@ -152,7 +148,7 @@ new one.
 Whitelisting is more complicated than exceptions because the rules can
 be more varied. In some ways they are less powerful than exceptions, but
 in others they are far more powerful. Whitelist rules use the
-[ctl](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#ctl)
+[ctl](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#ctl)
 action to change the state of the engine on a per transaction basis.
 This can be as simple as turning off the ruleEngine when a certain IP
 hits. Note, the ruleEngine will return to state from the configuration
@@ -175,7 +171,7 @@ SecRule REMOTE_ADDR "@IPMatch 129.21.0.0/24" "id:4,deny,status:403"
 ```
 
 The
-[ctl](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#ctl)
+[ctl](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#ctl)
 action can also change the configuration of certain directives which can
 lead to more efficient rules. It is recommended that you investigate its
 full potential.
@@ -188,7 +184,7 @@ relevant to your configuration. Not only are Rules organized into files
 that are titled with general categories but we have also renumbered
 according to a scheme such that rule IDs can be used to quickly remove
 entire unwanted configurations files by using
-[SecRuleRemoveById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleRemoveById).
+[SecRuleRemoveById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveById).
 The following example removes all XSS rules which are located in the
 `REQUEST-941-APPLICATION-ATTACK-XSS.conf` file. Notice that all OWASP CRS
 rules are prefixed with '9' and then the next two digits represent the
@@ -202,7 +198,7 @@ The CRS rules also features tags to identify what their functionality
 is. It is therefore easy to remove an entire category that doesn\'t
 apply to your environment. In the following example we remove all IIS
 rules using
-[SecRuleRemoveByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual#SecRuleRemoveByTag).
+[SecRuleRemoveByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveByTag).
 
 ```apache
 SecRuleRemoveByTag "platform-iis"
