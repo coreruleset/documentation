@@ -4,12 +4,7 @@ title: "OWASP Core Rule Set: Documentation"
 
 # Overview
 
-The OWASP (Open Web Application Security Project) CRS (Core Rule Set)
-for ModSecurity™ is an open source collection of rules that work with
-the ModSecurity™ WAF (Web Application Firewall). These rules were
-designed to provide, easy to use, generic attack detection capabilities
-to your web application as part of a well balanced defence-in-depth
-solution.
+The OWASP® (Open Web Application Security Project) CRS (Core Rule Set) is an open source collection of rules that work with ModSecurity® and compatible web application firewalls (WAFs). These rules are designed to provide easy to use, generic attack detection capabilities, with a minimum of false positives (false alerts), to your web application as part of a well balanced defence-in-depth solution.
 
 ## Licensing
 
