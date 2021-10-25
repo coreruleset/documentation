@@ -1,7 +1,7 @@
-baseURL = "https://fzipi.github.io/coreruleset-documentation/"
+baseURL = "https://coreruleset.github.io/coreruleset-documentation/"
 languageCode = "en-us"
 title = "Core Rule Set Documentation"
-theme = "hugo-theme-learn"
+theme = "hugo-relearn"
 
 # For search functionality
 [outputs]
@@ -11,7 +11,7 @@ home = [ "HTML", "RSS", "JSON"]
   # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page.
   # Useful to give opportunity to people to create merge request for your doc.
   # See the config.toml file from this documentation site to have an example.
-  editURL = "https://github.com/fzipi/coreruleset-documentation/blob/master/content/"
+  editURL = "https://github.com/coreruleset/coreruleset-documentation/blob/master/content/"
   # Author of the site, will be used in meta information
   author = "CoreRuleSet"
   # Description of the site, will be used in meta information
