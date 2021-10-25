@@ -1,6 +1,6 @@
 ---
 title: OWASP CRS Install
-menuTitle: "Installing"
+menuTitle: "Getting CRS"
 weight: 5
 pre: "<b>1. </b>"
 chapter: true
