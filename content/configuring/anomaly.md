@@ -1,6 +1,6 @@
 ---
 title: "Anomaly Scoring Mode"
-menuTitle: "Basics"
+menuTitle: "Anomaly Scoring"
 chapter: false
 weight: 10
 ---
