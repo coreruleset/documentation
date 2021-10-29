@@ -41,18 +41,13 @@ home = [ "HTML", "RSS", "JSON"]
   #custom_css = ["css/foo.css", "css/bar.css"]
 
 [[menu.shortcuts]]
-name = "<i class='fab fa-github'></i> Github repo"
-identifier = "ds"
-url = "https://github.com/coreruleset/coreruleset"
+name = "<i class='fas fa-bookmark'></i> Core Rule Set Home"
+identifier = "home"
+url = "https://coreruleset.org/"
 weight = 10
 
 [[menu.shortcuts]]
-name = "<i class='fas fa-bookmark'></i> Hugo Documentation"
-identifier = "hugodoc"
-url = "https://gohugo.io/"
+name = "<i class='fab fa-github'></i> Core Rule Set GitHub"
+identifier = "github"
+url = "https://github.com/coreruleset/coreruleset"
 weight = 20
-
-[[menu.shortcuts]]
-name = "<i class='fas fa-bullhorn'></i> Credits"
-url = "/credits"
-weight = 30
