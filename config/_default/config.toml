@@ -38,7 +38,7 @@ home = [ "HTML", "RSS", "JSON"]
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "blue"
   # Provide a list of custom css files to load relative from the `static/` folder in the site root.
-  custom_css = ["css/foo.css", "css/bar.css"]
+  #custom_css = ["css/foo.css", "css/bar.css"]
 
 [[menu.shortcuts]]
 name = "<i class='fab fa-github'></i> Github repo"
