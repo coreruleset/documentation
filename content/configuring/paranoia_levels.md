@@ -12,7 +12,7 @@ weight: 15
 
 This continues at PL 3, where more rules are added, namely for certain specialized attacks. This leads to even more false alarms. Then at PL 4, the rules are so aggressive that they detect almost every possible attack, yet they also flag a lot of legitimate traffic as malicious.
 
-![Onion model diagram showing the four paranoia levels as ellipses. Each successive paranoia level is a superset of the previous one.](https://raw.githubusercontent.com/coreruleset/documentation/main/static/images/pl_onion_no_fonts.svg?width=25em)
+![Onion model diagram showing the four paranoia levels as ellipses. Each successive paranoia level is a superset of the previous one.](https://coreruleset.org/docs/images/pl_onion_no_fonts.svg?width=25em)
 
 A higher paranoia level makes it harder for an attacker to go undetected. Yet this comes at the cost of more false positives: more false alarms. That's the downside to running a rule set that detects almost everything: your business / service / web application is also disrupted.
 
