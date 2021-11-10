@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="267.27841mm"
+   height="155.735mm"
+   viewBox="0 0 267.27841 155.735"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2" />
+  <g
+     id="layer1"
+     transform="translate(-28.846687,-142.28695)">
+    <ellipse
+       style="fill:#00adef;fill-opacity:1;stroke:#005c87;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;stop-color:#000000"
+       id="ellipse17424"
+       ry="73.1175"
+       rx="68.4375"
+       cy="220.15445"
+       cx="102.03419" />
+    <ellipse
+       style="fill:#53c8f5;fill-opacity:1;stroke:#005c87;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;stop-color:#000000"
+       id="ellipse17996"
+       ry="52.012501"
+       rx="56.90625"
+       cy="234.71454"
+       cx="102.03419" />
+    <ellipse
+       style="fill:#a8e4fa;fill-opacity:1;stroke:#005c87;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;stop-color:#000000"
+       id="ellipse17422"
+       ry="34.424999"
+       rx="45.375"
+       cy="246.07045"
+       cx="102.03419" />
+    <ellipse
+       style="fill:#ffffff;fill-opacity:1;stroke:#005c87;stroke-width:1.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal;stop-color:#000000"
+       id="ellipse16496"
+       ry="16"
+       rx="30"
+       cy="257.57611"
+       cx="102.03419" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19.7556px;line-height:1.5;font-family:'Museo Sans Rounded';-inkscape-font-specification:'Museo Sans Rounded';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="83.157715"
+       y="174.63223"
+       id="text3092"><tspan
+         id="tspan3090"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         x="83.157715"
+         y="174.63223">PL 4</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         x="83.157715"
+         y="204.6805"
+         id="tspan13092">PL 3</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         x="83.157715"
+         y="234.72878"
+         id="tspan13094">PL 2</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans';fill:#000000;fill-opacity:1;stroke-width:0.264583"
+         x="83.157715"
+         y="264.77704"
+         id="tspan13096">PL 1</tspan></text>
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 147.58376,180.55538 11.82899,-11.82899 h 21.43394"
+       id="path229889" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;line-height:1.25;font-family:'Museo Sans Rounded';-inkscape-font-specification:'Museo Sans Rounded';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="183.83069"
+       y="164.37108"
+       id="text231769"><tspan
+         id="tspan231767"
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         x="183.83069"
+         y="164.37108">Very aggressive rules</tspan><tspan
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         x="183.83069"
+         y="178.85033"
+         id="tspan233833">False positives likely</tspan></text>
+    <path
+       style="opacity:1;fill:none;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       d="m 125.46935,259.02863 11.82899,-11.82899 h 43.54835"
+       id="path245964" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;line-height:1.25;font-family:'Museo Sans Rounded';-inkscape-font-specification:'Museo Sans Rounded';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="183.83069"
+       y="242.84433"
+       id="text251435"><tspan
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         x="183.83069"
+         y="242.84433"
+         id="tspan251433">Less aggressive rules</tspan><tspan
+         style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:11.2889px;font-family:'Nimbus Sans';-inkscape-font-specification:'Nimbus Sans Italic';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;stroke-width:0.264583"
+         x="183.83069"
+         y="257.32358"
+         id="tspan252761">False positives rare</tspan></text>
+  </g>
+</svg>
