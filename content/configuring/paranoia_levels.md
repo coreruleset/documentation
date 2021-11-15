@@ -21,7 +21,7 @@ When false positives occur they need to be tuned away. In ModSecurity parlance: 
 {{% notice note %}}
 Depending on the complexity of the service (web application) in question and on the paranoia level, the process of writing rule exclusions can be a *substantial* amount of work.
 
-This page wont explore the problem of handling false positives further: for more information on this topic, see the appropriate chapter or refer to the [tutorials at netnea.com](https://www.netnea.com/cms/apache-tutorials/).
+This page won't explore the problem of handling false positives further: for more information on this topic, see the appropriate chapter or refer to the [tutorials at netnea.com](https://www.netnea.com/cms/apache-tutorials/).
 {{% /notice %}}
 
 ## Description of the Four Paranoia Levels
