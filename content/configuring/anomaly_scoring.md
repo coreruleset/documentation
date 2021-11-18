@@ -1,9 +1,39 @@
 ---
-title: "Anomaly Scoring Mode"
-menuTitle: "Anomaly Scoring"
+title: "Anomaly Scoring"
 chapter: false
 weight: 10
 ---
+
+> The Core Rule Set 3 is designed as an anomaly scoring rule set. This page explains what anomaly scoring is and how to use it.
+
+## Overview of Anomaly Scoring
+
+Anomaly scoring, also known as "collaborative detection", is a scoring mechanism used in the Core Rule Set. It assigns a numeric score to HTTP requests and responses, representing how 'anomalous' they appear to be. Anomaly scores can then be used to make blocking decisions. The default CRS blocking policy, for example, is to block any transaction that exceeds a defined anomaly score threshold.
+
+## How Anomaly Scoring Mode Works
+
+Anomaly scoring mode combines the concepts of *collaborative detection* and *delayed blocking*. The key idea to understand is that **the inspection/detection rule logic is decoupled from the blocking functionality**.
+
+Individual rules designed to detect specific types of attacks and malicious behaviour are executed. If a rule matches, no immediate disruptive action is taken (e.g. the transaction is not blocked). Instead, the matched rule contributes to a transactional *anomaly score*, which acts as a running total. The rules just handle detection, adding to the anomaly score if they match. In addition, an individual matched rule will typically log a record of the match for later reference, including the ID of the matched rule, the data that caused the match, and the URI that was being requested.
+
+Once all of the rules that inspect *request* data have been executed, *blocking evaluation* takes place. If the anomaly score is greater than or equal to the inbound anomaly score threshold then the transaction is *denied*. Transactions that are not denied continue on their journey.
+
+![Diagram showing an example where the inbound anomaly score threshold is set to 5. A first example request accumulates an anomaly score of 7 and is denied at the blocking evaluation step. A second example request accumulates no anomaly score and is allowed to pass at the blocking evaluation step.](as_inbound_no_fonts.svg)
+
+Continuing on, once all of the rules that inspect *response* data have been executed, a second round of blocking evaluation takes place. If the *outbound* anomaly score is greater than or equal to the outbound anomaly score threshold then the transaction is *denied*.
+
+{{% notice info %}}
+Having separate inbound and outbound anomaly scores and thresholds allows for request data and response data to be inspected and scored independently.
+{{% /notice %}}
+
+### Summary of Anomaly Scoring Mode
+
+To summarise, anomaly scoring mode in the CRS works like so:
+
+1. Execute all *request* rules
+1. Make a blocking decision using the *inbound* anomaly score threshold
+1. Execute all *response* rules
+1. Make a blocking decision using the *outbound* anomaly score threshold
 
 {{% notice warning %}}
 From version 3.0 onwards, Anomaly Scoring is the default detection mode. Traditional detection mode is discouraged.
@@ -20,15 +50,6 @@ Within the `csr-setup.conf.example` you can control the following related CRS it
 Anomaly Scoring Mode
 --------------------
 
-Within anomaly scoring mode we are implementing the concept of
-Collaborative Detection and Delayed Blocking. This is to say that we
-have changed the rules logic by decoupling the inspection/detection from
-the blocking functionality. The individual rules can be run so that the
-detection remains, however instead of applying any disruptive action at
-that point, the rules will contribute to a transactional anomaly score
-collection. In addition, each rule will also store meta-data about each
-rule match (such as the Rule ID, Attack Category, Matched Location and
-Matched Data) for later logging.
 
 ### Configuring Anomaly Scoring Mode
 
