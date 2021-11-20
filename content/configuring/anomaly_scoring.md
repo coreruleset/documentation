@@ -85,8 +85,14 @@ An anomaly score threshold is the cumulative anomaly score at which an inbound r
 
 Most detected inbound threats carry an anomaly score of 5 (by default), while smaller violations, e.g. protocol and standards violations, carry lower scores. An anomaly score threshold of 7, for example, would require multiple rule matches in order to trigger a block (e.g. one "critical" rule scoring 5 plus a lesser-scoring rule, in order to reach the threshold of 7). An anomaly score threshold of 10 would require at least two "critical" rules to match, or a combination of many lesser-scoring rules. **Increasing the anomaly score thresholds makes the CRS less sensitive** and hence less likely to block transactions.
 
+Rule coverage should be taken into account when setting anomaly score thresholds. Different CRS rule categories feature different numbers of rules. SQL injection, for example, is covered by more than 50 rules. As a result, a real world SQLi attack can easily gain an anomaly score of 15, 20, or even more. On the other hand, a rare protocol attack might only be covered by a single, specific rule. If such an attack only causes the one specific rule to match then it will only gain an anomaly score of 5. If the inbound anomaly score threshold is set to anything higher than 5 then attacks like the one described will not be stopped. As such, a CRS installation should aim for an inbound anomaly score threshold of 5.
+
 {{% notice warning %}}
 Increasing the anomaly score thresholds may allow some attacks to bypass the CRS rules.
+{{% /notice %}}
+
+{{% notice info %}}
+An outbound anomaly score threshold of 4 (the default) will block a transaction if any single response rule matches.
 {{% /notice %}}
 
 {{% notice tip %}}
