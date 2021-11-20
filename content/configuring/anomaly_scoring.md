@@ -128,7 +128,7 @@ The four severity levels and their *default* anomaly scores are:
 
 For example, by default, a single matching `CRITICAL` rule would increase the anomaly score by 5, while a single matching `WARNING` rule would increase the anomaly score by 3.
 
-The default anomaly scores are usually acceptable. It is possible, however, to set custom anomaly scores for severity levels. To do so, uncomment rule 900100 and set the anomaly scores as desired:
+The default anomaly scores are rarely ever changed. It is possible, however, to set custom anomaly scores for severity levels. To do so, uncomment rule 900100 and set the anomaly scores as desired:
 
 ```apache
 SecAction \
