@@ -21,10 +21,6 @@ SecDefaultAction "phase:2,pass,log"
 From version 3.0 onwards, Anomaly Scoring is the default detection mode. Traditional detection mode is discouraged.
 {{% /notice %}}
 
-{{% notice warning %}}
-Don't use this mode unless you have a ver specific need. You've been warned.
-{{% /notice %}}
-
 (AH) Summary: traditional, self-contained mode: a rule match (alert) causes an immediate block.
 
 Traditional Detection Mode (or IDS/IPS mode) is the old default
