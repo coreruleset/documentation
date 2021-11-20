@@ -39,15 +39,16 @@ To summarize, anomaly scoring mode in the CRS works like so:
 
 As described, individual rules are only responsible for detection and inspection: they do not block or deny transactions. If a rule matches then it increments the anomaly score. This is done using ModSecurity's `setvar` action.
 
-Below is an example of a detection rule which matches when a request contains an empty `User-Agent` header. Notice the final line of the rule: it makes use of the `setvar` action, which will increment the anomaly score if the rule matches:
+Below is an example of a detection rule which matches when a request has a `Content-Length` header field containing something other than digits. Notice the final line of the rule: it makes use of the `setvar` action, which will increment the anomaly score if the rule matches:
 
 ```apache
-SecRule REQUEST_HEADERS:User-Agent "@rx ^$" \
-    "id:920330,\
+SecRule REQUEST_HEADERS:Content-Length "!@rx ^\d+$" \
+    "id:920160,\
     phase:1,\
-    pass,\
+    block,\
     t:none,\
-    msg:'Empty User Agent Header',\
+    msg:'Content-Length HTTP header is not numeric',\
+    logdata:'%{MATCHED_VAR}',\
     tag:'application-multi',\
     tag:'language-multi',\
     tag:'platform-multi',\
@@ -56,8 +57,8 @@ SecRule REQUEST_HEADERS:User-Agent "@rx ^$" \
     tag:'OWASP_CRS',\
     tag:'capec/1000/210/272',\
     ver:'OWASP_CRS/3.4.0-dev',\
-    severity:'NOTICE',\
-    setvar:'tx.anomaly_score_pl1=+%{tx.notice_anomaly_score}'"
+    severity:'CRITICAL',\
+    setvar:'tx.anomaly_score_pl1=+%{tx.critical_anomaly_score}'"
 ```
 
 {{% notice info %}}
