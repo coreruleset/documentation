@@ -90,7 +90,9 @@ Increasing the anomaly score thresholds may allow some attacks to bypass the CRS
 {{% /notice %}}
 
 {{% notice tip %}}
-A common practice when working with a **new** CRS deployment is to start with very high anomaly score thresholds (even as high as 10000) and gradually lower them over time, through multiple iterations of a tuning process.
+A common practice when working with a **new** CRS deployment is to start in blocking mode from the very beginning with *very high anomaly score thresholds* (even as high as 10000). The thresholds can be gradually lowered over time as an iterative process.
+
+This tuning method was developed and advocated by Christian Folini, who documented it in detail, along with examples, in a popular tutorial titled [Handling False Positives with the OWASP ModSecurity Core Rule Set](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/).
 {{% /notice %}}
 
 CRS uses two anomaly score thresholds, which can be defined using the variables listed below:
