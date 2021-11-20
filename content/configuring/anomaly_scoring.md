@@ -14,7 +14,7 @@ Anomaly scoring, also known as "collaborative detection", is a scoring mechanism
 
 Anomaly scoring mode combines the concepts of *collaborative detection* and *delayed blocking*. The key idea to understand is that **the inspection/detection rule logic is decoupled from the blocking functionality**.
 
-Individual rules designed to detect specific types of attacks and malicious behaviour are executed. If a rule matches, no immediate disruptive action is taken (e.g. the transaction is not blocked). Instead, the matched rule contributes to a transactional *anomaly score*, which acts as a running total. The rules just handle detection, adding to the anomaly score if they match. In addition, an individual matched rule will typically log a record of the match for later reference, including the ID of the matched rule, the data that caused the match, and the URI that was being requested.
+Individual rules designed to detect specific types of attacks and malicious behavior are executed. If a rule matches, no immediate disruptive action is taken (e.g. the transaction is not blocked). Instead, the matched rule contributes to a transactional *anomaly score*, which acts as a running total. The rules just handle detection, adding to the anomaly score if they match. In addition, an individual matched rule will typically log a record of the match for later reference, including the ID of the matched rule, the data that caused the match, and the URI that was being requested.
 
 Once all of the rules that inspect *request* data have been executed, *blocking evaluation* takes place. If the anomaly score is greater than or equal to the inbound anomaly score threshold then the transaction is *denied*. Transactions that are not denied continue on their journey.
 
@@ -28,7 +28,7 @@ Having separate inbound and outbound anomaly scores and thresholds allows for re
 
 ### Summary of Anomaly Scoring Mode
 
-To summarise, anomaly scoring mode in the CRS works like so:
+To summarize, anomaly scoring mode in the CRS works like so:
 
 1. Execute all *request* rules
 1. Make a blocking decision using the *inbound* anomaly score threshold
