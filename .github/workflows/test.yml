@@ -22,3 +22,6 @@ jobs:
     - name: Build
       run: hugo --gc --minify --cleanDestinationDir
 
+    - name: (British/American) English test
+      description: 'Content should be written in American English. Test all content against British English spelling list from: http://www.tysto.com/uk-us-spelling-list.html'
+      run: ! grep -Ri -f .github/workflows/en_GB_wordlist content/
