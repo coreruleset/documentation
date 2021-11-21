@@ -1,5 +1,5 @@
 #!/bin/bash
-grep -Ri -f .github/workflows/en_GB_wordlist content/
+grep --color -Ri -f .github/workflows/en_GB_wordlist content/
 
 # grep found nothing (i.e. grep exited citing failure)? Exit successfully
 if [ $? -eq 1 ]
