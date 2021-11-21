@@ -27,5 +27,4 @@ jobs:
       # British English spelling list from:
       # http://www.tysto.com/uk-us-spelling-list.html'
       shell: bash
-      run: |
-        \! grep -Ri -f .github/workflows/en_GB_wordlist content/
+      run: .github/workflows/english_test.sh
