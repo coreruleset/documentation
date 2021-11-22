@@ -186,7 +186,7 @@ HIGHLY recommended. At minimum you should keep in mind the following.
     information see [Anomaly]({{< ref "anomaly.md" >}} "Anomaly")
 -   By default ModSecurity looks for lots of issues with different
     databases and languages, if you are running a specific environment,
-    you probably want to limit this behaviour for performance reasons.
+    you probably want to limit this behavior for performance reasons.
 -   ModSecurity supports [Project Honeypot](https://www.projecthoneypot.org/) blacklists. This is a
     great project and all you need to do to leverage it is sign up for
     an [API key](https://www.projecthoneypot.org/httpbl_api.php)

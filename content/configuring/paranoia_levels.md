@@ -77,7 +77,7 @@ There is a better solution. First, think of the paranoia level as being the "blo
 
 *Example: Blocking paranoia level of 1 and executing paranoia level of 2*
 
-![Diagram showing a scenario where the blocking paranoia level and the executing paranoia level are different. The active and inactive paranoia levels are emphasised to explain the concept.](https://coreruleset.org/assets/uploads/2021/10/executing-paranoia-level-1.png?width=25em)
+![Diagram showing a scenario where the blocking paranoia level and the executing paranoia level are different. The active and inactive paranoia levels are emphasized to explain the concept.](https://coreruleset.org/assets/uploads/2021/10/executing-paranoia-level-1.png?width=25em)
 
 **The executing paranoia level allows rules from a higher paranoia level to be run, and potentially to trigger false positives, without increasing the probability of blocking legitimate users.** Any new false positives can then be tuned away using rule exclusions. Once ready and with all the new rule exclusions in place, the blocking paranoia level can then be raised to match the executing paranoia level. This approach is a flexible and secure way to raise the paranoia level on a working production system *without* the risk of new false positives blocking users in error.
 
@@ -87,4 +87,4 @@ It is always possible to lower the paranoia level in order to experience fewer f
 
 ## Further Reading
 
-For a slightly longer explanation of paranoia levels, please refer to [our blog post on the subject](https://coreruleset.org/20211028/working-with-paranoia-levels/). The blog post also discusses the pros and cons of dynamically setting the paranoia level on a per-request basis, firstly by geolocation (i.e. a lower PL for domestic traffic and a higher PL for non-domestic traffic) and secondly based on previous behaviour (i.e. a user is dealt with at PL 1, but if they ever trigger a rule then they're handled at PL 2 for all future requests).
+For a slightly longer explanation of paranoia levels, please refer to [our blog post on the subject](https://coreruleset.org/20211028/working-with-paranoia-levels/). The blog post also discusses the pros and cons of dynamically setting the paranoia level on a per-request basis, firstly by geolocation (i.e. a lower PL for domestic traffic and a higher PL for non-domestic traffic) and secondly based on previous behavior (i.e. a user is dealt with at PL 1, but if they ever trigger a rule then they're handled at PL 2 for all future requests).
