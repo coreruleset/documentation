@@ -11,7 +11,7 @@ The Core Rule Set can be run using a compatible WAF engine. The CRS can also be 
 
 ### ModSecurity
 
-ModSecurity comes in two flavours: ModSecurity v2 and ModSecurity v3 (aka libmodsecurity).
+ModSecurity comes in two flavors: ModSecurity v2 and ModSecurity v3 (aka libmodsecurity).
 
 ## Existing CRS Integrations: Cloud and CDN Offerings
 
