@@ -19,7 +19,7 @@ Imagine deploying the CRS in front of a WordPress instance. The WordPress engine
 Consider the CRS inspecting a request with a URL like the following:
 
 ```
-www.mywordpressblog.com?wp_post=<h1>Welcome+To+My+Blog</h1>
+www.mywordpressblog.com/?wp_post=<h1>Welcome+To+My+Blog</h1>
 ```
 
 At paranoia level 2, the `wp_post` query string parameter would trigger a match against an XSS attack rule due to the presence of HTML tags. CRS is unaware that the problem is properly mitigated on the server side and, as a result, the request causes a false positive and may be blocked.
