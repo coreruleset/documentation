@@ -1,9 +1,26 @@
 ---
-title: "Adding Exceptions and Tuning CRS"
-menuTitle: "Exceptions"
+title: "Rule Exclusions"
 chapter: false
-weight: 30
+weight: 18
 ---
+
+> When a *genuine* transaction causes rules form the Core Rule Set to match it is said that a **false positive** has occurred. False positives need to be tuned away by writing *rule exclusions*, which this page explains.
+
+## What are False Positives?
+
+The Core Rule Set provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match some of the generic attack behaviors and patterns that are being searched for. Such a match is referred to as a *false positive*, or false alarm.
+
+False positives are particularly likely to happen when operating at higher [paranoia levels]({{< ref "paranoia_levels" >}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of higher security provided by higher paranoia levels: the time it takes to tune away the increasing number of false positives.
+
+### Why are False Positives a Problem?
+
+#### Alert Fatigue
+
+If a system is prone to reporting false positives then the alerts it raises may be ignored. This may lead to real attacks being overlooked. For this reason, leaving false positives mixed in with real attacks is dangerous: the false positives must be resolved.
+
+#### Poor User Experience
+
+When working in blocking mode, false positives can cause genuine user transactions to be blocked, leading to poor user experience. This can create pressure to disable the CRS or even to remove the WAF solution entirely. This is an unnecessary sacrifice of security for usability: tuning away the false positives is the correct solution to this problem.
 
 ## Modifying Rules
 
@@ -203,3 +220,8 @@ rules using
 ```apache
 SecRuleRemoveByTag "platform-iis"
 ```
+
+## TODO: RE Packages
+
+## TODO: Link to netnea
+
