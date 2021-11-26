@@ -4,13 +4,29 @@ chapter: false
 weight: 18
 ---
 
-> When a *genuine* transaction causes rules form the Core Rule Set to match it is said that a **false positive** has occurred. False positives need to be tuned away by writing *rule exclusions*, which this page explains.
+> When a *genuine* transaction causes a rule form the Core Rule Set to match in error it is described as a **false positive**. False positives need to be tuned away by writing *rule exclusions*, which this page explains.
 
 ## What are False Positives?
 
-The Core Rule Set provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match some of the generic attack behaviors and patterns that are being searched for. Such a match is referred to as a *false positive*, or false alarm.
+The Core Rule Set provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a *false positive*, or false alarm.
 
 False positives are particularly likely to happen when operating at higher [paranoia levels]({{< ref "paranoia_levels" >}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of higher security provided by higher paranoia levels: the time it takes to tune away the increasing number of false positives.
+
+### An Example
+
+Imagine deploying the CRS in front of a WordPress instance. The WordPress engine features the ability to add HTML to blog posts (as well as JavaScript, if you're an administrator). Internally, WordPress has rules controlling which HTML tags are allowed to be used. This list of allowed tags has been studied heavily by the security community and it's considered to be a secure mechanism.
+
+Consider the CRS inspecting a request with a URL like the following:
+
+```
+www.mywordpressblog.com?wp_post=<h1>Welcome+To+My+Blog</h1>
+```
+
+At paranoia level 2, the `wp_post` query string parameter would trigger a match against an XSS attack rule due to the presence of HTML tags. CRS is unaware that the problem is properly mitigated on the server side and, as a result, the request causes a false positive and may be blocked.
+
+{{% notice tip %}}
+TODO Mention the WordPress RE package.
+{{% /notice %}}
 
 ### Why are False Positives a Problem?
 
@@ -20,34 +36,46 @@ If a system is prone to reporting false positives then the alerts it raises may 
 
 #### Poor User Experience
 
-When working in blocking mode, false positives can cause genuine user transactions to be blocked, leading to poor user experience. This can create pressure to disable the CRS or even to remove the WAF solution entirely. This is an unnecessary sacrifice of security for usability: tuning away the false positives is the correct solution to this problem.
+When working in blocking mode, false positives can cause legitimate user transactions to be blocked, leading to poor user experience. This can create pressure to disable the CRS or even to remove the WAF solution entirely. This is an unnecessary sacrifice of security for usability: tuning away the false positives is the correct solution to this problem.
 
-## Modifying Rules
+## Tuning Away False Positives
 
-OWASP Core Rule Set (CRS) as a rule set for ModSecurity has no context
-into what your web application is doing and how it is designed. As a
-result, often legitimate requests might seem to CRS to be attacks. This
-term is often called a **False Positive**. While the CRS team does its
-best to prevent these from happening, they are somewhat inevitable due
-to the blacklist nature of the rules. A quick example might illustrate
-the problem better.
+### Directly Modifying CRS Rules
 
-Imagine you are running the popular Wordpress CMS engine. As part of
-this engine the capability exists to add both HTML (and JavaScript if
-you\'re an administrator) to your blog posts. Now Wordpress has rules
-around which tags can be used and their whitelist of tags has generally
-been studied pretty heavily by the security community. However,
-ModSecurity will only has visibility akin to
-`www.mywordpressblog.com?wp_post=<h1>Welcome+To+My+Blog</h1>`. In
-this instance OWASP CRS sees HTML Injection, because that is what's
-there. ModSecurity will have no knowledge that this problem is mitigated
-server side and as a result may block the request. It is therefore
-necessary sometimes to add an exception.
+{{% notice warning %}}
+This is a bad idea and is not recommended.
+{{% /notice %}}
 
-The most common issues when adding exceptions to OWASP CRS is that if
-done 'inline' it will be clobbered by the next update. The ModSecurity
-team has developed sophisticated methods for dealing with this problem
-that are quite versatile.
+It may seem logical, at first, to prevent false positives by modifying the offending CRS rules. **This is a bad idea.**
+
+*Directly modifying CRS rules essentially creates a fork of the rule set.* Any modifications made would be undone by a rule set update, meaning that any changes would need to be continually reapplied by hand. This is a tedious and error-prone solution.
+
+### Rule Exclusions
+
+#### Overview
+
+The ModSecurity WAF engine provides several *rule exclusion* mechanisms which allow rules to be modified *without* directly changing the rules themselves. This makes it possible to work with third-party rule sets, like the Core Rule Set, by adapting rules as needed while leaving the rule set files intact and unmodified. This allows for easy rule set updates.
+
+Two fundamentally different types of rule exclusions are supported:
+
+- **Configure-time rule exclusions:** Rule exclusions that are applied once, at *configure-time* (e.g. when (re)starting or reloading ModSecurity, or the server process that holds it).
+- **Runtime rule exclusions:** Rule exclusions that are applied at *runtime* on a per-transaction basis (e.g. exclusions that can be conditionally applied to some transactions but not others).
+
+In addition to the two *types* of exclusions, rules can be excluded in two different *ways*:
+
+- **Exclude the entire rule:** An entire rule is disabled and will not be executed by the rule engine.
+- **Exclude a specific parameter from the rule:** A *specific parameter* will be excluded from a specific rule.
+
+This is summarized in the table below, which presents different directives and actions that can be used for each type and method of rule exclusion:
+
+|                    | Exclude entire rule  | Exclude specific parameter from rule |
+| ------------------ | -------------------- | ------------------------------------ |
+| **Configure-time** | `SecRuleRemoveById`  | `SecRuleUpdateTargetById`            |
+| **Runtime**        | `ctl:ruleRemoveById` | `ctl:ruleRemoveTargetById`           |
+
+{{% notice tip %}}
+This information is available as a well-presented, downloadable [Rule Exclusion Cheatsheet](https://www.netnea.com/cms/rule-exclusion-cheatsheet-download) over at netnea.com
+{{% /notice %}}
 
 ### Exceptions versus Whitelist
 
