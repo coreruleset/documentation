@@ -260,7 +260,11 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
 It's possible to write a conditional rule exclusion that tests something other than just the request URI. Conditions can be built which test the source IP address, HTTP request method, HTTP headers, and even the day of the week.
 {{% /notice %}}
 
-#### ModSecurity Reference
+#### Rule Exclusion Packages
+
+TODO
+
+## Further Reading
 
 Detailed reference of each of the rule exclusion mechanisms outlined above can be found in the [ModSecurity Reference Manual](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)):
 
@@ -271,7 +275,3 @@ Detailed reference of each of the rule exclusion mechanisms outlined above can b
   - [SecRuleUpdateTargetByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetByTag)
 - Runtime rule exclusion mechanisms:
   - [The ctl action](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#ctl)
-
-#### Rule Exclusion Packages
-
-TODO
