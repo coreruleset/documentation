@@ -25,7 +25,7 @@ www.mywordpressblog.com/?wp_post=<h1>Welcome+To+My+Blog</h1>
 At paranoia level 2, the `wp_post` query string parameter would trigger a match against an XSS attack rule due to the presence of HTML tags. CRS is unaware that the problem is properly mitigated on the server side and, as a result, the request causes a false positive and may be blocked.
 
 {{% notice tip %}}
-TODO Mention the WordPress RE package.
+CRS ships with a prebuilt *rule exclusion package* for WordPress, as well as other popular web applications, to help prevent false positives. See the section on [rule exclusion packages]({{< ref "#rule-exclusion-packages" >}}) for details. 
 {{% /notice %}}
 
 ### Why are False Positives a Problem?
@@ -262,7 +262,34 @@ It's possible to write a conditional rule exclusion that tests something other t
 
 #### Rule Exclusion Packages
 
-TODO
+CRS ships with prebuilt *rule exclusion packages* for a selection of popular web applications. These packages contain application-specific rule exclusions designed to prevent false positives from occurring when CRS is put in front of one of these web applications.
+
+The packages should be viewed as a good *starting point* from which to build upon. Some false positives may still occur, for example if working at a high paranoia level, if using a very new or old version of the application, if using plug-ins, add-ons, or user customisations.
+
+If using a native Core Rule Set installation, rule exclusion packages can be enabled in the file `crs-setup.conf`. Modify rule 900130 to select the web applications in question, e.g. to enable the DokuWiki rule exclusion package use `setvar:tx.crs_exclusions_dokuwiki=1`, and then uncomment the rule to enable it.
+
+If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose rule exclusion packages in the GUI while other vendors require custom rules to be written which set the necessary variables. Unfortunately, there are also vendors that don't allow rule exclusion packages to be used at all.
+
+{{% notice tip %}}
+If running multiple web applications, it is highly recommended to enable a rule exclusion package only for the location where the corresponding web application resides. For example, to enable the WordPress rule exclusion package only for locations under '/wordpress', a rule like the following could be used:
+
+```apache
+SecRule REQUEST_URI "@beginsWith /wordpress/" setvar:tx.crs_exclusions_wordpress=1...
+```
+{{% /notice %}}
+
+Rule exclusion packages are currently available for the following web applications:
+
+- [cPanel](https://cpanel.net)
+- [DokuWiki](https://www.dokuwiki.org)
+- [Drupal](https://www.drupal.org)
+- [Nextcloud](https://nextcloud.com)
+- [phpBB](https://www.phpbb.com)
+- [phpMyAdmin](https://www.phpmyadmin.net)
+- [WordPress](https://wordpress.org)
+- [XenForo](https://xenforo.com)
+
+The CRS project is always looking to work with other communities and individuals to add support for additional web applications. Please get in touch via [GitHub](https://github.com/coreruleset/coreruleset) to discuss writing a rule exclusion package for a specific web application.
 
 ## Further Reading
 
