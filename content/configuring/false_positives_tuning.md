@@ -10,9 +10,9 @@ weight: 18
 
 The Core Rule Set provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a *false positive*, or false alarm.
 
-False positives are particularly likely to happen when operating at higher [paranoia levels]({{< ref "paranoia_levels" >}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives.
+False positives are particularly likely to happen when operating at higher [paranoia levels]({{< ref "paranoia_levels" >}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives.
 
-### An Example
+### Example False Positive
 
 Imagine deploying the CRS in front of a WordPress instance. The WordPress engine features the ability to add HTML to blog posts (as well as JavaScript, if you're an administrator). Internally, WordPress has rules controlling which HTML tags are allowed to be used. This list of allowed tags has been studied heavily by the security community and it's considered to be a secure mechanism.
 
@@ -22,7 +22,33 @@ Consider the CRS inspecting a request with a URL like the following:
 www.mywordpressblog.com/?wp_post=<h1>Welcome+To+My+Blog</h1>
 ```
 
-At paranoia level 2, the `wp_post` query string parameter would trigger a match against an XSS attack rule due to the presence of HTML tags. CRS is unaware that the problem is properly mitigated on the server side and, as a result, the request causes a false positive and may be blocked.
+At paranoia level 2, the `wp_post` query string parameter would trigger a match against an XSS attack rule due to the presence of HTML tags. CRS is unaware that the problem is properly mitigated on the server side and, as a result, the request causes a false positive and may be blocked. The false positive may generate an error log line like the following (split across multiple lines for readability):
+
+```
+[Wed Jan 01 00:00:00.123456 2022]
+    [:error]
+    [pid 2357:tid 140543564093184]
+    [client 10.0.0.1:0]
+    [client 10.0.0.1] ModSecurity: Warning. Pattern match "<(?:a|abbr|acronym|address|applet|area|audioscope|b|base|basefront|bdo|bgsound|big|blackface|blink|blockquote|body|bq|br|button|caption|center|cite|code|col|colgroup|comment|dd|del|dfn|dir|div|dl|dt|em|embed|fieldset|fn|font|form|frame|frameset|h1|head ..." at ARGS:wp_post.
+    [file "/etc/crs/rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf"]
+    [line "783"]
+    [id "941320"]
+    [msg "Possible XSS Attack Detected - HTML Tag Handler"]
+    [data "Matched Data: <h1> found within ARGS:wp_post: <h1>welcome to my blog</h1>"]
+    [severity "CRITICAL"]
+    [ver "OWASP_CRS/3.3.2"]
+    [tag "application-multi"]
+    [tag "language-multi"]
+    [tag "platform-multi"]
+    [tag "attack-xss"]
+    [tag "OWASP_CRS"]
+    [tag "capec/1000/152/242/63"]
+    [tag "PCI/6.5.1"]
+    [tag "paranoia-level/2"]
+    [hostname "www.mywordpressblog.com"]
+    [uri "/"]
+    [unique_id "Yad-7q03dV56xYsnGhYJlQAAAAA"]
+```
 
 {{% notice tip %}}
 CRS ships with a prebuilt *rule exclusion package* for WordPress, as well as other popular web applications, to help prevent false positives. See the section on [rule exclusion packages]({{< ref "#rule-exclusion-packages" >}}) for details. 
@@ -67,13 +93,15 @@ Two fundamentally different types of rule exclusions are supported:
   This type of rule exclusion takes the form of a `SecRule`.
 
 {{% notice info %}}
-Runtime rule exclusions, while granular and flexible, have a computational cost associated to them. A runtime rule exclusion is an extra SecRule which must be evaluated for every transaction.
+Runtime rule exclusions, while granular and flexible, have a computational overhead, albeit a small one. A runtime rule exclusion is an extra SecRule which must be evaluated for every transaction.
 {{% /notice %}}
 
 In addition to the two *types* of exclusions, rules can be excluded in two different *ways*:
 
 - **Exclude the entire rule:** An entire rule is removed and will not be executed by the rule engine.
 - **Exclude a specific variable from the rule:** A *specific variable* will be excluded from a specific rule.
+
+These two methods can also operate on multiple rules or even entire rule categories.
 
 The combinations of rule exclusion types and methods allow for writing rule exclusions of varying granularity. Very coarse rule exclusions can be written, for example "remove all SQL injection rules" using `SecRuleRemoveByTag`. Extremely granular rule exclusions can also be written, for example "for transactions to the location 'web_app_2/function.php', exclude the query string parameter 'user_id' from rule 920280" using a SecRule and the action `ctl:ruleRemoveTargetById`.
 
@@ -94,7 +122,7 @@ This table is available as a well presented, downloadable [Rule Exclusion Cheats
 
 #### Rule Ranges
 
-As well as rules being tagged using different categories, CRS rules are organized into files by general category. In addition, CRS rule IDs follow a consistent numbering convention. This makes it easy to remove unwanted types of rules by removing ranges of rule IDs. For example, the file `REQUEST-933-APPLICATION-ATTACK-PHP.conf` contains the PHP related rules, which all have rule IDs in the range 933000-933999. All of the rules in this file can be easily removed by using a configure-time rule exclusion like so:
+As well as rules being tagged using different categories, CRS rules are organized into files by general category. In addition, CRS rule IDs follow a consistent numbering convention. This makes it easy to remove unwanted types of rules by removing ranges of rule IDs. For example, the file `REQUEST-933-APPLICATION-ATTACK-PHP.conf` contains the PHP related rules, which all have rule IDs in the range 933000-933999. All of the rules in this file can be easily removed using a configure-time rule exclusion, like so:
 
 ```apache
 SecRuleRemoveById "933000-933999"
@@ -257,7 +285,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
 ```
 
 {{% notice tip %}}
-It's possible to write a conditional rule exclusion that tests something other than just the request URI. Conditions can be built which test the source IP address, HTTP request method, HTTP headers, and even the day of the week.
+It's possible to write a conditional rule exclusion that tests something other than just the request URI. Conditions can be built which test, for example, the source IP address, HTTP request method, HTTP headers, and even the day of the week.
 {{% /notice %}}
 
 #### Rule Exclusion Packages
@@ -292,6 +320,8 @@ Rule exclusion packages are currently available for the following web applicatio
 The CRS project is always looking to work with other communities and individuals to add support for additional web applications. Please get in touch via [GitHub](https://github.com/coreruleset/coreruleset) to discuss writing a rule exclusion package for a specific web application.
 
 ## Further Reading
+
+ A popular tutorial titled [Handling False Positives with the OWASP ModSecurity Core Rule Set](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/) by Christian Folini walks through a full CRS tuning process, with examples.
 
 Detailed reference of each of the rule exclusion mechanisms outlined above can be found in the [ModSecurity Reference Manual](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)):
 
