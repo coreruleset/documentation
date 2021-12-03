@@ -124,13 +124,25 @@ This table is available as a well presented, downloadable [Rule Exclusion Cheats
 There's also a third group of rule exclusion directives and actions, the use of which is discouraged. As well as excluding rules "ById" and "ByTag", it's also possible to exclude "ByMsg" (`SecRuleRemoveByMsg`, `SecRuleUpdateTargetByMsg`, `ctl:ruleRemoveByMsg`, and `ctl:ruleRemoveTargetByMsg`). This excludes rules based on the message they write to the error log. These messages can be dynamic and may contain special characters. As such, trying to exclude rules by message is difficult and error-prone.
 {{% /notice %}}
 
+#### Rule Tags
+
+CRS rules typically feature multiple tags, grouping them into different categories. For example, a rule might be tagged by attack type ('attack-rce', 'attack-xss', etc.), by language ('language-java', 'language-php', etc.), and by platform ('platform-apache', 'platform-unix', etc.).
+
+Tags can be used to remove or modify entire categories of rules all at once, but some tags are more useful than others in this regard. Tags for _specific_ attack types, languages, and platforms may be useful for writing rule exclusions. For example, if lots of the SQL injection rules are causing false positives but SQL isn't in use anywhere in the back end web application then it may be worthwhile to remove all CRS rules tagged with 'attack-sqli' (`SecRuleRemoveByTag attack-sqli`).
+
+Some rule tags are _not_ useful for rule exclusion purposes. For example, there are generic tags like 'language-multi' and 'platform-multi': these contain hundreds of rules across the entire CRS, and they don't represent a meaningful rule property to be useful in rule exclusions. There are also tags that categorize rules based on well known security standards, like CAPEC and PCI DSS (e.g. 'capec/1000/153/267', 'PCI/6.5.4'). These tags may be useful for informational and reporting purposes but are not useful in the context of writing rule exclusions.
+
+Excluding rules using tags may be more useful than excluding using rule ranges in situations where a category of rules is spread across multiple files. For example, the 'language-php' rules are spread across several different rule files (both inbound and outbound rule files).
+
 #### Rule Ranges
 
-As well as rules being tagged using different categories, CRS rules are organized into files by general category. In addition, CRS rule IDs follow a consistent numbering convention. This makes it easy to remove unwanted types of rules by removing ranges of rule IDs. For example, the file `REQUEST-933-APPLICATION-ATTACK-PHP.conf` contains the PHP related rules, which all have rule IDs in the range 933000-933999. All of the rules in this file can be easily removed using a configure-time rule exclusion, like so:
+As well as rules being tagged using different categories, CRS rules are organized into files by general category. In addition, CRS rule IDs follow a consistent numbering convention. This makes it easy to remove unwanted types of rules by removing ranges of rule IDs. For example, the file `REQUEST-913-SCANNER-DETECTION.conf` contains rules related to detecting well known scanners and crawlers, which all have rule IDs in the range 913000-913999. All of the rules in this file can be easily removed using a configure-time rule exclusion, like so:
 
 ```apache
-SecRuleRemoveById "933000-933999"
+SecRuleRemoveById "913000-913999"
 ```
+
+Excluding rules using rule ranges may be more useful than excluding using tags in situations where tags are less relevant or where tags vary across the rules in question. For example, a rule range may be the most appropriate solution if the goal is to remove all rules contained in a single file, regardless of how the rules are tagged.
 
 #### Placement of Rule Exclusions
 
