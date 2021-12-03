@@ -120,6 +120,10 @@ The different rule exclusion types and methods are summarized in the table below
 This table is available as a well presented, downloadable [Rule Exclusion Cheatsheet](https://www.netnea.com/cms/rule-exclusion-cheatsheet-download) from Christian Folini.
 {{% /notice %}}
 
+{{% notice note %}}
+There's also a third group of rule exclusion directives and actions, the use of which is discouraged. As well as excluding rules "ById" and "ByTag", it's also possible to exclude "ByMsg" (`SecRuleRemoveByMsg`, `SecRuleUpdateTargetByMsg`, `ctl:ruleRemoveByMsg`, and `ctl:ruleRemoveTargetByMsg`). This excludes rules based on the message they write to the error log. These messages can be dynamic and may contain special characters. As such, trying to exclude rules by message is difficult and error-prone.
+{{% /notice %}}
+
 #### Rule Ranges
 
 As well as rules being tagged using different categories, CRS rules are organized into files by general category. In addition, CRS rule IDs follow a consistent numbering convention. This makes it easy to remove unwanted types of rules by removing ranges of rule IDs. For example, the file `REQUEST-933-APPLICATION-ATTACK-PHP.conf` contains the PHP related rules, which all have rule IDs in the range 933000-933999. All of the rules in this file can be easily removed using a configure-time rule exclusion, like so:
