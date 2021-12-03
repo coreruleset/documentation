@@ -74,6 +74,8 @@ It may seem logical to prevent false positives by modifying the offending CRS ru
 
 *Directly modifying CRS rules essentially creates a fork of the rule set.* Any modifications made would be undone by a rule set update, meaning that any changes would need to be continually reapplied by hand. This is a tedious, time consuming, and error-prone solution.
 
+There are alternative ways to deal with false positives, as described below. These methods sometimes require slightly more effort and knowledge but they do not cause problems when performing rule set updates.
+
 ### Rule Exclusions
 
 #### Overview
