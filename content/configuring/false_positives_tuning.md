@@ -144,6 +144,30 @@ SecRuleRemoveById "913000-913999"
 
 Excluding rules using rule ranges may be more useful than excluding using tags in situations where tags are less relevant or where tags vary across the rules in question. For example, a rule range may be the most appropriate solution if the goal is to remove all rules contained in a single file, regardless of how the rules are tagged.
 
+#### Support for Regular Expressions
+
+Most of the configure-time rule exclusion directives feature some level of support for using regular expressions. This makes it possible, for example, to exclude a dynamically named variable from a rule. The directives with support for regular expressions are:
+
+- `SecRuleRemoveByTag`
+
+  A regular expression is used for the tag match. For example, `SecRuleRemoveByTag "injection"` would match both "attack-injection-nodejs" and "attack-injection-php".
+
+- `SecRuleRemoveByMsg`
+
+  A regular expression is used for the message match. For example, `SecRuleRemoveByMsg "File Access"` would match both "OS File Access Attempt" and "Restricted File Access Attempt".
+
+- `SecRuleUpdateTargetById`, `SecRuleUpdateTargetByTag`, `SecRuleUpdateTargetByMsg`
+
+  A regular expression can optionally be used in the target specification by enclosing the regular expression in forward slashes. This is useful for dealing with dynamically named variables, like so:
+
+  `SecRuleUpdateTargetById 942440 "!REQUEST_COOKIES:/^uid_.*/"`.
+
+  This example would exclude request cookies named "uid_0123456", "uid_6543210", etc. from rule 942440.
+
+{{% notice note %}}
+The 'ctl' action for writing runtime rule exclusions does **not** support any use of regular expressions. This is a known limitation of the ModSecurity rule engine.
+{{% /notice %}}
+
 #### Placement of Rule Exclusions
 
 **It is crucial to put rule exclusions in the correct place, otherwise they may not work.**
@@ -219,7 +243,7 @@ SecRuleUpdateTargetById 941320 "!ARGS:wp_post"
 
 *(Configure-time RE. Exclude specific variable from rule.)*
 
-**Scenario:** The values of request cookies with random names of the form 'uid_\<STRING\>' are causing false positives with various SQL injection rules. It is decided that it is not a risk to allow SQL-like content in cookie values, however it is deemed unacceptable to disable the SQLi detection rules for anything apart from the request cookies in question. It is decided to tune away these false positives by excluding only the problematic request cookies from the SQLi detection rules. A regular expression it to be used to handle the random string in the cookie names.
+**Scenario:** The values of request cookies with random names of the form 'uid_\<STRING\>' are causing false positives with various SQL injection rules. It is decided that it is not a risk to allow SQL-like content in cookie values, however it is deemed unacceptable to disable the SQLi detection rules for anything apart from the request cookies in question. It is decided to tune away these false positives by excluding only the problematic request cookies from the SQLi detection rules. A regular expression is to be used to handle the random string portion of the cookie names.
 
 **Rule Exclusion:**
 
