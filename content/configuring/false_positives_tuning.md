@@ -115,7 +115,7 @@ The different rule exclusion types and methods are summarized in the table below
 *\*\*Can also exclude ranges of rules.*
 
 {{% notice tip %}}
-This table is available as a well presented, downloadable [Rule Exclusion Cheatsheet](https://www.netnea.com/cms/rule-exclusion-cheatsheet-download) at netnea.com
+This table is available as a well presented, downloadable [Rule Exclusion Cheatsheet](https://www.netnea.com/cms/rule-exclusion-cheatsheet-download) from Christian Folini.
 {{% /notice %}}
 
 #### Rule Ranges
