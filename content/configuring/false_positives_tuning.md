@@ -101,7 +101,7 @@ In addition to the two *types* of exclusions, rules can be excluded in two diffe
 - **Exclude the entire rule:** An entire rule is removed and will not be executed by the rule engine.
 - **Exclude a specific variable from the rule:** A *specific variable* will be excluded from a specific rule.
 
-These two methods can also operate on multiple rules or even entire rule categories.
+These two methods can also operate on multiple rules, or even entire rule categories (identified either by tag or by using a [range of rule IDs]({{< ref "#rule-ranges" >}})). 
 
 The combinations of rule exclusion types and methods allow for writing rule exclusions of varying granularity. Very coarse rule exclusions can be written, for example "remove all SQL injection rules" using `SecRuleRemoveByTag`. Extremely granular rule exclusions can also be written, for example "for transactions to the location 'web_app_2/function.php', exclude the query string parameter 'user_id' from rule 920280" using a SecRule and the action `ctl:ruleRemoveTargetById`.
 
