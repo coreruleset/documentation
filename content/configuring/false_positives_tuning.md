@@ -206,20 +206,20 @@ SecRuleRemoveByTag attack-sqli
 
 *(Configure-time RE. Exclude specific variable from rule.)*
 
-**Scenario:** The content of a POST body parameter named 'text_input' is causing false positives with rule 941150, "XSS Filter - Category 5: Disallowed HTML Attributes". Removing this rule entirely is deemed to be unacceptable: the rule is not causing any other issues, and the protection it provides should be retained for everything apart from 'text_input'. It is decided to tune away this false positive by excluding 'text_input' from rule 941150.
+**Scenario:** The content of a POST body parameter named 'wp_post' is causing false positives with rule 941320, "Possible XSS Attack Detected - HTML Tag Handler". Removing this rule entirely is deemed to be unacceptable: the rule is not causing any other issues, and the protection it provides should be retained for everything apart from 'wp_post'. It is decided to tune away this false positive by excluding 'wp_post' from rule 941320.
 
 **Rule Exclusion:**
 
 ```apache
-# CRS Rule Exclusion: 941150 - XSS Filter - Category 5: Disallowed HTML Attributes
-SecRuleUpdateTargetById 941150 "!ARGS:text_input"
+# CRS Rule Exclusion: 941320 - Possible XSS Attack Detected - HTML Tag Handler
+SecRuleUpdateTargetById 941320 "!ARGS:wp_post"
 ```
 
 #### Example 4 *(SecRuleUpdateTargetByTag)*
 
 *(Configure-time RE. Exclude specific variable from rule.)*
 
-**Scenario:** The values of request cookies with random names of the form 'uid_\<STRING\>' are causing false positives with various SQL injection rules. It is decided that it is not a risk to allow SQL-like content in cookie values, however it is deemed unacceptable to disable the SQLi detection rules for anything apart from the request cookies in question. It is decided to tune away these false positives by excluding only the problematic request cookies from the SQLi detection rules.
+**Scenario:** The values of request cookies with random names of the form 'uid_\<STRING\>' are causing false positives with various SQL injection rules. It is decided that it is not a risk to allow SQL-like content in cookie values, however it is deemed unacceptable to disable the SQLi detection rules for anything apart from the request cookies in question. It is decided to tune away these false positives by excluding only the problematic request cookies from the SQLi detection rules. A regular expression it to be used to handle the random string in the cookie names.
 
 **Rule Exclusion:**
 
