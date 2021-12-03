@@ -22,33 +22,25 @@ Consider the CRS inspecting a request with a URL like the following:
 www.example.com/?wp_post=<h1>Welcome+To+My+Blog</h1>
 ```
 
-At paranoia level 2, the `wp_post` query string parameter would trigger a match against an XSS attack rule due to the presence of HTML tags. CRS is unaware that the problem is properly mitigated on the server side and, as a result, the request causes a false positive and may be blocked. The false positive may generate an error log line like the following (split across multiple lines for readability):
+At paranoia level 2, the `wp_post` query string parameter would trigger a match against an XSS attack rule due to the presence of HTML tags. CRS is unaware that the problem is properly mitigated on the server side and, as a result, the request causes a false positive and may be blocked. The false positive may generate an error log line like the following:
 
 ```
-[Wed Jan 01 00:00:00.123456 2022]
-    [:error]
-    [pid 2357:tid 140543564093184]
-    [client 10.0.0.1:0]
-    [client 10.0.0.1] ModSecurity: Warning. Pattern match "<(?:a|abbr|acronym|address|applet|area|audioscope|b|base|basefront|bdo|bgsound|big|blackface|blink|blockquote|body|bq|br|button|caption|center|cite|code|col|colgroup|comment|dd|del|dfn|dir|div|dl|dt|em|embed|fieldset|fn|font|form|frame|frameset|h1|head ..." at ARGS:wp_post.
-    [file "/etc/crs/rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf"]
-    [line "783"]
-    [id "941320"]
-    [msg "Possible XSS Attack Detected - HTML Tag Handler"]
-    [data "Matched Data: <h1> found within ARGS:wp_post: <h1>welcome to my blog</h1>"]
-    [severity "CRITICAL"]
-    [ver "OWASP_CRS/3.3.2"]
-    [tag "application-multi"]
-    [tag "language-multi"]
-    [tag "platform-multi"]
-    [tag "attack-xss"]
-    [tag "OWASP_CRS"]
-    [tag "capec/1000/152/242/63"]
-    [tag "PCI/6.5.1"]
-    [tag "paranoia-level/2"]
-    [hostname "www.example.com"]
-    [uri "/"]
-    [unique_id "Yad-7q03dV56xYsnGhYJlQAAAAA"]
+[Wed Jan 01 00:00:00.123456 2022] [:error] [pid 2357:tid 140543564093184] [client 10.0.0.1:0] [client 10.0.0.1] ModSecurity: Warning. Pattern match "<(?:a|abbr|acronym|address|applet|area|audioscope|b|base|basefront|bdo|bgsound|big|blackface|blink|blockquote|body|bq|br|button|caption|center|cite|code|col|colgroup|comment|dd|del|dfn|dir|div|dl|dt|em|embed|fieldset|fn|font|form|frame|frameset|h1|head ..." at ARGS:wp_post. [file "/etc/crs/rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf"] [line "783"] [id "941320"] [msg "Possible XSS Attack Detected - HTML Tag Handler"] [data "Matched Data: <h1> found within ARGS:wp_post: <h1>welcome to my blog</h1>"] [severity "CRITICAL"] [ver "OWASP_CRS/3.3.2"] [tag "application-multi"] [tag "language-multi"] [tag "platform-multi"] [tag "attack-xss"] [tag "OWASP_CRS"] [tag "capec/1000/152/242/63"] [tag "PCI/6.5.1"] [tag "paranoia-level/2"] [hostname "www.example.com"] [uri "/"] [unique_id "Yad-7q03dV56xYsnGhYJlQAAAAA"]
 ```
+
+This example log entry provides lots of information about the rule match. Some of the key pieces of information are:
+
+- The message from ModSecurity, which explains what happened and where:
+
+  `ModSecurity: Warning. Pattern match "<(?:a|abbr|acronym ..." at ARGS:wp_post.`
+
+- The rule ID of the matched rule:
+
+  `[id "941320"]`
+
+- The additional matching data from the rule, which explains precisely what caused the rule match:
+
+  `[data "Matched Data: <h1> found within ARGS:wp_post: <h1>welcome to my blog</h1>"]`
 
 {{% notice tip %}}
 CRS ships with a prebuilt *rule exclusion package* for WordPress, as well as other popular web applications, to help prevent false positives. See the section on [rule exclusion packages]({{< ref "#rule-exclusion-packages" >}}) for details. 
