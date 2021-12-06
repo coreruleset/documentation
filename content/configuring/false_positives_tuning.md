@@ -98,16 +98,16 @@ Runtime rule exclusions, while granular and flexible, have a computational overh
 
 In addition to the two *types* of exclusions, rules can be excluded in two different *ways*:
 
-- **Exclude the entire rule:** An entire rule is removed and will not be executed by the rule engine.
-- **Exclude a specific variable from the rule:** A *specific variable* will be excluded from a specific rule.
+- **Exclude the entire rule/tag:** An entire rule, or entire category of rules (by specifying a tag), is removed and will not be executed by the rule engine.
+- **Exclude a specific variable from the rule/tag:** A *specific variable* will be excluded from a specific rule, or excluded from a category of rules (by specifying a tag).
 
-These two methods can also operate on multiple rules, or even entire rule categories (identified either by tag or by using a [range of rule IDs]({{< ref "#rule-ranges" >}})). 
+These two methods can also operate on multiple individual rules, or even entire rule categories (identified either [by tag]({{< ref "#rule-tags" >}}) or by using a [range of rule IDs]({{< ref "#rule-ranges" >}})). 
 
 The combinations of rule exclusion types and methods allow for writing rule exclusions of varying granularity. Very coarse rule exclusions can be written, for example "remove all SQL injection rules" using `SecRuleRemoveByTag`. Extremely granular rule exclusions can also be written, for example "for transactions to the location 'web_app_2/function.php', exclude the query string parameter 'user_id' from rule 920280" using a SecRule and the action `ctl:ruleRemoveTargetById`.
 
 The different rule exclusion types and methods are summarized in the table below, which presents the main ModSecurity directives and actions that can be used for each type and method of rule exclusion:
 
-|                    | Exclude entire rule                            | Exclude specific variable from rule                    |
+|                    | Exclude entire rule/tag                        | Exclude specific variable from rule/tag                |
 | ------------------ | ---------------------------------------------- | ------------------------------------------------------ |
 | **Configure-time** | `SecRuleRemoveById`\* `SecRuleRemoveByTag`     | `SecRuleUpdateTargetById` `SecRuleUpdateTargetByTag`   |
 | **Runtime**        | `ctl:ruleRemoveById`\*\* `ctl:ruleRemoveByTag` | `ctl:ruleRemoveTargetById` `ctl:ruleRemoveTargetByTag` |
@@ -215,7 +215,7 @@ SecRuleRemoveById 933151
 
 #### Example 2 *(SecRuleRemoveByTag)*
 
-*(Configure-time RE. Exclude entire rule.)*
+*(Configure-time RE. Exclude entire tag.)*
 
 **Scenario:** Several different parts of a web application are causing false positives with various SQL injection rules. None of the web services behind the WAF make use of SQL, so it is deemed safe to tune away these false positives by removing all the SQLi detection rules.
 
@@ -272,7 +272,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/function.php" \
 
 #### Example 6 *(ctl:ruleRemoveByTag)*
 
-*(Runtime RE. Exclude entire rule.)*
+*(Runtime RE. Exclude entire tag.)*
 
 **Scenario:** Several different locations under '/web_app_1/content' are causing false positives with various SQL injection rules. Nothing under that location makes any use of SQL, so it is deemed safe to remove all the SQLi detection rules for that location. Other locations *may* make use of SQL, however, so the SQLi detection rules **must** remain in place everywhere else. It has been decided to tune away the false positives by removing all the SQLi detection rules for locations under '/web_app_1/content' only.
 
