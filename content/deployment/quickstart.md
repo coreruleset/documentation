@@ -66,7 +66,7 @@ echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/rules/*.conf' >> /etc/htt
 Now that we have configured everything you should be able to restart and
 enjoy using the OWASP Core Rule Set. Typically these rules will require
 a bit of exception tuning, depending on your site. For more information
-see [exceptions]({{< ref "exceptions.md" >}}). Enjoy!
+see [rule exclusions]({{< ref "false_positives_tuning.md" >}}). Enjoy!
 
 ```bash
 systemctl restart httpd.service
