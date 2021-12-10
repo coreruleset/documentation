@@ -4,7 +4,7 @@ chapter: false
 weight: 18
 ---
 
-> When a *genuine* transaction causes a rule form the Core Rule Set to match in error it is described as a **false positive**. False positives need to be tuned away by writing *rule exclusions*, as this page explains.
+> When a *genuine* transaction causes a rule from the Core Rule Set to match in error it is described as a **false positive**. False positives need to be tuned away by writing *rule exclusions*, as this page explains.
 
 ## What are False Positives?
 
