@@ -150,7 +150,7 @@ Most of the configure-time rule exclusion directives feature some level of suppo
 
 - `SecRuleRemoveByTag`
 
-  A regular expression is used for the tag match. For example, `SecRuleRemoveByTag "injection"` would match both "attack-injection-nodejs" and "attack-injection-php".
+  A regular expression is used for the tag match. For example, `SecRuleRemoveByTag "injection"` would match both "attack-injection-generic" and "attack-injection-php".
 
 - `SecRuleRemoveByMsg`
 
