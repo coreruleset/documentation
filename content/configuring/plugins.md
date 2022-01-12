@@ -12,7 +12,7 @@ Plugins are not part of the CRS 3.3.x release line. They will be released offici
 
 ## What are Plugins?
 
-Plugins are *sets of additional rules* that can be plugged in to a web application firewall in order to expand CRS with complementary functionality or to interact with CRS. **Rule exclusion plugins** are a special case: these are plugins that disable certain rules to integrate CRS into a context that is otherwise likely to trigger certain false alarms.
+Plugins are sets of additional rules that can be plugged in to a web application firewall in order to expand CRS with complementary functionality or to interact with CRS. **Rule exclusion plugins** are a special case: these are plugins that disable certain rules to integrate CRS in to a context that is otherwise likely to trigger certain false alarms.
 
 ## Why are Plugins Needed?
 
@@ -119,9 +119,9 @@ Available plugins include:
 
 ## How to Write a Plugin
 
-The first and most important question to ask is:
-
 ### Is a Plugin the Right Approach for a Given Rule Problem?
+
+This is the first and most important question to ask.
 
 CRS is a generic rule set. The rule set has no awareness of the particular setup it finds itself deployed in. As such, the rules are written with caution and administrators are given the ability to steer the behavior of CRS by setting the anomaly threshold accordingly. *An administrator writing their own rules knows a lot more about their specific setup*, so there's probably no need to be as cautious. It's also probably futile to write anomaly scoring rules in this situation. Anomaly scoring adds little value if an administrator knows that everybody issuing a request to `/no-access`, for example, is an attacker.
 
@@ -139,7 +139,7 @@ When it *is* planned to contribute a plugin back to the CRS project, the followi
 * Be careful when interfering with CRS. It's easy to disrupt CRS by excluding essential rules or by messing with variables.
 * Keep an eye on performance and think of use cases.
 
-### Anomaly Scoring: Get the Phases Right
+### Anomaly Scoring: Getting the Phases Right
 
 The anomaly scores are only initialized in the CRS rules file `REQUEST-901-INITIALIZATION.conf`. This happens in phase 1, but it still happens *after* a plugin's `*-before.conf` file has been executed for phase 1. As a consequence, if anomaly scores are set there then they'll be overwritten in CRS phase 1.
 
