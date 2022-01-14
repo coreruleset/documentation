@@ -181,7 +181,7 @@ pre = "<b>3. </b>"
 | The rules in this configuration file facilitate the gathering of data
   about successful and unsuccessful attacks on the server.
 
-  **REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example**
+  **RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example**
   Configuration Path: `rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example`
 
   This file is used to add LOCAL exceptions for your site. Often in this
