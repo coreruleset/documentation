@@ -115,6 +115,7 @@ Available plugins include:
 * **Auto-Decoding Plugin:** This uses ModSecurity transformations to decode encoded payloads before applying CRS rules at PL 3 and double-decoding payloads at PL 4.
 * **Antivirus Plugin:** This helps to integrate an antivirus scanner into CRS.
 * **Body-Decompress Plugin:** This decompresses/unzips the response body for inspection by CRS.
+* **Fake-Bot Plugin:** This performs a reverse DNS lookup on IP addresses pretending to be a search engine.
 * **Incubator Plugin:** This plugin allows non-scoring rules to be tested in production before pushing them into the mainline.
 
 ## How to Write a Plugin
