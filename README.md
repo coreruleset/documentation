@@ -2,6 +2,10 @@
 
 This repository contains the documentation for the OWASP ModSecurity Core Rule Set.
 
+## For users of the CRS
+
+The generated documentation is automatically updated at https://coreruleset.org/docs/. Unless you intend on contributing to the documentation, you can view the documentation there. The rest of this page explains how to work on the documentation.
+
 ## Requirements
 
 Just download latest version of [Hugo binary](https://gohugo.io/getting-started/installing/) for your OS (Windows, Linux, Mac) : it’s that simple. 
