@@ -4,7 +4,7 @@ This repository contains the documentation for the OWASP ModSecurity Core Rule S
 
 ## For users of the CRS
 
-The generated documentation is automatically updated at https://coreruleset.org/docs/. If you just want to read the documentation, you can find it there. If you intend on contributing to the documentation, the rest of this page will guide you through it.
+The generated documentation is automatically updated at https://coreruleset.org/docs/. If you just want to read the documentation, you can find it there. If you intend to _contribute_ to the documentation, the rest of this page will guide you through it.
 
 ## Requirements
 
