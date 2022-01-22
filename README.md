@@ -10,9 +10,9 @@ Just download latest version of [Hugo binary](https://gohugo.io/getting-started/
 
 ## Cloning this repository
 
-After getting hugo, just clone this repository to work locally. This was you can edit and verify quickly that everything is working properly before creating a new pull request.
+After getting hugo, just clone this repository to work locally. This way you can edit and verify quickly that everything is working properly before creating a new pull request.
 
-To clone, use the recursive version so you will be getting also the theme to render the pages properly:
+To clone, use the *recursive* option so you will be getting also the theme to render the pages properly:
 
 ```bash
 git clone --recursive git@github.com:coreruleset/documentation.git
@@ -20,18 +20,20 @@ git clone --recursive git@github.com:coreruleset/documentation.git
 
 ## Editing locally
 
-Now you have all in place to perform you local edition.
+Now you have all in place to perform your local edits.
 
 Everything is created using markdown, and you will normally use the `content` subdirectory to add your edits.
 
-The theme has many shortcodes and others that you can use to simplify the edition. You can have more information about it on [Hugo Relearn theme](https://themes.gohugo.io/themes/hugo-theme-relearn/).
+The theme has many shortcodes and others that you can use to simplify editing. You can get more information about it on [Hugo Relearn theme](https://themes.gohugo.io/themes/hugo-theme-relearn/).
 
-You should run hugo to serve the pages and while you edit and save changes will be refreshed!
+You can run `hugo` to serve the pages, and while you edit and save, your changes will be refreshed!
 
 Use:
 ```
 hugo serve
 ```
+
+Then check your edits on http://localhost:1313/documentation/.
 
 Once you are happy with your changes, [send a new PR](https://github.com/coreruleset/documentation/pulls) with your changes.
 
