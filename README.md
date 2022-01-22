@@ -4,7 +4,9 @@ This repository contains the documentation for the OWASP ModSecurity Core Rule S
 
 ## Requirements
 
-Just download latest version of [Hugo binary](https://gohugo.io/getting-started/installing/) for your OS (Windows, Linux, Mac) : it’s that simple. You will need the _extended_ version, so be sure you download that one.
+Just download latest version of [Hugo binary](https://gohugo.io/getting-started/installing/) for your OS (Windows, Linux, Mac) : it’s that simple. 
+
+**Important: You will need the _extended_ version of Hugo, so be sure you download that one.**
 
 ## Cloning this repository
 
