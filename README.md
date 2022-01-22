@@ -35,6 +35,12 @@ hugo serve
 
 Then check your edits on http://localhost:1313/documentation/.
 
-Once you are happy with your changes, [send a new PR](https://github.com/coreruleset/documentation/pulls) with your changes.
+## Creating a pull request
 
-After reviewed and merged, the documentation is built and published [here](https://coreruleset.org/docs/).
+If you are a CRS developer, you can make a branch on the documentation repository.
+
+If you are an outside contributor, the best way is to fork the [repository](https://github.com/coreruleset/documentation/) to your own GitHub account and work in your fork.
+
+Once you are happy with your changes, [send a PR](https://github.com/coreruleset/documentation/pulls) with your changes.
+
+After review and merging, the documentation is built and published [here](https://coreruleset.org/docs/) after max. 5 minutes.
