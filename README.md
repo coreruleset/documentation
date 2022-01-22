@@ -33,4 +33,4 @@ hugo serve
 
 Once you are happy with your changes, [send a new PR](https://github.com/coreruleset/documentation/pulls) with your changes.
 
-After reviewed and merged, the documentation is built by GitHub Actions and published [here](https://coreruleset.github.io/documentation/).
+After reviewed and merged, the documentation is built and published [here](https://coreruleset.org/docs/).
