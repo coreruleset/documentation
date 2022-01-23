@@ -142,7 +142,7 @@ The logs are parsed, and values like User-Agent and geolocation are extracted. W
 
 If you have any issues with the CRS sandbox, please open a GitHub issue at [https://github.com/coreruleset/crs-sandbox/issues](https://github.com/coreruleset/crs-sandbox/issues) and we will help you as soon as possible.
 
-If you have suggestions for extra functionality, a GitHub issue will do.
+If you have suggestions for extra functionality, a GitHub issue is appreciated.
 
 ## Working on the sandbox: adding new backends
 
