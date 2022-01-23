@@ -13,7 +13,7 @@ The sandbox is useful for:
 
 - integrators and administrators: you can test out our response in case of an urgent security event, such as the Log4j vulnerability;
 - exploit developers/researchers: if you have devised a payload, you can test beforehand if it will be blocked by the CRS and by which versions;
-- rule writers: you can quickly check if the CRS catches a (variant of an) exploit without the hassle of setting up your own CRS instance.
+- developers/rule writers: you can quickly check if the CRS catches a (variant of an) attack without the hassle of setting up your own CRS instance.
 
 ## Basic usage
 
