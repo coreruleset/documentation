@@ -8,9 +8,9 @@ The generated documentation is automatically updated at https://coreruleset.org/
 
 ## Requirements
 
-Just download latest version of [Hugo binary](https://gohugo.io/getting-started/installing/) for your OS (Windows, Linux, Mac) : it’s that simple. 
+You can edit the documentation on your local system. The only thing you need is the latest [Hugo binary](https://gohugo.io/getting-started/installing/) for your OS (Windows, Linux, Mac): it’s that simple.
 
-**Important: You will need the _extended_ version of Hugo, so be sure you download that one.**
+**Important: You need the _extended_ version of Hugo, so be sure you download that one.**
 
 ## Cloning this repository
 
@@ -30,7 +30,7 @@ Everything is created using markdown, and you will normally use the `content` su
 
 The theme has many shortcodes and others that you can use to simplify editing. You can get more information about it on [Hugo Relearn theme](https://themes.gohugo.io/themes/hugo-theme-relearn/).
 
-You can run `hugo` to serve the pages, and while you edit and save, your changes will be refreshed!
+You can run `hugo` to serve the pages, and while you edit and save, your changes will be refreshed in the browser!
 
 Use:
 ```
@@ -41,10 +41,10 @@ Then check your edits on http://localhost:1313/documentation/.
 
 ## Creating a pull request
 
-If you are a CRS developer, you can make a branch on the documentation repository.
+If you are a CRS developer, you can make a branch in the documentation repository.
 
-If you are an outside contributor, the best way is to fork the [repository](https://github.com/coreruleset/documentation/) to your own GitHub account and work in your fork.
+If you are an outside contributor, you can fork the [repository](https://github.com/coreruleset/documentation/) to your own GitHub account and create a branch in your fork.
 
 Once you are happy with your changes, [send a PR](https://github.com/coreruleset/documentation/pulls) with your changes.
 
-After review and merging, the documentation is built and published [here](https://coreruleset.org/docs/) after max. 5 minutes.
+After review and merging, the documentation is built and published on [https://coreruleset.org/docs](https://coreruleset.org/docs/) after max. 5 minutes.
