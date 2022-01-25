@@ -13,7 +13,7 @@ The sandbox is useful for:
 
 - integrators and administrators: you can test out our response in case of an urgent security event, such as the Log4j vulnerability;
 - exploit developers/researchers: if you have devised a payload, you can test beforehand if it will be blocked by the CRS and by which versions;
-- developers/rule writers: you can quickly check if the CRS catches a (variant of an) attack without the hassle of setting up your own CRS instance.
+- CRS developers/rule writers: you can quickly check if the CRS catches a (variant of an) exploit without the hassle of setting up your own CRS instance.
 
 ## Basic usage
 
@@ -40,6 +40,25 @@ You can send anything you want at the sandbox, for instance, you can send HTTP h
 
 The sandbox will return a 200 response code, no matter if an attack was detected or not.
 
+The sandbox also adds a `X-Unique-Id` header to the response. It contains a unique value that you can use to refer to your request when communicating with us. With `curl -i` you can see the returned headers.
+
+### Example showing the response headers
+
+```bash
+curl -i -H 'x-format-output: txt-matched-rules' 'https://sandbox.coreruleset.org/?test=posix_uname()'
+HTTP/1.1 200 OK
+Date: Tue, 25 Jan 2022 13:53:07 GMT
+Content-Type: text/plain
+Transfer-Encoding: chunked
+Connection: keep-alive
+X-Unique-ID: YfAAw3Gq8uf24wZCMjHTcAAAANE
+x-backend: apache-3.3.2
+
+933150 PL1 PHP Injection Attack: High-Risk PHP Function Name Found
+949110 PL1 Inbound Anomaly Score Exceeded (Total Score: 5)
+980130 PL1 Inbound Anomaly Score Exceeded (Total Inbound Score: 5 - SQLI=0,XSS=0,RFI=0,LFI=0,RCE=0,PHPI=5,HTTP=0,SESS=0): individual paranoia level scores: 5, 0, 0, 0
+```
+
 ## Default options
 
 It’s useful to know that you can tweak the sandbox in various ways. If you don’t send any `X-` headers, the sandbox will use the following defaults.
@@ -65,7 +84,9 @@ Let’s say you want to try your payload on different WAF engines or CRS version
   - `csv-matched-rules`: CSV formatted
   - omitted/default: the WAF’s audit log is returned unmodified as JSON.
 
-Tip: if you work with JSON output (either unmodified or matched rules), `jq` is a useful tool to work with the output, for example you can add `| jq .` to get a pretty-printed JSON, or use `jq` to select and filter the output.
+The header names are case-insensitive.
+
+Tip: if you work with JSON output (either unmodified or matched rules), `jq` is a useful tool to work with the output, for example you can add `| jq .` to get a pretty-printed JSON, or use `jq` to filter and modify the output.
 
 ### Advanced examples
 
@@ -136,7 +157,10 @@ The logs are parsed, and values like User-Agent and geolocation are extracted. W
 
 ## Known issues
 
-- Openresty is itself a HTTP server which performs parsing of any incoming request. This may not be fully transparent. For instance, it may reject an invalid HTTP request with an error 400. So, some types of attacks may not reach the backend. This happens for instance with the Apache 2.4.50 vulnerability that depended on a URL encoding violation. If you receive an error 400, your request was rejected by the frontend.
+In some cases, the sandbox will not properly handle and finish your request.
+
+- **Invalid HTTP requests:** The frontend, Openresty, is itself a HTTP server which performs parsing of the incoming request. This may not be fully transparent. For instance, it may reject an invalid HTTP request with an error 400 before it can even be sent to a backend. This happens for instance with the Apache 2.4.50 vulnerability that depended on a URL encoding violation. If you receive an error 400, your request was rejected by the frontend.
+- **ReDoS:** If your request leads to a ReDoS and makes the backend spend too much time to process a regular expression, this leads to a timeout from the backend server. The frontend will cancel the request with an error 502. If you have to wait a long time and then receive an error 502, there was likely a ReDoS situation.
 
 ## Questions and suggestions
 
