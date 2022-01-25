@@ -159,7 +159,7 @@ The logs are parsed, and values like User-Agent and geolocation are extracted. W
 
 In some cases, the sandbox will not properly handle and finish your request.
 
-- **Invalid HTTP requests:** The frontend, Openresty, is itself a HTTP server which performs parsing of the incoming request. This may not be fully transparent. For instance, it may reject an invalid HTTP request with an error 400 before it can even be sent to a backend. This happens for instance with the Apache 2.4.50 vulnerability that depended on a URL encoding violation. If you receive an error 400, your request was rejected by the frontend.
+- **Malformed HTTP requests:** The frontend, Openresty, is itself a HTTP server which performs parsing of the incoming request. This may not be fully transparent: it may reject a malformed HTTP request with an error 400 before it can even be sent to a backend. This happens for instance when you try to send an Apache 2.4.50 attack that depended on a URL encoding violation. If you receive an error 400, your request was rejected by the frontend.
 - **ReDoS:** If your request leads to a ReDoS and makes the backend spend too much time to process a regular expression, this leads to a timeout from the backend server. The frontend will cancel the request with an error 502. If you have to wait a long time and then receive an error 502, there was likely a ReDoS situation.
 
 ## Questions and suggestions
