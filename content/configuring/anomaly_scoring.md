@@ -157,4 +157,74 @@ The CRS makes use of a ModSecurity feature called *macro expansion* to propagate
 
 ### Early Blocking
 
-TODO
+Early blocking is an optional setting which allows blocking decisions to be made earlier than usual.
+
+As summarized previously, anomaly scoring mode works like so:
+
+1. Execute all *request* rules
+1. Make a **blocking decision** using the *inbound* anomaly score threshold
+1. Execute all *response* rules
+1. Make a **blocking decision** using the *outbound* anomaly score threshold
+
+The early blocking option takes advantage of the fact that the request and response rules are actually split across different *phases*. A more detailed overview of anomaly scoring mode looks like so:
+
+1. Execute all phase 1 *(request header)* rules
+1. Execute all phase 2 *(request body)* rules
+1. Make a **blocking decision** using the *inbound* anomaly score threshold
+1. Execute all phase 3 *(response header)* rules
+1. Execute all phase 4 *(response body)* rules
+1. Make a **blocking decision** using the *outbound* anomaly score threshold
+
+More data from a transaction becomes available for inspection in each subsequent processing phase. In phase 1 only the request headers are available for inspection. Detection rules that are only concerned with request headers are executed here. In phase 2 the request body also becomes available for inspection. Rules that need to inspect the request body, perhaps in addition to request headers, are executed here.
+
+If a transaction's anomaly score *already* meets or exceeds the inbound anomaly score threshold by the end of phase 1 (due to causing phase 1 rules to match) then, in theory, the phase 2 rules don't need to be executed. This saves the time and resources it would take to process the detection rules in phase 2. The majority of CRS rules take place in phase 2, which is also where the request body inspection rules are located. When dealing with large request bodies, it may be worthwhile to avoid executing the phase 2 rules in this way. The same logic applies to blocking responses that have already met the outbound anomaly score threshold in phase 3, *before* reaching phase 4 and having to inspect the response body.
+
+Early blocking makes this possible by inserting two additional rounds of blocking evaluation: one after the phase 1 detection rules have finished executing, and another after the phase 3 detection rules:
+
+1. Execute all phase 1 *(request header)* rules
+1. Make an **early blocking decision** using the *inbound* anomaly score threshold
+1. Execute all phase 2 *(request body)* rules
+1. Make a **blocking decision** using the *inbound* anomaly score threshold
+1. Execute all phase 3 *(response header)* rules
+1. Make an **early blocking decision** using the *outbound* anomaly score threshold
+1. Execute all phase 4 *(response body)* rules
+1. Make a **blocking decision** using the *outbound* anomaly score threshold
+
+CONS of doing this???
+
+How to enable this???
+
+{{% notice info %}}
+More information about processing phases can be found in the [processing phases section](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#processing-phases) of the ModSecurity Reference Manual.
+{{% /notice %}}
+
+
+
+
+The anomaly scores for the request and the responses are generally summed up
+and evaluated at the end of phase:2 and at the end of phase:4 respectively.
+However, it is possible to enable an early evaluation of these anomaly scores
+at the end of phase:1 and at the end of phase:3.
+
+If a request (or a response) hits the anomaly threshold in this early
+evaluation, then blocking happens immediately (if blocking is enabled) and
+the phase 2 (and phase 4 respectively) will no longer be executed.
+
+Enable the rule 900120 that sets the variable tx.blocking_early to 1 in order
+to enable early blocking. The variable tx.blocking_early is set to 0 by
+default. Early blocking is thus disabled by default.
+
+Please note that blocking early will hide potential alerts from you. This
+means that a payload that would appear in an alert in phase 2 (or phase 4)
+does not get evaluated if the request is being blocked early. So when you
+disabled blocking early again at some point in the future, then new alerts
+from phase 2 might pop up.
+ecAction \
+ "id:900120,\
+ phase:1,\
+ nolog,\
+ pass,\
+ t:none,\
+ setvar:tx.blocking_early=1"
+
+PROS, CONS
