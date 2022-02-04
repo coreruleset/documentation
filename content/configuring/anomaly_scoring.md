@@ -157,7 +157,7 @@ The CRS makes use of a ModSecurity feature called *macro expansion* to propagate
 
 ### Early Blocking
 
-Early blocking is an optional setting which allows blocking decisions to be made earlier than usual.
+Early blocking is an optional setting which can be enabled to allow blocking decisions to be made earlier than usual.
 
 As summarized previously, anomaly scoring mode works like so:
 
@@ -175,11 +175,11 @@ The early blocking option takes advantage of the fact that the request and respo
 1. Execute all phase 4 *(response body)* rules
 1. Make a **blocking decision** using the *outbound* anomaly score threshold
 
-More data from a transaction becomes available for inspection in each subsequent processing phase. In phase 1 only the request headers are available for inspection. Detection rules that are only concerned with request headers are executed here. In phase 2 the request body also becomes available for inspection. Rules that need to inspect the request body, perhaps in addition to request headers, are executed here.
+More data from a transaction becomes available for inspection in each subsequent processing phase. In phase 1 the request headers are available for inspection. Detection rules that are only concerned with request headers are executed here. In phase 2 the request body also becomes available for inspection. Rules that need to inspect the request body, perhaps in addition to request headers, are executed here.
 
-If a transaction's anomaly score *already* meets or exceeds the inbound anomaly score threshold by the end of phase 1 (due to causing phase 1 rules to match) then, in theory, the phase 2 rules don't need to be executed. This saves the time and resources it would take to process the detection rules in phase 2. The majority of CRS rules take place in phase 2, which is also where the request body inspection rules are located. When dealing with large request bodies, it may be worthwhile to avoid executing the phase 2 rules in this way. The same logic applies to blocking responses that have already met the outbound anomaly score threshold in phase 3, *before* reaching phase 4 and having to inspect the response body.
+If a transaction's anomaly score *already* meets or exceeds the inbound anomaly score threshold by the end of phase 1 (due to causing phase 1 rules to match) then, in theory, the phase 2 rules don't need to be executed. This saves the time and resources it would take to process the detection rules in phase 2. The majority of CRS rules take place in phase 2, which is also where the request body inspection rules are located. When dealing with large request bodies, it may be worthwhile to avoid executing the phase 2 rules in this way. The same logic applies to blocking *responses* that have already met the *outbound* anomaly score threshold in phase 3, *before* reaching phase 4. This saves the time and resources required to execute the phase 4 rules, which inspect the response body.
 
-Early blocking makes this possible by inserting two additional rounds of blocking evaluation: one after the phase 1 detection rules have finished executing, and another after the phase 3 detection rules:
+Early blocking makes this possible by inserting **two additional rounds of blocking evaluation**: one after the phase 1 detection rules have finished executing, and another after the phase 3 detection rules:
 
 1. Execute all phase 1 *(request header)* rules
 1. Make an **early blocking decision** using the *inbound* anomaly score threshold
@@ -190,41 +190,30 @@ Early blocking makes this possible by inserting two additional rounds of blockin
 1. Execute all phase 4 *(response body)* rules
 1. Make a **blocking decision** using the *outbound* anomaly score threshold
 
-CONS of doing this???
-
-How to enable this???
-
 {{% notice info %}}
 More information about processing phases can be found in the [processing phases section](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#processing-phases) of the ModSecurity Reference Manual.
 {{% /notice %}}
 
+{{% notice warning %}}
+The early blocking option has a major drawback to be aware of: **it can cause potential alerts to be hidden**.
 
+If a transaction is blocked early then its body is not inspected. For example, if a transaction is blocked early at the end of phase 1 (the request headers phase) then the body of the request is never inspected. If the early blocking option is *not* enabled, it's possible that such a transaction would proceed to cause phase 2 rules to match. Early blocking hides these potential alerts. The same applies to responses that trigger an early block: it's possible that some phase 4 rules would match if early blocking were not enabled.
 
+Using the early blocking option results in having less information to work with, due to fewer rules being executed. This may mean that the full picture is not present in log files when looking back at attacks and malicious traffic. It can also be a problem when dealing with false positives: tuning away a false positive in phase 1 may reveal many more "hidden" false positives in phase 2, for example.
+{{% /notice %}}
 
-The anomaly scores for the request and the responses are generally summed up
-and evaluated at the end of phase:2 and at the end of phase:4 respectively.
-However, it is possible to enable an early evaluation of these anomaly scores
-at the end of phase:1 and at the end of phase:3.
+#### Enabling the Early Blocking Option
 
-If a request (or a response) hits the anomaly threshold in this early
-evaluation, then blocking happens immediately (if blocking is enabled) and
-the phase 2 (and phase 4 respectively) will no longer be executed.
+If using a native Core Rule Set installation on a web application firewall, the early blocking option can be enabled in the file `crs-setup.conf`. This is done by uncommenting rule 900120, which sets the variable `tx.blocking_early` to 1 in order to enable early blocking. CRS otherwise gives this variable a default value of 0, meaning that early blocking is disabled by default.
 
-Enable the rule 900120 that sets the variable tx.blocking_early to 1 in order
-to enable early blocking. The variable tx.blocking_early is set to 0 by
-default. Early blocking is thus disabled by default.
+```apache
+SecAction \
+  "id:900120,\
+  phase:1,\
+  nolog,\
+  pass,\
+  t:none,\
+  setvar:tx.blocking_early=1"
+```
 
-Please note that blocking early will hide potential alerts from you. This
-means that a payload that would appear in an alert in phase 2 (or phase 4)
-does not get evaluated if the request is being blocked early. So when you
-disabled blocking early again at some point in the future, then new alerts
-from phase 2 might pop up.
-ecAction \
- "id:900120,\
- phase:1,\
- nolog,\
- pass,\
- t:none,\
- setvar:tx.blocking_early=1"
-
-PROS, CONS
+If running CRS where it has been integrated into a commercial product or CDN then support for the early blocking option varies. Some vendors may allow it to be enabled through the GUI, through a custom rule, or they might not allow it to be enabled at all.
