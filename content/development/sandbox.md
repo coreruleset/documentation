@@ -145,7 +145,7 @@ CRS therefore detects this payload starting with paranoia level 1.
 
 ## Architecture
 
-The sandbox consists of various parts. The frontend that receives the requests runs on Openresty. It handles the incoming request, chooses and configures the backend, proxies the request to the backend, and waits for the response. Then it parses the WAF audit log and sends the matched rules back in the format chosen by the user.
+The sandbox consists of various parts. The frontend that receives the requests runs on Openresty. It handles the incoming request, chooses and configures the backend running CRS, proxies the request to the backend, and waits for the response. Then it parses the WAF audit log and sends the matched rules back in the format chosen by the user.
 
 ![CRS sandbox diagram v3.drawio.png](https://coreruleset.org/assets/uploads/2022/01/CRS_sandbox_diagram_v3.drawio.png)
 
@@ -164,7 +164,7 @@ In some cases, the sandbox will not properly handle and finish your request.
 
 ## Questions and suggestions
 
-If you have any issues with the CRS sandbox, please open a GitHub issue at [https://github.com/coreruleset/crs-sandbox/issues](https://github.com/coreruleset/crs-sandbox/issues) and we will help you as soon as possible.
+If you have any issues with the CRS sandbox, please open a GitHub issue at [https://github.com/coreruleset/coreruleset/issues](https://github.com/coreruleset/coreruleset/issues) and we will help you as soon as possible.
 
 If you have suggestions for extra functionality, a GitHub issue is appreciated.
 
