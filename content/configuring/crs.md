@@ -1,7 +1,7 @@
 ---
 title: "Configuration"
 chapter: false
-weight: 20
+weight: 30
 ---
 
 # Configuring OWASP CRS
