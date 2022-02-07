@@ -76,7 +76,7 @@ Let’s say you want to try your payload on different WAF engines or CRS version
 - `X-CRS-Paranoia-Level` will run CRS in a given paranoia level. Available values are `1` (default), `2`, `3`, `4`.
 - `X-Backend: apache` (default) will send the request to **Apache 2 + ModSecurity 2.9**.
 - `X-Backend: nginx` will send the request to **Nginx + ModSecurity 3**.
-- `X-Backend: coraza` will send the request to **Caddy + Coraza WAF**.
+- `X-Backend: coraza-caddy` will send the request to **Caddy + Coraza WAF**.
 - `X-Format-Output` formats the response to your use-case (human or automation). Available values are:
   - `txt-matched-rules`: human-readable list of CRS rule matches, one rule per line
   - `txt-matched-rules-extended`: same but with explanation for easy inclusion in publications
