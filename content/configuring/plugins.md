@@ -157,4 +157,4 @@ The official CRS plugins are separated from third party plugins. The rationale i
 
 ## How to Integrate a Plugin into the Official Registry
 
-Plugins should be developed and refined until they are production-ready. The next step is to open a pull request at the plugin registry. Any free rule ID range can be used for a new plugin. The plugin will then be reviewed and assigned a block of rule IDs. Afterwards, the plugin will be listed as a new third party plugin.
+Plugins should be developed and refined until they are production-ready. The next step is to open a pull request at the [plugin registry](https://github.com/coreruleset/plugin-registry). Any free rule ID range can be used for a new plugin. The plugin will then be reviewed and assigned a block of rule IDs. Afterwards, the plugin will be listed as a new third party plugin.
