@@ -5,6 +5,10 @@ weight = 9
 pre = "<b>9. </b>"
 +++
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 ## Making Rules
 
 ### The Basic Synatax

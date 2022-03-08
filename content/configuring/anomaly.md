@@ -5,6 +5,10 @@ chapter: false
 weight: 10
 ---
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 {{% notice warning %}}
 From version 3.0 onwards, Anomaly Scoring is the default detection mode. Traditional detection mode is discouraged.
 {{% /notice %}}

@@ -5,6 +5,10 @@ weight = 10
 pre = "<b>10. </b>"
 +++
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 ## OWASP CRS Metadata
 
 OWASP CRS 3.x includes several pieces of metadata within rules. Not

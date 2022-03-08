@@ -5,6 +5,10 @@ chapter: false
 weight: 10
 ---
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 Welcome to the OWASP Core RuleSet (CRS) quickstart guide. We will
 attempt to get you up and running with CRS as quick as possible. This
 guide assumes ModSecurity is already working. If you are unsure see the
