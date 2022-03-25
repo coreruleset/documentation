@@ -25,7 +25,7 @@ weight: 5
 * Make sure your commits adhere to the rules guidelines below.
 * Make sure your commit messages are in the [proper format](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html): The first line of the message should have 50 characters or less, separated by a blank line from the (optional) body. The body should be wrapped at 70 characters and paragraphs separated by blank lines. Bulleted lists are also fine.
 
-## General Formatting Guidelines for rules contributions
+## General Formatting Guidelines for Rules Contributions
 
 - American English should be used throughout.
 - 4 spaces per indentation level, no tabs
@@ -80,14 +80,16 @@ skip
 skipAfter
 ```
 
-## Variable naming conventions
+## Variable Naming Conventions
 
 * Variable names are lowercase using chars from `[a-z0-9_]`
 * To somewhat reflect the fact that the syntax for variable usage is different when you define it (using setvar) and when you use it, we propose the following visual distinction:
   * Lowercase letters for collection, dot as separator, variable name. E.g.,: `setvar:tx.foo_bar_variable`
   * Capital letters for collection, colon as separator, variable name. E.g.,: `SecRule TX:foo_bar_variable`
 
-## Rules compliance with each Paranoia Level (PL)
+## Writing Regular Expressions
+
+## Rules Compliance with each Paranoia Level (PL)
 
 Rules in the CRS are organized in Paranoia Levels, which allows you to choose the desired level of rule checks.
 
@@ -156,7 +158,7 @@ Within a rule file / block, there are sometimes smaller groups of rules that bel
 Stricter siblings often have a different paranoia level. This means that the base rule and the stricter sibling do not reside next to one another in the rule file. Instead they are ordered in their appropriate paranoia level and can be linked via the first digits of the rule id. It is a good practice to introduce stricter siblings together with the base rule in the comments of the base rule and to reference the base rule with the keyword stricter sibling in the comments of the stricter sibling. E.g., "... This is
 performed in two separate stricter siblings of this rule: 9XXXX1 and 9XXXX2", "This is a stricter sibling of rule 9XXXX0."
 
-## Non-rules general guidelines
+## Non-rules General Guidelines
 
 * Remove trailing spaces from files (if they are not needed). This will make linters happy.
 * EOF should have an EOL
