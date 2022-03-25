@@ -6,7 +6,5 @@ pre: "<b>4. </b>"
 chapter: true
 ---
 
-### Chapter 4
-
-# Creating new rules
+# Development
 
