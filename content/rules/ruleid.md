@@ -5,6 +5,10 @@ weight = 1
 pre = "<b>1. </b>"
 +++
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 ## Why do rule IDs matter?
 
 Each rule added to a ModSecurity instance must have a unique ID (in
