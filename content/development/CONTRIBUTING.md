@@ -89,6 +89,18 @@ skipAfter
 
 ## Writing Regular Expressions
 
+* The preferred style: `[a-zA-Z0-9_-]`
+
+### Portable Backslash Representation
+
+### When and Why to Anchor Regular Expressions
+
+### Lazy Matching
+
+### Writing RE2-compatible Regular Expressions
+
+Avoid "lookbehind" and "lookafter".
+
 ## Rules Compliance with each Paranoia Level (PL)
 
 Rules in the CRS are organized in Paranoia Levels, which allows you to choose the desired level of rule checks.
