@@ -93,6 +93,18 @@ skipAfter
 
 ### Portable Backslash Representation
 
+CRS uses `\x5c` to represent the backslash `\` character in regular expressions. Some of the reasons for this are:
+
+* It's portable across web servers and WAF engines: it works with Apache, Nginx, and Coraza.
+* It works with the `regexp-assemble.py` script for building optimized regular expressions.
+
+The older style of representing a backslash using the character class `[\\\\]` must _not_ be used. This was previously used in CRS to get consistent results between Apache and Nginx, owing to a quirk with how Apache would "double un-escape" character escapes. For future reference, the decision was made to stop using this older method because:
+
+* It can be confusing and difficult to understand how it works.
+* It doesn't work with the `regexp-assemble.py` script.
+* It doesn't work with Coraza.
+* It isn't obvious how to use it in a character class, e.g. `[a-zA-Z<portable-backslash>]`.
+
 ### When and Why to Anchor Regular Expressions
 
 ### Lazy Matching
