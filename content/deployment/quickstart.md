@@ -20,7 +20,7 @@ There we have all our official releases listed. For production we recommend you 
 {{% notice note %}}
 Releases are signed using [use our GPG key](https://coreruleset.org/security.asc), (fingerprint: 3600 6F0E 0BA1 6783 2158 8211 38EE ACA1 AB8A 6E72). You can verify the release using GPG/PGP compatible tooling.
 
-To get our key using gpg from public servers: `gpg --keyserver pgp.mit.edu --recv 0x38EEACA1AB8A6E72`. (this id should be equal to the last sixteen hex characters in our fingerprint).
+To get our key using gpg from public servers: `gpg --keyserver pgp.mit.edu --recv 0x38EEACA1AB8A6E72` (this id should be equal to the last sixteen hex characters in our fingerprint).
 You can also use `gpg --fetch-key https://coreruleset.org/security.asc` directly.
 {{% /notice %}}
 
