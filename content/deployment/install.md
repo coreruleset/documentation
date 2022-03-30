@@ -197,7 +197,7 @@ Are you sure: Yes
 gpg> quit
 ```
 
-The you will see this result when verifying:
+Then you will see this result when verifying:
 ```bash
 gpg --verify coreruleset-3.3.2.tar.gz.asc v3.3.2.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
