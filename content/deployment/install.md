@@ -186,7 +186,7 @@ gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: 3600 6F0E 0BA1 6783 2158  8211 38EE ACA1 AB8A 6E72
 ```
 
-If the signature was good, the verification succeeded. If you see a warning like the above, it means you know our public key, but you are trusting it. You can trust it by using this method:
+If the signature was good, the verification succeeded. If you see a warning like the above, it means you know our public key, but you are not trusting it. You can trust it by using the following method:
 
 ```bash
 gpg edit-key 36006F0E0BA167832158821138EEACA1AB8A6E72
