@@ -338,7 +338,7 @@ include owasp-modsecurity-crs/rules/RESPONSE-80-CORRELATION.conf
 include owasp-modsecurity-crs/rules/RESPONSE-99-EXCEPTIONS.conf
 ```
 
-Setting up automated updated
+## Setting up automated updates
 
 todo: The OWASP Core Rule Set is designed with the capability to be
 frequently updated in mind. New threats and techniques and updates are

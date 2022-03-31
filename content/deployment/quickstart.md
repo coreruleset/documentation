@@ -75,7 +75,7 @@ Apache path used to match your installation.
 
 ```bash
 $ mkdir /etc/httpd/modsecurity.d
-$ tar zxvf v{{< param crs_latest_release >}}.tar.gz -C /etc/httpd/modsecurity.d/owasp-modsecurity-crs
+$ tar -zxvf v{{< param crs_latest_release >}}.tar.gz -C /etc/httpd/modsecurity.d/owasp-modsecurity-crs
 ```
 
 After extracting the rule set we have to set up the main OWASP
