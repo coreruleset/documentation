@@ -158,7 +158,7 @@ If you have gotten to this step ModSecurity is functioning on IIS and you now kn
 
 ## Downloading OWASP CRS
 
-Now that you know where your rules belong typically we'll want to download the OWASP CRS. The best place to get the latest copy of the ruleset will be from [our Github Releases](https://github.com/coreruleset/coreruleset/releases). There we have all our official releases listed. For production we recommend you to use the **latest release**, v{{< param crs_latest_release >}}. If you want to test the bleeding edge version, we also provide daily _Nightly releases_.
+Now that you know where your rules belong typically we'll want to download the OWASP CRS. The best place to get the latest copy of the ruleset will be from [our Github Releases](https://github.com/coreruleset/coreruleset/releases). There we have all our official releases listed. For production we recommend you to use the **latest release**, v{{< param crs_latest_release >}}. If you want to test the bleeding edge version, we also provide _nightly releases_.
 
 {{% notice note %}}
 Releases are signed using [our GPG key](https://coreruleset.org/security.asc), (fingerprint: 3600 6F0E 0BA1 6783 2158 8211 38EE ACA1 AB8A 6E72). You can verify the release using GPG/PGP compatible tooling.
