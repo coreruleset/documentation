@@ -13,7 +13,7 @@ guide assumes ModSecurity is already working. If you are unsure see the
 You'll first need to download the ruleset. Our strong recommendation is that you [use a supported version](https://github.com/coreruleset/coreruleset/security/policy). Using a browser (or
 equivalent) visit the following URL: https://github.com/coreruleset/coreruleset/releases.
 
-There we have all our official releases listed. For production we recommend you to use the latest release, v{{< param crs_latest_release >}}. If you want to test the bleeding edge version, we also provide daily _Nightly releases_.
+There we have all our official releases listed. For production we recommend you to use the latest release, v{{< param crs_latest_release >}}. If you want to test the bleeding edge version, we also provide _nightly releases_.
 
 ### Verifying our release
 
