@@ -212,7 +212,7 @@ Once you downloaded and verified the release, you are ready to continue with the
 OWASP CRS contains one setup file that should be reviewed prior to
 completing setup. The setup file is the only configuration file within
 the root 'coreruleset-{{< param crs_latest_release >}}' folder and is named
-`csr-setup.conf.example`. Going through the configuration file
+`csr-setup.conf.example`. Going through this configuration file
 (`csr-setup.conf.example`) and reading what the different options are is
 HIGHLY recommended. At minimum you should keep in mind the following.
 
