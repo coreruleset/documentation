@@ -213,7 +213,7 @@ OWASP CRS contains one setup file that should be reviewed prior to
 completing setup. The setup file is the only configuration file within
 the root 'coreruleset-{{< param crs_latest_release >}}' folder and is named
 `csr-setup.conf.example`. Going through this configuration file
-(`csr-setup.conf.example`) and reading what the different options are is
+and reading what the different options are is
 HIGHLY recommended. At minimum you should keep in mind the following.
 
 -   CRS does not configure ModSecurity features such as the rule engine,
