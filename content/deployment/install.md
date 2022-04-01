@@ -263,7 +263,7 @@ mv rules/REQUEST-00-LOCAL-WHITELIST.conf.example rules/REQUEST-00-LOCAL-WHITELIS
 mv rules/RESPONSE-99-EXCEPTIONS.conf.example rules/RESPONSE-99-EXCEPTIONS.conf
 ```
 
-## Proceeding with the Install
+## Proceeding with the Installation
 
 Both ModSecurity 2.x (via APR) and ModSecurity 3.x support the Include
 directive and what it tells the ModSecurity core to do is parse the
