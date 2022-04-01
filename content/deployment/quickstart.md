@@ -35,7 +35,7 @@ $ wget https://github.com/coreruleset/coreruleset/releases/download/v{{< param c
 
 Optional verification:
 ```bash
-❯ gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
+gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 10:05:48 2021 -03
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
 gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [unknown]
