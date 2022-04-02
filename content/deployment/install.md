@@ -172,7 +172,7 @@ The steps here assume you are using a *nix operating system. For Windows you wil
 To get the release file and the corresponding signature:
 
 ```bash
-$ wget https://github.com/coreruleset/coreruleset/archive/refs/tags/v{{< param crs_latest_release >}}.tar.gz
+wget https://github.com/coreruleset/coreruleset/archive/refs/tags/v{{< param crs_latest_release >}}.tar.gz
 wget https://github.com/coreruleset/coreruleset/releases/download/v{{< param crs_latest_release >}}/coreruleset-{{< param crs_latest_release >}}.tar.gz.asc
 ```
 

@@ -30,7 +30,7 @@ To get the release file and the corresponding signature:
 
 ```bash
 wget https://github.com/coreruleset/coreruleset/archive/refs/tags/v{{< param crs_latest_release >}}.tar.gz
-$ wget https://github.com/coreruleset/coreruleset/releases/download/v{{< param crs_latest_release >}}/coreruleset-{{< param crs_latest_release >}}.tar.gz.asc
+wget https://github.com/coreruleset/coreruleset/releases/download/v{{< param crs_latest_release >}}/coreruleset-{{< param crs_latest_release >}}.tar.gz.asc
 ```
 
 Optional verification:
@@ -67,18 +67,18 @@ gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultim
 Once you downloaded and verified the release, extract it somewhere well known on your server.
 Typically this will be in the webserver directory. We are demonstrating
 with Apache below. For information on configuring Nginx or IIS see
-[install]({{< ref "install.md" >}}). Additionally, while it is a
+the [extended install]({{< ref "install.md" >}}) page. Additionally, while it is a
 successful practice to make a new `modsecurity.d` folder as outlined
 below, it isn't strictly necessary. The path scheme outlined is the
 common to RHEL based operating systems, you may have to adjust the
 Apache path used to match your installation.
 
 ```bash
-$ mkdir /etc/httpd/modsecurity.d
-$ tar -zxvf v{{< param crs_latest_release >}}.tar.gz -C /etc/httpd/modsecurity.d/owasp-modsecurity-crs
+mkdir /etc/httpd/modsecurity.d
+tar -zxvf v{{< param crs_latest_release >}}.tar.gz -C /etc/httpd/modsecurity.d/owasp-modsecurity-crs
 ```
 
-After extracting the rule set we have to set up the main OWASP
+After extracting the rule set we have to set up the main OWASP Core Rule Set
 configuration file. We provide an example configuration file as part of
 the package located in the main directory: `csr-setup.conf.example`.
 
