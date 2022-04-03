@@ -88,7 +88,7 @@ recommended ModSecurity configuration rules, packaged with ModSecurity)
 For many people
 this will be a good enough starting point but you should take the time
 to look through this file before deploying it to make sure it's right
-for your environment. For more information see [configuration](configuration.md).
+for your environment. For more information see [configuration]({{< ref "../configuring/crs.md" >}}).
 
 Once you have changed any settings within the configuration file, as
 needed, you should rename it to remove the .example portion
@@ -101,7 +101,7 @@ mv csr-setup.conf.example csr-setup.conf
 Only one more step! We now have to tell our web server where our rules
 are. We do this by including the rule configuration files in our
 httpd.conf file. Again, we are demonstrating using Apache but it is
-similar on other systems see the [install](install.md) page for details.
+similar on other systems see the [extended install]({{< ref "install.md" >}}) page for details.
 
 ```bash
 echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/csr-setup.conf' >> /etc/httpd/conf/httpd.conf
@@ -111,7 +111,7 @@ echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/rules/*.conf' >> /etc/htt
 Now that we have configured everything you should be able to restart and
 enjoy using the OWASP Core Rule Set. Typically these rules will require
 a bit of exception tuning, depending on your site. For more information
-see [rule exclusions]({{< ref "false_positives_tuning.md" >}}). Enjoy!
+see [false positives and tuning]({{< ref "false_positives_tuning.md" >}}). Enjoy!
 
 ```bash
 systemctl restart httpd.service

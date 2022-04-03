@@ -251,7 +251,7 @@ within our repository. These files are:
 `rules/REQUEST-00-LOCAL-WHITELIST.conf.example` and
 `rules/RESPONSE-99-EXCEPTIONS.conf.example`. These files are designed to
 provide the rule maintainer the capability to modify rules (see
-[exceptions](exceptions.md)) without breaking forward
+[false positives and tuning]({{< ref "../configuring/false_positives_tuning.md" >}}#rule-exclusions)) without breaking forward
 compatability with updates. As such you should rename these two files,
 removing the `.example` suffix. This will make it so that even when
 updates are installed they do not overwrite your custom updates. To
@@ -509,4 +509,4 @@ configurations, this may result in a redirect loop or a status code. If
 this is the problem you are experiencing you should consult your
 error.log (or event viewer for IIS). From this location you can
 determine the offending rule and add an exception if neccessary see
-[exceptions](exceptions.md).
+[false positives and tuning]({{< ref "../configuring/false_positives_tuning.md" >}}).
