@@ -42,6 +42,7 @@ home = [ "HTML", "RSS", "JSON"]
 
   # CRS related parameters
   crs_latest_release = "3.3.2"
+  crs_dev_branch = "v3.4/dev"
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-bookmark'></i> Core Rule Set Home"
