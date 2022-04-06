@@ -15,6 +15,7 @@ weight: 5
     * **Specify the CRS version in question** if reporting a bug.
     * Bonus points for submitting tests along with the issue.
 3. Fork the repository on GitHub and begin making changes there.
+4. Signed commits are preferred. (For more information and help with this, refer to the [GitHub documentation](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits)).
 
 ## Making Changes
 
