@@ -97,10 +97,10 @@ skipAfter
 
 CRS uses `\x5c` to represent the backslash `\` character in regular expressions. Some of the reasons for this are:
 
-* It's portable across web servers and WAF engines: it works with Apache, Nginx, and Coraza.
+* It's portable across web servers and WAF engines: it works with Apache, NGiNX, and Coraza.
 * It works with the `regexp-assemble.py` script for building optimized regular expressions.
 
-The older style of representing a backslash using the character class `[\\\\]` must _not_ be used. This was previously used in CRS to get consistent results between Apache and Nginx, owing to a quirk with how Apache would "double un-escape" character escapes. For future reference, the decision was made to stop using this older method because:
+The older style of representing a backslash using the character class `[\\\\]` must _not_ be used. This was previously used in CRS to get consistent results between Apache and NGiNX, owing to a quirk with how Apache would "double un-escape" character escapes. For future reference, the decision was made to stop using this older method because:
 
 * It can be confusing and difficult to understand how it works.
 * It doesn't work with the `regexp-assemble.py` script.
@@ -109,17 +109,107 @@ The older style of representing a backslash using the character class `[\\\\]` m
 
 ### When and Why to Anchor Regular Expressions
 
-TODO
+Engines running OWASP Core Rule Set will use regular expressions to _search_ the input string, i.e., the regular expression engine is asked to find the first match in the input string. If you need your expression to match the entire input, then you must anchor your expression appropriately.
+
+#### Beginning of String Anchor (^)
+
+It is often necessary to match something at the start of the input to prevent false positives that match the same string in the middle of another argument, for example. Let's say you wanted to match the value of `REQUEST_HEADERS:Content-Type` to be `multipart/form-data`. You could use the following regular expression:
+```python
+"@rx multipart/form-data"
+```
+HTTP headers can contain multiple values, so it might well be that you have to guarantee that the value you are looking for is the first value of the header. There are different ways to do this but the simplest one is to use the `^` caret anchor to match the beginning of the string:
+```python
+"@rx ^multipart/form-data"
+```
+You will also want to ignore case sensitivity in this case:
+```python
+"@rx (?i)^multipart/form-data"
+```
+
+#### End of String Anchor ($)
+
+Consider, for example, that you wanted to find the string `/admin/content/assets/add/evil"` in the `REQUEST_FILENAME`. You could do this with the following regular expression:
+```python
+"@rx /admin/content/assets/add/evil"
+```
+Now, if we change the input, we see that this expression can easily produce a false positive: `/admin/content/assets/add/evilbutactuallynot/nonevilfile`. If you know that the file you are looking for can't be in a subdirectory of `add` you can use the `$` anchor to match the end of the input:
+```python
+"@rx /admin/content/assets/add/evil$
+```
+Of course, you would want to make this a bit more general:
+```python
+"@rx /admin/content/assets/add/[a-z]+$"
+```
+
+#### Matching the Entire Input String
+
+Sometimes it is necessary to match the entire input string to ensure that it matches our expectations exactly. You might want to find the "edit" action, transmitted by Wordpress, for example. To avoid false positives on variations (e.g. "myedit", "the edit", "editable", etc.) you can use the `^` caret and `$` dollar anchors to say that you expect an exact string:
+```python
+"@rx ^(?:edit|editpost)$
+```
+
+#### Other Anchors
+
+Other anchors apart from `^` caret and `$` dollar exist, such as `\A`, `\G` and `\Z` in PCRE. We strongly discourage the use of other anchors for the following reasons:
+- not all regular expression engines support all anchors and OWASP Core Rule Set should be compatible with as many regular expression engines as possible
+- their function is sometimes not trivial
+- they aren't well known and would require additional documentation
+- in most cases that would justify their use the regular expression can be transformed into a form that doesn't require them, or the rule can be transformed (e.g. with an additional chain rule)
+
+### Use Capture Groups Sparingly
+
+Capture groups, i.e. parts of the regular expression sourrounded by parentheses (`(` and `)`), are used to store the matched information from a string in memory for later use. Capturing input uses both additional CPU cycles and additional memory. In many cases, parentheses are used for grouping and ensuring precedence mistakenly.
+
+To group parts of a regular expression, or to ensure that the expression uses the precedence you want, sourround the concerning parts with `(?:` and `)`. Such a group is called "non-capturing". The following will create a capture group:
+```python
+"@rx a|(b|c)d"
+```
+This will create a non-capturing group, guaranteeing the precedence of the alternative without capturing the input:
+```python
+"@rx a|(?:b|c)d"
+```
 
 ### Lazy Matching
 
-TODO
+The question mark `?` can be used to turn "greedy" quantifiers into "lazy" quantifiers, i.e., `.+` and `.*` are greedy while `.+?` and `.*?` are lazy. Using lazy quantifiers can help you write certain expressions that wouldn't otherwise be possible. However, in backtracking regular expression engines like PCRE, lazy quantifiers can also be a source of performance issues. The following is an example of an expression that uses a lazy qantifier:
+```python
+"@rx (?i)\.cookie\b.*?;\W*?(?:expires|domain)\W*?="
+```
+This expression matches cookie values in HTML to detect session fixation attacks. The input string could be `document.cookie = "name=evil; domain=https://example.com";`.
 
-### Writing RE2-compatible Regular Expressions
+The lazy quantifiers in this expression are used to reduce the amount of backtracking that engines such as PCRE have to perform (others, such as re2, are not affected by this). Since the asterisk `*` is greedy, `.*` would match every character in the input up to the end, at which point the regular expression engine would realize that the next character, `;`, can't be matched and it will backtrack to the previous position (`;`). A few iterations later, the engine will realize that the character `d` from `domain` can't be matched and it will backtrack again. This will happen again and again, until the `;` at `evil;` if found. Only then can the engine proceed with the next expression part.
 
-Avoid "lookbehind" and "lookafter".
+Using lazy quantifiers, the regular expression engine will instead match _as few characters as possible_. The engine will match ` `, then look for `;` and will not find it. The match will then be expanded to ` =` and, again, a match of `;` is attempted. This continues until the match is ` = "name=evil` and the engine finds `;`. While lazy matching still includes some work, in this case, backtracking would require many more steps.
 
-TODO
+Lazy matching can have the inverse effect though. Consider the following expression:
+```python
+"@rx (?i)\b(?:s(?:tyle|rc)|href)\b[\s\S]*?="
+```
+It matches some HTML attributes and then expects to see `=`. Using a somewhat contrived input, the lazy qantifier will require more steps to match then the greedy version would: `style                     =`. With the lazy quantifier, the regular expression engine will expand the match by one character for each of the space characters in the input, that are 21 steps in this case. With the greedy quantifier, the engine would match up to the end in a single step, backtrack one character and then match `=` (note that `=` is included in `[\s\S]`), which makes 3 steps.
+
+To summarize: be very mindful about when and why you use lazy quantifiers in your regular expressions.
+
+### Writing Regular Expressions for Non-backtracking Compatibility
+
+Traditional regualar expression engines use backtracking to solve some additional problems, such as finding a string that is preceded or followed by another string. While this functionality can certainly come in handy and has it's place in certain applications, it can also lead to performance issues and, in uncontrolled environments, open up possibilities for attacks (the term "ReDoS" is often used to describe an attack that exhausts process or system resources due to excessive backtracking).
+
+The OWASP Core Rule Set tries to be compatible with non-backtracking regular expression engines, such as re2 because
+- non-backtracking engines are less vulnerable to ReDoS attacks
+- non-backtracking engines can often outperform backtracking engines
+- we want to leave the choice of the engine to the user / system.
+
+To ensure compatibility with non-backtracking regular expression engines, the following operations are not permitted in regular expressions:
+- positive lookahead (e.g.  `(?=regex)`)
+- negative lookahead (e.g. `(?!regex)`)
+- positive lookbehind (e.g. `(?<=regex)`)
+- negative lookbehind (e.g. `(?<!regex)`)
+- named capture groups (e.g. `(?P<name>regex)`)
+- backreferences (e.g. `\1`)
+- named backreferences (e.g. `(?P=name)`)
+- conditionals (e.g. `(?(regex)then|else)`)
+- recursive calls to capture groups (e.g. `(?1)`)
+
+This list is not exhaustive but covers the most important points.
 
 ## Rules Compliance with Paranoia Levels
 
