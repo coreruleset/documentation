@@ -209,7 +209,7 @@ To ensure compatibility with non-backtracking regular expression engines, the fo
 - conditionals (e.g. `(?(regex)then|else)`)
 - recursive calls to capture groups (e.g. `(?1)`)
 
-This list is not exhaustive but covers the most important points.
+This list is not exhaustive but covers the most important points. The [re2 documentation](https://github.com/google/re2/wiki/Syntax) includes a complete list of supported and unsupported features that various engines offer.
 
 ## Rules Compliance with Paranoia Levels
 
