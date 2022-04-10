@@ -19,7 +19,7 @@ weight: 5
 
 ## Making Changes
 
-* Base any changes on the latest dev branch (e.g. `{{< param crs_dev_branch >}}`).
+* Base any changes on the latest dev branch (e.g., `{{< param crs_dev_branch >}}`).
 * Create a topic branch for each new contribution.
 * Fix only one problem at a time. This helps to quickly test and merge submitted changes. If intending to fix *multiple unrelated problems* then use a separate branch for each problem.
 * Make commits of logical units.
@@ -43,7 +43,7 @@ SecRule .. .. \
         SecRule .. .. \
             "..."
 ```
-- Action lists in rules must always be enclosed in double quotes for readability, even if there is only one action (e.g. use `"chain"` instead of `chain`, and `"ctl:requestBodyAccess=Off"` instead of `ctl:requestBodyAccess=Off`).
+- Action lists in rules must always be enclosed in double quotes for readability, even if there is only one action (e.g., use `"chain"` instead of `chain`, and `"ctl:requestBodyAccess=Off"` instead of `ctl:requestBodyAccess=Off`).
 - Always use numbers for phases instead of names.
 - Format all use of `SecMarker` using double quotes, using UPPERCASE, and separating words with hyphens. For example:
 ```
@@ -105,11 +105,11 @@ The older style of representing a backslash using the character class `[\\\\]` m
 * It can be confusing and difficult to understand how it works.
 * It doesn't work with the `regexp-assemble.py` script.
 * It doesn't work with Coraza.
-* It isn't obvious how to use it in a character class, e.g. `[a-zA-Z<portable-backslash>]`.
+* It isn't obvious how to use it in a character class, e.g., `[a-zA-Z<portable-backslash>]`.
 
 ### When and Why to Anchor Regular Expressions
 
-Engines running the OWASP Core Rule Set will use regular expressions to _search_ the input string, i.e. the regular expression engine is asked to find the first match in the input string. If an expression needs to match the entire input then the expression must be anchored appropriately.
+Engines running the OWASP Core Rule Set will use regular expressions to _search_ the input string, i.e., the regular expression engine is asked to find the first match in the input string. If an expression needs to match the entire input then the expression must be anchored appropriately.
 
 #### Beginning of String Anchor (^)
 
@@ -153,7 +153,7 @@ This could be made a bit more general:
 
 #### Matching the Entire Input String
 
-It is sometimes necessary to match the entire input string to ensure that it _exactly_ matches what is expected. It might be necessary to find the "edit" action transmitted by WordPress, for example. To avoid false positives on variations (e.g. "myedit", "the edit", "editable", etc.), the `^` caret and `$` dollar anchors can be used to indicate that an exact string is expected. For example, to only match the _exact_ strings `edit` or `editpost`:
+It is sometimes necessary to match the entire input string to ensure that it _exactly_ matches what is expected. It might be necessary to find the "edit" action transmitted by WordPress, for example. To avoid false positives on variations (e.g., "myedit", "the edit", "editable", etc.), the `^` caret and `$` dollar anchors can be used to indicate that an exact string is expected. For example, to only match the _exact_ strings `edit` or `editpost`:
 
 ```python
 "@rx ^(?:edit|editpost)$
@@ -166,11 +166,11 @@ Other anchors apart from `^` caret and `$` dollar exist, such as `\A`, `\G`, and
 - Not all regular expression engines support all anchors and the OWASP Core Rule Set should be compatible with as many regular expression engines as possible.
 - Their function is sometimes not trivial.
 - They aren't well known and would require additional documentation.
-- In most cases that would justify their use the regular expression can be transformed into a form that doesn't require them, or the rule can be transformed (e.g. with an additional chain rule).
+- In most cases that would justify their use the regular expression can be transformed into a form that doesn't require them, or the rule can be transformed (e.g., with an additional chain rule).
 
 ### Use Capture Groups Sparingly
 
-Capture groups, i.e. parts of the regular expression surrounded by parentheses (`(` and `)`), are used to store the matched information from a string in memory for later use. Capturing input uses both additional CPU cycles and additional memory. In many cases, parentheses are *mistakenly* used for grouping and ensuring precedence.
+Capture groups, i.e., parts of the regular expression surrounded by parentheses (`(` and `)`), are used to store the matched information from a string in memory for later use. Capturing input uses both additional CPU cycles and additional memory. In many cases, parentheses are *mistakenly* used for grouping and ensuring precedence.
 
 To group parts of a regular expression, or to ensure that the expression uses the precedence required, surround the concerning parts with `(?:` and `)`. Such a group is referred to as being "non-capturing". The following will create a capture group:
 
@@ -186,7 +186,7 @@ On the other hand, this will create a _non-capturing_ group, guaranteeing the pr
 
 ### Lazy Matching
 
-The question mark `?` can be used to turn "greedy" quantifiers into "lazy" quantifiers, i.e. `.+` and `.*` are greedy while `.+?` and `.*?` are lazy. Using lazy quantifiers can help with writing certain expressions that wouldn't otherwise be possible. However, in backtracking regular expression engines, like PCRE, lazy quantifiers can also be a source of performance issues. The following is an example of an expression that uses a lazy quantifier:
+The question mark `?` can be used to turn "greedy" quantifiers into "lazy" quantifiers, i.e., `.+` and `.*` are greedy while `.+?` and `.*?` are lazy. Using lazy quantifiers can help with writing certain expressions that wouldn't otherwise be possible. However, in backtracking regular expression engines, like PCRE, lazy quantifiers can also be a source of performance issues. The following is an example of an expression that uses a lazy quantifier:
 
 ```python
 "@rx (?i)\.cookie\b.*?;\W*?(?:expires|domain)\W*?="
@@ -220,15 +220,15 @@ The OWASP Core Rule Set tries to be compatible with non-backtracking regular exp
 
 To ensure compatibility with non-backtracking regular expression engines, the following operations are **not** permitted in regular expressions:
 
-- positive lookahead (e.g. `(?=regex)`)
-- negative lookahead (e.g. `(?!regex)`)
-- positive lookbehind (e.g. `(?<=regex)`)
-- negative lookbehind (e.g. `(?<!regex)`)
-- named capture groups (e.g. `(?P<name>regex)`)
-- backreferences (e.g. `\1`)
-- named backreferences (e.g. `(?P=name)`)
-- conditionals (e.g. `(?(regex)then|else)`)
-- recursive calls to capture groups (e.g. `(?1)`)
+- positive lookahead (e.g., `(?=regex)`)
+- negative lookahead (e.g., `(?!regex)`)
+- positive lookbehind (e.g., `(?<=regex)`)
+- negative lookbehind (e.g., `(?<!regex)`)
+- named capture groups (e.g., `(?P<name>regex)`)
+- backreferences (e.g., `\1`)
+- named backreferences (e.g., `(?P=name)`)
+- conditionals (e.g., `(?(regex)then|else)`)
+- recursive calls to capture groups (e.g., `(?1)`)
 
 This list is not exhaustive but covers the most important points. The [RE2 documentation](https://github.com/google/re2/wiki/Syntax) includes a complete list of supported and unsupported features that various engines offer.
 
@@ -284,7 +284,7 @@ The CRS project uses the numerical ID rule namespace from 900,000 to 999,999 for
 - Rules applying to the **incoming request** use the ID range 900,000 to 949,999.
 - Rules applying to the **outgoing response** use the ID range 950,000 to 999,999.
 
-The rules are grouped by the vulnerability class they address (SQLi, RCE, etc.) or the functionality they provide (e.g. initialization). These groups occupy blocks of thousands (e.g. SQLi: 942,000 - 942,999). These grouped rules are defined in files dedicated to a single group or functionality. The filename takes up the first three digits of the rule IDs defined within the file (e.g. SQLi: `REQUEST-942-APPLICATION-ATTACK-SQLI.conf`).
+The rules are grouped by the vulnerability class they address (SQLi, RCE, etc.) or the functionality they provide (e.g., initialization). These groups occupy blocks of thousands (e.g., SQLi: 942,000 - 942,999). These grouped rules are defined in files dedicated to a single group or functionality. The filename takes up the first three digits of the rule IDs defined within the file (e.g., SQLi: `REQUEST-942-APPLICATION-ATTACK-SQLI.conf`).
 
 The individual rules within each file for a vulnerability class are organized by the paranoia level of the rules. PL 1 is first, then PL 2, etc.
 
@@ -292,13 +292,13 @@ The ID block 9xx000 - 9xx099 is reserved for use by CRS helper functionality. Th
 
 Among the rules providing CRS helper functionality are rules that skip other rules depending on the paranoia level. These rules always use the following reserved rule IDs: 9xx011 - 9xx018, with very few exceptions.
 
-The blocking and filter rules start at 9xx100 with a step width of 10, e.g. 9xx100, 9xx110, 9xx120, etc.
+The blocking and filter rules start at 9xx100 with a step width of 10, e.g., 9xx100, 9xx110, 9xx120, etc.
 
 The ID of a rule does not correspond directly with its paranoia level. Given the size of rule groups and how they're organized by paranoia level (starting with the lower PL rules first), PL 2 and above tend to be composed of rules with higher ID numbers.
 
 ### Stricter Siblings
 
-Within a rule file / block, there are sometimes smaller groups of rules that belong together. They're closely linked and very often represent copies of the original rules with a stricter limit (alternatively, they can represent the same rule addressing a different *target* in a second rule, where this is necessary). These are **stricter siblings** of the base rule. Stricter siblings usually share the first five digits of the rule ID and raise the rule ID by one, e.g. a base rule at 9xx160 and a stricter sibling at 9xx161.
+Within a rule file / block, there are sometimes smaller groups of rules that belong together. They're closely linked and very often represent copies of the original rules with a stricter limit (alternatively, they can represent the same rule addressing a different *target* in a second rule, where this is necessary). These are **stricter siblings** of the base rule. Stricter siblings usually share the first five digits of the rule ID and raise the rule ID by one, e.g., a base rule at 9xx160 and a stricter sibling at 9xx161.
 
 Stricter siblings often have different paranoia levels. This means that the base rule and the stricter siblings don't usually reside next to each another in the rule file. Instead, they're ordered by paranoia level and are linked by the first digits of their rule IDs. It's good practice to introduce all stricter siblings together as part of the definition of the base rule: this can be done in the comments of the base rule. It's also good practice to refer back to the base rule with the keywords "stricter sibling" in the comments of the stricter siblings themselves. For example: "...This is performed in two separate stricter siblings of this rule: 9xxxx1 and 9xxxx2", and "This is a stricter sibling of rule 9xxxx0."
 
