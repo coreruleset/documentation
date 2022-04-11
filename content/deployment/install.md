@@ -226,7 +226,7 @@ HIGHLY recommended. At minimum you should keep in mind the following.
     packet, return a status:403, go to a custom page etc.) when it
     detects malicious activity.
 -   Make sure to configure your anomaly scoring thresholds for more
-    information see [Anomaly]({{< ref "anomaly.md" >}} "Anomaly")
+    information see [Anomaly]({{< ref "anomaly_scoring.md" >}} "Anomaly")
 -   By default ModSecurity looks for lots of issues with different
     databases and languages, if you are running a specific environment,
     you probably want to limit this behavior for performance reasons.
