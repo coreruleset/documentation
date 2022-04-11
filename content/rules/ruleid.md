@@ -5,6 +5,10 @@ weight = 1
 pre = "<b>1. </b>"
 +++
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 ## Why do rule IDs matter?
 
 Each rule added to a ModSecurity instance must have a unique ID (in
@@ -31,7 +35,7 @@ of IDs for you thank you.
 -   430,000--439,999: reserved for rules published by Flameeyes
 -   440,000-599,999; unused (available for reservation).
 -   600,000-699,999; reserved for use by Akamai
-    <http://www.akamai.com/html/solutions/waf.html>
+    <https://www.akamai.com/products/web-application-protector>
 -   700,000-799,999; reserved for Ivan Ristic.
 -   900,000-999,999; reserved for the OWASP ModSecurity Core Rule Set
     project.

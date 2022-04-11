@@ -6,6 +6,10 @@ weight = 2
 pre = "<b>2. </b>"
 +++
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 Shipped with the ruleset are a number of different tools. One of these
 tools are the regression testing framework for OWASP CRS. For testing we
 use WTF (WAF Testing Framework). This framework allows us to specify

@@ -5,6 +5,10 @@ chapter: false
 weight: 20
 ---
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 If you need mode information than the one in the [quickstart guide]({{< ref "quickstart.md" >}}), here we extend with additional details so keep reading.
 
 Below you should find all the information you need to properly install
@@ -154,23 +158,62 @@ If you have gotten to this step ModSecurity is functioning on IIS and you now kn
 
 ## Downloading OWASP CRS
 
-Now that you know where your rules belong typically we'll want to download the OWASP CRS. The best place to get the latest copy of the ruleset will be from [our Github](https://github.com/coreruleset/coreruleset). Be careful to determine if there are any more relevant branches in development that can take advantage of the version of ModSecurity you are using. You can do this by checking the different branches on the site and looking throughout this documentation. To download a repository you can either click the {{% button href="https://github.com/coreruleset/coreruleset/archive/master.zip" icon="fas fa-download" %}}Download Zip{{% /button %}} button or your can use git clone. For instance,
+Now that you know where your rules belong typically we'll want to download the OWASP CRS. The best place to get the latest copy of the ruleset will be from [our Github Releases](https://github.com/coreruleset/coreruleset/releases). There we have all our official releases listed. For production we recommend you to use the **latest release**, v{{< param crs_latest_release >}}. If you want to test the bleeding edge version, we also provide _nightly releases_.
+
+{{% notice note %}}
+Releases are signed using [our GPG key](https://coreruleset.org/security.asc), (fingerprint: 3600 6F0E 0BA1 6783 2158 8211 38EE ACA1 AB8A 6E72). You can verify the release using GPG/PGP compatible tooling.
+
+To get our key using gpg: `gpg --keyserver pgp.mit.edu --recv 0x38EEACA1AB8A6E72` (this id should be equal to the last sixteen hex characters in our fingerprint).
+You can also use `gpg --fetch-key https://coreruleset.org/security.asc` directly.
+{{% /notice %}}
+
+The steps here assume you are using a *nix operating system. For Windows you will be doing a similar install, but probably using the zip file from our releases.
+
+To get the release file and the corresponding signature:
 
 ```bash
-git clone https://github.com/coreruleset/coreruleset.git
+wget https://github.com/coreruleset/coreruleset/archive/refs/tags/v{{< param crs_latest_release >}}.tar.gz
+wget https://github.com/coreruleset/coreruleset/releases/download/v{{< param crs_latest_release >}}/coreruleset-{{< param crs_latest_release >}}.tar.gz.asc
 ```
 
-Typically you'll end up with a folder named something similar to `owasp-modsecurity-crs`. From here the process is surprisingly simple.
-Because OWASP CRS is, at its core, a set of ModSecurity configuration files (`*.conf` files) all you have to do is tell ModSecurity where these CRS configuration files reside and it will do MOST of the remaining work. To do this you must use the `'Include'` directive. This include directive can be used in similar places to where we used our SecRule
-earlier. It should be noted that OWASP CRS should be included AFTER the ModSecurity configuration rules which are available via the [ModSecurity repo](https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended) which should have been configured during your inital installation. These rules will configure ModSecurity options, such as SecRuleEngine that we used earlier. This configuration file should be reviewed and modified as desired.
+Optional verification:
+```bash
+gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
+gpg: Signature made Wed Jun 30 10:05:48 2021 -03
+gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
+gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [unknown]
+gpg: WARNING: This key is not certified with a trusted signature!
+gpg:          There is no indication that the signature belongs to the owner.
+Primary key fingerprint: 3600 6F0E 0BA1 6783 2158  8211 38EE ACA1 AB8A 6E72
+```
 
-### Setup OWASP CRS
+If the signature was good, the verification succeeded. If you see a warning like the above, it means you know our public key, but you are not trusting it. You can trust it by using the following method:
+
+```bash
+gpg edit-key 36006F0E0BA167832158821138EEACA1AB8A6E72
+gpg> trust
+Your decision: 5 (ultimate trust)
+Are you sure: Yes
+gpg> quit
+```
+
+Then you will see this result when verifying:
+```bash
+gpg --verify coreruleset-3.3.2.tar.gz.asc v3.3.2.tar.gz
+gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
+gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
+gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultimate]
+```
+
+Once you downloaded and verified the release, you are ready to continue with the setup.
+
+### Setting up OWASP CRS
 
 OWASP CRS contains one setup file that should be reviewed prior to
 completing setup. The setup file is the only configuration file within
-the root 'owasp-crs-modsecurity' folder and is named
-`csr-setup.conf.example`. Going through the configuration file
-(`csr-setup.conf.example`) and reading what the different options are is
+the root 'coreruleset-{{< param crs_latest_release >}}' folder and is named
+`csr-setup.conf.example`. Going through this configuration file
+and reading what the different options are is
 HIGHLY recommended. At minimum you should keep in mind the following.
 
 -   CRS does not configure ModSecurity features such as the rule engine,
@@ -189,7 +232,7 @@ HIGHLY recommended. At minimum you should keep in mind the following.
     you probably want to limit this behavior for performance reasons.
 -   ModSecurity supports [Project Honeypot](https://www.projecthoneypot.org/) blacklists. This is a
     great project and all you need to do to leverage it is sign up for
-    an [API key](https://www.projecthoneypot.org/httpbl_api.php)
+    an [API key](https://www.projecthoneypot.org/httpbl_api.php) (⚠️ it might be outdated)
 -   Do make sure you have added any methods, static resources, content
     types, or file extensions that your site needs beyond the basic ones
     listed.
@@ -208,7 +251,7 @@ within our repository. These files are:
 `rules/REQUEST-00-LOCAL-WHITELIST.conf.example` and
 `rules/RESPONSE-99-EXCEPTIONS.conf.example`. These files are designed to
 provide the rule maintainer the capability to modify rules (see
-[exceptions](exceptions.md)) without breaking forward
+[false positives and tuning]({{< ref "../configuring/false_positives_tuning.md" >}}#rule-exclusions)) without breaking forward
 compatability with updates. As such you should rename these two files,
 removing the `.example` suffix. This will make it so that even when
 updates are installed they do not overwrite your custom updates. To
@@ -220,8 +263,7 @@ mv rules/REQUEST-00-LOCAL-WHITELIST.conf.example rules/REQUEST-00-LOCAL-WHITELIS
 mv rules/RESPONSE-99-EXCEPTIONS.conf.example rules/RESPONSE-99-EXCEPTIONS.conf
 ```
 
-Proceeding with the Install
----------------------------
+## Proceeding with the Installation
 
 Both ModSecurity 2.x (via APR) and ModSecurity 3.x support the Include
 directive and what it tells the ModSecurity core to do is parse the
@@ -296,8 +338,7 @@ include owasp-modsecurity-crs/rules/RESPONSE-80-CORRELATION.conf
 include owasp-modsecurity-crs/rules/RESPONSE-99-EXCEPTIONS.conf
 ```
 
-Setting up automated updated
-----------------------------
+## Setting up automated updates
 
 todo: The OWASP Core Rule Set is designed with the capability to be
 frequently updated in mind. New threats and techniques and updates are
@@ -468,4 +509,4 @@ configurations, this may result in a redirect loop or a status code. If
 this is the problem you are experiencing you should consult your
 error.log (or event viewer for IIS). From this location you can
 determine the offending rule and add an exception if neccessary see
-[exceptions](exceptions.md).
+[false positives and tuning]({{< ref "../configuring/false_positives_tuning.md" >}}).

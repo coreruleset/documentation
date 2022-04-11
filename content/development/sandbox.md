@@ -76,7 +76,7 @@ Let’s say you want to try your payload on different WAF engines or CRS version
 - `X-CRS-Paranoia-Level` will run CRS in a given paranoia level. Available values are `1` (default), `2`, `3`, `4`.
 - `X-Backend: apache` (default) will send the request to **Apache 2 + ModSecurity 2.9**.
 - `X-Backend: nginx` will send the request to **Nginx + ModSecurity 3**.
-- `X-Backend: coraza` will send the request to **Caddy + Coraza WAF**.
+- `X-Backend: coraza-caddy` will send the request to **Caddy + Coraza WAF**.
 - `X-Format-Output` formats the response to your use-case (human or automation). Available values are:
   - `txt-matched-rules`: human-readable list of CRS rule matches, one rule per line
   - `txt-matched-rules-extended`: same but with explanation for easy inclusion in publications
@@ -145,7 +145,7 @@ CRS therefore detects this payload starting with paranoia level 1.
 
 ## Architecture
 
-The sandbox consists of various parts. The frontend that receives the requests runs on Openresty. It handles the incoming request, chooses and configures the backend, proxies the request to the backend, and waits for the response. Then it parses the WAF audit log and sends the matched rules back in the format chosen by the user.
+The sandbox consists of various parts. The frontend that receives the requests runs on Openresty. It handles the incoming request, chooses and configures the backend running CRS, proxies the request to the backend, and waits for the response. Then it parses the WAF audit log and sends the matched rules back in the format chosen by the user.
 
 ![CRS sandbox diagram v3.drawio.png](https://coreruleset.org/assets/uploads/2022/01/CRS_sandbox_diagram_v3.drawio.png)
 
@@ -159,12 +159,12 @@ The logs are parsed, and values like User-Agent and geolocation are extracted. W
 
 In some cases, the sandbox will not properly handle and finish your request.
 
-- **Malformed HTTP requests:** The frontend, Openresty, is itself a HTTP server which performs parsing of the incoming request. This may not be fully transparent: it may reject a malformed HTTP request with an error 400 before it can even be sent to a backend. This happens for instance when you try to send an Apache 2.4.50 attack that depended on a URL encoding violation. If you receive an error 400, your request was rejected by the frontend.
+- **Malformed HTTP requests:** The frontend, Openresty, is itself a HTTP server which performs parsing of the incoming request. The backend servers running CRS are regular webservers such as Apache and Nginx. Either one of these may reject a malformed HTTP request with an error 400 before it is even processed by CRS. This happens for instance when you try to send an Apache 2.4.50 attack that depended on a URL encoding violation. If you receive an error 400, your request was rejected by the frontend or a backend, and it was not scanned by CRS.
 - **ReDoS:** If your request leads to a ReDoS and makes the backend spend too much time to process a regular expression, this leads to a timeout from the backend server. The frontend will cancel the request with an error 502. If you have to wait a long time and then receive an error 502, there was likely a ReDoS situation.
 
 ## Questions and suggestions
 
-If you have any issues with the CRS sandbox, please open a GitHub issue at [https://github.com/coreruleset/crs-sandbox/issues](https://github.com/coreruleset/crs-sandbox/issues) and we will help you as soon as possible.
+If you have any issues with the CRS sandbox, please open a GitHub issue at [https://github.com/coreruleset/coreruleset/issues](https://github.com/coreruleset/coreruleset/issues) and we will help you as soon as possible.
 
 If you have suggestions for extra functionality, a GitHub issue is appreciated.
 

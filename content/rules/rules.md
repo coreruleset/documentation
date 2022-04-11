@@ -5,6 +5,10 @@ weight = 3
 pre = "<b>3. </b>"
 +++
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 # What's In The Rules
 
 | **REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example**

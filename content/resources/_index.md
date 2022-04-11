@@ -8,6 +8,10 @@ chapter: true
 
 # Additional Resources
 
+{{% notice note %}}
+**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
+{{% /notice %}}
+
 ## Free and Open-Source Community Help
 
 - [Core Rule Set GitHub repository](https://github.com/coreruleset/coreruleset). Open issues for bugs, report false positives, and access the source code.
