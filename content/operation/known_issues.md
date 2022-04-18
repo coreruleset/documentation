@@ -22,6 +22,15 @@ weight: 30
   This notice should be a warning and can be safely ignored.
   We have investigated the problem and did not find a solution yet.
 
+- **ModSecurity 3.0.0-3.0.2** will give an error:
+
+  ```
+  Expecting an action, got: ctl:requestBodyProcessor=URLENCODED"`
+  ```
+
+  Support for the URLENCODED body processor was only added in ModSecurity 3.0.3.
+  Please upgrade your ModSecurity to 3.0.3 or higher.
+
 - **Debian** up to and including Jessie lacks YAJL/JSON support in ModSecurity,
   which causes the following error in the Apache ErrorLog or SecAuditLog:
   ```
