@@ -7,6 +7,18 @@ weight: 6
 
 > There are many third party tools that help with ModSecurity and CRS development. The most useful ones are listed here. Get in touch if you think something is missing.
 
+## FTW
+
+https://pypi.org/project/ftw/
+
+*Framework for Testing WAFs.* The original Python-based testing framework used by CRS.
+
+## Go-FTW
+
+https://github.com/fzipi/go-ftw
+
+*Framework for Testing WAFs in Go.* A Go-based rewrite of the original Python FTW project. Usually much faster than the original and has no dependencies.
+
 ## Official CRS Maintained Docker Images
 
 ### ModSecurity Core Rule Set Docker Image
