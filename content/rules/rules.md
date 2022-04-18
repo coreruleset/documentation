@@ -2,7 +2,7 @@
 title = "Rules"
 chapter = false
 weight = 3
-pre = "<b>3. </b>"
+pre = "<b>4. </b>"
 +++
 
 {{% notice note %}}
