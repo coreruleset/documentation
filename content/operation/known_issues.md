@@ -63,7 +63,7 @@ weight: 30
   indicative that XML will be provided. In accordance with this, ModSecurity's XML
   Request Body Processor should also be configured to support this MIME type. Within
   the ModSecurity project, [commit 5e4e2af](https://github.com/SpiderLabs/ModSecurity/commit/5e4e2af7a6f07854fee6ed36ef4a381d4e03960e)
-  has been merged to support this endeavour. However, if you are running a modified or
+  has been merged to support this endeavor. However, if you are running a modified or
   preexisting version of the modsecurity.conf provided by this repository, you may
   wish to upgrade rule '200000' accordingly. The rule now appears as follows:
   ```
