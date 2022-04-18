@@ -30,8 +30,9 @@ weight: 5
 
 * American English should be used throughout.
 * 4 spaces should be used for indentation (no tabs).
+* Files must end with a single newline character.
 * No trailing whitespace at EOL.
-* No trailing blank lines at EOF.
+* No trailing blank lines at EOF (only the required single EOF newline character is allowed).
 * Add comments where possible and clearly explain any new rules.
 * Adhere to an 80 character line length limit where possible.
 * All [chained rules](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual(v2.x)#chain) should be indented like so, for readability:
