@@ -307,7 +307,7 @@ Stricter siblings often have different paranoia levels. This means that the base
 
 Each rule should be accompanied by tests. Rule tests are an invaluable way to check that a rule behaves as expected:
 
-- Does the rule correctly match against the payloads and behaviours that the rule is designed to detect? (**Positive tests**)
+- Does the rule correctly match against the payloads and behaviors that the rule is designed to detect? (**Positive tests**)
 - Does the rule correctly **not** match against legitimate requests, i.e., the rule doesn't cause obvious false positives? (**Negative tests**)
 
 Rule tests also provide an excellent way to test WAF engines and implementations to ensure they behave and execute CRS rules as expected.
