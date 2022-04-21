@@ -20,9 +20,9 @@ For information on how to join the vibrant community of Core Rule Set developers
 
 ## CRS Change Policy
 
-The Core Rule Set project endeavors not to make breaking changes in **minor releases** (i.e., 3.3.2). Instead, these releases fix bugs otherwise identified in the previous release.
+The Core Rule Set project endeavors not to make breaking changes in **minor releases** (i.e., 3.3.2). Instead, these releases fix bugs identified in the previous release.
 
-New functionality and breaking changes will be made in **major releases** (i.e., 3.3).
+New functionality and breaking changes are made in **major releases** (i.e., 3.3).
 
 For information about what has changed in recent versions of the software, refer to the project's [CHANGES](https://github.com/coreruleset/coreruleset/blob/v3.4/dev/CHANGES) file on GitHub.
 
