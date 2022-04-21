@@ -1,35 +1,37 @@
 ---
-title: "OWASP Core Rule Set Documentation"
+title: "Core Rule Set Documentation"
 ---
 
-# Core Rule Set Project
+# Core Rule Set Documentation
 
-The OWASP Core Rule Set provides guidelines for many of the aspects surrounding the project. Please explore some of these below.
+> The OWASP Core Rule Set provides documentation for many of the aspects surrounding the project. This page provides an overview of the project and its documentation.
 
-If you are looking to submit a security issue with the Core Rule Set please email security [ at ] coreruleset.org.
+{{% notice info %}}
+Security issues regarding the Core Rule Set can be submitted via email to security [ at ] coreruleset.org.
+{{% /notice %}}
 
-## Core Rule Set Documentation
+## What Is the Core Rule Set?
 
-### What is the Core Rule Set?
+The OWASP® (Open Web Application Security Project) CRS (Core Rule Set) is a free and open-source collection of rules that work with ModSecurity® and compatible web application firewalls (WAFs). These rules are designed to provide easy to use, generic attack detection capabilities, with a minimum of false positives (false alerts), to web applications as part of a well balanced defense-in-depth solution.
 
-The OWASP® (Open Web Application Security Project) CRS (Core Rule Set) is an open source collection of rules that work with ModSecurity® and compatible web application firewalls (WAFs). These rules are designed to provide easy to use, generic attack detection capabilities, with a minimum of false positives (false alerts), to your web application as part of a well balanced defense-in-depth solution.
+## How to Get Involved
 
-### Contribution Guidelines
+For information on how to join the vibrant community of Core Rule Set developers, start by checking out the project's [GitHub repository](https://github.com/coreruleset/coreruleset). When ready to make a contribution, have a read of the project's [contribution guidelines]({{< ref "development/contribution_guidelines/" >}}) which are used to keep the project consistent, well managed, and of a high quality.
 
-If you are looking for information about how to join our vibrant community of Core Rule Set developers, we invite you to check out [our GitHub repository](https://github.com/coreruleset/coreruleset). When you’re ready to contribute, we've outlined some of the guidelines that we use to keep our project managed.
+## CRS Change Policy
 
-### Change Policy
+The Core Rule Set project endeavors not to make breaking changes in **minor releases** (i.e., 3.3.2). Instead, these releases fix bugs otherwise identified in the previous release.
 
-The Core Rule Set project endeavors not to make breaking changes in minor releases (i.e. 3.1.1). Instead, these releases will fix bugs otherwise identified in the previous release. New functionality and breaking changes will be made in major releases (i.e. 3.3).
+New functionality and breaking changes will be made in **major releases** (i.e., 3.3).
 
-If you are interested in seeing what has changed in recent versions of the software please see our [CHANGES](https://github.com/coreruleset/coreruleset/blob/v3.4/dev/CHANGES) file.
+For information about what has changed in recent versions of the software, refer to the project's [CHANGES](https://github.com/coreruleset/coreruleset/blob/v3.4/dev/CHANGES) file on GitHub.
 
-### License
+## Documentation Source
 
-The OWASP Core Rule Set is a free and open-source set of security rules using the Apache License 2.0. Although it was originally developed for ModSecurity's SecRules language, the rule set can be, and often has been, freely modified, reproduced, and adapted for various commercial and non-commercial endeavors. We encourage individuals and organizations to commit back to the OWASP Core Rule Set where possible.
+The source files for this documentation can be found at the [CRS documentation repository](https://github.com/coreruleset/documentation) on GitHub.
 
-### Documentation Source
+This documentation has been statically generated with [Hugo](https://github.com/gohugoio/hugo). It uses the [Hugo Relearn Theme](https://github.com/McShelby/hugo-theme-relearn).
 
-The source files for this documentation can be found at [our documentation repository on GitHub](https://github.com/coreruleset/documentation).
+## License
 
-This documentation has been statically generated with [Hugo](https://github.com/gohugoio/hugo) with a simple command : `hugo`. The Hugo Relearn Theme is also used, the source code for which is [available here at GitHub](https://github.com/McShelby/hugo-theme-relearn).
+The OWASP Core Rule Set is a free and open-source set of security rules which use the Apache License 2.0. Although it was originally developed for ModSecurity's SecRules language, the rule set can be, and often has been, freely modified, reproduced, and adapted for various commercial and non-commercial endeavors. The CRS project encourages individuals and organizations to contribute back to the OWASP Core Rule Set where possible.
