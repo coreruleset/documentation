@@ -116,3 +116,41 @@ see [false positives and tuning]({{< ref "false_positives_tuning.md" >}}). Enjoy
 ```bash
 systemctl restart httpd.service
 ```
+
+## Using Containers
+
+Another quick option is to leverage our pre-packaged containers. You can use docker, podman, or any container compatible engine. Our images are published in the docker hub. The one you probably want is the `owasp/modsecurity-crs`: it already has everything to get you up and running quickly.
+
+We already pre-package both Apache and Nginx Web servers with the corresponding ModSecurity engine. More engines (like Coraza) will come later.
+
+So to protect your running Web Server, just get the image and use these configuration variables to make the WAF receive the requests and proxy your server.
+
+This is an example `docker-compose` that can be used to pull the container images. You just need to change the `BACKEND` server so it points to your own server:
+
+```docker-compose
+services:
+  modsec2-apache:
+    container_name: modsec2-apache
+    image: owasp/modsecurity-crs:apache
+    environment:
+      SERVERNAME: modsec2-apache
+      BACKEND: http://<your own server>
+      PORT: "80"
+      MODSEC_RULE_ENGINE: DetectionOnly
+      BLOCKING_PARANOIA: 2
+      TZ: "${TZ}"
+      ERRORLOG: "/var/log/error.log"
+      ACCESSLOG: "/var/log/access.log"
+      MODSEC_AUDIT_LOG_FORMAT: Native
+      MODSEC_AUDIT_LOG_TYPE: Serial
+      MODSEC_AUDIT_LOG: "/var/log/modsec_audit.log"
+      MODSEC_TMP_DIR: "/tmp"
+      MODSEC_RESP_BODY_ACCESS: "On"
+      MODSEC_RESP_BODY_MIMETYPE: "text/plain text/html text/xml application/json"
+      COMBINED_FILE_SIZES: "65535"
+    volumes:
+    ports:
+      - "80:80"
+```
+
+That's it! Now just starting that container will give you the latest stable CRS protecting your site. There are [plenty of additional variables](https://github.com/coreruleset/modsecurity-crs-docker) you can use to configure the container image and its behaviour. Be sure to check those out!
