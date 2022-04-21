@@ -2,146 +2,82 @@
 title: "Installing CoreRuleSet"
 menuTitle: "Extended Install"
 chapter: false
+disableToc: false
 weight: 20
 ---
 
-{{% notice note %}}
-**The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
-{{% /notice %}}
+#### TODO: insert TOC
 
 If you need mode information than the one in the [quickstart guide]({{< ref "quickstart.md" >}}), here we extend with additional details so keep reading.
 
-Below you should find all the information you need to properly install
-CRS. If you are having problems feel free to reach out to our [Google Group](https://groups.google.com/a/owasp.org/forum/#!forum/modsecurity-core-rule-set-project), or our [Slack Channel](https://owasp.slack.com/archives/CBKGH8A5P). If you don't have access yet, [get your invite here](https://owasp.org/slack/invite).
+Below you should find all the information you need to properly install CRS. If you are having problems feel free to reach out to our [Google Group](https://groups.google.com/a/owasp.org/forum/#!forum/modsecurity-core-rule-set-project), or our [Slack Channel](https://owasp.slack.com/archives/CBKGH8A5P). If you don't have access yet, [get your invite here](https://owasp.org/slack/invite).
 
 ## Prerequisites
 
-Installing the CRS isn't very hard but it does have one major requirement, ModSecurity. If ModSecurity isn't working properly you will likely run into problems running the CRS.
+Installing the CRS isn't very hard but it does have one major requirement: a compatible engine. The base reference engine shown here is ModSecurity.
 
 {{% notice warning %}}
-In order to run the CRS `3.x` branch you require AT MINIMUM ModSecurity 2.8 or above, preferably version `3.x` or above.
+In order to run the CRS `3.x` using ModSecurity we recommend you to use the latest version available. For Nginx please use the `3.x` branch of ModSecurity, and for Apache use the latest `2.x` branch.
 {{% /notice %}}
 
-## Finding where to edit in your configuration
+## How to install a compatible engine
 
-ModSecurity comes in MANY different version with support for a multitude
-of Operating Systems (OS) and Web Servers. The installation locations
-may differ greatly between these different options so please be aware
-that the following are just some of the more common configurations.
+Here we will cover two different ways of getting your engine up and running: you can use your favorite engine provided by your OS distribution, or it can be compiled from source. Here we will cover ModSecurity installs, but you can see the Coraza install documents [here](https://www.coraza.io).
 
-### Apache 2.x with ModSecurity 2.x Compiled
+### Installing ModSecurity in your Linux distribution
 
-Compiling ModSecurity is easy, but slightly outside the scope of this
-document. If you are interested in learning how to compile ModSecurity
-please go to the ModSecurity documentation. Having compiled ModSecurity
-there is a simple test to see if your installation is working. If you
-have compiled from source you would have needed to include `LoadModule security2_module modules/mod_security2.so` either in `httpd.conf` (`apache2.conf` on Debian) or in some file included from this file.
-Anywhere after you load your module you may add the following
-ModSecurity directives.
+Pre-packaged modsecurity can be get from major distributions.
+
+- Debian: our friends at [DigitalWave](https://modsecurity.digitalwave.hu) package and keep updates of ModSecurity for debian and derivatives
+- Fedora: 
+  - `dnf install mod_security` for Apache + ModSecurity2
+  - `dnf install libmodse
+- RHEL compatible: you will need to install epel and then `yum install mod_security`.
+
+### Compiling ModSecurity
+
+Compiling ModSecurity is easy, but slightly outside the scope of this document. If you are interested in learning how to compile ModSecurity please go to the ModSecurity documentation. Having compiled ModSecurity there is a simple test to see if your installation is working. If you have compiled from source you would have needed to include `LoadModule security2_module modules/mod_security2.so` either in `httpd.conf` (`apache2.conf` on Debian) or in some file included from this file. Anywhere after you load your module you may add the following ModSecurity directives.
 
 ```apache
 SecRuleEngine On
 SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403,msg:'Our test rule has triggered'"
 ```
 
-If you restart Apache you may now navigate to any page on your web
-server passing the parameter `'testparam'` with the value `'test'` (via
-post or get) and you should receive a 403. This request will typically
-appear similar to as follows: `http://localhost/?testparam=test`.
+If you restart Apache you may now navigate to any page on your web server passing the parameter `'testparam'` with the value `'test'` (via post or get) and you should receive a 403. This request will typically appear similar to as follows: `http://localhost/?testparam=test`.
 
-If you obtained a 403 status code your ModSecurity instance is
-functioning correctly with Apache and you now know where to place
-directives.
+If you obtained a 403 status code your ModSecurity instance is functioning correctly with Apache and you now know where to place directives.
 
 ### Apache 2.x with ModSecurity 2.x Packaged (RHEL)
 
-Many operating systems provide package managers in order to aid in the
-install of software packages and their associated dependencies. Even
-though ModSecurity is relatively straight forward to install, some
-people prefer using package managers due to their ease. It should be
-noted here that many package managers do not up date their releases very
-frequently, as a result it is quite likely that your distribution may be
-missing required features or possibly even have security
-vulnerabilities. Additionally, depending on your package/package manager
-your ModSecurity configuration will be laid out slightly different.
+Many operating systems provide package managers in order to aid in the install of software packages and their associated dependencies. Even though ModSecurity is relatively straight forward to install, some people prefer using package managers due to their ease. It should be noted here that many package managers do not up date their releases very frequently, as a result it is quite likely that your distribution may be missing required features or possibly even have security vulnerabilities. Additionally, depending on your package/package manager your ModSecurity configuration will be laid out slightly different.
 
-On Fedora we will find that when you use `dnf install mod_security`
-you will receive the base ModSecurity package. Apache's configuration
-files are split out within this environment such that there are
-different folders for the base config (`/etc/httpd/config`), user
-configuration (`/etc/httpd/conf.d`, and module configuration
-(`/etc/httpd/conf.modules.d/`). The Fedora ModSecurity 2.x package places
-the LoadModule and associated 'Include's within
-`/etc/httpd/conf.modules.d/10-mod_security.conf`. Additionally, it places
-some of the reccomended default rules in
-`/etc/httpd/conf.d/mod_security.conf`. It is this secondary configuration
-file that will setup the locations where you should add your rules. By
-default it reads in all config files from the `/etc/httpd/modsecurity.d/`
-and `/etc/httpd/modsecurity.d/activated_rules/` folder. To keep order I
-would reccomend testing this configuration by placing a `rules.conf` file
-within the `activated_rules` folder. Within this `rules.conf` file add the
-following:
+On Fedora we will find that when you use `dnf install mod_security` you will receive the base ModSecurity package. Apache's configuration files are split out within this environment such that there are different folders for the base config (`/etc/httpd/config`), user configuration (`/etc/httpd/conf.d`, and module configuration (`/etc/httpd/conf.modules.d/`). The Fedora ModSecurity 2.x package places the LoadModule and associated 'Include's within `/etc/httpd/conf.modules.d/10-mod_security.conf`. Additionally, it places some of the reccomended default rules in `/etc/httpd/conf.d/mod_security.conf`. It is this secondary configuration file that will setup the locations where you should add your rules. By default it reads in all config files from the `/etc/httpd/modsecurity.d/` and `/etc/httpd/modsecurity.d/activated_rules/` folder. To keep order I would reccomend testing this configuration by placing a `rules.conf` file within the `activated_rules` folder. Within this `rules.conf` file add the following:
 
 ```bash
 SecRuleEngine On
 SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403,msg:'Our test rule has triggered'"
 ```
 
-Upon saving and restarting Apache (`systemctl restart httpd.service`) you
-should be able to navigate to a your local webserver. Once this is
-accomplished try passing the 'testparam' paramater with the value
-'test' such as via the following
-URL: `http://localhost/?testparam=test`. You should receive a 403
-Forbidden status. If you do congratulations, ModSecurity is ready for
-the OWASP CRS rules.
+Upon saving and restarting Apache (`systemctl restart httpd.service`) you should be able to navigate to a your local webserver. Once this is accomplished try passing the 'testparam' paramater with the value 'test' such as via the following
+URL: `http://localhost/?testparam=test`. You should receive a 403 Forbidden status. If you do congratulations, ModSecurity is ready for the OWASP CRS rules.
 
-### Nginx with ModSecurity 2.x Compiled
+{{% notice error %}}
+**Nginx with ModSecurity 2.x**
 
-ModSecurity 2.x currently doesn't support the new Nginx loadable
-modules. As a result, it is required that you compile Nginx from source
-with ModSecurity. For more information on how to do this see the
-ModSecurity documentaiton. Once ModSecurity is compiled in you will have
-to specify both 'ModSecurityEnabled' and 'ModSecurityConfig' within
-any location block where you want ModSecurity enabled. An example would
-look similar to below.
-
-```nginx
-location / {
-    ModSecurityEnabled on;
-    ModSecurityConfig modsec_includes.conf;
-}
-```
-
-Within this `modsec_includes.conf` you may use the `Include` directive to
-include other files or any ModSecurity directives. For our testing
-purpose we will add the following to our `modsec_includes.conf`:
-
-```Apache
-SecRuleEngine On
-SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403,msg:'Our test rule has triggered'"
-```
-
-Upon saving and restarting Nginx (`./nginx -s reload`) you should be able
-to navigate to a your local webserver. Once this is accomplished try
-passing the 'testparam' paramater with the value 'test' such as via
-the following URL: `http://localhost/?testparam=test`. You should receive
-a 403 Forbidden status. If you do congratulations, ModSecurity is ready
-for the OWASP CRS rules 🚀.
+This is not supported. It doesn't work as expected.
+{{% /notice %}}
 
 ### Nginx with ModSecurity 3.x (libmodsecurity) Compiled
 
-
+TBD
 
 ### Microsoft IIS with ModSecurity 2.x
 
-The most common deployment of ModSecurity for IIS is via the
-pre-packaged MSI installer, available at <https://www.modsecurity.org/download.html>. If you compiled or are looking to compile ModSecurity for IIS this documentation isn't for
-you. 
+The most common deployment of ModSecurity for IIS is via the pre-packaged MSI installer, available at <https://www.modsecurity.org/download.html>. If you compiled or are looking to compile ModSecurity for IIS this documentation isn't for
+you.
+ If you used this package to install ModSecurity 2.x on IIS (tested on IIS 7-10), than your configuration files are located within`C:\Program Files\ModSecurity IIS\` (or Program Files(x86) depending on your configuration). The inital configuration file, that is the one that the remainder are included from, is `modsecurity_iis.conf`. This file will be parsed by the ModSecurity for both ModSecurity and `'Include'` directives.
 
-If you used this package to install ModSecurity 2.x on IIS (tested
-on IIS 7-10), than your configuration files are located within`C:\Program Files\ModSecurity IIS\` (or Program Files(x86) depending on your configuration). The inital configuration file, that is the one that the remainder are included from, is `modsecurity_iis.conf`. This file will be parsed by the ModSecurity for both ModSecurity and `'Include'` directives.
-
-By default all installations of ModSecurity without [SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine) declared will start in DetectionOnly mode. IIS, by default, explicitly declares [SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine) to be DetectionOnly within the included modsecurity.conf file. As a result any rule we make will only show up in the Windows Event Viewer by default. For our example we're going to turn on disruptive actions. To test we should add the following to the end of our `modsecurity_iis.conf`:
+By default all installations of ModSecurity without [SecRuleEngine](<https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine>) declared will start in DetectionOnly mode. IIS, by default, explicitly declares [SecRuleEngine](<https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine>) to be DetectionOnly within the included modsecurity.conf file. As a result any rule we make will only show up in the Windows Event Viewer by default. For our example we're going to turn on disruptive actions. To test we should add the following to the end of our `modsecurity_iis.conf`:
 
 ```apache
 SecRuleEngine On
@@ -152,7 +88,7 @@ This rule will be triggered when you go to your web page and pass the testparam 
 
 If all went well you should see an HTTP 403 Forbidden in your browser when you navigate to the site in question. Additionally, in your Event Viewer, under 'Windows Logs'-\>'Application', we should see a new log that looks like the following:
 
-\<Log.png\>
+TBD: insert log image
 
 If you have gotten to this step ModSecurity is functioning on IIS and you now know where to place new directives.
 
@@ -167,7 +103,7 @@ To get our key using gpg: `gpg --keyserver pgp.mit.edu --recv 0x38EEACA1AB8A6E72
 You can also use `gpg --fetch-key https://coreruleset.org/security.asc` directly.
 {{% /notice %}}
 
-The steps here assume you are using a *nix operating system. For Windows you will be doing a similar install, but probably using the zip file from our releases.
+The steps here assume you are using a \*nix operating system. For Windows you will be doing a similar install, but probably using the zip file from our releases.
 
 To get the release file and the corresponding signature:
 
@@ -177,6 +113,7 @@ wget https://github.com/coreruleset/coreruleset/releases/download/v{{< param crs
 ```
 
 Optional verification:
+
 ```bash
 gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 10:05:48 2021 -03
@@ -198,6 +135,7 @@ gpg> quit
 ```
 
 Then you will see this result when verifying:
+
 ```bash
 gpg --verify coreruleset-3.3.2.tar.gz.asc v3.3.2.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
@@ -216,26 +154,26 @@ the root 'coreruleset-{{< param crs_latest_release >}}' folder and is named
 and reading what the different options are is
 HIGHLY recommended. At minimum you should keep in mind the following.
 
--   CRS does not configure ModSecurity features such as the rule engine,
-    the audit engine, logging etc. This task is part of the ModSecurity
-    initial setup.If you haven't done this yet please check out the
-    [recommended ModSecurity configuration](https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended)
--   By default [SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-%28v2.x%29#SecDefaultAction) CRS will redirect to your local domain when an alert is triggered.
-    This may cause redirect loops depending on your configuration. Take
-    some time to decide what you want ModSecurity it do (drop the
-    packet, return a status:403, go to a custom page etc.) when it
-    detects malicious activity.
--   Make sure to configure your anomaly scoring thresholds for more
-    information see [Anomaly]({{< ref "anomaly_scoring.md" >}} "Anomaly")
--   By default ModSecurity looks for lots of issues with different
-    databases and languages, if you are running a specific environment,
-    you probably want to limit this behavior for performance reasons.
--   ModSecurity supports [Project Honeypot](https://www.projecthoneypot.org/) blacklists. This is a
-    great project and all you need to do to leverage it is sign up for
-    an [API key](https://www.projecthoneypot.org/httpbl_api.php) (⚠️ it might be outdated)
--   Do make sure you have added any methods, static resources, content
-    types, or file extensions that your site needs beyond the basic ones
-    listed.
+- CRS does not configure ModSecurity features such as the rule engine,
+  the audit engine, logging etc. This task is part of the ModSecurity
+  initial setup.If you haven't done this yet please check out the
+  [recommended ModSecurity configuration](https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended)
+- By default [SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-%28v2.x%29#SecDefaultAction) CRS will redirect to your local domain when an alert is triggered.
+  This may cause redirect loops depending on your configuration. Take
+  some time to decide what you want ModSecurity it do (drop the
+  packet, return a status:403, go to a custom page etc.) when it
+  detects malicious activity.
+- Make sure to configure your anomaly scoring thresholds for more
+  information see [Anomaly]({{< ref "anomaly_scoring.md" >}} "Anomaly")
+- By default ModSecurity looks for lots of issues with different
+  databases and languages, if you are running a specific environment,
+  you probably want to limit this behavior for performance reasons.
+- ModSecurity supports [Project Honeypot](https://www.projecthoneypot.org/) blacklists. This is a
+  great project and all you need to do to leverage it is sign up for
+  an [API key](https://www.projecthoneypot.org/httpbl_api.php) (⚠️ it might be outdated)
+- Do make sure you have added any methods, static resources, content
+  types, or file extensions that your site needs beyond the basic ones
+  listed.
 
 For more information please see the page on
 [configuration]({{< ref "crs.md" >}} "configuration"). Once you have reviewed
@@ -273,6 +211,13 @@ you'd note there are quite a few .conf files. While the names attempt
 to do a good job at describing what each file does additional
 information is available in the [rules](rules.md)
 section.
+
+## Finding where to edit in your configuration
+
+ModSecurity comes in MANY different version with support for a multitude
+of Operating Systems (OS) and Web Servers. The installation locations
+may differ greatly between these different options so please be aware
+that the following are just some of the more common configurations.
 
 ### Includes for Apache
 
@@ -345,168 +290,3 @@ frequently updated in mind. New threats and techniques and updates are
 provided frequently as part of the rule set and as a result, in order to
 combat the latest threats effectivly it is imperative that constant
 updates should be part of your strategy.
-
-### An update script
-
-As part of our continuing effort to provide the most user friendly rule
-set available we provide an example script that you can use for updating
-your ruleset:
-
-```python
-# -*- coding: utf-8 -*-
-"""
-This script is designed to allow users to automatically
-update their ModSecurity OWASP Core Rule Set. It can
-be called by a cronjob or scheduled task in order to
-allow for automation. Note that it can either replace
-the whole CRS directory or just update the rules folder,
-which is the default.
-"""
-
-from __future__ import print_function
-import argparse
-import os
-import uuid
-import shutil
-import logging
-
-try:
-    from git import Repo
-except ImportError:
-    print("This script requires the GitPython module (pip install gitpython).")
-
-__author__ = "Chaim Sanders"
-__copyright__ = "Copyright 2016, Trustwave Inc"
-__credits__ = ["Chaim Sanders"]
-__license__ = "ASL 2.0"
-__version__ = "1.0"
-__maintainer__ = "Chaim Sanders"
-__git__ = "csanders-git"
-__status__ = "Production"
-
-def check_arguments(logger):
-    """Control arguments and set args variable"""
-    example_string = "Examples: python %(prog)s --full -p ./owasp-modsecurity-crs/" \
-                     " or python %(prog)s --folder=util/ --path=./owasp-modsecurity-crs/util" \
-                     " or python %(prog)s"
-    parser = argparse.ArgumentParser(description='Update OWASP CRS rules',
-                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-                                     epilog=example_string)
-    parser.add_argument('-b', '--branch', default="v3.0.0-rc1", type=str,
-                        required=False, help='The GitHub branch you want to download.')
-    parser.add_argument('-r', '--repo',
-                        default="https://github.com/SpiderLabs/owasp-modsecurity-crs",
-                        type=str, required=False, help='The GitHub repository you want to use.')
-    parser.add_argument('-p', '--path', default="./owasp-modsecurity-crs/rules/", type=str,
-                        required=False, help='The path where the rules files should be placed')
-    group = parser.add_mutually_exclusive_group(required=False)
-    group.add_argument('--full', action='store_true',
-                       required=False,
-                       help='Copy the whole repo to the path specified instead of just the rules')
-    group.add_argument('--folder', default="rules/", type=str,
-                       required=False,
-                       help='The toplevel folder within the repo to copy. Can\'t be used with full')
-    parser.add_argument('-d', '--debug', action='store_true',
-                        required=False, help='Display debug logging.')
-    args = parser.parse_args()
-    if args.debug:
-        logger.setLevel(logging.DEBUG)
-        logger.debug("Debugging mode has been enabled.")
-    logger.debug("The following arguments were assigned: " + str(args) + ".")
-    return args
-
-def download_rules(args, logger):
-    """Download and replace our rules"""
-    if args.path[-1] != os.path.sep:
-        dst_dir = args.path + os.path.sep
-    else:
-        dst_dir = args.path
-    logger.debug("The final path was set to " + str(dst_dir) + ".")
-    rand_fold = "./" + str(uuid.uuid4())
-    logger.debug("The temporary repo folder was set to " + str(rand_fold) + ".")
-    # If the user wants the whole directory set that otherwise just rules/
-    if args.full:
-        copy_fold = rand_fold
-    else:
-        copy_fold = rand_fold + os.path.sep + args.folder
-    logger.debug("Set the folder to be copied to " + copy_fold + ".")
-    Repo.clone_from(args.repo, rand_fold, branch=(args.branch))
-    logger.debug("Cloned the repo successfully.")
-    for src_dir, _, files in os.walk(copy_fold):
-        for file_ in files:
-            if file_[-8:] != ".example":
-                src_file = os.path.join(src_dir, file_)
-                # If its the full copy we need the new prefix path
-                if args.full:
-                    copy_path = src_file.replace(rand_fold, "")[1:]
-                else:
-                    # Remove the overlap in folders
-                    copy_path = src_file.replace(os.path.join(rand_fold, args.folder), "")
-                dst_file = os.path.join(dst_dir, copy_path)
-                cwd = os.path.dirname(dst_file)
-                # Check if the directory structure exists
-                if not os.path.exists(cwd):
-                    os.makedirs(cwd)
-                if os.path.exists(dst_file):
-                    os.remove(dst_file)
-                    logger.debug("Removed existing " + dst_file + ".")
-                try:
-                    shutil.move(src_file, cwd)
-                except shutil.Error as exc:
-                    print(exc)
-                logger.debug("Moved " + file_ + " to " + cwd + ".")
-    logger.debug("Copying completed successfully")
-    shutil.rmtree(rand_fold)
-    logger.debug("Deleted the temporary folder.")
-
-def main():
-    """Initiate logging and run subroutines"""
-    logging.basicConfig(level=logging.INFO)
-    logger = logging.getLogger(os.path.basename(__file__))
-    args = check_arguments(logger)
-    download_rules(args, logger)
-
-if __name__ == "__main__":
-    main()
-```
-
-## Problems with installation
-
-### Apache Line Continuation
-
-In Apache 2.4.x before 2.4.11 there is a bug where the use of line
-continuations in a config size may cause the line continuation to be
-truncated. This will lead to an error similar to the following:
-
-```bash
-Syntax error on line 24 of /etc/httpd/modsecurity.d/activated_rules/RESPONSE-50-DATA-LEAKAGES-PHP.conf:
-Error parsing actions: Unknown action: \
-```
-
-This is not an error with ModSecurity or OWASP CRS. In order to fix this
-issue you can simply add a space before the continuation on the
-offending line. For more information see [apache bugzilla](https://bz.apache.org/bugzilla/show_bug.cgi?id=55910).
-
-### Anomaly Mode Doesn't Work
-
-Sometimes on IIS or Nginx users run into an instance where anamoly mode
-doesn't work as expected. In fact upon careful inspection of logs one
-would notice that rules don't fire in the order we would expect. In
-general this is a result of using the `'*'` operator within these
-environments as it does not act the same way as in Apache. In general
-within both Apache and IIS one should expliticly include the various
-files present within the OWASP CRS instead of using the `'*'`.
-
-### Webserver returns error after CRS install
-
-This is likley due to a rule triggering. For instance in some cases a
-rule is enabled that prohibits access via an IP address. Depending on
-your
-[SecDefaultAction](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecDefaultAction)
-and
-[SecRuleEngine](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine)
-configurations, this may result in a redirect loop or a status code. If
-this is the problem you are experiencing you should consult your
-error.log (or event viewer for IIS). From this location you can
-determine the offending rule and add an exception if neccessary see
-[false positives and tuning]({{< ref "../configuring/false_positives_tuning.md" >}}).
