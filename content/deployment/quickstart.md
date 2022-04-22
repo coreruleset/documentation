@@ -153,4 +153,4 @@ services:
       - "80:80"
 ```
 
-That's it! Now just starting that container will give you the latest stable CRS protecting your site. There are [plenty of additional variables](https://github.com/coreruleset/modsecurity-crs-docker) you can use to configure the container image and its behaviour. Be sure to check those out!
+That's it! Now just starting that container will give you the latest stable CRS protecting your site. There are [plenty of additional variables](https://github.com/coreruleset/modsecurity-crs-docker) you can use to configure the container image and its behavior. Be sure to check those out!
