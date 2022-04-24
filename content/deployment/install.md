@@ -1,12 +1,11 @@
 ---
-title: "Installing CoreRuleSet"
-menuTitle: "Extended Install"
+title: "Extended Install"
 chapter: false
 disableToc: false
 weight: 20
 ---
 
-If you need mode information than the one in the [quickstart guide]({{< ref "quickstart.md" >}}), here we extend with additional details so keep reading.
+If you need mode information than the one in the [quick start guide]({{< ref "quick_start.md" >}}), here we extend with additional details so keep reading.
 
 Below you should find all the information you need to properly install CRS. If you are having problems feel free to reach out to our [Google Group](https://groups.google.com/a/owasp.org/forum/#!forum/modsecurity-core-rule-set-project), or our [Slack Channel](https://owasp.slack.com/archives/CBKGH8A5P). If you don't have access yet, [get your invite here](https://owasp.org/slack/invite).
 

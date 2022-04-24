@@ -1,11 +1,10 @@
 ---
-title: "OWASP CRS Quickstart"
-menuTitle: "Quickstart"
+title: "Quick Start Guide"
 chapter: false
 weight: 10
 ---
 
-Welcome to the OWASP Core RuleSet (CRS) quickstart guide. We will
+Welcome to the OWASP Core RuleSet (CRS) quick start guide. We will
 attempt to get you up and running with CRS as quick as possible. This
 guide assumes ModSecurity is already working. If you are unsure see the
 [extended install]({{< ref "install.md" >}}) page. Otherwise, lets jump in.
