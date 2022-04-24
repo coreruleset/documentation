@@ -10,7 +10,7 @@ The generated documentation is automatically updated at https://coreruleset.org/
 
 You can edit the documentation on your local system. The only thing you need is the latest [Hugo binary](https://gohugo.io/getting-started/installing/) for your OS (Windows, Linux, Mac): it’s that simple.
 
-**Important: You need the _extended_ version of Hugo, so be sure you download that one.**
+**Important: You need Hugo _extended_ version >= 0.93.0.**
 
 ## Cloning this repository
 
