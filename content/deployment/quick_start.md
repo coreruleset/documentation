@@ -4,35 +4,37 @@ chapter: false
 weight: 10
 ---
 
-Welcome to the OWASP Core RuleSet (CRS) quick start guide. We will
-attempt to get you up and running with CRS as quick as possible. This
-guide assumes ModSecurity is already working. If you are unsure see the
-[extended install]({{< ref "install.md" >}}) page. Otherwise, lets jump in.
+> This quick start guide aims to get a CRS installation up and running as quickly as possible. This guide assumes that ModSecurity is already working. If unsure then refer to the [extended install]({{< ref "install.md" >}}) page for full details.
 
-You'll first need to download the ruleset. Our strong recommendation is that you [use a supported version](https://github.com/coreruleset/coreruleset/security/policy). Using a browser (or
-equivalent) visit the following URL: https://github.com/coreruleset/coreruleset/releases.
+## Downloading the Rule Set
 
-There we have all our official releases listed. For production we recommend you to use the latest release, v{{< param crs_latest_release >}}. If you want to test the bleeding edge version, we also provide _nightly releases_.
+The first step is to download the Core Rule Set itself. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
 
-### Verifying our release
+Official CRS releases can be found at the following URL: https://github.com/coreruleset/coreruleset/releases.
+
+For *production* environments, it is recommended to use the latest release, which is v{{< param crs_latest_release >}}. For *testing* the bleeding edge CRS version, nightly releases are also provided.
+
+### Verifying Releases
 
 {{% notice note %}}
-Releases are signed using [our GPG key](https://coreruleset.org/security.asc), (fingerprint: 3600 6F0E 0BA1 6783 2158 8211 38EE ACA1 AB8A 6E72). You can verify the release using GPG/PGP compatible tooling.
+Releases are signed using the CRS project's [GPG key](https://coreruleset.org/security.asc) (fingerprint: 3600 6F0E 0BA1 6783 2158 8211 38EE ACA1 AB8A 6E72). Releases can be verified using GPG/PGP compatible tooling.
 
-To get our key using gpg from public servers: `gpg --keyserver pgp.mit.edu --recv 0x38EEACA1AB8A6E72` (this id should be equal to the last sixteen hex characters in our fingerprint).
-You can also use `gpg --fetch-key https://coreruleset.org/security.asc` directly.
+To retrieve the CRS project's public key from public key servers using `gpg`, execute: `gpg --keyserver pgp.mit.edu --recv 0x38EEACA1AB8A6E72` (this ID should be equal to the last sixteen hex characters in the fingerprint).
+
+It is also possible to use `gpg --fetch-key https://coreruleset.org/security.asc` to retrieve the key directly.
 {{% /notice %}}
 
-The steps here assume you are using a *nix operating system. For Windows you will be doing a similar install, but probably using the zip file from our releases.
+The following steps assume that a \*nix operating system is being used. Installation is similar on Windows but likely involves using a zip file from the CRS [releases page](https://github.com/coreruleset/coreruleset/releases).
 
-To get the release file and the corresponding signature:
+To download the release file and the corresponding signature:
 
 ```bash
 wget https://github.com/coreruleset/coreruleset/archive/refs/tags/v{{< param crs_latest_release >}}.tar.gz
 wget https://github.com/coreruleset/coreruleset/releases/download/v{{< param crs_latest_release >}}/coreruleset-{{< param crs_latest_release >}}.tar.gz.asc
 ```
 
-Optional verification:
+To verify the integrity of the release:
+
 ```bash
 gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 10:05:48 2021 -03
@@ -43,7 +45,9 @@ gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: 3600 6F0E 0BA1 6783 2158  8211 38EE ACA1 AB8A 6E72
 ```
 
-If the signature was good, the verification succeeded. If you see a warning like the above, it means you know our public key, but you are not trusting it. You can trust it by using the following method:
+If the signature was good then the verification succeeds. If a warning is displayed, like the above, it means the CRS project's public key is *known* but is not *trusted*.
+
+To trust the CRS project's public key:
 
 ```bash
 gpg edit-key 36006F0E0BA167832158821138EEACA1AB8A6E72
@@ -53,7 +57,8 @@ Are you sure: Yes
 gpg> quit
 ```
 
-Then you will see this result when verifying:
+The result when verifying a release will then look like so:
+
 ```bash
 gpg --verify coreruleset-3.3.2.tar.gz.asc v3.3.2.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
@@ -61,70 +66,62 @@ gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
 gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultimate]
 ```
 
-### Installing the files
+## Installing the Rule Set
 
-Once you downloaded and verified the release, extract it somewhere well known on your server.
-Typically this will be in the webserver directory. We are demonstrating
-with Apache below. For information on configuring Nginx or IIS see
-the [extended install]({{< ref "install.md" >}}) page. Additionally, while it is a
-successful practice to make a new `modsecurity.d` folder as outlined
-below, it isn't strictly necessary. The path scheme outlined is the
-common to RHEL based operating systems, you may have to adjust the
-Apache path used to match your installation.
+### Extracting the Files
+
+Once the rule set has been downloaded and verified, extract the rule set files to a well known location on the server. This will typically be somewhere in the web server directory.
+
+The examples presented below demonstrate using Apache. For information on configuring Nginx or IIS see the [extended install]({{< ref "install.md" >}}) page.
+
+Note that while it's common practice to make a new `modsecurity.d` folder, as outlined below, this isn't strictly necessary. The path scheme outlined is common on RHEL-based operating systems; the Apache path used may need to be adjusted to match the server's installation.
 
 ```bash
 mkdir /etc/httpd/modsecurity.d
 tar -zxvf v{{< param crs_latest_release >}}.tar.gz -C /etc/httpd/modsecurity.d/owasp-modsecurity-crs
 ```
 
-After extracting the rule set we have to set up the main OWASP Core Rule Set
-configuration file. We provide an example configuration file as part of
-the package located in the main directory: `csr-setup.conf.example`.
+### Setting Up the Main Configuration File
 
-(Note: Other aspects of ModSecurity are controlled by the
-recommended ModSecurity configuration rules, packaged with ModSecurity)
+After extracting the rule set files, the next step is to set up the main OWASP Core Rule Set configuration file. An example configuration file is provided as part of the release package, located in the main directory: `csr-setup.conf.example`.
 
-For many people
-this will be a good enough starting point but you should take the time
-to look through this file before deploying it to make sure it's right
-for your environment. For more information see [configuration]({{< ref "../configuring/crs.md" >}}).
+{{% notice note %}}
+Other aspects of ModSecurity, particularly engine-specific parameters, are controlled by the ModSecurity "recommended" configuration rules, `modsecurity.conf-recommended`. This file comes packaged with ModSecurity itself.
+{{% /notice %}}
 
-Once you have changed any settings within the configuration file, as
-needed, you should rename it to remove the .example portion
+In many scenarios, the default example CRS configuration will be a good enough starting point. It is, however, a good idea to take the time to look through the example configuration file *before* deploying it to make sure it's right for a given environment. For more information see [configuration]({{< ref "../configuring/crs.md" >}}).
+
+Once any settings have been changed within the example configuration file, as needed, it should be renamed to remove the .example portion, like so:
 
 ```bash
 cd /etc/httpd/modsecurity.d/owasp-modsecurity-crs/
 mv csr-setup.conf.example csr-setup.conf
 ```
 
-Only one more step! We now have to tell our web server where our rules
-are. We do this by including the rule configuration files in our
-httpd.conf file. Again, we are demonstrating using Apache but it is
-similar on other systems see the [extended install]({{< ref "install.md" >}}) page for details.
+### Include-ing the Rule Files
+
+The last step is to tell the web server where the rules are. This is achieved by `include`-ing the rule configuration files in the `httpd.conf` file. Again, this example demonstrates using Apache, but the process is similar on other systems (see the [extended install]({{< ref "install.md" >}}) page for details).
 
 ```bash
 echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/csr-setup.conf' >> /etc/httpd/conf/httpd.conf
 echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/rules/*.conf' >> /etc/httpd/conf/httpd.conf
 ```
 
-Now that we have configured everything you should be able to restart and
-enjoy using the OWASP Core Rule Set. Typically these rules will require
-a bit of exception tuning, depending on your site. For more information
-see [false positives and tuning]({{< ref "false_positives_tuning.md" >}}). Enjoy!
+Now that everything has been configured, it should be possible to restart and being using the OWASP Core Rule Set. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "false_positives_tuning.md" >}}).
 
 ```bash
 systemctl restart httpd.service
 ```
 
-## Using Containers
+## Alternative: Using Containers
 
-Another quick option is to leverage our pre-packaged containers. You can use docker, podman, or any container compatible engine. Our images are published in the docker hub. The one you probably want is the `owasp/modsecurity-crs`: it already has everything to get you up and running quickly.
+Another quick option is to use the official CRS [pre-packaged containers]({{< ref "../development/useful_tools/#official-crs-maintained-docker-images" >}}). Docker, Podman, or any compatible container engine can be used. The official CRS images are published in the Docker Hub. The image most often deployed is `owasp/modsecurity-crs`: it already has everything needed to get up and running quickly.
 
-We already pre-package both Apache and Nginx Web servers with the corresponding ModSecurity engine. More engines (like Coraza) will come later.
+The CRS project pre-packages both Apache and Nginx web servers along with the appropriate corresponding ModSecurity engine. More engines, like [Coraza](https://coraza.io/), will be added at a later date.
 
-So to protect your running Web Server, just get the image and use these configuration variables to make the WAF receive the requests and proxy your server.
+To protect a running web server, all that's required is to get the appropriate image and set its configuration variables to make the WAF receives requests and proxies them to your backend server.
 
-This is an example `docker-compose` that can be used to pull the container images. You just need to change the `BACKEND` server so it points to your own server:
+Below is an example `docker-compose` file that can be used to pull the container images. All that needs to be changed is the `BACKEND` variable so that the WAF points to the backend server in question:
 
 ```docker-compose
 services:
@@ -133,7 +130,7 @@ services:
     image: owasp/modsecurity-crs:apache
     environment:
       SERVERNAME: modsec2-apache
-      BACKEND: http://<your own server>
+      BACKEND: http://<backend server>
       PORT: "80"
       MODSEC_RULE_ENGINE: DetectionOnly
       BLOCKING_PARANOIA: 2
@@ -152,4 +149,4 @@ services:
       - "80:80"
 ```
 
-That's it! Now just starting that container will give you the latest stable CRS protecting your site. There are [plenty of additional variables](https://github.com/coreruleset/modsecurity-crs-docker) you can use to configure the container image and its behavior. Be sure to check those out!
+That's all that needs to be done. Simply starting the container described above will instantly provide the protection of the latest stable CRS release in front of a given backend server or service. There are [lots of additional variables](https://github.com/coreruleset/modsecurity-crs-docker) that can be used to configure the container image and its behavior, so be sure to read the full documentation.
