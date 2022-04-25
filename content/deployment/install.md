@@ -170,7 +170,7 @@ With the CRS release downloaded and verified, the rest of the set up can continu
 
 ## Setting Up OWASP CRS
 
-OWASP CRS contains a setup file that should be reviewed prior to completing set up. The setup file is the only configuration file within the root 'coreruleset-{{< param crs_latest_release >}}' folder and is named `csr-setup.conf.example`. Examining this configuration file and reading what the different options are is **highly** recommended.
+OWASP CRS contains a setup file that should be reviewed prior to completing set up. The setup file is the only configuration file within the root 'coreruleset-{{< param crs_latest_release >}}' folder and is named `crs-setup.conf.example`. Examining this configuration file and reading what the different options are is **highly** recommended.
 
 At a minimum, keep in mind the following:
 
@@ -184,10 +184,10 @@ At a minimum, keep in mind the following:
 Once reviewed and configured, the CRS configuration file should be renamed by changing the file suffix from `.example` to `.conf`:
 
 ```bash
-mv csr-setup.conf.example csr-setup.conf
+mv crs-setup.conf.example crs-setup.conf
 ```
 
-In addition to `csr-setup.conf.example`, there are two other ".example" files within the CRS repository. These are:
+In addition to `crs-setup.conf.example`, there are two other ".example" files within the CRS repository. These are:
 
 - `rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example`
 - `rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example`
@@ -212,7 +212,7 @@ It is recommended to create a folder specifically to contain the CRS rules. In t
 ```apache
 <IfModule security2_module>
         Include modsecurity.d/modsecurity.conf
-        Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/csr-setup.conf
+        Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/crs-setup.conf
         Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/rules/*.conf
 </IfModule>
 ```
