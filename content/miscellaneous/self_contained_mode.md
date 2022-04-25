@@ -11,7 +11,7 @@ weight: 10
 
 The default mode in CRS 3.x is Anomaly Scoring mode, you can verify this
 is your mode by checking that the SecDefaultAction line in the
-csr-setup.conf file usees the pass action:
+crs-setup.conf file usees the pass action:
 
 ```apache
 SecDefaultAction "phase:2,pass,log"
@@ -33,7 +33,7 @@ execute any disruptive/logging actions specified on the current rule.
 ### Configuring Traditional Mode
 
 If you want to run the CRS in Traditional mode, you can do this easily
-by modifying the SecDefaultAction directive in the csr-setup.conf file
+by modifying the SecDefaultAction directive in the crs-setup.conf file
 to use a disruptive action other than the default \'pass\', such as
 deny:
 
