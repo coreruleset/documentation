@@ -83,7 +83,7 @@ tar -zxvf v{{< param crs_latest_release >}}.tar.gz -C /etc/httpd/modsecurity.d/o
 
 ### Setting Up the Main Configuration File
 
-After extracting the rule set files, the next step is to set up the main OWASP Core Rule Set configuration file. An example configuration file is provided as part of the release package, located in the main directory: `csr-setup.conf.example`.
+After extracting the rule set files, the next step is to set up the main OWASP Core Rule Set configuration file. An example configuration file is provided as part of the release package, located in the main directory: `crs-setup.conf.example`.
 
 {{% notice note %}}
 Other aspects of ModSecurity, particularly engine-specific parameters, are controlled by the ModSecurity "recommended" configuration rules, `modsecurity.conf-recommended`. This file comes packaged with ModSecurity itself.
@@ -95,7 +95,7 @@ Once any settings have been changed within the example configuration file, as ne
 
 ```bash
 cd /etc/httpd/modsecurity.d/owasp-modsecurity-crs/
-mv csr-setup.conf.example csr-setup.conf
+mv crs-setup.conf.example crs-setup.conf
 ```
 
 ### Include-ing the Rule Files
@@ -103,7 +103,7 @@ mv csr-setup.conf.example csr-setup.conf
 The last step is to tell the web server where the rules are. This is achieved by `include`-ing the rule configuration files in the `httpd.conf` file. Again, this example demonstrates using Apache, but the process is similar on other systems (see the [extended install]({{< ref "install.md" >}}) page for details).
 
 ```bash
-echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/csr-setup.conf' >> /etc/httpd/conf/httpd.conf
+echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/crs-setup.conf' >> /etc/httpd/conf/httpd.conf
 echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/rules/*.conf' >> /etc/httpd/conf/httpd.conf
 ```
 
