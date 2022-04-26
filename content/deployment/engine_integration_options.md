@@ -73,6 +73,11 @@ The Loadbalancer.org is a loadbalancer based on Apache and ModSecurity v2. We've
 
 [Learn more about this](https://www.loadbalancer.org/blog/how-to-train-your-waf/)
 
+### AVI Networks "Vantage"
+
+AVI Networks Vantage is a modern virtual loadbalancer and proxy with strong WAF capabilities. It is based on a fork of ModSecurity v3.
+
+[Learn more about this platform](Learn more about https://avinetworks.com/docs/21.1/waf-configuring/).
 
 ## Existing CRS Integrations: Cloud and CDN Offerings
 
