@@ -7,7 +7,7 @@ weight: 19
 > The CRS plugin mechanism allows the rule set to be extended in specific, experimental, or unusual ways, as this page explains.
 
 {{% notice note %}}
-Plugins are not part of the CRS 3.3.x release line. They will be released officially with the next major CRS release. In the meantime, plugins can be used with one of the stable releases by following the instructions presented below.
+Plugins are not part of the CRS 3.3.x release line. They are released officially with CRS 4.0. In the meantime, plugins _can_ be used with one of the stable releases by following the instructions presented below.
 {{% /notice %}}
 
 ## What are Plugins?
@@ -61,7 +61,7 @@ The two existing CRS `Include` statements are complemented with three additional
 
 The first step is to prepare the plugin folder.
 
-Future CRS releases will come with a plugins folder next to the rules folder. If using a CRS release *without* a plugins folder, create one and place three empty config files in it (e.g. by using the shell command `touch`):
+CRS 4.x will come with a plugins folder next to the rules folder. When using an older CRS release *without* a plugins folder, create one and place three empty config files in it (e.g. by using the shell command `touch`):
 
 ```
 crs/plugins/empty-config.conf
@@ -69,7 +69,7 @@ crs/plugins/empty-before.conf
 crs/plugins/empty-after.conf
 ```
 
-These empty rule files ensure that the web server does not fail when `Include`-ing `*.conf` if there are no plugins present.
+These empty rule files ensure that the web server does not fail when `Include`-ing `*.conf` if there are no plugin files present.
 
 {{% notice info %}}
 Apache supports the `IncludeOptional` directive, but that is not available on *all* web servers, so `Include` is used here in the interests of having consistent and simple documentation.
