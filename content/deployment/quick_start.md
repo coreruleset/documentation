@@ -150,3 +150,13 @@ services:
 ```
 
 That's all that needs to be done. Simply starting the container described above will instantly provide the protection of the latest stable CRS release in front of a given backend server or service. There are [lots of additional variables](https://github.com/coreruleset/modsecurity-crs-docker) that can be used to configure the container image and its behavior, so be sure to read the full documentation.
+
+## Verifying that the CRS is active
+
+Always verify that CRS is installed correctly by sending a 'malicious' request to your site or application, for instance:
+
+```bash
+curl https://www.example.com/?foo=/etc/passwd&bar=/bin/sh
+```
+
+Depending on your configurated thresholds, this should be detected as a malicious request. If you use blocking mode, you should receive an Error 403. The request should also be logged to the audit log, which is usually in `/var/log/modsec_audit.log`.
