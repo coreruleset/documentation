@@ -156,7 +156,7 @@ That's all that needs to be done. Simply starting the container described above 
 Always verify that CRS is installed correctly by sending a 'malicious' request to your site or application, for instance:
 
 ```bash
-curl https://www.example.com/?foo=/etc/passwd&bar=/bin/sh
+curl 'https://www.example.com/?foo=/etc/passwd&bar=/bin/sh'
 ```
 
 Depending on your configurated thresholds, this should be detected as a malicious request. If you use blocking mode, you should receive an Error 403. The request should also be logged to the audit log, which is usually in `/var/log/modsec_audit.log`.
