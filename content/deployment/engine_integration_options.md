@@ -5,56 +5,132 @@ chapter: false
 weight: 5
 ---
 
-> The Core Rule Set can be run using a compatible WAF engine. CRS can also be used via a number of services which feature CRS integration, such as cloud and CDN-based WAF offerings.
+> The Core Rule Set runs on WAF engines that are compatible with a subset of ModSecurity's SecLang configuration language. There are several options outside of ModSecurity itself, namely cloud offerings and content delivery network (CDN) services. There is also an open-source alternative to ModSecurity in the form of the new Coraza WAF engine.
 
-## Compatible WAF Engines
+## Compatible Free and Open-Source WAF Engines
 
-### ModSecurity
+### ModSecurity v2
 
-ModSecurity comes in two distinct flavors:
+ModSecurity v2, originally a security module for the Apache web server, is **the reference implementation for CRS**.
 
-- ModSecurity v2
-- ModSecurity v3 (aka _libmodsecurity_)
+ModSecurity 2.9.x passes 100% of the CRS unit tests on the Apache platform.
 
-Originally, ModSecurity v2 was designed to work as an Apache module. This is the more stable engine of those available, and it's also the CRS base target.
+When running ModSecurity, this is the option that is *practically guaranteed* to work with most documentation and know-how all around.
 
-The evolution (or reimplementation) of v2 was v3, where the core engine was moved to a library, _libmodsecurity_, and detached from Apache. Connectors were then implemented to bridge between web servers and libmodsecurity. For v3, the most stable connector available is the [Nginx connector](https://github.com/SpiderLabs/ModSecurity-nginx).
+ModSecurity is released under the Apache License 2.0. It is primarily developed by Spiderlabs, an entity within the company Trustwave. In summer 2021, Trustwave announced their plans to end development of ModSecurity in 2024. Attempts to convince Trustwave to hand over the project in the meantime, in the interests of guaranteeing the project's continuation, have failed. Trustwave have stated that they will not relinquish control of the project before 2024.
 
-{{% notice note %}}
-Not all features from ModSecurity v2 were implemented in v3, but **all features implemented by CRS should be compatible with both ModSecurity engines**.
+As of this writing, there is no imminent need to leave the ModSecurity v2 platform, but such a step may become necessary in the future as the project's development stalls or new security problems can no longer be fixed. Despite these difficulties, the CRS community is confident it has the power and knowledge to provide ModSecurity patches if really needed.
 
-For full details on implemented features, refer to the ModSecurity [v2](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)) and [v3](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-%28v3.x%29) reference manuals on GitHub.
-{{% /notice %}}
+To learn more about the situation around ModSecurity, read [this CRS blog post](https://coreruleset.org/20211222/talking-about-modsecurity-and-the-new-coraza-waf/) discussing the matter.
 
-Which engine to choose depends on the available expertise and the software used normally (i.e., Apache or Nginx). Recommended setups are:
+There is a [ModSecurity v2 / Apache Docker container](https://github.com/coreruleset/modsecurity-crs-docker) which is maintained by the CRS project.
 
-- Apache with ModSecurity v2
-- Nginx with ModSecurity v3
+### ModSecurity v3
 
-Both of these combinations can be quickly deployed using our [provided Docker containers](https://github.com/coreruleset/modsecurity-crs-docker).
- 
-### Coraza WAF Engine
+ModSecurity v3, also known as *libModSecurity*, is a re-implementation of ModSecurity v3 with an architecture that is less dependent on the web server. The connection between the standalone ModSecurity and the web server is made using a lean connector module.
 
-The OWASP Coraza WAF engine is 100% compatible with the CRS v4 major release. See the [Coraza website](https://coraza.io/) for information on deployment options. 
+As of spring 2021, *only the Nginx connector module is really usable in production*.
 
-{{% notice info %}}
-Coraza WAF is not a replacement for ModSecurity. It is a **new engine** which is compatible enough to run CRS, but will be growing with its own new set of features. 
-{{% /notice %}}
+ModSecurity v3 fails with 2-4% of the CRS unit tests due to bugs and implementation gaps. Nginx + ModSecurity v3 also suffers from performance problems when compared to the Apache + ModSecurity v2 platform. This may be surprising for people familiar with the high performance of Nginx.
+
+ModSecurity v3 is used in production together with Nginx, but the CRS project recommends to use the ModSecurity v2 release line with Apache.
+
+ModSecurity is released under the Apache License 2.0. It is primarily developed by Spiderlabs, an entity within the company Trustwave. In summer 2021, Trustwave announced their plans to end development of ModSecurity in 2024. Attempts to convince Trustwave to hand over the project in the meantime, in the interests of guaranteeing the project's continuation, have failed. Trustwave have stated that they will not relinquish control of the project before 2024.
+
+To learn more about the situation around ModSecurity, read [this CRS blog post](https://coreruleset.org/20211222/talking-about-modsecurity-and-the-new-coraza-waf/) discussing the matter.
+
+There is a [ModSecurity v3 / Nginx Docker container](https://github.com/coreruleset/modsecurity-crs-docker) which is maintained by the CRS project.
+
+### Coraza
+
+The new [OWASP Coraza WAF](https://coraza.io/) is meant to provide an open-source alternative to the two ModSecurity release lines.
+
+Coraza passes 100% of the CRS v4 test suite and is thus *fully compatible with CRS*.
+
+Coraza has been developed in Go and currently runs on the Caddy and Traefik platforms. Additional ports are being developed and the developers also seek to bring Coraza to Nginx and, eventually, Apache. In parallel to this expansion, Coraza will be developed further with its own feature set.
+
+To learn more about CRS and Coraza, read [this CRS blog post](https://coreruleset.org/20211222/talking-about-modsecurity-and-the-new-coraza-waf/) which introduces Coraza.
+
+## Commercial WAF Appliances
+
+Dozens of commercial WAFs, both virtual and hardware-based, offer CRS as part of their service. Many of them use ModSecurity underneath, or some alternative implementation (although this is rare on the WAF appliance approach). Most of these commercial WAFs either don't offer the full feature set of CRS or they don't make it easily accessible. With some of these companies, there is often also a lack of CRS experience and knowledge.
+
+The CRS project recommends evaluating these commercial appliance-based offerings in a holistic way before buying a license.
+
+In light of the many, many appliance offerings on the market and the CRS project's relatively limited exposure, only a few offerings are listed here.
+
+### Kemp/Progressive LoadMaster
+
+The Kemp LoadMaster is a popular load balancer that integrates ModSecurity v2 and CRS in a typical way. It goes further than the competition with the support of most CRS features.
+
+To learn more, read [this blog post about CRS on LoadMaster](https://kemptechnologies.com/blog/how-to-run-owasp-open-web-application-security-project-i-kemp-load-master/).
+
+Kemp/Progressive is a sponsor of CRS.
+
+### Loadbalancer.org
+
+The load balancer appliance from Loadbalancer.org features WAF functionality based on Apache + ModSecurity v2 + CRS, sandwiched by HAProxy for load balancing. It's available as a hardware, virtual, and cloud appliance.
+
+To learn more, read [this blog post about CRS at Loadbalancer.org](https://www.loadbalancer.org/blog/simplifying-web-application-security-with-the-core-rule-set-v3/).
+
+### Avi Networks "Vantage"
+
+Avi Vantage from Avi Networks is a modern virtual load balancer and proxy with strong WAF capabilities. It's based on a fork of ModSecurity v3.
+
+To learn more, read [Avi's WAF documentation](https://avinetworks.com/docs/21.1/waf-configuring/).
 
 ## Existing CRS Integrations: Cloud and CDN Offerings
 
+Most big cloud providers and CDNs provide a CRS offering. While originally these were mostly based on ModSecurity, over time they have all moved to alternative (usually proprietary) implementations of ModSecurity's SecLang configuration language, or they transpose the CRS rules written in SecLang into their own domain specific language (DSL).
+
+The CRS project has some insight into some of these platforms and is in touch with most of these providers. The *exact specifics* are not really known, however, but what *is* known is that almost all of these integrators compromised and provide a *subset* of CRS rules and a *subset* of features, in the interests of ease of integration and operation.
+
 {{% notice info %}}
-The [CRS Status page project](https://github.com/coreruleset/coreruleset/wiki/DevRetreat21StatusPage) will be testing cloud and CDN offerings. As part of this effort, we will be documenting results and even publishing code on how to quickly get started using CRS in CDN/cloud providers.
+The [CRS Status page project](https://github.com/coreruleset/coreruleset/wiki/DevRetreat21StatusPage) will be testing cloud and CDN offerings. As part of this effort, the CRS project will be documenting the results and even publishing code on how to quickly get started using CRS in CDN/cloud providers. This status page project is in development as of spring 2022.
 {{% /notice %}}
+
+A selection of these platforms are listed below, along with links to get more info.
 
 ### AWS WAF
 
-AWS provides an [abridged version of the Core Rule set](https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html). It's confusing initially because, as a managed rule set, it's called `AWSManagedRulesCommonRuleSet`, but technically it's their partial implementation of / resembles the CRS. 
+AWS provides an [abridged version of the Core Rule set](https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html). It's confusing initially because, as a managed rule set, it's called `AWSManagedRulesCommonRuleSet`, but technically it's their partial implementation of / resembles the CRS.
+
+### Cloudflare WAF
+
+Cloudflare WAF supports CRS as one of its WAF rule sets. Documentation on how to use it can be found in [Cloudflare's documentation](https://developers.cloudflare.com/waf/managed-rulesets/owasp-core-ruleset/).
+
+### Edgecast
+
+Edgecast offers CRS as a managed rule set as part of their WAF service that runs on a ModSecurity re-implementation called WAFLZ.
+
+To learn more about Edgecast, read [their WAF documentation](https://docs.edgecast.com/cdn/Content/Web-Security/Managed-Rules.htm#RuleSet).
+
+### Fastly
+
+Fastly has offered CRS as part of their Fastly WAF for several years, but they have started to migrate their existing customers to the recently acquired Signal Sciences WAF. Interestingly, Fastly is transposing CRS rules into their own Varnish-based WAF engine.
+
+For more information about the Fastly CRS offering, read [their WAF documentation](https://docs.fastly.com/en/guides/fastly-waf-rule-set-updates-maintenance-legacy).
+
+### Google Cloud Armor
+
+Google integrates CRS into its Cloud Armor WAF offering. Google runs the CRS rules on their own WAF engine. As of spring 2021, Google only offers an outdated version of CRS.
+
+To learn more about CRS on Google's Cloud Armor, read [this document from Google](https://cloud.google.com/armor/docs/rule-tuning).
+
+Google Cloud Armor is a sponsor of CRS.
 
 ### Microsoft Azure WAF
 
 Azure Application Gateways can be configured to use the WAFv2 and [managed rules with different versions of CRS](https://docs.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules). Azure provides the 3.2, 3.1, 3.0, and 2.2.9 CRS versions. **We recommend using version 3.2** (see our [security policy](https://github.com/coreruleset/coreruleset/blob/v3.4/dev/SECURITY.md) for details on supported CRS versions).
 
-### Cloudflare WAF
+### Oracle WAF
 
-Cloudflare WAF supports using CRS. Documentation on how to use it can be found [here](https://developers.cloudflare.com/waf/managed-rulesets/owasp-core-ruleset/).
+The Oracle WAF is a cloud-based offering that includes CRS. To learn more, read [Oracle's WAF documentation](https://docs.oracle.com/en-us/iaas/Content/WAF/Concepts/waftuning.htm).
+
+## Alternative Use Cases
+
+Outside of the narrower implementation of a WAF, CRS can also be found in different security-related setups.
+
+### Sqreen/Datadog
+
+Sqreen uses a subset of CRS as an innovative part of their RASP offering. A few pieces of information about this offering can be found in [this Sqreen blog post](https://blog.sqreen.com/sqreen-october-release/).
