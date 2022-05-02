@@ -1,8 +1,8 @@
 ---
-title: "Self-Contained Mode"
-#menuTitle: ""
-chapter: false
+title: Self-Contained Mode
 weight: 10
+disableToc: false
+chapter: false
 ---
 
 ## Self-Contained Mode

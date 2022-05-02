@@ -1,8 +1,8 @@
 ---
-title: "Known Issues"
-#menuTitle: ""
+title: Known Issues
+weight: 10
+disableToc: false
 chapter: false
-weight: 30
 ---
 
 - There are still **false positives** for standard web applications in

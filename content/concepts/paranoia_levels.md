@@ -1,7 +1,8 @@
 ---
-title: "Paranoia Levels"
+title: Paranoia Levels
+weight: 20
+disableToc: false
 chapter: false
-weight: 15
 ---
 
 > Paranoia levels are an essential concept when working with the Core Rule Set. This page explains the concept behind paranoia levels and how to work with them on a practical level.

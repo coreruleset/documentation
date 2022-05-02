@@ -1,9 +1,9 @@
-+++
-title = "Making"
-chapter = false
-weight = 9
-pre = "<b>9. </b>"
-+++
+---
+title: Making
+weight: 30
+disableToc: false
+chapter: false
+---
 
 {{% notice note %}}
 **The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.

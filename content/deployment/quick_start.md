@@ -1,7 +1,8 @@
 ---
-title: "Quick Start Guide"
+title: Quick Start Guide
+weight: 20
+disableToc: false
 chapter: false
-weight: 10
 ---
 
 > This quick start guide aims to get a CRS installation up and running as quickly as possible. This guide assumes that ModSecurity is already present and working. If unsure then refer to the [extended install]({{< ref "install.md" >}}) page for full details.

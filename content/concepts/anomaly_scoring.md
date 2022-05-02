@@ -1,7 +1,8 @@
 ---
-title: "Anomaly Scoring"
-chapter: false
+title: Anomaly Scoring
 weight: 10
+disableToc: false
+chapter: false
 ---
 
 > The Core Rule Set 3 is designed as an anomaly scoring rule set. This page explains what anomaly scoring is and how to use it.

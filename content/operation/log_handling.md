@@ -1,6 +1,6 @@
 ---
-title: "Log Handling"
-#menuTitle: ""
+title: Log Handling
+weight: 30
+disableToc: false
 chapter: false
-weight: 20
 ---

@@ -1,7 +1,8 @@
 ---
-title: "Sampling Mode"
+title: Sampling Mode
+weight: 50
+disableToc: false
 chapter: false
-weight: 20
 ---
 
 > Sampling mode makes it possible to apply the Core Rule Set to a limited percentage of traffic only. This may be useful in certain scenarios when enabling CRS for the first time, as this page explains.
