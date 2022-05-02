@@ -49,7 +49,7 @@ A ModSecurity config parser. Makes it possible to modify SecRules en masse, for 
 
 https://github.com/digitalwave/msc_retest
 
-An invaluable tool for testing how regular expressions behave *and perform* in both `mod_security2` (the Apache module) and `libmodsecurity` (ModSecurity v3).
+An invaluable tool for testing how regular expressions behave *and perform* in both `mod_security2` (the Apache module) and `libModSecurity` (ModSecurity v3).
 
 ## Regexploit
 
