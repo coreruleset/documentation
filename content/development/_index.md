@@ -1,7 +1,6 @@
 ---
 title: Development
-menuTitle: "Development"
-weight: 40
+weight: 50
 pre: "<b>5. </b>"
 chapter: true
 ---
