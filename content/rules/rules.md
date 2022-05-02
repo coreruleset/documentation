@@ -1,9 +1,9 @@
-+++
-title = "Rules"
-chapter = false
-weight = 3
-pre = "<b>4. </b>"
-+++
+---
+title: Rules
+weight: 20
+disableToc: false
+chapter: false
+---
 
 {{% notice note %}}
 **The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.

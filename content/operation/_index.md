@@ -1,7 +1,6 @@
 ---
 title: Operation
-menuTitle: "Operation"
-weight: 21
+weight: 30
 pre: "<b>3. </b>"
 chapter: true
 ---

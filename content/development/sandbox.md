@@ -1,8 +1,8 @@
 ---
-title: "Using the CRS Sandbox"
-#menuTitle: ""
+title: Using the CRS Sandbox
+weight: 50
+disableToc: false
 chapter: false
-weight: 30
 ---
 
 ## Introducing the CRS Sandbox

@@ -1,8 +1,8 @@
 ---
-title: "Engine and Integration Options"
-menuTitle: "Engine and Integration Options"
+title: Engine and Integration Options
+weight: 10
+disableToc: false
 chapter: false
-weight: 5
 ---
 
 > The Core Rule Set runs on WAF engines that are compatible with a subset of ModSecurity's SecLang configuration language. There are several options outside of ModSecurity itself, namely cloud offerings and content delivery network (CDN) services. There is also an open-source alternative to ModSecurity in the form of the new Coraza WAF engine.

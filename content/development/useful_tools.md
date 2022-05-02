@@ -1,8 +1,8 @@
 ---
-title: "Useful Tools"
-#menuTitle: ""
+title: Useful Tools
+weight: 20
+disableToc: false
 chapter: false
-weight: 6
 ---
 
 > There are many third party tools that help with ModSecurity and CRS development. The most useful ones are listed here. Get in touch if you think something is missing.

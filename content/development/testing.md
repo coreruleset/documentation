@@ -1,8 +1,8 @@
 ---
-title: "Testing the Rule Set"
-#menuTitle: ""
+title: Testing the Rule Set
+weight: 30
+disableToc: false
 chapter: false
-weight: 8
 ---
 
 # Testing for rule developers

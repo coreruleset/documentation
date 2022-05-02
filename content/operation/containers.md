@@ -1,8 +1,8 @@
 ---
-title: "Using Containers"
-#menuTitle: ""
+title: Using Containers
+weight: 20
+disableToc: false
 chapter: false
-weight: 10
 ---
 
 ## Docker

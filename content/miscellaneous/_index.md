@@ -1,6 +1,6 @@
 ---
 title: Miscellaneous
-weight: 100
+weight: 70
 pre: "<b>7. </b>"
 chapter: true
 ---

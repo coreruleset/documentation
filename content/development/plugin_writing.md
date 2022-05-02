@@ -1,6 +1,6 @@
 ---
-title: "Writing Plugins"
-#menuTitle: ""
+title: Writing Plugins
+weight: 40
+disableToc: false
 chapter: false
-weight: 20
 ---

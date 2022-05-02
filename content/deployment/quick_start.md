@@ -1,7 +1,8 @@
 ---
-title: "Quick Start Guide"
+title: Quick Start Guide
+weight: 20
+disableToc: false
 chapter: false
-weight: 10
 ---
 
 > This quick start guide aims to get a CRS installation up and running as quickly as possible. This guide assumes that ModSecurity is already present and working. If unsure then refer to the [extended install]({{< ref "install.md" >}}) page for full details.
@@ -89,7 +90,7 @@ After extracting the rule set files, the next step is to set up the main OWASP C
 Other aspects of ModSecurity, particularly engine-specific parameters, are controlled by the ModSecurity "recommended" configuration rules, `modsecurity.conf-recommended`. This file comes packaged with ModSecurity itself.
 {{% /notice %}}
 
-In many scenarios, the default example CRS configuration will be a good enough starting point. It is, however, a good idea to take the time to look through the example configuration file *before* deploying it to make sure it's right for a given environment. For more information see [configuration]({{< ref "../configuring/crs.md" >}}).
+In many scenarios, the default example CRS configuration will be a good enough starting point. It is, however, a good idea to take the time to look through the example configuration file *before* deploying it to make sure it's right for a given environment.
 
 Once any settings have been changed within the example configuration file, as needed, it should be renamed to remove the .example portion, like so:
 

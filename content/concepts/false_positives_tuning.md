@@ -1,7 +1,8 @@
 ---
-title: "False Positives and Tuning"
+title: False Positives and Tuning
+weight: 30
+disableToc: false
 chapter: false
-weight: 18
 ---
 
 > When a *genuine* transaction causes a rule from the Core Rule Set to match in error it is described as a **false positive**. False positives need to be tuned away by writing *rule exclusions*, as this page explains.
