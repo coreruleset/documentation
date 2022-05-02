@@ -235,7 +235,7 @@ This list is not exhaustive but covers the most important points. The [RE2 docum
 
 ## Rules Compliance with Paranoia Levels
 
-The rules in CRS are organized into **paranoia levels** (PLs) which makes it possible to define how aggressive CRS is. See the documentation on [paranoia levels](https://coreruleset.org/docs/configuring/paranoia_levels/) for an introduction and more detailed explanation.
+The rules in CRS are organized into **paranoia levels** (PLs) which makes it possible to define how aggressive CRS is. See the documentation on [paranoia levels](https://coreruleset.org/docs/concepts/paranoia_levels/) for an introduction and more detailed explanation.
 
 The types of rules that are allowed at each paranoia level are as follows:
 

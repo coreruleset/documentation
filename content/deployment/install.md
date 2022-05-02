@@ -192,7 +192,7 @@ In addition to `crs-setup.conf.example`, there are two other ".example" files wi
 - `rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example`
 - `rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example`
 
-These files are designed to provide the rule maintainer with the ability to modify rules (see [false positives and tuning]({{< ref "../configuring/false_positives_tuning.md" >}}#rule-exclusions)) without breaking forward compatibility with rule set updates. These two files should be renamed by removing the `.example` suffix. This will mean that installing updates will *not* overwrite custom rule exclusions. To rename the files in Linux, use a command similar to the following:
+These files are designed to provide the rule maintainer with the ability to modify rules (see [false positives and tuning]({{< ref "../concepts/false_positives_tuning.md" >}}#rule-exclusions)) without breaking forward compatibility with rule set updates. These two files should be renamed by removing the `.example` suffix. This will mean that installing updates will *not* overwrite custom rule exclusions. To rename the files in Linux, use a command similar to the following:
 
 ```bash
 mv rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
