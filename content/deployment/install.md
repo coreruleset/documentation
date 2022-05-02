@@ -223,38 +223,5 @@ Nginx will include files from the Nginx configuration directory (`/etc/nginx` or
 
 ```nginx
 include modsecurity.conf
-include coreruleset-{{< param crs_latest_release >}}/crs-setup.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-901-INITIALIZATION.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-903.9001-DRUPAL-EXCLUSION-RULES.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-903.9002-WORDPRESS-EXCLUSION-RULES.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-903.9003-NEXTCLOUD-EXCLUSION-RULES.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-903.9004-DOKUWIKI-EXCLUSION-RULES.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-905-COMMON-EXCEPTIONS.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-910-IP-REPUTATION.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-911-METHOD-ENFORCEMENT.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-912-DOS-PROTECTION.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-913-SCANNER-DETECTION.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-920-PROTOCOL-ENFORCEMENT.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-921-PROTOCOL-ATTACK.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-930-APPLICATION-ATTACK-LFI.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-931-APPLICATION-ATTACK-RFI.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-932-APPLICATION-ATTACK-RCE.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-933-APPLICATION-ATTACK-PHP.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-934-APPLICATION-ATTACK-NODEJS.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-941-APPLICATION-ATTACK-XSS.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-942-APPLICATION-ATTACK-SQLI.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-943-APPLICATION-ATTACK-SESSION-FIXATION.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-944-APPLICATION-ATTACK-JAVA.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/REQUEST-949-BLOCKING-EVALUATION.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/RESPONSE-950-DATA-LEAKAGES.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/RESPONSE-951-DATA-LEAKAGES-SQL.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/RESPONSE-952-DATA-LEAKAGES-JAVA.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/RESPONSE-953-DATA-LEAKAGES-PHP.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/RESPONSE-954-DATA-LEAKAGES-IIS.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/RESPONSE-959-BLOCKING-EVALUATION.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/RESPONSE-980-CORRELATION.conf
-include coreruleset-{{< param crs_latest_release >}}/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
+{{% crsfiles prefix="include coreruleset-" version="3.3.2" %}}
 ``` 

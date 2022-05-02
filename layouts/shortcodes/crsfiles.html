@@ -1,0 +1,16 @@
+{{- $urlPre := "https://api.github.com" -}}
+{{- $crsversion := .Get "version" -}}
+{{- $prefix := .Get "prefix" | default "" -}}
+{{- $filesJ := getJSON $urlPre (printf "/repos/coreruleset/coreruleset/git/trees/v%s" $crsversion) "?recursive=1" -}}
+{{- $text := slice -}}
+{{- range $idx, $file := $filesJ.tree -}}
+  {{- if eq $file.type "blob" -}}
+    {{- if strings.HasSuffix $file.path "example" -}}
+      {{- $text = $text | append (printf "%s%s/%s" $prefix $crsversion (strings.TrimSuffix ".example" $file.path) ) -}}
+    {{- end -}}
+    {{- if and (eq (path.Dir $file.path) "rules") (strings.HasSuffix $file.path "conf") -}}
+      {{- $text = $text | append (printf "%s%s/%s" $prefix $crsversion $file.path) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{ htmlEscape (delimit $text "\n") }}
