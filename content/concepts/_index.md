@@ -1,6 +1,6 @@
 ---
-title: How it Works
-menuTitle: "How it Works"
+title: How CRS Works
+menuTitle: "How CRS Works"
 weight: 20 
 pre: "<b>2. </b>"
 chapter: true
