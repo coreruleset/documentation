@@ -25,7 +25,10 @@ chapter: false
 * Make commits of logical units.
 * Make sure commits adhere to the contribution guidelines presented in this document.
 * Make sure commit messages follow the [standard Git format](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
-* Make sure you submit your changes as a PR on GitHub. For PR titles, we use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format, example: `fix(rce): Fix a FP in rule 912345 with keyword 'time'`. If the PR touches only a single rule, we prefer to have the rule ID in the title. If the PR title is not in this format, our developers will fix the PR title for you.
+* Make sure changes are submitted as a pull request (PR) on [GitHub](https://github.com/coreruleset/coreruleset/pulls).
+    * PR titles should follow the [Conventional Commits format](https://www.conventionalcommits.org/en/v1.0.0/), for example: `fix(rce): Fix a FP in rule 912345 with keyword 'time'`.
+    * If a PR only affects a single rule then the rule ID should be included in the title.
+    * If a PR title does not follow the correct format then a CRS developer will fix it.
 
 ## General Formatting Guidelines for Rules Contributions
 
