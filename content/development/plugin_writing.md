@@ -1,6 +1,6 @@
 ---
 title: Writing Plugins
-weight: 40
+weight: 50
 disableToc: false
 chapter: false
 ---
