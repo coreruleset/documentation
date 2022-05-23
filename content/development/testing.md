@@ -1,6 +1,6 @@
 ---
 title: Testing the Rule Set
-weight: 30
+weight: 40
 disableToc: false
 chapter: false
 ---
