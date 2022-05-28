@@ -24,7 +24,7 @@ The Core Rule Set project endeavors not to make breaking changes in **minor rele
 
 New functionality and breaking changes are made in **major releases** (i.e., 3.3).
 
-For information about what has changed in recent versions of the software, refer to the project's [CHANGES](https://github.com/coreruleset/coreruleset/blob/v3.4/dev/CHANGES) file on GitHub.
+For information about what has changed in recent versions of the software, refer to the project's [CHANGES](https://github.com/coreruleset/coreruleset/blob/v4.0/dev/CHANGES.md) file on GitHub.
 
 ## Documentation Source
 
