@@ -111,12 +111,12 @@ SecRule ARGS "foo" "id:1,phase:1,pass,t:none"
 CRS uses `\x5c` to represent the backslash `\` character in regular expressions. Some of the reasons for this are:
 
 * It's portable across web servers and WAF engines: it works with Apache, Nginx, and Coraza.
-* It works with the `regexp-assemble.py` script for building optimized regular expressions.
+* It works with [regexp-assemble]({{< ref "regexp_assemble" >}}) for building optimized regular expressions.
 
 The older style of representing a backslash using the character class `[\\\\]` must _not_ be used. This was previously used in CRS to get consistent results between Apache and Nginx, owing to a quirk with how Apache would "double un-escape" character escapes. For future reference, the decision was made to stop using this older method because:
 
 * It can be confusing and difficult to understand how it works.
-* It doesn't work with the `regexp-assemble.py` script.
+* It doesn't work with [regexp-assemble]({{< ref "regexp_assemble" >}}).
 * It doesn't work with Coraza.
 * It isn't obvious how to use it in a character class, e.g., `[a-zA-Z<portable-backslash>]`.
 
@@ -221,6 +221,12 @@ It matches some HTML attributes and then expects to see `=`. Using a somewhat co
 
 To summarize: **be very mindful about when and why you use lazy quantifiers in your regular expressions**.
 
+### Possessive quantifiers and atomic groups
+
+Lazy and greedy matching change the order a regular expression engine processes a regular expression. However, the order of execution does not influence the backtracking behavior of backtracking engines.
+
+Possessive quantifiers (e.g., `x++`) and atomic groups (e.g., `(?>x)`) are tools that can be used to prevent a backtracking engine from backtracking. They _can_ be for performance optimzation but are only supported by backtracking engines and, therefore, not permitted in CRS rules.
+
 ### Writing Regular Expressions for Non-Backtracking Compatibility
 
 Traditional regular expression engines use backtracking to solve some additional problems, such as finding a string that is preceded or followed by another string. While this functionality can certainly come in handy and has its place in certain applications, it can also lead to performance issues and, in uncontrolled environments, open up possibilities for attacks (the term "[ReDoS](https://en.wikipedia.org/wiki/ReDoS)" is often used to describe an attack that exhausts process or system resources due to excessive backtracking).
@@ -242,8 +248,30 @@ To ensure compatibility with non-backtracking regular expression engines, the fo
 - named backreferences (e.g., `(?P=name)`)
 - conditionals (e.g., `(?(regex)then|else)`)
 - recursive calls to capture groups (e.g., `(?1)`)
+- possessive quantifiers (e.g., `(?:regex)++`)
+- atomic (or possessive) groups (e.g., `(?>regex`))
 
 This list is not exhaustive but covers the most important points. The [RE2 documentation](https://github.com/google/re2/wiki/Syntax) includes a complete list of supported and unsupported features that various engines offer.
+
+### When and how to optimize regular expressions
+
+Optimizing regular expressions is hard. Often, a change intended to improve the performance of a regular expression will change the original semantics by accident. In addition, optimizations usually make expressions harder to read. Consider the following example of URL schemes:
+
+```python
+mailto|mms|mumble|maven
+```
+
+An optimized version (produced by [regexp-assemble]({{< ref "regexp_assemble" >}})) could look like this:
+
+```python
+m(?:a(?:ilto|ven)|umble|ms)
+```
+
+The above expression is an optimization because it reduces the number of backtracking steps when a branch fails. The regular expressions in the CRS contain lists of tens or even hundreds of words. Reading such an expression in an optimized expression is difficult, and this example of optimization is a simple one.
+
+In general, contributors should not try to optimize contributed regular expressions and instead strive for clarity. New regular expressions will usually be required to be submitted in a `.data` file for [regexp-assemble]({{< ref "regexp_assemble" >}}) to process. In such a file, the regular expression is decomposed into individual parts, making optimizations much harder or even impossible. `regexp-assemble` also performs some common optimizations automatically, such as the one shown above.
+
+Whether optimizations make sense in a contribution is assessed for each case individually.
 
 ## Rules Compliance with Paranoia Levels
 
