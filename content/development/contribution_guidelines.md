@@ -120,6 +120,14 @@ The older style of representing a backslash using the character class `[\\\\]` m
 * It doesn't work with Coraza.
 * It isn't obvious how to use it in a character class, e.g., `[a-zA-Z<portable-backslash>]`.
 
+### Forward Slash Representation
+
+CRS uses literal, *unescaped* forward slash `/` characters in regular expressions.
+
+Regular expression engines and libraries based on PCRE use the forward slash `/` character as the default delimiter. As such, forward slashes are often escaped in regular expression patterns. In the interests of readability, CRS does *not* escape forward slashes in regular expression patterns, which may seem unusual at first to new contributors.
+
+If testing a CRS regular expression using a third party tool, it may be useful to change the delimiter to something other than `/` if a testing tool raises errors because a CRS pattern features unescaped forward slashes.
+
 ### When and Why to Anchor Regular Expressions
 
 Engines running the OWASP Core Rule Set will use regular expressions to _search_ the input string, i.e., the regular expression engine is asked to find the first match in the input string. If an expression needs to match the entire input then the expression must be anchored appropriately.
