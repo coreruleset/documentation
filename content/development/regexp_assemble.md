@@ -1,6 +1,6 @@
 ---
 title: regexp-assemble
-weight: 20
+weight: 15
 disableToc: false
 chapter: false
 ---
