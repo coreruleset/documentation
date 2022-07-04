@@ -229,7 +229,7 @@ It matches some HTML attributes and then expects to see `=`. Using a somewhat co
 
 To summarize: **be very mindful about when and why you use lazy quantifiers in your regular expressions**.
 
-### Possessive quantifiers and atomic groups
+### Possessive Quantifiers and Atomic Groups
 
 Lazy and greedy matching change the order a regular expression engine processes a regular expression. However, the order of execution does not influence the backtracking behavior of backtracking engines.
 
@@ -261,7 +261,7 @@ To ensure compatibility with non-backtracking regular expression engines, the fo
 
 This list is not exhaustive but covers the most important points. The [RE2 documentation](https://github.com/google/re2/wiki/Syntax) includes a complete list of supported and unsupported features that various engines offer.
 
-### When and how to optimize regular expressions
+### When and How to Optimize Regular Expressions
 
 Optimizing regular expressions is hard. Often, a change intended to improve the performance of a regular expression will change the original semantics by accident. In addition, optimizations usually make expressions harder to read. Consider the following example of URL schemes:
 
