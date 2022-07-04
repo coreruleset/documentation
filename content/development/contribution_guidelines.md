@@ -229,11 +229,11 @@ It matches some HTML attributes and then expects to see `=`. Using a somewhat co
 
 To summarize: **be very mindful about when and why you use lazy quantifiers in your regular expressions**.
 
-### Possessive quantifiers and atomic groups
+### Possessive Quantifiers and Atomic Groups
 
-Lazy and greedy matching change the order a regular expression engine processes a regular expression. However, the order of execution does not influence the backtracking behavior of backtracking engines.
+Lazy and greedy matching change the order in which a regular expression engine processes a regular expression. However, the order of execution does not influence the backtracking behavior of backtracking engines.
 
-Possessive quantifiers (e.g., `x++`) and atomic groups (e.g., `(?>x)`) are tools that can be used to prevent a backtracking engine from backtracking. They _can_ be for performance optimzation but are only supported by backtracking engines and, therefore, not permitted in CRS rules.
+Possessive quantifiers (e.g., `x++`) and atomic groups (e.g., `(?>x)`) are tools that can be used to prevent a backtracking engine from backtracking. They _can_ be used for performance optimization but are only supported by backtracking engines and, therefore, are not permitted in CRS rules.
 
 ### Writing Regular Expressions for Non-Backtracking Compatibility
 
@@ -261,7 +261,7 @@ To ensure compatibility with non-backtracking regular expression engines, the fo
 
 This list is not exhaustive but covers the most important points. The [RE2 documentation](https://github.com/google/re2/wiki/Syntax) includes a complete list of supported and unsupported features that various engines offer.
 
-### When and how to optimize regular expressions
+### When and How to Optimize Regular Expressions
 
 Optimizing regular expressions is hard. Often, a change intended to improve the performance of a regular expression will change the original semantics by accident. In addition, optimizations usually make expressions harder to read. Consider the following example of URL schemes:
 
@@ -275,9 +275,9 @@ An optimized version (produced by [regexp-assemble]({{< ref "regexp_assemble" >}
 m(?:a(?:ilto|ven)|umble|ms)
 ```
 
-The above expression is an optimization because it reduces the number of backtracking steps when a branch fails. The regular expressions in the CRS contain lists of tens or even hundreds of words. Reading such an expression in an optimized expression is difficult, and this example of optimization is a simple one.
+The above expression is an optimization because it reduces the number of backtracking steps when a branch fails. The regular expressions in the CRS are often comprised of lists of tens or even hundreds of words. Reading such an expression in an optimized form is difficult: even the _simple_ optimized example above is difficult to read.
 
-In general, contributors should not try to optimize contributed regular expressions and instead strive for clarity. New regular expressions will usually be required to be submitted in a `.data` file for [regexp-assemble]({{< ref "regexp_assemble" >}}) to process. In such a file, the regular expression is decomposed into individual parts, making optimizations much harder or even impossible. `regexp-assemble` also performs some common optimizations automatically, such as the one shown above.
+In general, contributors should not try to optimize contributed regular expressions and should instead strive for clarity. New regular expressions will usually be required to be submitted as a `.data` file for [regexp-assemble]({{< ref "regexp_assemble" >}}) to process. In such a file, the regular expression is decomposed into individual parts, making manual optimizations much harder or even impossible (and unnecessary with the use of `regexp-assemble`). `regexp-assemble` performs some common optimizations automatically, such as the one shown above.
 
 Whether optimizations make sense in a contribution is assessed for each case individually.
 
