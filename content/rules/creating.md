@@ -11,7 +11,7 @@ chapter: false
 
 ## Making Rules
 
-### The Basic Synatax
+### The Basic Syntax
 
 A [SecRule](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRule)
 is a directive like any other understood by ModSecurity. The difference
