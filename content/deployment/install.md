@@ -178,7 +178,6 @@ At a minimum, keep in mind the following:
 - Decide what ModSecurity should do when it detects malicious activity, e.g., drop the packet, return a *403 Forbidden* status code, issue a redirect to a custom page, etc.
 - Make sure to configure the anomaly scoring thresholds. For more information see [Anomaly]({{< ref "anomaly_scoring.md" >}} "Anomaly").
 - By default, the CRS rules will consider many issues with different databases and languages. If running in a specific environment, e.g., without any SQL database services present, it is probably a good idea to limit this behavior for performance reasons.
-- ModSecurity supports [Project Honeypot](https://www.projecthoneypot.org/) blacklists. This is a great project and all you need to do to leverage it is sign up for an [API key](https://www.projecthoneypot.org/httpbl_api.php) (⚠️ it might be outdated)
 - Make sure to add any HTTP methods, static resources, content types, or file extensions that are needed, beyond the default ones listed.
 
 Once reviewed and configured, the CRS configuration file should be renamed by changing the file suffix from `.example` to `.conf`:
