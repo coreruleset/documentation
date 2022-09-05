@@ -206,6 +206,8 @@ Lines starting with a single quote `'` are treated as literals and will not be e
 
 The special token `@` will be replaced with the expression `(?:\s|<|>).*` in `unix` mode and `(?:[\s,;]|\.|/|<|>).*` in `windows` mode. This can be used in the context of a shell to reduce the number of of false positives for a word by requiring a subsequent token to be present. For example: `diff@`.
 
+The special token `~` acts like `@` but does not allow any white space tokens to _immediately_ follow the preceding word. This is useful for adding common english words to word lists. There are multiple executables names for "python", such as `python3` or `python3.8`. These could not be added with `python@`, as `python ` would be a valid match and create many false positives.
+
 ## Assemble Preprocessor
 
 Processor name: `assemble`
