@@ -370,22 +370,22 @@ Example of a simple *positive test*:
 
 ```yaml
 - test_title: 932100-21
-    desc: "Unix command injection"
-    stages:
-      - stage:
-          input:
-            dest_addr: 127.0.0.1
-            port: 80
-            headers:
-              Host: localhost
-              User-Agent: OWASP ModSecurity Core Rule Set
-              Accept: */*
-            method: POST
-            uri: "/"
-            data: "var=` /bin/cat /etc/passwd`"
-            version: HTTP/1.0
-          output:
-            log_contains: id "932100"
+  desc: "Unix command injection"
+  stages:
+    - stage:
+	input:
+	  dest_addr: 127.0.0.1
+	  port: 80
+	  headers:
+	    Host: localhost
+	    User-Agent: OWASP ModSecurity Core Rule Set
+	    Accept: */*
+	  method: POST
+	  uri: "/"
+	  data: "var=` /bin/cat /etc/passwd`"
+	  version: HTTP/1.0
+	output:
+	  log_contains: id "932100"
 ```
 
 This test will succeed if the log output contains `id "932100"`, which would indicate that the rule in question matched and generated an alert.
@@ -400,22 +400,22 @@ Example of a simple *negative test*:
 
 ```yaml
 - test_title: 932150-5
-    desc: "Natural language 'ping pong tables' should not cause FPs"
-    stages:
-      - stage:
-          input:
-            dest_addr: 127.0.0.1
-            port: 80
-            headers:
-              Host: localhost
-              User-Agent: OWASP ModSecurity Core Rule Set
-              Accept: */*
-            method: POST
-            uri: "/"
-            data: "foo=ping pong tables"
-            version: HTTP/1.0
-          output:
-            no_log_contains: id "932150"
+  desc: "Natural language 'ping pong tables' should not cause FPs"
+  stages:
+    - stage:
+	input:
+	  dest_addr: 127.0.0.1
+	  port: 80
+	  headers:
+	    Host: localhost
+	    User-Agent: OWASP ModSecurity Core Rule Set
+	    Accept: */*
+	  method: POST
+	  uri: "/"
+	  data: "foo=ping pong tables"
+	  version: HTTP/1.0
+	output:
+	  no_log_contains: id "932150"
 ```
 
 This test will succeed if the log output does **not** contain `id "932150"`, which would indicate that the rule in question did **not** match and so did **not** generate an alert.
