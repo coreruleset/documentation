@@ -72,17 +72,21 @@ It’s useful to know that you can tweak the sandbox in various ways. If you don
 
 Let’s say you want to try your payload on different WAF engines or CRS versions, or like the output in a different format for automated usage. You can do this by adding the following HTTP headers to your request:
 
-- `X-CRS-Version` will pick another CRS version. Available values are `3.3.2` (default), `3.2.1`, `nightly` (which has the latest changes which are not released) and `3.4.0-dev-log4j` (which contains an experimental rule against Log4j attacks).
-- `X-CRS-Paranoia-Level` will run CRS in a given paranoia level. Available values are `1` (default), `2`, `3`, `4`.
-- `X-Backend: apache` (default) will send the request to **Apache 2 + ModSecurity 2.9**.
-- `X-Backend: nginx` will send the request to **Nginx + ModSecurity 3**.
-- `X-Backend: coraza-caddy` will send the request to **Caddy + Coraza WAF**.
-- `X-Format-Output` formats the response to your use-case (human or automation). Available values are:
+- `x-crs-version`: will pick another CRS version. Available values are `3.3.2` (default), `3.2.1`, `nightly` (which has the latest changes which are not released) and `3.4.0-dev-log4j` (which contains an experimental rule against Log4j attacks).
+- `x-crs-paranoia-level`: will run CRS in a given paranoia level. Available values are `1` (default), `2`, `3`, `4`.
+- `x-crs-mode`: can be changed to return the http status code from the backend WAF. Default value is blocking (`On`), and can be changed using `detection` (will set engine to `DetectionOnly`). Values are case insensitive.
+- `x-crs-inbound-anomaly-score-threshold`: defines the inbound anomaly score threshold. Valid values are any integer > 0, with `5` being the CRS default. ⚠️ Anything different than a positive integer will be taken as 0, so it will be ignored. This only makes sense if `blocking` mode is enabled (the default now).
+- `x-crs-outbound-anomaly-score-threshold`: defines the outbound anomaly score threshold. Valid values are any integer > 0, with `4` being the CRS default.  ⚠️ Anything different than a positive integer will be taken as 0, so it will be ignored. This only makes sense if `blocking` mode is enabled (the default now).
+- `x-backend` allows you to select the specific backend web server
+  - `apache` (default) will send the request to **Apache 2 + ModSecurity 2.9**.
+  - `nginx` will send the request to **Nginx + ModSecurity 3**.
+  - `coraza-caddy` will send the request to **Caddy + Coraza WAF**.
+- `x-format-output` formats the response to your use-case (human or automation). Available values are:
+  -  omitted/default: the WAF’s audit log is returned unmodified as JSON
   - `txt-matched-rules`: human-readable list of CRS rule matches, one rule per line
   - `txt-matched-rules-extended`: same but with explanation for easy inclusion in publications
   - `json-matched-rules`: JSON formatted CRS rule matches
   - `csv-matched-rules`: CSV formatted
-  - omitted/default: the WAF’s audit log is returned unmodified as JSON.
 
 The header names are case-insensitive.
 
