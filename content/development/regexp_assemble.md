@@ -214,7 +214,7 @@ The special token `@` will be replaced with the expression `(?:\s|<|>).*` in `un
 - `python3<<<'print("hello")'`
 - `python3 <<< 'print("hello")'`
 
-The special token `~` acts like `@` but does not allow any white space tokens to _immediately_ follow the preceding word. This is useful for adding common english words to word lists. For example, there are multiple executables names for "python", such as `python3` or `python3.8`. These could not be added with `python@`, as `python ` would be a valid match and create many false positives.
+The special token `~` acts like `@` but does not allow any white space tokens to _immediately_ follow the preceding word. This is useful for adding common English words to word lists. For example, there are multiple executable names for "python", such as `python3` or `python3.8`. These could not be added with `python@`, as `python ` would be a valid match and create many false positives.
 
 `~` will match:
 - `python<<<'print("hello")'`
