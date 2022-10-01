@@ -41,8 +41,8 @@ home = [ "HTML", "RSS", "JSON"]
   #custom_css = ["css/foo.css", "css/bar.css"]
 
   # CRS related parameters
-  crs_latest_release = "3.3.2"
-  crs_dev_branch = "v3.4/dev"
+  crs_latest_release = "3.3.4"
+  crs_dev_branch = "v4.0/dev"
 
 [[menu.shortcuts]]
 name = "<i class='fas fa-bookmark'></i> Core Rule Set Home"

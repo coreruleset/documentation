@@ -121,7 +121,7 @@ Google Cloud Armor is a sponsor of CRS.
 
 ### Microsoft Azure WAF
 
-Azure Application Gateways can be configured to use the WAFv2 and [managed rules with different versions of CRS](https://docs.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules). Azure provides the 3.2, 3.1, 3.0, and 2.2.9 CRS versions. **We recommend using version 3.2** (see our [security policy](https://github.com/coreruleset/coreruleset/blob/v3.4/dev/SECURITY.md) for details on supported CRS versions).
+Azure Application Gateways can be configured to use the WAFv2 and [managed rules with different versions of CRS](https://docs.microsoft.com/en-us/azure/web-application-firewall/ag/application-gateway-crs-rulegroups-rules). Azure provides the 3.2, 3.1, 3.0, and 2.2.9 CRS versions. **We recommend using version 3.2** (see our [security policy](https://github.com/coreruleset/coreruleset/blob/{{< param crs_dev_branch >}}/SECURITY.md) for details on supported CRS versions).
 
 ### Oracle WAF
 
