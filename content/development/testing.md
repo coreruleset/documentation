@@ -9,7 +9,7 @@ chapter: false
 
 Well, you managed to write your rule, but now want to see if if can be added to the CRS? This document should help you to test it using the same tooling the project uses for its tests.
 
-Tests are performed using a Python tool called [ftw](https://github.com/coreruleset/ftw). We run them using a [GitHub actions pipeline](https://github.com/coreruleset/coreruleset/blob/v3.4/dev/.github/workflows/test.yml). You can easily reproduce that locally, in your workstation.
+Tests are performed using a Python tool called [ftw](https://github.com/coreruleset/ftw). We run them using a [GitHub actions pipeline](https://github.com/coreruleset/coreruleset/blob/{{< param crs_dev_branch >}}/dev/.github/workflows/test.yml). You can easily reproduce that locally, in your workstation.
 
 For that you will need:
 
