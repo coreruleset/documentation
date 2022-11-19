@@ -13,7 +13,7 @@ chapter: false
 If you have a current Go environment, you can simply run
 
 ```bash
-go install github.com/coreruleset/crs-toolchain/v2@main
+go install github.com/coreruleset/crs-toolchain@latest
 ```
 
 Provided that you have the Go binaries on your, you can now run the toolchain from anywhere with
