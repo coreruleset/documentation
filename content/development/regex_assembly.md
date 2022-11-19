@@ -13,7 +13,7 @@ The files containing regular expression specifications (`.ra` suffix, under `reg
 
 ### Example
 
-The following is an example of what a data file might contain:
+The following is an example of what an assembly file might contain:
 
 ```
 ##! This line is a comment and will be ignored. The next line is empty and will also be ignored.
@@ -35,7 +35,7 @@ __b__
 ^#!/bin/bash
 ```
 
-This data file would produce the following assembled expression: `(?i)\b(?:^#!\/bin\/bash|--a--|__b__)\W*(`
+This assembly file would produce the following assembled expression: `(?i)\b(?:^#!\/bin\/bash|--a--|__b__)\W*(`
 
 ### Comments
 
@@ -172,7 +172,7 @@ Each line of the input is treated as an alternation of a regular expression, pro
 
 This processor can also produce the concatenation of blocks delimited with `##!=>`. It supports two special markers, one for output (`##!=>`) and one for input (`##!=<`).
 
-Lines within blocks delimited by input or output markers are treated as alternations, as usual. The input and output markers enable more complex scenarios, such as separating parts of the regular expression in the data file for improved readability. Rule 930100, for example, uses separate expressions for periods and slashes, since it's easier to reason about the differences when they are physically separated. The following example is based on rules from 930100:
+Lines within blocks delimited by input or output markers are treated as alternations, as usual. The input and output markers enable more complex scenarios, such as separating parts of the regular expression in the assembly file for improved readability. Rule 930100, for example, uses separate expressions for periods and slashes, since it's easier to reason about the differences when they are physically separated. The following example is based on rules from 930100:
 
 ```python
 ##!> assemble
@@ -293,7 +293,10 @@ The exact contents of the included file, including processor directives.
 
 ### Description
 
-The include processor reduces repetition across data files. Repeated blocks can be put into a file in the `include` directory and then be included with the `include` processor comment. The contents of an include file could, for example, be the alternation of accepted HTTP headers:
+
+The include processor reduces repetition across assembly files. Repeated blocks can be put into a file in the `include` directory and then be included with the `include` processor comment. Include files are normal assembly files, hence include files can also contain further include directives.
+
+The contents of an include file could, for example, be the alternation of accepted HTTP headers:
 
 ```python
 POST
@@ -301,7 +304,7 @@ GET
 HEAD
 ```
 
-This could be included into a data file for a rule that adds an additional method:
+This could be included into a assembly file for a rule that adds an additional method:
 
 ```python
 ##!> include http-headers
@@ -309,5 +312,20 @@ OPTIONS
 ```
 
 The resulting regular expression would be `(?:POS|GE)T|HEAD|OPTIONS`.
+
+Additionally, definition directives of include files are available to the including file. This means that include files can be used as libraries of expressions. For example, an include file called `lib.ra` could contain the following definitions:
+
+```python
+##!> define quotes ['"`]
+##!> define opt-lazy-wspace \s*?
+```
+
+These definitions could then be used in an including file as follows:
+
+```python
+##!> include lib
+
+it{{quotes}}s{{opt-lazy-wspace}}possible
+```  
 
 Note that the include processor does not have a body, therefore the end marker is optional.
