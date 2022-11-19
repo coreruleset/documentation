@@ -5,19 +5,19 @@ disableToc: false
 chapter: false
 ---
 
-> There are many third party tools that help with ModSecurity and CRS development. The most useful ones are listed here. Get in touch if you think something is missing.
+> There are many first and third party tools that help with ModSecurity and CRS development. The most useful ones are listed here. Get in touch if you think something is missing.
 
-## FTW
+## crs-toolchain
 
-https://pypi.org/project/ftw/
+https://github.com/coreruleset/crs-toolchain
 
-*Framework for Testing WAFs.* The original Python-based testing framework used by CRS.
+The CRS developer's toolbelt. Documentation lives at [crs-toolchain]({{< ref "crs_toolchain" >}}).
 
 ## Go-FTW
 
-https://github.com/fzipi/go-ftw
+https://github.com/coreruleset/go-ftw
 
-*Framework for Testing WAFs in Go.* A Go-based rewrite of the original Python FTW project. Usually much faster than the original and has no dependencies.
+*Framework for Testing WAFs in Go.* A Go-based rewrite of the original Python FTW project.
 
 ## Official CRS Maintained Docker Images
 
@@ -26,15 +26,6 @@ https://github.com/fzipi/go-ftw
 https://github.com/coreruleset/modsecurity-crs-docker
 
 A Docker image supporting the latest stable CRS release on: 
-
-- the latest stable ModSecurity v2 on Apache
-- the latest stable ModSecurity v3 on Nginx
-
-### ModSecurity Docker Image
-
-https://github.com/coreruleset/modsecurity-docker
-
-A Docker image supporting:
 
 - the latest stable ModSecurity v2 on Apache
 - the latest stable ModSecurity v3 on Nginx
