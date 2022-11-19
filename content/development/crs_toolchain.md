@@ -5,7 +5,7 @@ disableToc: false
 chapter: false
 ---
 
-> The crs-toolchain is the utility belt of CRS developers. It provides a single point of entry and a consistent interface for range of different tools. Its core functionality (owed to the great [rassemble-go](https://github.com/itchyny/rassemble-go) (which it itself based on the brain melting [Regexp::Assemble](https://github.com/ronsavage/Regexp-Assemble) Perl module) is to assemble individual parts of a regular expression into a single expression (with some optimizations).
+> The crs-toolchain is the utility belt of CRS developers. It provides a single point of entry and a consistent interface for a range of different tools. Its core functionality (owed to the great [rassemble-go](https://github.com/itchyny/rassemble-go) (which is itself based on the brain-melting [Regexp::Assemble](https://github.com/ronsavage/Regexp-Assemble) Perl module) is to assemble individual parts of a regular expression into a single expression (with some optimizations).
 
 ## Setup
 

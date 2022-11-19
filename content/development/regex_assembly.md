@@ -9,7 +9,7 @@ chapter: false
 
 ## Specification Format
 
-The files containing regular expression specifications (`.data` suffix, under `data`) contain one regular expression per line. These files are meant to be processed by the [crs-toolchain]({{< ref "crs_toolchain" >}}).
+The files containing regular expression specifications (`.ra` suffix, under `regex-assembly`) contain one regular expression per line. These files are meant to be processed by the [crs-toolchain]({{< ref "crs_toolchain" >}}).
 
 ### Example
 
