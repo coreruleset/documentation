@@ -1,5 +1,5 @@
 ---
-title: Regular Expression Assembly
+title: Assembling Regular Expressions
 weight: 15
 disableToc: false
 chapter: false
