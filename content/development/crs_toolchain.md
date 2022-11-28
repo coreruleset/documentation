@@ -25,7 +25,7 @@ crs-toolchain
 
 ### With the Binary
 
-Alternatively, you can download one of the pre-built binaries from Github. Navigate to `https://github.com/coreruleset/crs-toolchain/releases/latest` and download the package of your choice and the `crs-toolchain-checksums.txt` file. To verify the integrity of the binary / archive, navigate to the directory where you've stored the two files and verify that the checksum matches:
+Alternatively, you can download one of the pre-built binaries from GitHub. Navigate to `https://github.com/coreruleset/crs-toolchain/releases/latest` and download the package of your choice and the `crs-toolchain-checksums.txt` file. To verify the integrity of the binary / archive, navigate to the directory where you've stored the two files and verify that the checksum matches:
 
 ```bash
 cd ~/Downloads
