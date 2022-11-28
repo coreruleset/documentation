@@ -17,7 +17,7 @@ If you have a current Go environment, you can simply run
 go install github.com/coreruleset/crs-toolchain@latest
 ```
 
-Provided that you have the Go binaries on your, you can now run the toolchain from anywhere with
+Provided that you have the Go binaries on your machine, you can now run the toolchain from anywhere with
 
 ```bash
 crs-toolchain
