@@ -10,6 +10,7 @@ chapter: false
 ## Setup
 
 ### With Existing Go Environment
+
 If you have a current Go environment, you can simply run
 
 ```bash
@@ -23,6 +24,7 @@ crs-toolchain
 ```
 
 ### With The Binary
+
 Alternatively, you can download one of the pre-built binaries from Github. Navigate to `https://github.com/coreruleset/crs-toolchain/releases/latest` and download the package of your choice and the `crs-toolchain-checksums.txt` file. To verify the integrity of the binary / archive, navigate to the directory where you've stored the two files and verify that the checksum matches:
 
 ```bash
@@ -37,6 +39,7 @@ crs-toolchain-1.0.0_amd64.deb: OK
 ```
 
 ### Test The Toolchain
+
 You should now be able to use the crs-toolchain. Try to run the following in your shell:
 
 ```bash
@@ -54,6 +57,7 @@ The output should be:
 The level of logging can be adjusted with the `--log-level` option. Accepted values are  `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`, `disabled`, the default is `info`.
 
 ## The `regex` Command
+
 The `regex` command provides sub-commands for everything surrounding regular expressions, especially the "assembly" of regular expressions from a specification of its components (see [Regular Expression Assembly]({{< ref "regex_assembly" >}}) for more details).
 
 ### Example Use
@@ -87,9 +91,11 @@ crs-toolchain --help
 ```
 
 ## The `util` Command
+
 The `util` command includes sub-commands that are used from time to time and do not fit nicely into any of the other groups. Currently, the only sub-command is `renumber-tests`. `renumber-tests` is used to simplify maintenance of the regression tests. Since every test has a consecutive number within its file, adding or removing tests can disrupt numbering. `renumber-tests` will renumber all tests within each test file consecutively.
 
 ## The `completion` command
+
 The `completion` command can be used to generate a shell script for shell completion. For example:
 
 ```bash
