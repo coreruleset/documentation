@@ -1,6 +1,6 @@
 ---
 title: crs-toolchain
-weight: 10
+weight: 12
 disableToc: false
 chapter: false
 ---
