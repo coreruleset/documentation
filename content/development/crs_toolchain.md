@@ -54,11 +54,11 @@ The output should be:
 
 ## Adjusting the Logging Level
 
-The level of logging can be adjusted with the `--log-level` option. Accepted values are  `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`, `disabled`, the default is `info`.
+The level of logging can be adjusted with the `--log-level` option. Accepted values are  `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`, and `disabled`. The default level is `info`.
 
 ## The `regex` Command
 
-The `regex` command provides sub-commands for everything surrounding regular expressions, especially the "assembly" of regular expressions from a specification of its components (see [Regular Expression Assembly]({{< ref "regex_assembly" >}}) for more details).
+The `regex` command provides sub-commands for everything surrounding regular expressions, especially the "assembly" of regular expressions from a specification of its components (see [Assembling Regular Expressions]({{< ref "regex_assembly" >}}) for more details).
 
 ### Example Use
 
