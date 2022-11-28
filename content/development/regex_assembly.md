@@ -5,7 +5,7 @@ disableToc: false
 chapter: false
 ---
 
-> The CRS team uses a custom specification format to specify how a regular expression is to be generated from its components. This format enables reuse across different files, explanation of choices and techniques with comments and specialized processing.
+> The CRS team uses a custom specification format to specify how a regular expression is to be generated from its components. This format enables reuse across different files, explanation of choices and techniques with comments, and specialized processing.
 
 ## Specification Format
 
