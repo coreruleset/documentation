@@ -11,13 +11,13 @@ chapter: false
 
 ### With Existing Go Environment
 
-If you have a current Go environment, you can simply run
+If a current Go environment is present, simply run
 
 ```bash
 go install github.com/coreruleset/crs-toolchain@latest
 ```
 
-Provided that you have the Go binaries on your machine, you can now run the toolchain from anywhere with
+Provided that the Go binaries are present, the toolchain can now be run from anywhere with
 
 ```bash
 crs-toolchain
@@ -25,14 +25,14 @@ crs-toolchain
 
 ### With the Binary
 
-Alternatively, you can download one of the pre-built binaries from GitHub. Navigate to `https://github.com/coreruleset/crs-toolchain/releases/latest` and download the package of your choice and the `crs-toolchain-checksums.txt` file. To verify the integrity of the binary / archive, navigate to the directory where you've stored the two files and verify that the checksum matches:
+Alternatively, one of the pre-built binaries can be downloaded from GitHub. Navigate to the [latest release](https://github.com/coreruleset/crs-toolchain/releases/latest) and download the package of choice along with the `crs-toolchain-checksums.txt` file. To verify the integrity of the binary/archive, navigate to the directory where the two files are stored and verify that the checksum matches:
 
 ```bash
 cd ~/Downloads
 shasum -a 256 -c crs-toolchain-checksums.txt 2>&1 | grep OK
 ```
 
-The output should look like the following (depnding on the binary / archive you downloaded):
+The output should look like the following (depending on the binary/archive downloaded):
 
 ```bash
 crs-toolchain-1.0.0_amd64.deb: OK
@@ -40,7 +40,7 @@ crs-toolchain-1.0.0_amd64.deb: OK
 
 ### Test the Toolchain
 
-You should now be able to use the crs-toolchain. Try to run the following in your shell:
+It should now be possible to use the crs-toolchain. Test this by running the following in a shell:
 
 ```bash
 printf "(?:homer)? simpson\n(?:lisa)? simpson" | crs-toolchain regex generate -
@@ -102,4 +102,4 @@ The `completion` command can be used to generate a shell script for shell comple
 crs-toolchain completion zsh >  ~/.zsh.d/2/crs-toolchain.zsh
 ```
 
-How completion is enabled and where completion scripts are sourced from depends on your environment. Please consult the documentation of your shell.
+How completion is enabled and where completion scripts are sourced from depends on the environment. Please consult the documentation of the shell in use.
