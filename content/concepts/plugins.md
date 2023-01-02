@@ -112,7 +112,7 @@ All official plugins are listed on GitHub in the CRS plugin registry repository:
 
 Available plugins include:
 
-* **Dummy Plugin:** This is the example plugin for getting started.
+* **Template Plugin:** This is the example plugin for getting started.
 * **Auto-Decoding Plugin:** This uses ModSecurity transformations to decode encoded payloads before applying CRS rules at PL 3 and double-decoding payloads at PL 4.
 * **Antivirus Plugin:** This helps to integrate an antivirus scanner into CRS.
 * **Body-Decompress Plugin:** This decompresses/unzips the response body for inspection by CRS.

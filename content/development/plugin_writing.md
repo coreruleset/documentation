@@ -19,7 +19,7 @@ In such a situation, it's better to write a simple deny-rule that blocks said re
 
 ### Plugin Writing Guidance
 
-When there really *is* a good use case for a plugin, it's recommended to start with a clone of the dummy plugin. It's well documented and a good place to start from.
+When there really *is* a good use case for a plugin, it's recommended to start with a clone of the [template plugin](https://github.com/coreruleset/template-plugin). It's well documented and a good place to start from.
 
 Plugins are a new idea for CRS. As such, there aren't currently any strict rules about what a plugin is and isn't allowed to do. There are definitely fewer rules and restrictions for writing plugin rules than for writing a mainline CRS rule, which is becoming increasingly strict as the project evolves. This means that it's basically possible to do anything in a plugin, especially when there's no plan to contribute the plugin to the CRS project.
 
