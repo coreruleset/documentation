@@ -53,3 +53,17 @@ chapter: false
   SecRule REQUEST_HEADERS:Content-Type "(?:application(?:/soap\+|/)|text/)xml" \
     "id:'200000',phase:1,t:none,t:lowercase,pass,nolog,ctl:requestBodyProcessor=XML"
   ```
+- **All versions of libmodsecurity3** [do not support](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v3.x)#secdisablebackendcompression) `SecDisableBackendCompression` directive at all. 
+If Nginx is acting as a proxy and the backend supports any type of compression, if the client sends an `Accept-Encoding: gzip,deflate,...` header, the backend will return the response in compressed format. Because of this, the engine cannot verify the response. As a workaround, you need to override the `Accept-Encoding` header in the proxy:
+
+   ```
+    server {
+        server_name     foo.com;
+        ...
+        location / {
+            proxy_pass         http://backend;
+            ...
+            proxy_set_header   Accept-Encoding "";
+        }
+    }
+   ```
