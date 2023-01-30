@@ -125,3 +125,13 @@ Nginx will include files from the Nginx configuration directory (`/etc/nginx` or
 include modsecurity.conf
 {{% crsfiles prefix="include coreruleset-" version="3.3.2" %}}
 ``` 
+
+## Verifying that the CRS is Active
+
+Always verify that CRS is installed correctly by sending a 'malicious' request to your site or application, for instance:
+
+```bash
+curl 'https://www.example.com/?foo=/etc/passwd&bar=/bin/sh'
+```
+
+Depending on your configurated thresholds, this should be detected as a malicious request. If you use blocking mode, you should receive an Error 403. The request should also be logged to the audit log, which is usually in `/var/log/modsec_audit.log`.
