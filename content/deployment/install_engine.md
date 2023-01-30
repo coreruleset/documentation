@@ -57,3 +57,47 @@ Compiling ModSecurity is easy, but slightly outside the scope of this document. 
 - the official [ModSecurity documentation](https://github.com/SpiderLabs/ModSecurity/wiki) on GitHub
 - the compilation recipes for ModSecurity v3 on the [ModSecurity wiki](https://github.com/SpiderLabs/ModSecurity/wiki/Compilation-recipes-for-v3.x)
 - the netnea tutorials for [Apache](https://www.netnea.com/cms/apache-tutorial-6_embedding-modsecurity/) or [Nginx](https://www.netnea.com/cms/nginx-tutorial-6_embedding-modsecurity/)
+
+{{% notice warning "Unsupported Configurations" "skull-crossbones" %}}
+Note that the following configurations are **not** supported. They do **not** work as expected. The CRS project recommendation is to *avoid these setups*:
+
+- Nginx with ModSecurity v2
+- Apache with ModSecurity v3
+{{% /notice %}}
+
+#### Testing the Compiled Module
+
+Once ModSecurity has been compiled, there is a simple test to see if the installation is working as expected. After compiling from source, use the appropriate directive to **load the newly compiled module** into the web server. For example:
+
+- **Apache:** `LoadModule security2_module modules/mod_security2.so`
+- **Nginx:** `load_module modules/ngx_http_modsecurity_module.so;`
+
+Now restart the web server. ModSecurity should output that it's being used.
+
+Nginx should show something like:
+
+```
+2022/04/21 23:45:52 [notice] 1#1: ModSecurity-nginx v1.0.2 (rules loaded inline/local/remote: 0/6/0)
+```
+
+Apache should show something like:
+
+```
+[Thu Apr 21 23:55:35.142945 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity for Apache/2.9.3 (http://www.modsecurity.org/) configured.
+[Thu Apr 21 23:55:35.142980 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: APR compiled version="1.6.5"; loaded version="1.6.5"
+[Thu Apr 21 23:55:35.142985 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: PCRE compiled version="8.39 "; loaded version="8.39 2016-06-14"
+[Thu Apr 21 23:55:35.142988 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: LUA compiled version="Lua 5.1"
+[Thu Apr 21 23:55:35.142991 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: YAJL compiled version="2.1.0"
+[Thu Apr 21 23:55:35.142994 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: LIBXML compiled version="2.9.4"
+[Thu Apr 21 23:55:35.142997 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: Status engine is currently disabled, enable it by set SecStatusEngine to On.
+[Thu Apr 21 23:55:35.187082 2022] [mpm_event:notice] [pid 2530:tid 140410548673600] AH00489: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
+[Thu Apr 21 23:55:35.187125 2022] [core:notice] [pid 2530:tid 140410548673600] AH00094: Command line: '/usr/sbin/apache2'
+```
+
+##### Microsoft IIS with ModSecurity 2.x
+
+The initial configuration file is `modsecurity_iis.conf`. This file will be parsed by ModSecurity for both ModSecurity directives and `'Include'` directives.
+
+Additionally, in the Event Viewer, under `Windows Logs\Application`, it should be possible to see a new log entry showing ModSecurity being successfully loaded.
+
+At this stage, the ModSecurity on IIS setup is working and new directives can be placed in the configuration file as needed.
