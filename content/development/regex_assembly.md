@@ -25,7 +25,7 @@ The following is an example of what an assembly file might contain:
 ##!^ \b
 
 ##! The next line is the suffix comment. The assembled expression will be suffixed with its contents:
-##!$ \W*(
+##!$ \W*\(
 
 ##! The following two lines are regular expressions that will be assembled:
 --a--
@@ -35,7 +35,7 @@ __b__
 ^#!/bin/bash
 ```
 
-This assembly file would produce the following assembled expression: `(?i)\b(?:^#!\/bin\/bash|--a--|__b__)\W*(`
+This assembly file would produce the following assembled expression: `(?i)\b(?:--a--|__b__|^#!/bin/bash)[^0-9A-Z_a-z]*\(`
 
 ### Comments
 
@@ -47,7 +47,7 @@ Empty lines, i.e., lines containing only white space, will be skipped. Empty lin
 
 ### Flag Marker
 
-A line starting with `##!+` can be used to pass global flags to the script. The last found flag comment line overwrites all previous flag comment lines. The resulting expression will be prefixed with the flags. For example, the two lines
+A line starting with `##!+` can be used to specify global flags for the regular expression engine. The flags from all lines starting with the flag marker will be combined. The resulting expression will be prefixed with the flags. For example, the two lines
 
 ```
 ##!+ i
@@ -56,7 +56,9 @@ a+b|c
 
 will produce the regular expression `(?i)a+b|c`.
 
-Only the ignore case flag `i` is currently supported.
+The following flags are currently supported:
+- `i`: ignore case; matches will be case-insensitive
+- `s`: make `.` match newline (`\n`); this set by ModSecurity anyway and is included here for backward compatibility
 
 ### Prefix Marker
 
@@ -69,13 +71,13 @@ a+b|c
 d
 ```
 
-will produce the regular expression `\W*\(two(?:a+b|c|d)`.
+will produce the regular expression `[^0-9A-Z_a-z]*\(two(?:a+b|[c-d])`.
 
 The prefix marker exists for convenience and improved readability. The same can be achieved with the [assemble processor](#assemble-processor).
 
 ### Suffix Marker
 
-A line starting with `##!$` can be used to pass a suffix to the script. The last found suffix comment line overwrites all previous suffix comment lines. The resulting expression will be suffixed with the literal contents of the line. For example, the two lines
+A line starting with `##!$` can be used to pass a suffix to the script. The resulting expression will be suffixed with the literal contents of the line. Multiple suffix lines will be concatenated in order. For example, the lines
 
 ```
 ##!$ \W*\(
@@ -84,7 +86,7 @@ a+b|c
 d
 ```
 
-will produce the regular expression `(?:a+b|c|d)\W*\(two`.
+will produce the regular expression `(?:a+b|[c-d])[^0-9A-Z_a-z]*\(two`.
 
 The suffix marker exists for convenience and improved readability. The same can be achieved with the [assemble processor](#assemble-processor).
 
@@ -92,15 +94,15 @@ The suffix marker exists for convenience and improved readability. The same can 
 
 A line starting with `##!>` is a processor directive. The processor marker can be used to preprocess a block of lines.
 
-A line starting with `##!<` marks the end of the most recent processor.
+A line starting with `##!<` marks the end of the most recent processor block.
 
-Processor markers have the following general format: `<marker> <processor name>[<processor arguments>]`. For example: `##!> cmdline unix`. The arguments depend on the processor and may be empty.
+Processor markers have the following general format: `<marker> <processor name> [<processor arguments>]`. For example: `##!> cmdline unix`. The arguments depend on the processor and may be empty.
 
 Processors are defined in the [crs-toolchain]({{< ref "crs_toolchain" >}}).
 
 ### Nesting
 
-processors may be nested. This enables complex scenarios, such as assembling a smaller expression to concatenate it with another line or block of lines. For example:
+Processors may be nested. This enables complex scenarios, such as assembling a smaller expression to concatenate it with another line or block of lines. For example:
 
 ```python
 ##!> assemble
@@ -131,11 +133,11 @@ One line per line of input, escaped for the specified environment.
 
 ### Description
 
-The command line evasion processor processes the entire file. Each line is treated as a word (e.g. shell command) that needs to be escaped.
+The command line evasion processor treats each line as a word (e.g., a shell command) that needs to be escaped.
 
 Lines starting with a single quote `'` are treated as literals and will not be escaped.
 
-The special token `@` will be replaced with the expression `(?:\s|<|>).*` in `unix` mode and `(?:[\s,;]|\.|/|<|>).*` in `windows` mode. This can be used in the context of a shell to reduce the number of of false positives for a word by requiring a subsequent token to be present. For example: `diff@`.
+The special token `@` will be replaced with an optional "word ending" regular expression. This can be used in the context of a shell to reduce the number of false positives for a word by requiring a subsequent token to be present. For example: `diff@`.
 
 `@` will match:
 - `python<<<'print("hello")'`
@@ -154,6 +156,8 @@ The special token `~` acts like `@` but does not allow any white space tokens to
 `~` will _not_ match:
 - `python <<< 'print("hello")'`
 
+The patterns that are used by the command line evasion processor are configurable. The default configuration for the Core Rule Set can be found in the `toolchain.yaml` in the `regex-assembly` directory of the [Core Rule Set project](https://github.com/coreruleset/coreruleset).
+
 ## Assemble processor
 
 Processor name: `assemble`
@@ -164,13 +168,13 @@ This processor does not accept any arguments.
 
 ### Output
 
-Single line regular expression, where each line of the input is treated as an alternation of the regular expression. Input can also be concatenated by using the two marker comments for input (`##!=<`) and output (`##!=>`).
+Single line regular expression, where each line of the input is treated as an alternation of the regular expression. Input can also be stored or concatenated by using the two marker comments for input (`##!=<`) and output (`##!=>`).
 
 ### Description
 
 Each line of the input is treated as an alternation of a regular expression, processed into a single line. The resulting regular expression is not optimized (in the strict sense) but is reduced (i.e., common elements may be put into character classes or groups). The ordering of alternations in the output can differ from the order in the file (ordering alternations by length is a simple performance optimization).
 
-This processor can also produce the concatenation of blocks delimited with `##!=>`. It supports two special markers, one for output (`##!=>`) and one for input (`##!=<`).
+This processor can also store the outpur of a block delimited with the input marker `##!=<`, or produce the concatenation of blocks delimited with the output marker `##!=>`.
 
 Lines within blocks delimited by input or output markers are treated as alternations, as usual. The input and output markers enable more complex scenarios, such as separating parts of the regular expression in the assembly file for improved readability. Rule 930100, for example, uses separate expressions for periods and slashes, since it's easier to reason about the differences when they are physically separated. The following example is based on rules from 930100:
 
@@ -196,7 +200,7 @@ The above would produce the following, concatenated regular expression:
 (?:\x5c|%(?:2f|5c))\.(?:%0[0-1])?
 ```
 
-The input marker `##!=<` takes an identifier as a parameter and associates the associated block with the identifier. No output is produced when using the input `##!=<` marker. To concatenate the output of a previously stored block, the appropriate identifier must be passed to the output marker `##!=>` as an argument. Stored blocks remain in storage until the end of the program and are available globally. Any input stored previously can be retrieved at any nesting level. Both of the following examples produce the output `ab`:
+The input marker `##!=<` takes an identifier as a parameter and associates the output of the preceding block with the identifier. No output is produced when using the input `##!=<` marker. To concatenate the output of a previously stored block, the appropriate identifier must be passed to the output marker `##!=>` as an argument. Stored blocks remain in storage until the end of the program and are available globally. Any input stored previously can be retrieved at any nesting level. Both of the following examples produce the output `ab`:
 
 ```python
 ##!> assemble
@@ -289,12 +293,11 @@ Processor name: `include`
 
 ### Output
 
-The exact contents of the included file, including processor directives.
+The exact contents of the included file, including processor directives. The prefix and suffix markers are not allowed in included files.
 
 ### Description
 
-
-The include processor reduces repetition across assembly files. Repeated blocks can be put into a file in the `include` directory and then be included with the `include` processor comment. Include files are normal assembly files, hence include files can also contain further include directives.
+The include processor reduces repetition across assembly files. Repeated blocks can be put into a file in the `include` directory and then be included with the `include` processor comment. Include files are normal assembly files, hence include files can also contain further include directives. The only restriction is that included files must not contain the prefix of suffix markers. This is a technical limitation in the [crs-toolchain]({{< ref "crs_toolchain" >}}).
 
 The contents of an include file could, for example, be the alternation of accepted HTTP headers:
 
@@ -304,7 +307,7 @@ GET
 HEAD
 ```
 
-This could be included into a assembly file for a rule that adds an additional method:
+This could be included into an assembly file for a rule that adds an additional method:
 
 ```python
 ##!> include http-headers
@@ -328,4 +331,43 @@ These definitions could then be used in an including file as follows:
 it{{quotes}}s{{opt-lazy-wspace}}possible
 ```  
 
-Note that the include processor does not have a body, therefore the end marker is optional.
+Note that the include processor does not have a body, thus the end marker is optional.
+
+## Include-Except processor
+
+Processor name: `include-except`
+
+### Arguments
+
+- Include file name (required): The name of the file to include, without suffix
+- Exclude file name (required): The name of the file to consult for exclusions, without suffix
+
+### Output
+
+The contents of the included file as per the include processor, but with all matching lines from the exclude file removed.
+
+### Description
+
+The include-except processor further improves reusability of include files by removing exact line matches found in the exclude file from the result. A use case for this scenario is remote command execution where it is desirable to have a single list of commands but where certain commands should be excluded from some rules to avoid false positives. Consider the following list of command words:
+
+```python
+cat
+wget
+who
+zless
+```
+
+This list may be usable at paranoia level 2 or 3 but the words `cat` and `who` would produce too many false positives at paranoia level 1. To work around this issue, the following exclude file can be used:
+
+```python
+cat
+who
+```
+
+The regular expression for a rule at paranoia level 1 would then be generated by the following:
+
+```python
+##!> include-except command-list pl1-exclude-list
+```
+
+Note that the include-exclude processor does not have a body, thus the end marker is optional.

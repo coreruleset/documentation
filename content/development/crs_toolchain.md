@@ -56,6 +56,13 @@ The output should be:
 
 The level of logging can be adjusted with the `--log-level` option. Accepted values are  `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`, and `disabled`. The default level is `info`.
 
+## Full Documentation
+Read the built-in help text for the full documentation:
+
+```bash
+crs-toolchain --help
+```
+
 ## The `regex` Command
 
 The `regex` command provides sub-commands for everything surrounding regular expressions, especially the "assembly" of regular expressions from a specification of its components (see [Assembling Regular Expressions]({{< ref "regex_assembly" >}}) for more details).
@@ -67,7 +74,7 @@ To generate a reduced expression from a list of expressions, simply pass the cor
 ```bash
 crs-toolchain regex generate 942170
 # or
-cat util/regexp-assemble/data/942170.data | crs-toolchain regex generate -
+cat regex-assembly/942170.ra | crs-toolchain regex generate -
 ```
 
 It is also possible to compare generated expressions to the current expressions in the rule files, like so:
@@ -84,11 +91,11 @@ crs-toolchain regex update 942170
 crs-toolchain regex update --all
 ```
 
-Read the built-in help text for the full documentation:
-
-```bash
-crs-toolchain --help
-```
+The `format` sub-command reports formatting violations and actively formats assembly files:
+ 
+ ```bash
+ crs-toolchain regex format --all
+ ```
 
 ## The `util` Command
 
@@ -99,7 +106,7 @@ The `util` command includes sub-commands that are used from time to time and do 
 The `completion` command can be used to generate a shell script for shell completion. For example:
 
 ```bash
-crs-toolchain completion zsh >  ~/.zsh.d/2/crs-toolchain.zsh
+mkdir -p ~/.oh-my-zsh/completions && crs-toolchain completion zsh >  ~/.oh-my-zsh/completions/_crs-toolchain
 ```
 
 How completion is enabled and where completion scripts are sourced from depends on the environment. Please consult the documentation of the shell in use.
