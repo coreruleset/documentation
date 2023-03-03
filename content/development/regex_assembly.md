@@ -65,13 +65,12 @@ The following flags are currently supported:
 A line starting with `##!^` can be used to pass a global prefix to the script. The resulting expression will be prefixed with the literal contents of the line. Multiple prefix lines will be concatenated in order. For example, the lines
 
 ```
-##!^ \W*\(
-##!^ two
-a+b|c
-d
+##!^ \d*\(
+##!^ simpson
+marge|homer
 ```
 
-will produce the regular expression `[^0-9A-Z_a-z]*\(two(?:a+b|[c-d])`.
+will produce the regular expression `[0-9]*\(simpson(?:marge|homer)`.
 
 The prefix marker exists for convenience and improved readability. The same can be achieved with the [assemble processor](#assemble-processor).
 
@@ -80,13 +79,12 @@ The prefix marker exists for convenience and improved readability. The same can 
 A line starting with `##!$` can be used to pass a suffix to the script. The resulting expression will be suffixed with the literal contents of the line. Multiple suffix lines will be concatenated in order. For example, the lines
 
 ```
-##!$ \W*\(
-##!$ two
-a+b|c
-d
+##!$ \d*\(
+##!$ simpson
+marge|homer
 ```
 
-will produce the regular expression `(?:a+b|[c-d])[^0-9A-Z_a-z]*\(two`.
+will produce the regular expression `(?:marge|homer)[0-9]*\(simpson`.
 
 The suffix marker exists for convenience and improved readability. The same can be achieved with the [assemble processor](#assemble-processor).
 
@@ -102,7 +100,7 @@ Processors are defined in the [crs-toolchain]({{< ref "crs_toolchain" >}}).
 
 ### Nesting
 
-Processors may be nested. This enables complex scenarios, such as assembling a smaller expression to concatenate it with another line or block of lines. For example:
+Processors may be nested. This enables complex scenarios, such as assembling a smaller expression to concatenate it with another line or block of lines. For example, the following will produce the regular expression `line1(?:ab|cd)`:
 
 ```python
 ##!> assemble
@@ -158,6 +156,18 @@ The special token `~` acts like `@` but does not allow any white space tokens to
 
 The patterns that are used by the command line evasion processor are configurable. The default configuration for the Core Rule Set can be found in the `toolchain.yaml` in the `regex-assembly` directory of the [Core Rule Set project](https://github.com/coreruleset/coreruleset).
 
+The following is an example of how the command line evasion processor can be used:
+
+```python
+##!> cmdline unix
+  w@
+  gcc~
+  'python[23]
+  aptitude@
+  pacman@
+##!<
+```
+
 ## Assemble processor
 
 Processor name: `assemble`
@@ -174,7 +184,7 @@ Single line regular expression, where each line of the input is treated as an al
 
 Each line of the input is treated as an alternation of a regular expression, processed into a single line. The resulting regular expression is not optimized (in the strict sense) but is reduced (i.e., common elements may be put into character classes or groups). The ordering of alternations in the output can differ from the order in the file (ordering alternations by length is a simple performance optimization).
 
-This processor can also store the outpur of a block delimited with the input marker `##!=<`, or produce the concatenation of blocks delimited with the output marker `##!=>`.
+This processor can also store the output of a block delimited with the input marker `##!=<`, or produce the concatenation of blocks delimited with the output marker `##!=>`.
 
 Lines within blocks delimited by input or output markers are treated as alternations, as usual. The input and output markers enable more complex scenarios, such as separating parts of the regular expression in the assembly file for improved readability. Rule 930100, for example, uses separate expressions for periods and slashes, since it's easier to reason about the differences when they are physically separated. The following example is based on rules from 930100:
 
@@ -299,7 +309,7 @@ The exact contents of the included file, including processor directives. The pre
 
 The include processor reduces repetition across assembly files. Repeated blocks can be put into a file in the `include` directory and then be included with the `include` processor comment. Include files are normal assembly files, hence include files can also contain further include directives. The only restriction is that included files must not contain the prefix of suffix markers. This is a technical limitation in the [crs-toolchain]({{< ref "crs_toolchain" >}}).
 
-The contents of an include file could, for example, be the alternation of accepted HTTP headers:
+The contents of an include file could, for example, be the alternation of accepted HTTP methods:
 
 ```python
 POST
