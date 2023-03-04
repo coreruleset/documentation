@@ -96,6 +96,19 @@ A line starting with `##!<` marks the end of the most recent processor block.
 
 Processor markers have the following general format: `<marker> <processor name> [<processor arguments>]`. For example: `##!> cmdline unix`. The arguments depend on the processor and may be empty.
 
+The following example illustrates the use of the markers. Please refer to the following sections for more concrete examples.
+
+```python
+##!> cmdline unix
+  command1
+  command2
+  ##!> assemble
+    nested1
+    nested2
+  ##!<
+##!<
+```
+
 Processors are defined in the [crs-toolchain]({{< ref "crs_toolchain" >}}).
 
 ### Nesting
