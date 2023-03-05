@@ -96,7 +96,7 @@ A line starting with `##!<` marks the end of the most recent processor block.
 
 Processor markers have the following general format: `<marker> <processor name> [<processor arguments>]`. For example: `##!> cmdline unix`. The arguments depend on the processor and may be empty.
 
-The following example illustrates the use of the markers. Please refer to the following sections for more concrete examples.
+The following example is intentionanlly simple (and meaningless) to illustrates the use of the markers without adding additionally confusing pieces. Please refer to the following sections for more concrete and useful examples.
 
 ```python
 ##!> cmdline unix
