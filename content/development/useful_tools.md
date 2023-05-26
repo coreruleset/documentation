@@ -7,6 +7,19 @@ chapter: false
 
 > There are many first and third party tools that help with ModSecurity and CRS development. The most useful ones are listed here. Get in touch if you think something is missing.
 
+## coraza-httpbin
+
+https://github.com/jcchavezs/coraza-httpbin
+
+A Coraza plus reverse proxy container for testing. Makes it possible to easily test CRS with Coraza in a similar way to testing CRS using the Apache and Nginx Docker containers.
+
+A local CRS installation can be included using directives in a `directives.conf` file like so:
+
+```
+Include ../coreruleset/crs-setup.conf.example
+Include ../coreruleset/rules/*.conf
+```
+
 ## crs-toolchain
 
 https://github.com/coreruleset/crs-toolchain
