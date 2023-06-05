@@ -440,11 +440,12 @@ The older method of using `raw_request` is deprecated as it's difficult to maint
 
 ### Using The Correct HTTP Endpoint
 
-The CRS project uses [kennthreitz/httpbin](https://hub.docker.com/r/kennethreitz/httpbin) as backend server for tests. This backend provides one dedicated endpoint for each HTTP method. Tests should target these endpoints to:
+The CRS project uses [kennthreitz/httpbin](https://hub.docker.com/r/kennethreitz/httpbin) as the backend server for tests. This backend provides one dedicated endpoint for each HTTP method. Tests should target these endpoints to:
+
 - improve test throughput (prevent HTML from being returned by the backend)
 - add automatic HTTP method verification (the backend will respond with status code `405` (method not allowed) to requests whose method does not match the endpoint)
 
-Test URI's should be structured as follows, where `<method>` must be replaced by the name of the HTTP method the test uses:
+Test URIs should be structured as follows, where `<method>` must be replaced by the name of the HTTP method the test uses:
 
 ```yaml
 #...
