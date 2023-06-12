@@ -5,7 +5,7 @@ disableToc: false
 chapter: false
 ---
 
-> TODO
+> The first step to a fully functional CRS installation is to have a compatible *engine* in place. The engine provides the tools and functionality to parse and inspect web traffic. This page walks through installing some common options.
 
 ## Prerequisites
 

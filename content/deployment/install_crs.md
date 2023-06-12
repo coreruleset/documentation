@@ -5,7 +5,7 @@ disableToc: false
 chapter: false
 ---
 
-> All the information needed to properly install CRS is presented on this page.
+> With a compatible engine in place and working, the next step is to add *rules*. The rules provide the logic of how to meaningfully inspect web traffic. This page presents instructions on how to install the Core Rule Set.
 
 ## Downloading the OWASP Core Rule Set
 
