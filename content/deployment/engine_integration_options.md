@@ -59,6 +59,16 @@ The CRS project recommends evaluating these commercial appliance-based offerings
 
 In light of the many, many appliance offerings on the market and the CRS project's relatively limited exposure, only a few offerings are listed here.
 
+### HAProxy Technologies
+
+HAProxy Technologies is the company behind HAProxy, the world’s fastest and most widely-used software load balancer. HAProxy Technologies embeds ModSecurity v3 in its products via the Libmodsecurity module. ModSecurity, as a custom integration with the load balancer, is included with: 
+
+* HAProxy Enterprise - the enterprise version of HAProxy that runs on-prem, in the cloud, or as a container
+* HAProxy ALOHA - a plug-and-play hardware or virtual load-balancing appliance
+* HAProxy Enterprise Kubernetes Ingress Controller - high-performance routing and load balancing for Kubernetes
+
+To learn more, read about the [HAProxy WAF solution on haproxy.com](https://www.haproxy.com/solutions/web-application-firewall).
+
 ### Kemp/Progressive LoadMaster
 
 The Kemp LoadMaster is a popular load balancer that integrates ModSecurity v2 and CRS in a typical way. It goes further than the competition with the support of most CRS features.
