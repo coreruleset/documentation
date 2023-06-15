@@ -93,7 +93,11 @@ A selection of these platforms are listed below, along with links to get more in
 
 ### AWS WAF
 
-AWS provides an [abridged version of the Core Rule set](https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html). It's confusing initially because, as a managed rule set, it's called `AWSManagedRulesCommonRuleSet`, but technically it's their partial implementation of / resembles the CRS.
+{{% notice note %}}
+AWS provides a rule set called the ["Core rule set (CRS) managed rule group"](https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html) which "…provides protection against… commonly occurring vulnerabilities described in OWASP publications such as OWASP Top 10."
+
+The CRS project does **not** believe that the AWS WAF "core rule set" is based on or related to the OWASP Core Rule Set.
+{{% /notice %}}
 
 ### Cloudflare WAF
 
