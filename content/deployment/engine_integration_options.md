@@ -61,13 +61,9 @@ In light of the many, many appliance offerings on the market and the CRS project
 
 ### HAProxy Technologies
 
-HAProxy Technologies is the company behind HAProxy, the world’s fastest and most widely-used software load balancer. HAProxy Technologies embeds ModSecurity v3 in its products via the Libmodsecurity module. ModSecurity, as a custom integration with the load balancer, is included with: 
+HAProxy Technologies embeds ModSecurity v3 in three of its products via the Libmodsecurity module. ModSecurity is included with: HAProxy Enterprise, HAProxy ALOHA, and HAProxy Enterprise Kubernetes Ingress Controller. 
 
-* HAProxy Enterprise - the enterprise version of HAProxy that runs on-prem, in the cloud, or as a container
-* HAProxy ALOHA - a plug-and-play hardware or virtual load-balancing appliance
-* HAProxy Enterprise Kubernetes Ingress Controller - high-performance routing and load balancing for Kubernetes
-
-To learn more, read about the [HAProxy WAF solution on haproxy.com](https://www.haproxy.com/solutions/web-application-firewall).
+To learn more, visit the [HAProxy WAF solution page on haproxy.com](https://www.haproxy.com/solutions/web-application-firewall).
 
 ### Kemp/Progressive LoadMaster
 
