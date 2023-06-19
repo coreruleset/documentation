@@ -59,6 +59,12 @@ The CRS project recommends evaluating these commercial appliance-based offerings
 
 In light of the many, many appliance offerings on the market and the CRS project's relatively limited exposure, only a few offerings are listed here.
 
+### HAProxy Technologies
+
+HAProxy Technologies embeds ModSecurity v3 in three of its products via the Libmodsecurity module. ModSecurity is included with: HAProxy Enterprise, HAProxy ALOHA, and HAProxy Enterprise Kubernetes Ingress Controller. 
+
+To learn more, visit the [HAProxy WAF solution page on haproxy.com](https://www.haproxy.com/solutions/web-application-firewall).
+
 ### Kemp/Progressive LoadMaster
 
 The Kemp LoadMaster is a popular load balancer that integrates ModSecurity v2 and CRS in a typical way. It goes further than the competition with the support of most CRS features.
