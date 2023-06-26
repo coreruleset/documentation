@@ -5,61 +5,95 @@ disableToc: false
 chapter: false
 ---
 
-> The first step to a fully functional CRS installation is to have a compatible *engine* in place. The engine provides the tools and functionality to parse and inspect web traffic. This page walks through installing some common options.
+> The first step to a fully functional CRS installation is to have a compatible *engine* in place. The engine provides the tools and functionality to parse and inspect web traffic. This page walks through some common options.
 
-## Prerequisites
+## Option 1: Use a Container
 
-Installing the CRS isn't very difficult but does have one major requirement: *a compatible engine*. The reference engine used throughout this page is ModSecurity.
+A quick and simple option is to use the official CRS [pre-packaged Docker container]({{< ref "../development/useful_tools/#official-crs-maintained-docker-images" >}} "Page detailing the official CRS maintained Docker image."), which avoids the need to install an engine by hand. This official CRS image is published on Docker Hub and provides both a pre-built engine in addition to the Core Rule Set itself.
 
-{{% notice note %}}
-In order to successfully run CRS `3.x` using ModSecurity it is recommended to use the latest version available. For Nginx use the `3.x` branch of ModSecurity, and for Apache use the latest `2.x` branch.
-{{% /notice %}}
+The image can be found at `owasp/modsecurity-crs` and has everything needed to get up and running quickly. Docker, Podman, or any similar, compatible container engine can be used.
 
-## Installing a Compatible WAF Engine
+The CRS project pre-packages both Apache and Nginx web servers along with the appropriate corresponding ModSecurity engine. More engines, like [Coraza](https://coraza.io/), will be added at a later date.
 
-Two different methods to get an engine up and running are presented here:
+Protecting an existing web server is simple. First get the appropriate CRS container image and then set its configuration variables so that the WAF container acts as a reverse proxy, receiving inbound requests and proxying them to the web server.
 
-- using the chosen engine as provided and packaged by the OS distribution
-- compiling the chosen engine from source
+Presented below is an example `docker-compose` configuration that can be used to pull the required container image. All that needs to be changed is the `BACKEND` variable to make the WAF point to the backend web server in question:
+
+```docker-compose
+services:
+  modsec2-apache:
+    container_name: modsec2-apache
+    image: owasp/modsecurity-crs:apache
+    environment:
+      SERVERNAME: modsec2-apache
+      BACKEND: http://<backend server>
+      PORT: "80"
+      MODSEC_RULE_ENGINE: DetectionOnly
+      BLOCKING_PARANOIA: 2
+      TZ: "${TZ}"
+      ERRORLOG: "/var/log/error.log"
+      ACCESSLOG: "/var/log/access.log"
+      MODSEC_AUDIT_LOG_FORMAT: Native
+      MODSEC_AUDIT_LOG_TYPE: Serial
+      MODSEC_AUDIT_LOG: "/var/log/modsec_audit.log"
+      MODSEC_TMP_DIR: "/tmp"
+      MODSEC_RESP_BODY_ACCESS: "On"
+      MODSEC_RESP_BODY_MIMETYPE: "text/plain text/html text/xml application/json"
+      COMBINED_FILE_SIZES: "65535"
+    volumes:
+    ports:
+      - "80:80"
+```
+
+That's all that needs to be done. Simply starting the container described in the configuration above will provide the protection of the latest stable CRS release in front of a given backend server or service. [Many additional variables](https://github.com/coreruleset/modsecurity-crs-docker "Link to the full CRS Docker documentation on GitHub.") can be used to configure the container image and its behavior, so it is recommended to read the full documentation for best results.
+
+## Option 2: Install a Compatible Engine
+
+The most flexible option is to install (and optionally also compile) a compatible engine to run CRS on. At the present time, the main engine options available are ModSecurity v2, ModSecurity v3, and Coraza. Details about all three engine options can be found on our [engine options page]({{< ref "../deployment/engine_integration_options/#compatible-free-and-open-source-waf-engines" >}} "Page detailing the available CRS-compatible engines.").
 
 A ModSecurity installation is presented in the examples below, however the install documentation for the Coraza engine can be found [here](https://www.coraza.io).
 
-### Option 1: Installing Pre-Packaged ModSecurity
+Two different methods to get an engine up and running are presented here:
+
+- Using the chosen engine as provided and packaged by the OS distribution
+- Compiling the chosen engine from source
+
+### Installing Pre-packaged ModSecurity
 
 ModSecurity is frequently pre-packaged and is available from several major Linux distributions.
 
-- **Debian:** Friends of the CRS project [DigitalWave](https://modsecurity.digitalwave.hu) package and, most importantly, **keep ModSecurity updated** for Debian and derivatives.
-- **Fedora:** Execute `dnf install mod_security` for Apache + ModSecurity v2.
-- **RHEL compatible:** Install EPEL and then execute `yum install mod_security`.
+- **Debian:** Friends of the CRS project [DigitalWave](https://modsecurity.digitalwave.hu) package and, most importantly, **keep ModSecurity updated** for Debian and its derivatives.
+- **Fedora:** Install using the package manager: execute `dnf install mod_security` for Apache + ModSecurity v2.
+- **RHEL compatible:** First install EPEL and then install ModSecurity using the package manager: execute `yum install mod_security`.
 
-For Windows, get the latest MSI package from https://github.com/SpiderLabs/ModSecurity/releases.
+For Windows, the latest MSI package can be obtained from https://github.com/SpiderLabs/ModSecurity/releases.
 
 {{% notice warning %}}
-**Distributions might not update their ModSecurity releases frequently.** 
-
-As a result, it is quite likely that a distribution's version of ModSecurity may be missing important features or **may even contain security vulnerabilities**. Additionally, depending on the package and package manager used, the ModSecurity configuration will be laid out slightly differently.
+**Distributions might not update their ModSecurity releases frequently.**  As a result, it is quite likely that a distribution's version of ModSecurity may be missing important features or **may even contain security vulnerabilities**. Additionally, depending on the package and package manager used, the ModSecurity configuration will be laid out slightly differently.
 {{% /notice %}}
 
-As the different engines and distributions have different layouts for their configuration, to simplify the documentation presented here the prefix `<web server config>/` will be used from this point on.
+As the different engines and distributions have different layouts for their configuration, to simplify the documentation presented here the prefix `<web server config>/` is used from this point on.
 
-Examples of `<web server config>/` include:
+Examples of common `<web server config>/` paths include:
 
 - `/etc/apache2` in Debian and derivatives
 - `/etc/httpd` in RHEL and derivatives
 - `/usr/local/apache2` if Apache was compiled from source using the default prefix
-- `C:\Program Files\ModSecurity IIS\` (or Program Files(x86), depending on configuration) on Windows
-- `/etc/nginx`
+- `C:\Program Files\ModSecurity IIS\` (or 'Program Files (x86)', depending on configuration) on Windows
+- `/etc/nginx` for Nginx
 
-### Option 2: Compiling ModSecurity From Source
+### Compiling ModSecurity from Source
 
-Compiling ModSecurity is easy, but slightly outside the scope of this document. For information on how to compile ModSecurity, refer to:
+An alternative to installing a pre-packaged version of ModSecurity is to compile it from source. This offers the maximum amount of flexibility.
 
-- the official [ModSecurity documentation](https://github.com/SpiderLabs/ModSecurity/wiki) on GitHub
-- the compilation recipes for ModSecurity v3 on the [ModSecurity wiki](https://github.com/SpiderLabs/ModSecurity/wiki/Compilation-recipes-for-v3.x)
-- the netnea tutorials for [Apache](https://www.netnea.com/cms/apache-tutorial-6_embedding-modsecurity/) or [Nginx](https://www.netnea.com/cms/nginx-tutorial-6_embedding-modsecurity/)
+Compiling ModSecurity is not difficult but is outside the scope of this document. For detailed information and instructions on how to compile ModSecurity, refer to the following:
+
+- The official [ModSecurity documentation](https://github.com/SpiderLabs/ModSecurity/wiki "Link to the official ModSecurity documentation on GitHub.") on GitHub
+- The compilation recipes for ModSecurity v3 on the [ModSecurity wiki](https://github.com/SpiderLabs/ModSecurity/wiki/Compilation-recipes-for-v3.x "Link to compilation recipes for ModSecurity v3 on the ModSecurity wiki.")
+- The netnea tutorials for [Apache](https://www.netnea.com/cms/apache-tutorial-6_embedding-modsecurity/ "Link to a tutorial about compiling ModSecurity for Apache, on netnea.com.") or [Nginx](https://www.netnea.com/cms/nginx-tutorial-6_embedding-modsecurity/ "Link to a tutorial about compiling ModSecurity for Nginx, on netnea.com.")
 
 {{% notice warning "Unsupported Configurations" "skull-crossbones" %}}
-Note that the following configurations are **not** supported. They do **not** work as expected. The CRS project recommendation is to *avoid these setups*:
+It is very important to note that the following configurations are **not** supported. They do **not** work as expected. The CRS project recommendation is to *avoid these setups*:
 
 - Nginx with ModSecurity v2
 - Apache with ModSecurity v3
@@ -94,7 +128,7 @@ Apache should show something like:
 [Thu Apr 21 23:55:35.187125 2022] [core:notice] [pid 2530:tid 140410548673600] AH00094: Command line: '/usr/sbin/apache2'
 ```
 
-##### Microsoft IIS with ModSecurity 2.x
+###### Microsoft IIS with ModSecurity 2.x
 
 The initial configuration file is `modsecurity_iis.conf`. This file will be parsed by ModSecurity for both ModSecurity directives and `'Include'` directives.
 
@@ -102,40 +136,18 @@ Additionally, in the Event Viewer, under `Windows Logs\Application`, it should b
 
 At this stage, the ModSecurity on IIS setup is working and new directives can be placed in the configuration file as needed.
 
-## Alternative: Using Containers
+### Installing Coraza
 
-Another quick option is to use the official CRS [pre-packaged containers]({{< ref "../development/useful_tools/#official-crs-maintained-docker-images" >}}). Docker, Podman, or any compatible container engine can be used. The official CRS images are published in the Docker Hub. The image most often deployed is `owasp/modsecurity-crs`: it already has everything needed to get up and running quickly.
+The latest installation documentation for the Coraza engine can be found at [the Coraza website](https://www.coraza.io).
 
-The CRS project pre-packages both Apache and Nginx web servers along with the appropriate corresponding ModSecurity engine. More engines, like [Coraza](https://coraza.io/), will be added at a later date.
+### Prerequisites
 
-To protect a running web server, all that's required is to get the appropriate image and set its configuration variables to make the WAF receives requests and proxies them to your backend server.
+Installing the CRS isn't very difficult but does have one major requirement: *a compatible engine*. The reference engine used throughout this page is ModSecurity.
 
-Below is an example `docker-compose` file that can be used to pull the container images. All that needs to be changed is the `BACKEND` variable so that the WAF points to the backend server in question:
+{{% notice note %}}
+In order to successfully run CRS `3.x` using ModSecurity it is recommended to use the latest version available. For Nginx use the `3.x` branch of ModSecurity, and for Apache use the latest `2.x` branch.
+{{% /notice %}}
 
-```docker-compose
-services:
-  modsec2-apache:
-    container_name: modsec2-apache
-    image: owasp/modsecurity-crs:apache
-    environment:
-      SERVERNAME: modsec2-apache
-      BACKEND: http://<backend server>
-      PORT: "80"
-      MODSEC_RULE_ENGINE: DetectionOnly
-      BLOCKING_PARANOIA: 2
-      TZ: "${TZ}"
-      ERRORLOG: "/var/log/error.log"
-      ACCESSLOG: "/var/log/access.log"
-      MODSEC_AUDIT_LOG_FORMAT: Native
-      MODSEC_AUDIT_LOG_TYPE: Serial
-      MODSEC_AUDIT_LOG: "/var/log/modsec_audit.log"
-      MODSEC_TMP_DIR: "/tmp"
-      MODSEC_RESP_BODY_ACCESS: "On"
-      MODSEC_RESP_BODY_MIMETYPE: "text/plain text/html text/xml application/json"
-      COMBINED_FILE_SIZES: "65535"
-    volumes:
-    ports:
-      - "80:80"
-```
+## Option 3: Use a Pre-built WAF Solution
 
-That's all that needs to be done. Simply starting the container described above will instantly provide the protection of the latest stable CRS release in front of a given backend server or service. There are [lots of additional variables](https://github.com/coreruleset/modsecurity-crs-docker) that can be used to configure the container image and its behavior, so be sure to read the full documentation.
+The simplest (but also most inflexible) option is to use a pre-built WAF solution, for example a commercial WAF appliance or a 'WAF-as-a-service' solution. This negates the need to install or compile a WAF engine. Examples of such solutions and services that are compatible with CRS can be found on the [engine and integration options]({{< ref "../deployment/engine_integration_options/#commercial-waf-appliances" >}} "Page giving examples of commercial WAF appliances in addition to cloud and CDN-based services.") page. Users should conduct their own research to determine whether such a solution meets their requirements.
