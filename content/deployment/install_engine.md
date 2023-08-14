@@ -7,15 +7,21 @@ chapter: false
 
 > The first step to a fully functional CRS installation is to have a compatible *engine* in place. The engine provides the tools and functionality to parse and inspect web traffic. This page walks through some common options.
 
-## Option 1: Use a Container
+## Option 1: Use an Official CRS Container
 
-A quick and simple option is to use the official CRS [pre-packaged Docker container]({{< ref "../development/useful_tools/#official-crs-maintained-docker-images" >}} "Page detailing the official CRS maintained Docker image."), which avoids the need to install an engine by hand. This official CRS image is published on Docker Hub and provides both a pre-built engine in addition to the Core Rule Set itself.
+A quick and simple option is to use the official CRS [pre-packaged Docker container]({{< ref "../development/useful_tools/#official-crs-maintained-docker-images" >}} "Page detailing the official CRS maintained Docker image."), which avoids the need to install an engine by hand. This official CRS image is published on Docker Hub and provides a working, pre-built engine bundled with the Core Rule Set itself.
 
 The image can be found at `owasp/modsecurity-crs` and has everything needed to get up and running quickly. Docker, Podman, or any similar, compatible container engine can be used.
 
-The CRS project pre-packages both Apache and Nginx web servers along with the appropriate corresponding ModSecurity engine. More engines, like [Coraza](https://coraza.io/), will be added at a later date.
+### Available Variants
 
-Protecting an existing web server is simple. First get the appropriate CRS container image and then set its configuration variables so that the WAF container acts as a reverse proxy, receiving inbound requests and proxying them to the web server.
+The CRS project publishes both **Apache** and **Nginx** container variants. The web servers are pre-packaged along with the appropriate corresponding ModSecurity engine (i.e. an Apache + ModSecurity v2 container and an Nginx + ModSecurity v3 container). Additional engine variants, like [Coraza](https://coraza.io/), may be added in the future.
+
+The Apache and Nginx containers are themselves both available in two variants: as a **Debian**-based container (the default) and an alternative as an **Alpine Linux**-based container.
+
+### Setting Up a CRS Container
+
+Using a chosen container image to protect a web server is simple. First, get the appropriate CRS container image. Then, set the container's configuration variables so that it acts as a reverse proxy, with the WAF container receiving inbound requests and proxying them to the web server.
 
 Presented below is an example `docker-compose` configuration that can be used to pull the required container image. All that needs to be changed is the `BACKEND` variable to make the WAF point to the backend web server in question:
 
@@ -45,7 +51,7 @@ services:
       - "80:80"
 ```
 
-That's all that needs to be done. Simply starting the container described in the configuration above will provide the protection of the latest stable CRS release in front of a given backend server or service. [Many additional variables](https://github.com/coreruleset/modsecurity-crs-docker "Link to the full CRS Docker documentation on GitHub.") can be used to configure the container image and its behavior, so it is recommended to read the full documentation for best results.
+When the container described in the configuration above is started it will provide the protection of the latest stable CRS release, acting as a reverse proxy in front of a given backend server or service. [Many additional variables](https://github.com/coreruleset/modsecurity-crs-docker "Link to the full CRS Docker documentation on GitHub.") can be used to configure and customise the container image and its behavior. It is recommended to read the full documentation for best results.
 
 ## Option 2: Install a Compatible Engine
 
