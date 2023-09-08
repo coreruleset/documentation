@@ -148,7 +148,7 @@ The command line evasion processor treats each line as a word (e.g., a shell com
 
 Lines starting with a single quote `'` are treated as literals and will not be escaped.
 
-The special token `@` will be replaced with an optional "word ending" regular expression. This can be used in the context of a shell to reduce the number of false positives for a word by requiring a subsequent token to be present. For example: `diff@`.
+The special token `@` will be replaced with an optional "word ending" regular expression. This can be used in the context of a shell to reduce the number of false positives for a word by requiring a subsequent token to be present. For example: `python@`.
 
 `@` will match:
 - `python<<<'print("hello")'`
