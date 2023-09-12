@@ -115,7 +115,7 @@ The different rule exclusion types and methods are summarized in the table below
 
 *\*Can also exclude ranges of rules or multiple space separated rules.*
 
-*\*\*Can also exclude ranges of rules.*
+*\*\*Can also exclude ranges of rules (not currently supported in ModSecurity v3).*
 
 {{% notice tip %}}
 This table is available as a well presented, downloadable [Rule Exclusion Cheatsheet](https://www.netnea.com/cms/rule-exclusion-cheatsheet-download) from Christian Folini.
