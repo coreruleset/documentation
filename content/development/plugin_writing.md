@@ -40,6 +40,10 @@ What to do is as follows:
 * **Scoring in phase 1:** Put in the plugin's *After-File* (and be aware that early blocking won't work).
 * **Scoring in phase 2:** Put in the plugin's *Before-File*.
 
+### ModSecurity SecCollectionTimeout
+
+CRS does not set change the default value (`3600`) for the ModSecurity `SecCollectionTimeout` directive. Plugin authors must instruct users to set the directive to an appropriate value if the plugin requires a value that differs from the default. A plugin should never actively set `SecCollectionTimeout`, as other plugins may specify different values for the directive and the choice for the effective value must be made by the user.
+
 ## Quality Guarantee
 
 The official CRS plugins are separated from third party plugins. The rationale is to keep the quality of official plugins on par with the quality of the CRS project itself. It's not possible to guarantee the quality of third party plugins as their code is not under the control of the CRS project. Third party plugins should be examined and considered separately to decide whether their quality is sufficient for use in production.
