@@ -405,6 +405,12 @@ Additionally, the processor can be instructed to replace suffixes of entries in 
 ##!> include-except command-list pl1-exclude-list -- @ [\s<>] ~ [^\s]
 ```
 
+`""` is the special literal used to represent the empty string in suffix replacements. In order to replace a suffix with the empty string one would write, for example:
+
+```python
+##!> include-except command-list pl1-exclude-list -- @ "" ~ ""
+```
+
 Suffix replacement is performed _after_ all exclusions have been removed, which means that entries in exclude files must target the _vebatim_ contents of the include file, i.e., `some entry@`, not `some entry[\s<>]`
 
 Note that the include-exclude processor does not have a body, thus the end marker is optional.
