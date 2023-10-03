@@ -42,7 +42,7 @@ What to do is as follows:
 
 ### ModSecurity SecCollectionTimeout
 
-CRS does not set change the default value (`3600`) for the ModSecurity `SecCollectionTimeout` directive. Plugin authors must instruct users to set the directive to an appropriate value if the plugin requires a value that differs from the default. A plugin should never actively set `SecCollectionTimeout`, as other plugins may specify different values for the directive and the choice for the effective value must be made by the user.
+CRS does not change the default value (`3600`) for the ModSecurity `SecCollectionTimeout` directive. Plugin authors must instruct users to set the directive to an appropriate value if the plugin requires a value that differs from the default. A plugin should never actively set `SecCollectionTimeout`, as other plugins may specify different values for the directive and the choice for the effective value must be made by the user.
 
 ## Quality Guarantee
 
