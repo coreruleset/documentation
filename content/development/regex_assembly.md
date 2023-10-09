@@ -313,11 +313,11 @@ Processor name: `include`
 ### Arguments
 
 - Include file name (required): The name of the file to include, without suffix
-- Suffix replacements (optional): Any number of space separated two-tuples, where the first entry is the suffix to match and the second entry is the replacement. To use, write `--` after the include file name. Tuples are space separated
+- Suffix replacements (optional): Any number of two-tuples, where the first entry is the suffix to match and the second entry is the replacement. To use, write `--` after the include file name. Tuples are space separated
 
 ### Output
 
-The exact contents of the included file, including processor directives, with suffixes replaced where apopriate. The prefix and suffix markers are not allowed in included files.
+The exact contents of the included file, including processor directives, with suffixes replaced where appropriate. The prefix and suffix markers are not allowed in included files.
 
 ### Description
 
@@ -367,7 +367,7 @@ Processor name: `include-except`
 
 - Include file name (required): The name of the file to include, without suffix
 - Exclude file names (required): One or more names of files to consult for exclusions, without suffix, space separated
-- Suffix replacements (optional): Any number of space separated two-tuples, where the first entry is the suffix to match and the second entry is the replacement. To use, end the list of exclude file names with `--`. Tuples are space separated
+- Suffix replacements (optional): Any number of two-tuples, where the first entry is the suffix to match and the second entry is the replacement. To use, end the list of exclude file names with `--`. Tuples are space separated
 
 ### Output
 
