@@ -371,7 +371,7 @@ Processor name: `include-except`
 
 ### Output
 
-The contents of the included file as per the include processor, but with all matching lines from the exclude file removed. Suffixes will have been replaced as apropriate.
+The contents of the included file as per the include processor, but with all matching lines from the exclude file removed. Suffixes will have been replaced as appropriate.
 
 ### Description
 
@@ -411,6 +411,6 @@ Additionally, the processor can be instructed to replace suffixes of entries in 
 ##!> include-except command-list pl1-exclude-list -- @ "" ~ ""
 ```
 
-Suffix replacement is performed _after_ all exclusions have been removed, which means that entries in exclude files must target the _vebatim_ contents of the include file, i.e., `some entry@`, not `some entry[\s<>]`
+Suffix replacement is performed _after_ all exclusions have been removed, which means that entries in exclude files must target the _verbatim_ contents of the include file, i.e., `some entry@`, not `some entry[\s<>]`
 
 Note that the include-exclude processor does not have a body, thus the end marker is optional.
