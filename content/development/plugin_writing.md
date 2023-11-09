@@ -40,9 +40,8 @@ What to do is as follows:
 * **Scoring in phase 1:** Put in the plugin's *After-File* (and be aware that early blocking won't work).
 * **Scoring in phase 2:** Put in the plugin's *Before-File*.
 
-### ModSecurity SecCollectionTimeout
-
-CRS does not change the default value (`3600`) for the ModSecurity `SecCollectionTimeout` directive. Plugin authors must instruct users to set the directive to an appropriate value if the plugin requires a value that differs from the default. A plugin should never actively set `SecCollectionTimeout`, as other plugins may specify different values for the directive and the choice for the effective value must be made by the user.
+### Plugin Use of Persistent Collections: ModSecurity SecCollectionTimeout
+If a plugin uses persistent collections (stores stateful information across multiple requests, e.g., to implement DoS protection functionality), it is important to note that CRS does not change the default value (`3600`) for the ModSecurity `SecCollectionTimeout` directive. Plugin authors must instruct users to set the directive to an appropriate value if the plugin requires a value that differs from the default. A plugin should never actively set `SecCollectionTimeout`, as other plugins may specify different values for the directive and the choice for the effective value must be made by the user.
 
 ## Quality Guarantee
 
