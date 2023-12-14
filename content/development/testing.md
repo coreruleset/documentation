@@ -314,6 +314,8 @@ testoverride:
 
 For more information and examples, please check the [go-ftw](https://github.com/coreruleset/go-ftw#example-usage)'s documentation.
 
+**Also please don't forget to rollback these modifications in your WAF config after you finished the tests!**
+
 ## Ftw
 
 In this case tests are performed using a Python tool called [ftw](https://github.com/coreruleset/ftw). We run them using the older versions of our [GitHub actions pipeline](https://github.com/coreruleset/coreruleset/blob/v3.3/dev/.github/workflows/test.yml). You can easily reproduce that locally, in your workstation.
