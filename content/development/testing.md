@@ -87,7 +87,7 @@ $ curl -X POST -H "Content-Type: application/json" -d '{"foo":"bar"}' "http://lo
 }
 ```
 
-As you can see, the response's `data` field contains your request data, this is necessary for testing response rules.
+As you can see, the response's `data` field contains your request data. This feature is mandatory for testing response rules.
 
 ### Modify webserver's config
 
