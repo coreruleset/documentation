@@ -314,7 +314,7 @@ For more information and examples, please check the [go-ftw documentation](https
 
 ## FTW (deprecated)
 
-[ftw](https://github.com/coreruleset/ftw) is our legacy test runner, and is **deprecated** and no longer used for tests after CRS v3.2. Refer to this [GitHub workflow]([https://github.com/coreruleset/coreruleset/blob/v3.2/dev/.travis.yml#L52) if you need to use the old **ftw** Python version. You can easily reproduce that locally, on your workstation.
+[ftw](https://github.com/coreruleset/ftw) is our legacy test runner, and is **deprecated** and no longer used for tests after CRS v3.2. Refer to this [GitHub workflow](https://github.com/coreruleset/coreruleset/blob/v3.2/dev/.travis.yml#L52) if you need to use the old **ftw** Python version. You can easily reproduce that locally, on your workstation.
 
 For that you will need:
 
