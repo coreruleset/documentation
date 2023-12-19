@@ -192,7 +192,7 @@ This will install the binary into your `$HOME/go/bin` directory. To compile **go
 ```bash
 $ git clone https://github.com/coreruleset/go-ftw.git
 $ cd go-ftw
-$ go build .
+$ go build
 ```
 
 This will build the binary in the **go-ftw** repository.
