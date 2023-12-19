@@ -312,7 +312,7 @@ For more information and examples, please check the [go-ftw documentation](https
 
 **Also please don't forget to roll back the modifications from this guide to your WAF configuration after you're done testing!**
 
-## Ftw
+## FTW (deprecated)
 
 [ftw](https://github.com/coreruleset/ftw) is our legacy test runner, retired with CRS 4.0. We used to automatically run our test suite using **ftw** as part of a [GitHub workflow](https://github.com/coreruleset/coreruleset/blob/v3.3/dev/.github/workflows/test.yml). You can easily reproduce that locally, on your workstation.
 
