@@ -40,7 +40,7 @@ Excellent, our containers are running, now we can start our tests.
 
 ### Using your own environment for testing
 
-If you have your own environment set up, you can configure that for testing. If you don't yet have an environment but have a Debian or Ubuntu server, you can configure [Digitalwave's](https://modsecurity.digitalwave.hu) package repository for supported distributions. There you can follow the instructions on how to configure your WAF.
+If you have your own environment set up, you can configure that for testing. Please [follow these instructions]({{< ref "install.md#installing-a-compatible-waf-engine" >}}) to install the WAF server locally.
 
 -> The supported platform is ModSecurity 2 with Apache httpd. If you want to run the tests against nginx, you can do that too, but nginx uses libmodsecurity3, which is not fully compatible with Apache httpd + ModSecurity 2.
 
