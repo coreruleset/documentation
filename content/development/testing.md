@@ -97,7 +97,7 @@ For the response tests you need to set up your web server as a proxy, forwarding
 
 #### Apache httpd
 
-Put this snippet into your httpd's default config:
+Put this snippet into your httpd's default config (eg. `/etc/apache2/sites-enabled/000-default.conf`):
 
 ```
         ProxyPreserveHost On
