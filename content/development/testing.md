@@ -9,24 +9,23 @@ chapter: false
 
 Well, you managed to write your rule, but now want to see if if can be added to the CRS? This document should help you to test it using the same tooling the project uses for its tests.
 
-CRS has two kind of types of test tools. Since the version 4.0 we use [go-ftw](https://github.com/coreruleset/go-ftw), this is the new method. The "old" one is the "classic" [ftw](https://github.com/coreruleset/ftw). This is a deprecated method, but it us useful for older version of CRS.
+CRS uses [go-ftw](https://github.com/coreruleset/go-ftw) to run test cases. **go-ftw** is the successor of the previously used test runner [ftw](https://github.com/coreruleset/ftw). The CRS project no longer uses **ftw** but it us still useful for running tests of older CRS versions.
 
 ## Environments
 
-Before you start to run tests, you should set up your environment. You can use a Docker image, or if you have an own instance, you can use that one.
+Before you start to run tests, you should set up your environment. You can use Docker to run a web server with CRS integration or use your existing environment.
 
 ### Setting up Docker containers
 
-For testing, we use the [docker images from our project](https://github.com/coreruleset/modsecurity-crs-docker). That way we can easily use the base containers. But, we "bind mount" the rules in the git repository. So that will allow you to easily test any rules you want inside the containers.
+For testing, we use the [container images from our project](https://github.com/coreruleset/modsecurity-crs-docker). We "bind mount" the rules in the CRS Git repository to the web server container and then instruct **go-ftw** to send requests to it.
 
-To test we need two containers: the WAF itself, and a backend provided by the http://httpbin.org project. That is we we use `docker-compose`, so we can run and connect them easily.
+To test we need two containers: the WAF itself, and a backend, provided in this case by the http://httpbin.org project. The `docker-compose.yml` in the CRS Git repository is a ready-to-run configuration for testing, to be used with the `docker compose` command.
 
 -> The supported platform is modsecurity 2 with Apache
 
 Let's start the containers using:
 ```bash
-❯ docker-compose -f tests/docker-compose.yml up -d modsec2-apache
-Docker Compose is now in the Docker CLI, try `docker compose up`
+❯ docker compose -f tests/docker-compose.yml up -d modsec2-apache
 
 Creating network "tests_default" with the default driver
 Creating tests_backend_1 ... done
@@ -39,15 +38,15 @@ bb8d5a7f256d   kennethreitz/httpbin               "gunicorn -b 0.0.0.0…"   10 
 
 Excellent, our containers are running, now we can start our tests.
 
-### Using your own instance
+### Using your own environment for testing
 
-If you have an own installed instance, you can configure that for testing. If you don't have, but have a Debian or Ubuntu server, you can set up [Digitalwave's](https://modsecurity.digitalwave.hu) repository for supported distributions. There you can follow the instructions how to configure your WAF.
+If you have your own environment set up, you can configure that for testing. If you don't yet have an environment but have a Debian or Ubuntu server, you can configure [Digitalwave's](https://modsecurity.digitalwave.hu) package repository for supported distributions. There you can follow the instructions on how to configure your WAF.
 
--> The supported platform is modsecurity 2 with Apache here too. If you want to run the tests against Nginx, you can do that too, but Nginx uses libmodsecurity3, which is not fully compatible with Apache + mod_security2.
+-> The supported platform is ModSecurity 2 with Apache httpd. If you want to run the tests against nginx, you can do that too, but nginx uses libmodsecurity3, which is not fully compatible with Apache httpd + ModSecurity 2.
 
-If you want to run tests against CRS 4.0 with **go-ftw**, you need to make some modifications on your setup. This is because the test cases for 4.0 contains some extra data for responses, therefore you can check the `RESPONSE-*` rules too. Without this step these tests will be failed.
+If you want to run the complete test suite of CRS 4.0 with **go-ftw**, you need to make some modifications to your setup. This is because the test cases for 4.0 contain some extra data for responses, letting us test the `RESPONSE-*` rules too. Without the following steps these tests will fail.
 
-For this feature, beside the configured WAF you need some other packages: `python3-gunicorn`, `gunicorn` and `python3-httpbin`.
+To enable response handling for tests you will need the following additional pacakges: `python3-gunicorn`, `gunicorn` and `python3-httpbin`.
 
 #### Start `httpbin`
 
@@ -92,11 +91,11 @@ As you can see, the response's `data` field contains your request data, this is 
 
 ### Modify webserver's config
 
-For the response's test you need to set up your webserver as a proxy, which sends the requests to `httpbin`. Here are the examples.
+For the response tests you need to set up your web server as a proxy, forwarding the requests to `httpbin`. The following is an example of such a proxy setup.
 
 **Before you start to change your configurations, please make a backup!**
 
-#### Apache
+#### Apache httpd
 
 Put this snippet into your httpd's default config:
 
@@ -107,9 +106,9 @@ Put this snippet into your httpd's default config:
         ServerName localhost
 ```
 
-#### Nginx
+#### nginx
 
-Put this snippet into your httpd's default config or replace the existing one:
+Put this snippet into the nginx default config (e.g., `/etc/nginx/conf.d/default.conf`) or replace the existing one:
 
 ```
         location / {
@@ -132,13 +131,13 @@ Put this snippet into your httpd's default config or replace the existing one:
         }
 ```
 
-In both cases (Apache2, Nginx) you have to change your `modsecurity.conf` settings. Open that file and find the directive `SecResponseBodyMimeType`. Modify the arguments:
+In both cases (Apache httpd, nginx) you have to change your `modsecurity.conf` settings. Open that file and find the directive `SecResponseBodyMimeType`. Modify the arguments:
 
 ```
 SecResponseBodyMimeType text/plain text/html text/xml application/json
 ```
 
-Note, that the default value does not have the mime type `application/json`.
+Note, that the default value does not have the MIME type `application/json`.
 
 In your `crs-setup.conf` you need to add these extra rules (after the rule `900990`):
 
@@ -166,30 +165,29 @@ SecRule REQUEST_HEADERS:X-CRS-Test "@rx ^.*$" \
     msg:'%{MATCHED_VAR}'"
 ```
 
-Now after the restart all request will send to `httpbin`. Let's start testing.
+Now, after the restarting the web server all request will be sent to `httpbin`. Let's start testing.
 
 ## Go-ftw
 
-Tests are performed using a golang tool called [go-ftw](https://github.com/coreruleset/go-ftw). We run them using a [GitHub actions pipeline](https://github.com/coreruleset/coreruleset/blob/{{< param crs_dev_branch >}}/.github/workflows/test.yml). You can easily reproduce that locally, in your workstation.
+Tests are performed using [go-ftw](https://github.com/coreruleset/go-ftw). We run our test suite automatically using **go-ftw** as part of a [GitHub workflow](https://github.com/coreruleset/coreruleset/blob/{{< param crs_dev_branch >}}/.github/workflows/test.yml). You can easily reproduce that locally, on your workstation.
 
 For that you will need:
 
-- the coreruleset git repository
-- docker and docker-compose (modern versions of docker already include compose functionality)
+- the CRS Git repository
+- Docker (modern versions of docker already include the `compose` command, if you are running an older version you also need to have `docker-compose` installed)
   OR
-  an own instance (see above installation steps)
-- golang compiler
+  your own environment (see above installation steps)
 - your rules and tests!
 
-You can download the pre-compiled version or build your own instance. Precompiled versions are [here](https://github.com/coreruleset/go-ftw/releases). Just download it and you can use that.
+You can download pre-compiled binaries of **go-ftw** or build from source (requires you to have a **Go** environment). The pre-compiled binaries are available [on GitHub](https://github.com/coreruleset/go-ftw/releases). The binaries are ready to run and do not require installation.
 
-If you want to build one, you can type:
+You can also install pre-compiled binaries by using `go install`, if you have a **Go** environment:
 
 ```bash
 $ go install github.com/coreruleset/go-ftw@latest
 ```
 
-This will build the binary into your `$HOME/go/bin` directory. Other option:
+This will install the binary into your `$HOME/go/bin` directory. To compile **go-ftw** from source, run the following commands:
 
 ```bash
 $ git clone https://github.com/coreruleset/go-ftw.git
@@ -197,11 +195,11 @@ $ cd go-ftw
 $ go build .
 ```
 
-This will build the binary into your source directory.
+This will build the binary in the **go-ftw** repository.
 
-Now create a configuration file. Because the two webservers uses different log files, and - perhaps - different ports, you can create two different config files.
+Now create a configuration file. Because Apache httpd and nginx use different log file paths, and, perhaps, different ports, you may want to create two different configuration files for **go-ftw**.
 
-You can use this for Nginx:
+Example for nginx:
 
 ```bash
 $ cat .ftw.nginx.yaml
@@ -214,7 +212,7 @@ testoverride:
 mode: "default"
 ```
 
-and this one for Apache:
+Example for Apache httpd:
 
 ```bash
 $ cat .ftw.apache.yaml
@@ -227,13 +225,12 @@ testoverride:
 mode: "default"
 ```
 
-Please check your `port` value and other settings, those can be different.
+Please verify that these settings are correct for your setup, specifically the `port` values.
 
 ### Running the test suite
 
-The test suite will be run by the tool `go-ftw`.
 
-Here is how you can run tests:
+Execute the following command to run the CRS test suite with **go-ftw** against Apache httpd:
 
 ```bash
 $ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/
@@ -257,7 +254,7 @@ $ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/test
   ...
 ```
 
-or you can use your Nginx configuration file:
+To run the test suite against nginx, execute the following:
 
 ```bash
 $ ./go-ftw run --config .ftw.nginx.yaml -d ../coreruleset/tests/regression/tests/
@@ -278,27 +275,26 @@ $ ./go-ftw run --config .ftw.nginx.yaml -d ../coreruleset/tests/regression/tests
   ...
 ```
 
-If you want to run only one test, or a group of tests, you can include only that one(s) with option `-i`:
+If you want to run only one test, or a group of tests, you can specify that using the "include" option `-i` (or `--include`). This option takes a regular expression:
 
 ```bash
 $ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$"
 ```
 
-In this case only the test case `955100-1` test will run.
+In the above case only the test case `955100-1` will be run.
 
-If you want to see how looks like the request, response and log lines, you can pass the option `--trace`:
+If you need to see more verbose output (e.g., to look at the requests and responses sent and received by **go-ftw**) you can use the `--debug` or `--trace` options:
 
 ```bash
 $ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$" --trace
 ```
 
-or `--debug`
 
 ```bash
 $ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$" --debug
 ```
 
-Please note again that `libmodsecurity3` is **not fully compatible** with `mod_security2`, some tests can be failed. If you want to ignore them, you can put the tests onto a list in your config:
+Please note again that `libmodsecurity3` is **not fully compatible** with ModSecurity 2, some tests can fail. If you want to ignore them, you can put the tests into a list in your config:
 
 ```
 testoverride:
@@ -312,13 +308,13 @@ testoverride:
     ...
 ```
 
-For more information and examples, please check the [go-ftw](https://github.com/coreruleset/go-ftw#example-usage)'s documentation.
+For more information and examples, please check the [go-ftw documentation](https://github.com/coreruleset/go-ftw#example-usage).
 
-**Also please don't forget to rollback these modifications in your WAF config after you finished the tests!**
+**Also please don't forget to roll back the modifications from this guide to your WAF configuration after you're done testing!**
 
 ## Ftw
 
-In this case tests are performed using a Python tool called [ftw](https://github.com/coreruleset/ftw). We run them using the older versions of our [GitHub actions pipeline](https://github.com/coreruleset/coreruleset/blob/v3.3/dev/.github/workflows/test.yml). You can easily reproduce that locally, in your workstation.
+[ftw](https://github.com/coreruleset/ftw) is our legacy test runner, retired with CRS 4.0. We used to automatically run our test suite using **ftw** as part of a [GitHub workflow](https://github.com/coreruleset/coreruleset/blob/v3.3/dev/.github/workflows/test.yml). You can easily reproduce that locally, on your workstation.
 
 For that you will need:
 
