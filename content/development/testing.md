@@ -197,7 +197,7 @@ $ go build
 
 This will build the binary in the **go-ftw** repository.
 
-Now create a configuration file. Because Apache httpd and nginx use different log file paths, and, perhaps, different ports, you may want to create two different configuration files for **go-ftw**. For details please read the [original](https://github.com/coreruleset/go-ftw#yaml-config-file) documentation of **fo-ftw**.
+Now create a configuration file. Because Apache httpd and nginx use different log file paths, and, perhaps, different ports, you may want to create two different configuration files for **go-ftw**. For details please read [go-ftw's documentation](https://github.com/coreruleset/go-ftw#yaml-config-file).
 
 Example for nginx:
 
