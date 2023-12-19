@@ -197,7 +197,7 @@ $ go build
 
 This will build the binary in the **go-ftw** repository.
 
-Now create a configuration file. Because Apache httpd and nginx use different log file paths, and, perhaps, different ports, you may want to create two different configuration files for **go-ftw**.
+Now create a configuration file. Because Apache httpd and nginx use different log file paths, and, perhaps, different ports, you may want to create two different configuration files for **go-ftw**. For details please read the [original](https://github.com/coreruleset/go-ftw#yaml-config-file) documentation of **fo-ftw**.
 
 Example for nginx:
 
@@ -209,7 +209,6 @@ testoverride:
   input:
     dest_addr: "127.0.0.1"
     port: 8080
-mode: "default"
 ```
 
 Example for Apache httpd:
@@ -222,7 +221,6 @@ testoverride:
   input:
     dest_addr: "127.0.0.1"
     port: 80
-mode: "default"
 ```
 
 Please verify that these settings are correct for your setup, specifically the `port` values.
