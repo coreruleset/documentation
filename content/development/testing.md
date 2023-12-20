@@ -227,7 +227,6 @@ Please verify that these settings are correct for your setup, specifically the `
 
 ### Running the test suite
 
-
 Execute the following command to run the CRS test suite with **go-ftw** against Apache httpd:
 
 ```bash
