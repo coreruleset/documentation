@@ -223,7 +223,7 @@ testoverride:
     port: 80
 ```
 
-Please verify that these settings are correct for your setup, specifically the `port` values.
+Please verify that these settings are correct for your setup, especially the `port` values.
 
 ### Running the test suite
 
