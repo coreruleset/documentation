@@ -165,7 +165,7 @@ SecRule REQUEST_HEADERS:X-CRS-Test "@rx ^.*$" \
     msg:'%{MATCHED_VAR}'"
 ```
 
-Now, after the restarting the web server all request will be sent to `httpbin`. Let's start testing.
+Now, after restarting the web server all request will be sent to `httpbin`. Let's start testing.
 
 ## Go-ftw
 
