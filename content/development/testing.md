@@ -46,7 +46,7 @@ If you have your own environment set up, you can configure that for testing. Ple
 
 If you want to run the complete test suite of CRS 4.0 with **go-ftw**, you need to make some modifications to your setup. This is because the test cases for 4.0 contain some extra data for responses, letting us test the `RESPONSE-*` rules too. Without the following steps these tests will fail.
 
-To enable response handling for tests you will need the following additional pacakges: `python3-gunicorn`, `gunicorn` and `python3-httpbin`.
+To enable response handling for tests you will need the following additional packages: `python3-gunicorn`, `gunicorn` and `python3-httpbin`.
 
 #### Start `httpbin`
 
