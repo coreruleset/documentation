@@ -176,7 +176,7 @@ For that you will need:
 - the CRS Git repository
 - Docker (modern versions of docker already include the `compose` command, if you are running an older version you also need to have `docker-compose` installed)
   OR
-  your own environment (see above installation steps)
+  [your own environment]({{< relref #use-own-env >}})
 - your rules and tests!
 
 You can download pre-compiled binaries of **go-ftw** or build from source (requires you to have a **Go** environment). The pre-compiled binaries are available [on GitHub](https://github.com/coreruleset/go-ftw/releases). The binaries are ready to run and do not require installation.
