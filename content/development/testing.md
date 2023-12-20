@@ -38,7 +38,7 @@ bb8d5a7f256d   kennethreitz/httpbin               "gunicorn -b 0.0.0.0…"   10 
 
 Excellent, our containers are running, now we can start our tests.
 
-### Using your own environment for testing
+### Using your own environment for testing {#use-own-env}
 
 If you have your own environment set up, you can configure that for testing. Please [follow these instructions]({{< ref "install.md#installing-a-compatible-waf-engine" >}}) to install the WAF server locally.
 
