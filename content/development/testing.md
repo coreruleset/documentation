@@ -23,7 +23,7 @@ To test we need two containers: the WAF itself, and a backend, provided in this 
 
 -> The supported platform is ModSecurity 2 with Apache httpd
 
-Let's start the containers using:
+Let's start the containers by executing the following command:
 ```bash
 ❯ docker compose -f tests/docker-compose.yml up -d modsec2-apache
 
