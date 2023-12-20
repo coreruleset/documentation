@@ -21,7 +21,7 @@ For testing, we use the [container images from our project](https://github.com/c
 
 To test we need two containers: the WAF itself, and a backend, provided in this case by the http://httpbin.org project. The `docker-compose.yml` in the CRS Git repository is a ready-to-run configuration for testing, to be used with the `docker compose` command.
 
--> The supported platform is modsecurity 2 with Apache
+-> The supported platform is ModSecurity 2 with Apache httpd
 
 Let's start the containers using:
 ```bash
