@@ -142,7 +142,7 @@ Note, that the default value does not have the MIME type `application/json`.
 In your `crs-setup.conf` you need to add these extra rules (after the rule `900990`):
 
 ```
-SecAction
+SecAction \
     "id:900005,\
     phase:1,\
     nolog,\
