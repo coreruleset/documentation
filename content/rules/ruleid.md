@@ -85,7 +85,7 @@ However, this is problematic for people who have made exceptions based
 on these existing rules. For these people we provide the following
 table:
 
-See [2.x to 3.x Rule ID Transition Table](data/IdNumbering.csv).
+See [2.x to 3.x Rule ID Transition Table](/data/IdNumbering.csv).
 
 You can use the above file along with a script similar to the one below
 to update exclusions or rule changes:
