@@ -1,0 +1,4 @@
+{{ $resource := resources.Get ($.Get 0) }}
+{{ with $resource }}
+{{- $resource.Permalink -}}
+{{ end }}
