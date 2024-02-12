@@ -4,6 +4,7 @@ common:
     This file is used to add LOCAL exceptions for your site. Often in this file
     we would see rules that short-circuit inspection and allow certain
     transactions to skip through inspection.
+    
     `Example: SecRule REMOTE_ADDR "@ipMatch 192.168.1.100" "phase:1,id:'981033',t:none,nolog,pass,ctl:ruleEngine=Off"`
   REQUEST-901-INITIALIZATION.conf: TODO
   REQUEST-913-SCANNER-DETECTION.conf: >
@@ -72,7 +73,8 @@ common:
     certain transactions to skip through inspection.
   RESPONSE-980-CORRELATION.conf: TODO
 
-"3":
+versioned:
+  "3":
   REQUEST-903.9001-DRUPAL-EXCLUSION-RULES.conf: TODO
   REQUEST-903.9002-WORDPRESS-EXCLUSION-RULES.conf: TODO
   REQUEST-903.9003-NEXTCLOUD-EXCLUSION-RULES.conf: TODO
@@ -81,7 +83,7 @@ common:
   REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf: TODO
   REQUEST-910-IP-REPUTATION.conf: >
     These rules deal with detecting traffic from IPs that have previously been
-    involved with malicious activity, either on our local site or globally. |
+    involved with malicious activity, either on our local site or globally.
   REQUEST-912-DOS-PROTECTION.conf: >
     The rules in this file will attempt to detect some level 7 DoS (Denial
     of Service) attacks against your server.
