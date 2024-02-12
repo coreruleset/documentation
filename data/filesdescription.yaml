@@ -75,18 +75,16 @@ common:
 
 versioned:
   "3":
-  REQUEST-903.9001-DRUPAL-EXCLUSION-RULES.conf: TODO
-  REQUEST-903.9002-WORDPRESS-EXCLUSION-RULES.conf: TODO
-  REQUEST-903.9003-NEXTCLOUD-EXCLUSION-RULES.conf: TODO
-  REQUEST-903.9004-DOKUWIKI-EXCLUSION-RULES.conf: TODO
-  REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf: TODO
-  REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf: TODO
-  REQUEST-910-IP-REPUTATION.conf: >
-    These rules deal with detecting traffic from IPs that have previously been
-    involved with malicious activity, either on our local site or globally.
-  REQUEST-912-DOS-PROTECTION.conf: >
-    The rules in this file will attempt to detect some level 7 DoS (Denial
-    of Service) attacks against your server.
-"4":
-  REQUEST-905-COMMON-EXCEPTIONS.conf: TODO
-  RESPONSE-955-WEB-SHELLS.conf: TODO
+    REQUEST-903.9001-DRUPAL-EXCLUSION-RULES.conf: TODO
+    REQUEST-903.9002-WORDPRESS-EXCLUSION-RULES.conf: TODO
+    REQUEST-903.9003-NEXTCLOUD-EXCLUSION-RULES.conf: TODO
+    REQUEST-903.9004-DOKUWIKI-EXCLUSION-RULES.conf: TODO
+    REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf: TODO
+    REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf: TODO
+    REQUEST-910-IP-REPUTATION.conf: >
+      These rules deal with detecting traffic from IPs that have   previously been involved with malicious activity, either on our local site or globally.
+    REQUEST-912-DOS-PROTECTION.conf: >
+      The rules in this file will attempt to detect some level 7 DoS (Denial of Service) attacks against your server.
+  "4":
+    REQUEST-905-COMMON-EXCEPTIONS.conf: TODO
+    RESPONSE-955-WEB-SHELLS.conf: TODO
