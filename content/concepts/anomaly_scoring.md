@@ -192,7 +192,7 @@ Early blocking makes this possible by inserting **two additional rounds of block
 1. Make a **blocking decision** using the *outbound* anomaly score threshold
 
 {{% notice info %}}
-More information about processing phases can be found in the [processing phases section](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#processing-phases) of the ModSecurity Reference Manual.
+More information about processing phases can be found in the [processing phases section](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#processing-phases) of the ModSecurity Reference Manual.
 {{% /notice %}}
 
 {{% notice warning %}}

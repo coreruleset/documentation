@@ -40,7 +40,7 @@ chapter: false
 * Adhere to an 80 character line length limit where possible.
 * Add comments where possible and clearly explain any new rules.
 * Comments must not appear between chained rules and should instead be placed before the start of a rule chain.
-* All [chained rules](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#chain) should be indented like so, for readability:
+* All [chained rules](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#chain) should be indented like so, for readability:
 ```
 SecRule .. .. \
     "..."
@@ -305,7 +305,7 @@ The types of rules that are allowed at each paranoia level are as follows:
 
 **PL 2:**
 
-* [Chain](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-%28v2.x%29#chain) usage is allowed
+* [Chain](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-%28v2.x%29#chain) usage is allowed
 * Confirmed matches use score critical
 * Matches that cause false positives are limited to using scores notice or warning
 * Low false positive rates

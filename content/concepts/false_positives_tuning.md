@@ -328,7 +328,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
 {{% notice tip %}}
 It's possible to write a conditional rule exclusion that tests something other than just the request URI. Conditions can be built which test, for example, the source IP address, HTTP request method, HTTP headers, and even the day of the week.
 
-Multiple conditions can also be chained together to create a logical AND by using ModSecurity's [chain](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#chain) action. This allows for creating powerful rule logic like "for transactions that are from source IP address 10.0.0.1 AND that are for location '/login.html', exclude the query string parameter 'user_id' from rule 920280". Extremely granular and specific rule exclusions can be written, in this way.
+Multiple conditions can also be chained together to create a logical AND by using ModSecurity's [chain](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#chain) action. This allows for creating powerful rule logic like "for transactions that are from source IP address 10.0.0.1 AND that are for location '/login.html', exclude the query string parameter 'user_id' from rule 920280". Extremely granular and specific rule exclusions can be written, in this way.
 {{% /notice %}}
 
 #### Rule Exclusion Packages
@@ -366,12 +366,12 @@ The CRS project is always looking to work with other communities and individuals
 
  A popular tutorial titled [Handling False Positives with the OWASP ModSecurity Core Rule Set](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/) by Christian Folini walks through a full CRS tuning process, with examples.
 
-Detailed reference of each of the rule exclusion mechanisms outlined above can be found in the [ModSecurity Reference Manual](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)):
+Detailed reference of each of the rule exclusion mechanisms outlined above can be found in the [ModSecurity Reference Manual](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)):
 
 - Configure-time rule exclusion mechanisms:
-  - [SecRuleRemoveById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveById)
-  - [SecRuleRemoveByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveByTag)
-  - [SecRuleUpdateTargetById](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetById)
-  - [SecRuleUpdateTargetByTag](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetByTag)
+  - [SecRuleRemoveById](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveById)
+  - [SecRuleRemoveByTag](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleRemoveByTag)
+  - [SecRuleUpdateTargetById](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetById)
+  - [SecRuleUpdateTargetByTag](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleUpdateTargetByTag)
 - Runtime rule exclusion mechanisms:
-  - [The ctl action](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#ctl)
+  - [The ctl action](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#ctl)
