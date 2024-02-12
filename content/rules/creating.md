@@ -13,7 +13,7 @@ chapter: false
 
 ### The Basic Syntax
 
-A [SecRule](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRule)
+A [SecRule](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRule)
 is a directive like any other understood by ModSecurity. The difference
 is that this directive is way more powerful in what it is capable of
 representing. Generally, a SecRule is made up of 4 parts:
@@ -48,7 +48,7 @@ ModSecurity directives are only evaluated at startup.
 Clearly, if this was all there was to SecRules it wouldn't be very
 powerful. In fact, there is a lot more. So much more that it is in fact
 a full fledged language. The best place to find out about all the
-possible capabilities is via the [ModSecurity Manual](https://github.com/SpiderLabs/ModSecurity/wiki/Reference-Manual-(v2.x)).
+possible capabilities is via the [ModSecurity Manual](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)).
 The following is just a glimpse of its capabilities:
 
 There are ~105 **variables** in 6 different categories, some examples

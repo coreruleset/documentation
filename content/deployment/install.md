@@ -36,7 +36,7 @@ ModSecurity is frequently pre-packaged and is available from several major Linux
 - **Fedora:** Execute `dnf install mod_security` for Apache + ModSecurity v2.
 - **RHEL compatible:** Install EPEL and then execute `yum install mod_security`.
 
-For Windows, get the latest MSI package from https://github.com/SpiderLabs/ModSecurity/releases.
+For Windows, get the latest MSI package from https://github.com/owasp-modsecurity/ModSecurity/releases.
 
 {{% notice warning %}}
 **Distributions might not update their ModSecurity releases frequently.** 
@@ -58,8 +58,8 @@ Examples of `<web server config>/` include:
 
 Compiling ModSecurity is easy, but slightly outside the scope of this document. For information on how to compile ModSecurity, refer to:
 
-- the official [ModSecurity documentation](https://github.com/SpiderLabs/ModSecurity/wiki) on GitHub
-- the compilation recipes for ModSecurity v3 on the [ModSecurity wiki](https://github.com/SpiderLabs/ModSecurity/wiki/Compilation-recipes-for-v3.x)
+- the official [ModSecurity documentation](https://github.com/owasp-modsecurity/ModSecurity/wiki) on GitHub
+- the compilation recipes for ModSecurity v3 on the [ModSecurity wiki](https://github.com/owasp-modsecurity/ModSecurity/wiki/Compilation-recipes-for-v3.x)
 - the netnea tutorials for [Apache](https://www.netnea.com/cms/apache-tutorial-6_embedding-modsecurity/) or [Nginx](https://www.netnea.com/cms/nginx-tutorial-6_embedding-modsecurity/)
 
 {{% notice warning "Unsupported Configurations" "skull-crossbones" %}}
@@ -174,7 +174,7 @@ OWASP CRS contains a setup file that should be reviewed prior to completing set 
 
 At a minimum, keep in mind the following:
 
-- CRS does not configure features such as the rule engine, audit engine, logging, etc. This task is part of the initial *engine* setup and is not a job for the rule set. For ModSecurity, if not already done, see the [recommended configuration](https://github.com/SpiderLabs/ModSecurity/blob/master/modsecurity.conf-recommended).
+- CRS does not configure features such as the rule engine, audit engine, logging, etc. This task is part of the initial *engine* setup and is not a job for the rule set. For ModSecurity, if not already done, see the [recommended configuration](https://github.com/owasp-modsecurity/ModSecurity/blob/master/modsecurity.conf-recommended).
 - Decide what ModSecurity should do when it detects malicious activity, e.g., drop the packet, return a *403 Forbidden* status code, issue a redirect to a custom page, etc.
 - Make sure to configure the anomaly scoring thresholds. For more information see [Anomaly]({{< ref "anomaly_scoring.md" >}} "Anomaly").
 - By default, the CRS rules will consider many issues with different databases and languages. If running in a specific environment, e.g., without any SQL database services present, it is probably a good idea to limit this behavior for performance reasons.
