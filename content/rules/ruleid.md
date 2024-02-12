@@ -25,33 +25,29 @@ of IDs for you thank you.
 
 ### ID Reservations
 
--   1-99,999; reserved for local (internal) use. Use as you see fit but
-    do not use this range for rules that are distributed to others.
--   100,000--199,999; reserved for rules published by Oracle.
--   200,000--299,999; reserved for rules published Comodo.
--   300,000-399,999; reserved for rules published at gotroot.com.
--   400,000--419,999; unused (available for reservation).
--   420,000-429,999; reserved for ScallyWhack .
--   430,000--439,999: reserved for rules published by Flameeyes
--   440,000-599,999; unused (available for reservation).
--   600,000-699,999; reserved for use by Akamai
-    <https://www.akamai.com/products/web-application-protector>
--   700,000-799,999; reserved for Ivan Ristic.
--   900,000-999,999; reserved for the OWASP ModSecurity Core Rule Set
-    project.
--   1,000,000-1,009,999; reserved for rules published by Redhat Security
-    Team
--   1,010,000-1,999,999; unused (available for reservation)
--   2,000,000-2,999,999; reserved for rules from Trustwave\'s SpiderLabs
-    Research team
--   3,000,000-3,999,999; reserved for use by Akamai
--   4,000,000-4,099,999; reserved in use by AviNetworks
--   4,100,000-4,199,999; reserved in use by Fastly
--   4,200,000-8,999,999; unused (available for reservation)
--   9,000,000-9,999,999; reserved for the OWASP ModSecurity Core Rule Set project.
--   10,000,000-89,999,999; unused (available for reservation)
--   99,000,000-99,099,999: reserved for use by Microsoft 
-    <https://azure.microsoft.com/en-us/services/web-application-firewall/>.
+| ID Range | Reserved for |
+|----------|--------------|
+| 1-99,999 | reserved for local (internal) use. Use as you see fit but do not use this range for rules that are distributed to others. |
+| 100,000--199,999 | reserved for rules published by Oracle |
+| 200,000--299,999 | reserved for rules published Comodo |
+| 300,000-399,999 | reserved for rules published at gotroot.com |
+| 400,000--419,999 | unused **(available for reservation)** |
+| 420,000-429,999 | reserved for ScallyWhack  |
+| 430,000--439,999 | reserved for rules published by Flameeye |
+| 440,000-599,999 | unused **(available for reservation)** |
+| 600,000-699,999 | reserved for [use by Akamai](https://www.akamai.com/products/web-application-protector) |
+| 700,000-799,999 | reserved for Ivan Ristic |
+| 900,000-999,999 | reserved for the OWASP ModSecurity Core Rule Set project |
+| 1,000,000-1,009,999 | reserved for rules published by Redhat Security Team |
+| 1,010,000-1,999,999 | unused **(available for reservation)** |
+| 2,000,000-2,999,999 | reserved for rules from Trustwave\'s SpiderLab Research team |
+| 3,000,000-3,999,999 | reserved for use by Akamai |
+| 4,000,000-4,099,999 | reserved in use by AviNetworks |
+| 4,100,000-4,199,999 | reserved in use by Fastly |
+| 4,200,000-8,999,999 | unused **(available for reservation)** |
+| 9,000,000-9,999,999 | reserved for the OWASP ModSecurity Core Rule Set project |
+| 10,000,000-89,999,999 | unused **(available for reservation)** |
+| 99,000,000-99,099,999 | reserved for [use by Microsoft](https://azure.microsoft.com/en-us/services/web-application-firewall/) |
 
 ### IDs in the OWASP CRS
 
@@ -85,13 +81,13 @@ However, this is problematic for people who have made exceptions based
 on these existing rules. For these people we provide the following
 table:
 
-See [2.x to 3.x Rule ID Transition Table](/data/IdNumbering.csv).
+See [2.x to 3.x Rule ID Transition Table]({{% resource-ref "data/IdNumbering.csv" %}})
 
 You can use the above file along with a script similar to the one below
 to update exclusions or rule changes:
 
 ```python
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import csv
