@@ -82,7 +82,8 @@ versioned:
     REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf: TODO
     REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf: TODO
     REQUEST-910-IP-REPUTATION.conf: >
-      These rules deal with detecting traffic from IPs that have   previously been involved with malicious activity, either on our local site or globally.
+      These rules deal with detecting traffic from IPs that have
+      previously been involved with malicious activity, either on our local site or globally.
     REQUEST-912-DOS-PROTECTION.conf: >
       The rules in this file will attempt to detect some level 7 DoS (Denial of Service) attacks against your server.
   "4":
