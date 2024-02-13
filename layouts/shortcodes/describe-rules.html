@@ -1,0 +1,7 @@
+{{- $crsversion := .Get "version" -}}
+{{- $files := merge $.Site.Data.filesdescription.common (index $.Site.Data.filesdescription.versioned $crsversion)}}
+| Rule File                                               | Description |
+|:--------------------------------------------------------|-------------|
+{{- range $file, $description:= $files }}
+   {{ partial "file-description.html" (dict "context" . "file" $file "description" $description) }}
+{{- end }}
