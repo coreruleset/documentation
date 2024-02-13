@@ -79,7 +79,7 @@ Note that while it's common practice to make a new `modsecurity.d` folder, as ou
 
 ```bash
 mkdir /etc/httpd/modsecurity.d
-tar -zxvf v{{< param crs_latest_release >}}.tar.gz -C /etc/httpd/modsecurity.d/owasp-modsecurity-crs
+tar -zxvf v{{< param crs_latest_release >}}.tar.gz -C /etc/httpd/modsecurity.d/coreruleset
 ```
 
 ### Setting Up the Main Configuration File
@@ -95,7 +95,7 @@ In many scenarios, the default example CRS configuration will be a good enough s
 Once any settings have been changed within the example configuration file, as needed, it should be renamed to remove the .example portion, like so:
 
 ```bash
-cd /etc/httpd/modsecurity.d/owasp-modsecurity-crs/
+cd /etc/httpd/modsecurity.d/coreruleset/
 mv crs-setup.conf.example crs-setup.conf
 ```
 
@@ -104,8 +104,8 @@ mv crs-setup.conf.example crs-setup.conf
 The last step is to tell the web server where the rules are. This is achieved by `include`-ing the rule configuration files in the `httpd.conf` file. Again, this example demonstrates using Apache, but the process is similar on other systems (see the [extended install]({{< ref "install.md" >}}) page for details).
 
 ```bash
-echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/crs-setup.conf' >> /etc/httpd/conf/httpd.conf
-echo 'IncludeOptional /etc/httpd/owasp-modsecurity-crs/rules/*.conf' >> /etc/httpd/conf/httpd.conf
+echo 'IncludeOptional /etc/httpd/coreruleset/crs-setup.conf' >> /etc/httpd/conf/httpd.conf
+echo 'IncludeOptional /etc/httpd/coreruleset/rules/*.conf' >> /etc/httpd/conf/httpd.conf
 ```
 
 Now that everything has been configured, it should be possible to restart and being using the OWASP Core Rule Set. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "false_positives_tuning.md" >}}).

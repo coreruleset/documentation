@@ -1,5 +1,5 @@
 {{- $urlPre := "https://api.github.com" -}}
-{{- $crsversion := .Get "version" -}}
+{{- $crsversion := .Site.Param "crs_latest_release" -}}
 {{- $prefix := .Get "prefix" | default "" -}}
 {{- $filesJ := getJSON $urlPre (printf "/repos/coreruleset/coreruleset/git/trees/v%s" $crsversion) "?recursive=1" -}}
 {{- $text := slice -}}
