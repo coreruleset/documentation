@@ -414,3 +414,7 @@ Additionally, the processor can be instructed to replace suffixes of entries in 
 Suffix replacement is performed _after_ all exclusions have been removed, which means that entries in exclude files must target the _verbatim_ contents of the include file, i.e., `some entry@`, not `some entry[\s<>]`
 
 Note that the include-exclude processor does not have a body, thus the end marker is optional.
+
+## Development
+
+We have a syntax highlight extension for Visual Studio Code that helps with writing assembly files. Instructions on how to install the extension can be found in the readme of the repository: https://github.com/coreruleset/regexp-assemble-syntax
