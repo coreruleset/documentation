@@ -125,4 +125,4 @@ For information on writing a new plugin, refer to the development documentation 
 
 ## Collection Timeout
 
-CRS used to define `SecCollectionTimeout` in `crs-setup.conf` before but removed this setting with the introduction of plugins for CRS v4. That's because CRS itself does not work with collections anymore. However, for plugins, there may be a need to work with collections and maybe also to set a custom `SecCollectionTimeout` outside of the default 3600 seconds defined by the ModSecurity engine. If that's the case, the plugin should either set it in its configuration or indicate the desired value in the plugin documentation.
+If plugins need to work with collections and set a custom `SecCollectionTimeout` outside of the default 3600 seconds defined by the ModSecurity engine, the plugin should either set it in its configuration or indicate the desired value in the plugin documentation. CRS used to define `SecCollectionTimeout` in `crs-setup.conf` before but removed this setting with the introduction of plugins for CRS v4. That's because CRS itself does not work with collections anymore. 
