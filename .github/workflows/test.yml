@@ -1,30 +1,53 @@
 name: test syntax
 
 on:
+  # Runs on pull requests targeting the default branch
   pull_request:
-    branches:
-    - main
+    branches: [$default-branch]
+
+# Sets permissions of the GITHUB_TOKEN
+permissions:
+  contents: read
+
+# Default to bash
+defaults:
+  run:
+    shell: bash
 
 jobs:
+  # Build job
   syntax-check:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: 0.122.0
     steps:
-    - uses: actions/checkout@master
-      with:
-        submodules: recursive
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      - name: Install Dart Sass
+        run: sudo snap install dart-sass
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: '0.97.3'
-        extended: true
+      - name: Install Node.js dependencies
+        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
 
-    - name: Build
-      run: hugo --gc --minify --cleanDestinationDir
+      - name: Build with Hugo
+        env:
+          # For maximum backward compatibility with Hugo modules
+          HUGO_ENVIRONMENT: testing
+          HUGO_ENV: testing
+        run: |
+          hugo \
+            --minify \
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
 
-    - name: (British/American) English test
-      # Content should be written in American English. Test all content against
-      # British English spelling list from:
-      # http://www.tysto.com/uk-us-spelling-list.html'
-      shell: bash
-      run: .github/workflows/english_test.sh
+      - name: (British/American) English test
+        # Content should be written in American English. Test all content against
+        # British English spelling list from:
+        # http://www.tysto.com/uk-us-spelling-list.html'
+        shell: bash
+        run: .github/workflows/english_test.sh
