@@ -211,8 +211,11 @@ It is recommended to create a folder specifically to contain the CRS rules. In t
 ```apache
 <IfModule security2_module>
         Include modsecurity.d/modsecurity.conf
-        Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/crs-setup.conf
-        Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/rules/*.conf
+        Include modsecurity.d/crs/crs-setup.conf
+        Include modsecurity.d/crs/plugins/*-config.conf
+        Include modsecurity.d/crs/plugins/*-before.conf
+        Include modsecurity.d/crs/rules/*.conf
+        Include modsecurity.d/crs/plugins/*-after.conf
 </IfModule>
 ```
 
