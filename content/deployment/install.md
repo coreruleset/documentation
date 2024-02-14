@@ -61,7 +61,7 @@ gpg> quit
 The result when verifying a release will then look like so:
 
 ```bash
-gpg --verify coreruleset-3.3.2.tar.gz.asc v3.3.2.tar.gz
+gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
 gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultimate]
