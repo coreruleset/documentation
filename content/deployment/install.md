@@ -160,7 +160,7 @@ gpg> quit
 The result when verifying a release will then look like so:
 
 ```bash
-gpg --verify coreruleset-3.3.2.tar.gz.asc v3.3.2.tar.gz
+gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
 gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultimate]
@@ -210,17 +210,28 @@ It is recommended to create a folder specifically to contain the CRS rules. In t
 
 ```apache
 <IfModule security2_module>
-        Include modsecurity.d/modsecurity.conf
-        Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/crs-setup.conf
-        Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/rules/*.conf
+  Include modsecurity.d/modsecurity.conf
+  Include {{< param crs_install_dir >}}/crs-setup.conf
+  Include {{< param crs_install_dir >}}/plugins/*-config.conf
+  Include {{< param crs_install_dir >}}/plugins/*-before.conf
+  Include {{< param crs_install_dir >}}/rules/*.conf
+  Include {{< param crs_install_dir >}}/plugins/*-after.conf
 </IfModule>
 ```
 
 ### Includes for Nginx
 
-Nginx will include files from the Nginx configuration directory (`/etc/nginx` or `/usr/local/nginx/conf/`, depending on the environment). Because only one `ModSecurityConfig` directive can be specified within `nginx.conf`, it is recommended to name that file `modsec_includes.conf` and include additional files from there. In the example below, the cloned `owasp-modsecurity-crs` folder was copied into the Nginx configuration directory. From there, the appropriate include directives are specified which will include OWASP CRS when the server is restarted. In the example below, the `modsecurity.conf` file has also been included, which includes recommended configurations for ModSecurity.
+Nginx will include files from the Nginx configuration directory (`/etc/nginx` or `/usr/local/nginx/conf/`, depending on the environment). Because only one `ModSecurityConfig` directive can be specified within `nginx.conf`, it is recommended to name that file `modsec_includes.conf` and include additional files from there. In the example below, the cloned `coreruleset` folder was copied into the Nginx configuration directory. From there, the appropriate include directives are specified which will include OWASP CRS when the server is restarted. In the example below, the `modsecurity.conf` file has also been included, which includes recommended configurations for ModSecurity.
 
 ```nginx
-include modsecurity.conf
-{{% crsfiles prefix="include coreruleset-" version="3.3.2" %}}
-``` 
+  Include modsecurity.d/modsecurity.conf
+  Include {{< param crs_install_dir >}}/crs-setup.conf
+  Include {{< param crs_install_dir >}}/plugins/*-config.conf
+  Include {{< param crs_install_dir >}}/plugins/*-before.conf
+  Include {{< param crs_install_dir >}}/rules/*.conf
+  Include {{< param crs_install_dir >}}/plugins/*-after.conf
+```
+
+{{% notice note %}}
+You will also need to include the plugins you want along with your CRS installation.
+{{% /notice %}}
