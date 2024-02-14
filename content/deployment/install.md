@@ -210,12 +210,12 @@ It is recommended to create a folder specifically to contain the CRS rules. In t
 
 ```apache
 <IfModule security2_module>
-        Include modsecurity.d/modsecurity.conf
-        Include {{< param crs_install_dir >}}/crs-setup.conf
-        Include {{< param crs_install_dir >}}/plugins/*-config.conf
-        Include {{< param crs_install_dir >}}/plugins/*-before.conf
-        Include {{< param crs_install_dir >}}/rules/*.conf
-        Include {{< param crs_install_dir >}}/plugins/*-after.conf
+  Include modsecurity.d/modsecurity.conf
+  Include {{< param crs_install_dir >}}/crs-setup.conf
+  Include {{< param crs_install_dir >}}/plugins/*-config.conf
+  Include {{< param crs_install_dir >}}/plugins/*-before.conf
+  Include {{< param crs_install_dir >}}/rules/*.conf
+  Include {{< param crs_install_dir >}}/plugins/*-after.conf
 </IfModule>
 ```
 
@@ -224,8 +224,12 @@ It is recommended to create a folder specifically to contain the CRS rules. In t
 Nginx will include files from the Nginx configuration directory (`/etc/nginx` or `/usr/local/nginx/conf/`, depending on the environment). Because only one `ModSecurityConfig` directive can be specified within `nginx.conf`, it is recommended to name that file `modsec_includes.conf` and include additional files from there. In the example below, the cloned `coreruleset` folder was copied into the Nginx configuration directory. From there, the appropriate include directives are specified which will include OWASP CRS when the server is restarted. In the example below, the `modsecurity.conf` file has also been included, which includes recommended configurations for ModSecurity.
 
 ```nginx
-include modsecurity.conf
-{{% crsfiles prepend="include " %}}
+  Include modsecurity.d/modsecurity.conf
+  Include {{< param crs_install_dir >}}/crs-setup.conf
+  Include {{< param crs_install_dir >}}/plugins/*-config.conf
+  Include {{< param crs_install_dir >}}/plugins/*-before.conf
+  Include {{< param crs_install_dir >}}/rules/*.conf
+  Include {{< param crs_install_dir >}}/plugins/*-after.conf
 ```
 
 {{% notice note %}}

@@ -41,7 +41,7 @@ home = [ "HTML", "RSS", "JSON"]
   #custom_css = ["css/foo.css", "css/bar.css"]
 
   # CRS related parameters
-  crs_latest_release = "3.3.4"
+  crs_latest_release = "4.0.0"
   crs_dev_branch = "main"
   crs_install_dir = "/etc/crs4"
 
