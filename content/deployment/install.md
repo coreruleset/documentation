@@ -166,3 +166,25 @@ curl 'https://www.example.com/?foo=/etc/passwd&bar=/bin/sh'
 ```
 
 Depending on your configurated thresholds, this should be detected as a malicious request. If you use blocking mode, you should receive an Error 403. The request should also be logged to the audit log, which is usually in `/var/log/modsec_audit.log`.
+
+## Upgrading
+
+### Upgrading from CRS 3.x to CRS 4
+
+The most impactful change is the removal of application exclusion packages in favor of a plugin system. If you had activated the exclusion packages in CRS 3, you should download the plugins for them and place them in the plugins subdirectory. We maintain the list of plugins in our [Plugin Registry](https://github.com/coreruleset/plugin-registry). You can find detailed information on working with plugins in our [plugins documentation]({{ ref "plugins.md" }}).
+
+In terms of changes to the detection rules, the amount of changes is smaller than in the CRS 2—3 changeover. Most rules have only evolved slightly, so it is recommended that you keep any existing custom exclusions that you have made under CRS 3.
+
+We recommend to start over by copying our `crs-setup.conf.example` to `crs-setup.conf` with a copy of your old file at hand, and re-do the customizations that you had under CRS 3.
+
+Please note that we added a large number of new detections, and any new detection brings a certain risk of false alarms. Therefore, we recommend to test first before going live.
+
+### Upgrading from CRS 2.x to CRS 3
+
+In general, you can update by unzipping our new release over your older one, and updating the `crs-setup.conf` file with any new settings.  However, CRS 3.0 is a major rewrite, incompatible with CRS 2.x. Key setup variables have changed their name, and new features have been introduced. Your former modsecurity_crs_10_setup.conf file is thus no longer usable. We recommend you to start with a fresh crs-setup.conf file from scratch.
+
+Most rule IDs have been changed to reorganize them into logical sections. This means that if you have written custom configuration with exclusion rules (e.g. `SecRuleRemoveById`, `SecRuleRemoveTargetById`, `ctl:ruleRemoveById` or `ctl:ruleRemoveTargetById`) you must renumber the rule numbers in that configuration. You can do this using the supplied utility util/id_renumbering/update.py or find the changes in util/id_renumbering/IdNumbering.csv.
+
+However, a key feature of the CRS 3 is the reduction of false positives in the default installation, and many of your old exclusion rules may no longer be necessary. Therefore, it is a good option to start fresh without your old exclusion rules.
+
+If you are experienced in writing exclusion rules for CRS 2.x, it may be worthwhile to try running CRS 3 in Paranoia Level 2 (PL2). This is a stricter mode, which blocks additional attack patterns, but brings a higher number of false positives — in many situations the false positives will be comparable with CRS 2.x. This paranoia level however will bring you a higher protection level than CRS 2.x or a CRS 3 default install, so it can be worth the investment.
