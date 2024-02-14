@@ -211,11 +211,11 @@ It is recommended to create a folder specifically to contain the CRS rules. In t
 ```apache
 <IfModule security2_module>
         Include modsecurity.d/modsecurity.conf
-        Include modsecurity.d/crs/crs-setup.conf
-        Include modsecurity.d/crs/plugins/*-config.conf
-        Include modsecurity.d/crs/plugins/*-before.conf
-        Include modsecurity.d/crs/rules/*.conf
-        Include modsecurity.d/crs/plugins/*-after.conf
+        Include {{< param crs_install_dir >}}/crs-setup.conf
+        Include {{< param crs_install_dir >}}/plugins/*-config.conf
+        Include {{< param crs_install_dir >}}/plugins/*-before.conf
+        Include {{< param crs_install_dir >}}/rules/*.conf
+        Include {{< param crs_install_dir >}}/plugins/*-after.conf
 </IfModule>
 ```
 
@@ -225,5 +225,9 @@ Nginx will include files from the Nginx configuration directory (`/etc/nginx` or
 
 ```nginx
 include modsecurity.conf
-{{% crsfiles prefix="include coreruleset-" %}}
-``` 
+{{% crsfiles prepend="include " %}}
+```
+
+{{% notice note %}}
+You will also need to include the plugins you want along with your CRS installation.
+{{% /notice %}}
