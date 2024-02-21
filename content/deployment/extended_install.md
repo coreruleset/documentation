@@ -150,7 +150,7 @@ If the signature was good then the verification succeeds. If a warning is displa
 To trust the CRS project's public key:
 
 ```bash
-gpg edit-key 36006F0E0BA167832158821138EEACA1AB8A6E72
+gpg --edit-key 36006F0E0BA167832158821138EEACA1AB8A6E72
 gpg> trust
 Your decision: 5 (ultimate trust)
 Are you sure: Yes
