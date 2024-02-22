@@ -1,114 +1,15 @@
 ---
-title: Extended Install
-weight: 30
+title: Installing CRS
+weight: 20
 disableToc: false
 chapter: false
 ---
 
-> All the information needed to properly install CRS is presented on this page. The installation concepts are expanded upon and presented in more detail than the [quick start guide]({{< ref "quick_start.md" >}}).
+This guide aims to get a CRS installation up and running. This guide assumes that a compatible ModSecurity engine is already present and working. If unsure then refer to the [extended install]({{< ref "extended_install.md" >}}) page for full details.
 
-## Contact Us
+## Downloading the Rule Set
 
-To contact the CRS project with questions or problems, reach out via the project's [Google group](https://groups.google.com/a/owasp.org/forum/#!forum/modsecurity-core-rule-set-project) or [Slack channel](https://owasp.slack.com/archives/CBKGH8A5P) (for Slack channel access, [use this link](https://owasp.org/slack/invite) to get an invite).
-
-## Prerequisites
-
-Installing the CRS isn't very difficult but does have one major requirement: *a compatible engine*. The reference engine used throughout this page is ModSecurity.
-
-{{% notice note %}}
-In order to successfully run CRS `3.x` using ModSecurity it is recommended to use the latest version available. For Nginx use the `3.x` branch of ModSecurity, and for Apache use the latest `2.x` branch.
-{{% /notice %}}
-
-## Installing a Compatible WAF Engine
-
-Two different methods to get an engine up and running are presented here:
-
-- using the chosen engine as provided and packaged by the OS distribution
-- compiling the chosen engine from source
-
-A ModSecurity installation is presented in the examples below, however the install documentation for the Coraza engine can be found [here](https://www.coraza.io).
-
-### Option 1: Installing Pre-Packaged ModSecurity
-
-ModSecurity is frequently pre-packaged and is available from several major Linux distributions.
-
-- **Debian:** Friends of the CRS project [DigitalWave](https://modsecurity.digitalwave.hu) package and, most importantly, **keep ModSecurity updated** for Debian and derivatives.
-- **Fedora:** Execute `dnf install mod_security` for Apache + ModSecurity v2.
-- **RHEL compatible:** Install EPEL and then execute `yum install mod_security`.
-
-For Windows, get the latest MSI package from https://github.com/owasp-modsecurity/ModSecurity/releases.
-
-{{% notice warning %}}
-**Distributions might not update their ModSecurity releases frequently.** 
-
-As a result, it is quite likely that a distribution's version of ModSecurity may be missing important features or **may even contain security vulnerabilities**. Additionally, depending on the package and package manager used, the ModSecurity configuration will be laid out slightly differently.
-{{% /notice %}}
-
-As the different engines and distributions have different layouts for their configuration, to simplify the documentation presented here the prefix `<web server config>/` will be used from this point on.
-
-Examples of `<web server config>/` include:
-
-- `/etc/apache2` in Debian and derivatives
-- `/etc/httpd` in RHEL and derivatives
-- `/usr/local/apache2` if Apache was compiled from source using the default prefix
-- `C:\Program Files\ModSecurity IIS\` (or Program Files(x86), depending on configuration) on Windows
-- `/etc/nginx`
-
-### Option 2: Compiling ModSecurity From Source
-
-Compiling ModSecurity is easy, but slightly outside the scope of this document. For information on how to compile ModSecurity, refer to:
-
-- the official [ModSecurity documentation](https://github.com/owasp-modsecurity/ModSecurity/wiki) on GitHub
-- the compilation recipes for ModSecurity v3 on the [ModSecurity wiki](https://github.com/owasp-modsecurity/ModSecurity/wiki/Compilation-recipes-for-v3.x)
-- the netnea tutorials for [Apache](https://www.netnea.com/cms/apache-tutorial-6_embedding-modsecurity/) or [Nginx](https://www.netnea.com/cms/nginx-tutorial-6_embedding-modsecurity/)
-
-{{% notice warning "Unsupported Configurations" "skull-crossbones" %}}
-Note that the following configurations are **not** supported. They do **not** work as expected. The CRS project recommendation is to *avoid these setups*:
-
-- Nginx with ModSecurity v2
-- Apache with ModSecurity v3
-{{% /notice %}}
-
-#### Testing the Compiled Module
-
-Once ModSecurity has been compiled, there is a simple test to see if the installation is working as expected. After compiling from source, use the appropriate directive to **load the newly compiled module** into the web server. For example:
-
-- **Apache:** `LoadModule security2_module modules/mod_security2.so`
-- **Nginx:** `load_module modules/ngx_http_modsecurity_module.so;`
-
-Now restart the web server. ModSecurity should output that it's being used.
-
-Nginx should show something like:
-
-```
-2022/04/21 23:45:52 [notice] 1#1: ModSecurity-nginx v1.0.2 (rules loaded inline/local/remote: 0/6/0)
-```
-
-Apache should show something like:
-
-```
-[Thu Apr 21 23:55:35.142945 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity for Apache/2.9.3 (http://www.modsecurity.org/) configured.
-[Thu Apr 21 23:55:35.142980 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: APR compiled version="1.6.5"; loaded version="1.6.5"
-[Thu Apr 21 23:55:35.142985 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: PCRE compiled version="8.39 "; loaded version="8.39 2016-06-14"
-[Thu Apr 21 23:55:35.142988 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: LUA compiled version="Lua 5.1"
-[Thu Apr 21 23:55:35.142991 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: YAJL compiled version="2.1.0"
-[Thu Apr 21 23:55:35.142994 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: LIBXML compiled version="2.9.4"
-[Thu Apr 21 23:55:35.142997 2022] [:notice] [pid 2528:tid 140410548673600] ModSecurity: Status engine is currently disabled, enable it by set SecStatusEngine to On.
-[Thu Apr 21 23:55:35.187082 2022] [mpm_event:notice] [pid 2530:tid 140410548673600] AH00489: Apache/2.4.41 (Ubuntu) configured -- resuming normal operations
-[Thu Apr 21 23:55:35.187125 2022] [core:notice] [pid 2530:tid 140410548673600] AH00094: Command line: '/usr/sbin/apache2'
-```
-
-##### Microsoft IIS with ModSecurity 2.x
-
-The initial configuration file is `modsecurity_iis.conf`. This file will be parsed by ModSecurity for both ModSecurity directives and `'Include'` directives.
-
-Additionally, in the Event Viewer, under `Windows Logs\Application`, it should be possible to see a new log entry showing ModSecurity being successfully loaded.
-
-At this stage, the ModSecurity on IIS setup is working and new directives can be placed in the configuration file as needed.
-
-## Downloading the OWASP Core Rule Set
-
-With a compatible WAF engine installed and working, the next step is typically to download and install the OWASP CRS. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
+The first step is to download the Core Rule Set itself. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
 
 Official CRS releases can be found at the following URL: https://github.com/coreruleset/coreruleset/releases.
 
@@ -150,7 +51,7 @@ If the signature was good then the verification succeeds. If a warning is displa
 To trust the CRS project's public key:
 
 ```bash
-gpg edit-key 36006F0E0BA167832158821138EEACA1AB8A6E72
+gpg --edit-key 36006F0E0BA167832158821138EEACA1AB8A6E72
 gpg> trust
 Your decision: 5 (ultimate trust)
 Are you sure: Yes
@@ -160,67 +61,130 @@ gpg> quit
 The result when verifying a release will then look like so:
 
 ```bash
-gpg --verify coreruleset-3.3.2.tar.gz.asc v3.3.2.tar.gz
+gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
 gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultimate]
 ```
 
-With the CRS release downloaded and verified, the rest of the set up can continue.
+## Installing the Rule Set
 
-## Setting Up OWASP CRS
+### Extracting the Files
 
-OWASP CRS contains a setup file that should be reviewed prior to completing set up. The setup file is the only configuration file within the root 'coreruleset-{{< param crs_latest_release >}}' folder and is named `crs-setup.conf.example`. Examining this configuration file and reading what the different options are is **highly** recommended.
+Once the rule set has been downloaded and verified, extract the rule set files to a well known location on the server. This will typically be somewhere in the web server directory.
 
-At a minimum, keep in mind the following:
+The examples presented below demonstrate using Apache. For information on configuring Nginx or IIS see the [extended install]({{< ref "install.md" >}}) page.
 
-- CRS does not configure features such as the rule engine, audit engine, logging, etc. This task is part of the initial *engine* setup and is not a job for the rule set. For ModSecurity, if not already done, see the [recommended configuration](https://github.com/owasp-modsecurity/ModSecurity/blob/master/modsecurity.conf-recommended).
-- Decide what ModSecurity should do when it detects malicious activity, e.g., drop the packet, return a *403 Forbidden* status code, issue a redirect to a custom page, etc.
-- Make sure to configure the anomaly scoring thresholds. For more information see [Anomaly]({{< ref "anomaly_scoring.md" >}} "Anomaly").
-- By default, the CRS rules will consider many issues with different databases and languages. If running in a specific environment, e.g., without any SQL database services present, it is probably a good idea to limit this behavior for performance reasons.
-- Make sure to add any HTTP methods, static resources, content types, or file extensions that are needed, beyond the default ones listed.
-
-Once reviewed and configured, the CRS configuration file should be renamed by changing the file suffix from `.example` to `.conf`:
+Note that while it's common practice to make a new `modsecurity.d` folder, as outlined below, this isn't strictly necessary. The path scheme outlined is common on RHEL-based operating systems; the Apache path used may need to be adjusted to match the server's installation.
 
 ```bash
+mkdir {{< param crs_install_dir >}}
+tar -xzvf v{{< param crs_latest_release >}}.tar.gz --strip-components 1 -C {{< param crs_install_dir >}}
+```
+
+Now all the CRS files will be located below the `{{< param crs_install_dir >}}` directory.
+
+### Setting Up the Main Configuration File
+
+After extracting the rule set files, the next step is to set up the main OWASP Core Rule Set configuration file. An example configuration file is provided as part of the release package, located in the main directory: `crs-setup.conf.example`.
+
+{{% notice note %}}
+Other aspects of ModSecurity, particularly engine-specific parameters, are controlled by the ModSecurity "recommended" configuration rules, `modsecurity.conf-recommended`. This file comes packaged with ModSecurity itself.
+{{% /notice %}}
+
+In many scenarios, the default example CRS configuration will be a good enough starting point. It is, however, a good idea to take the time to look through the example configuration file *before* deploying it to make sure it's right for a given environment.
+
+Once any settings have been changed within the example configuration file, as needed, it should be renamed to remove the .example portion, like so:
+
+```bash
+cd {{< param crs_install_dir >}}
 mv crs-setup.conf.example crs-setup.conf
 ```
 
-In addition to `crs-setup.conf.example`, there are two other ".example" files within the CRS repository. These are:
+### Include-ing the Rule Files
 
-- `rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example`
-- `rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example`
-
-These files are designed to provide the rule maintainer with the ability to modify rules (see [false positives and tuning]({{< ref "../concepts/false_positives_tuning.md" >}}#rule-exclusions)) without breaking forward compatibility with rule set updates. These two files should be renamed by removing the `.example` suffix. This will mean that installing updates will *not* overwrite custom rule exclusions. To rename the files in Linux, use a command similar to the following:
+The last step is to tell the web server where the rules are. This is achieved by `include`-ing the rule configuration files in the `httpd.conf` file. Again, this example demonstrates using Apache, but the process is similar on other systems (see the [extended install]({{< ref "install.md" >}}) page for details).
 
 ```bash
-mv rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
-mv rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf
+echo 'IncludeOptional {{< param crs_install_dir >}}/crs-setup.conf' >> /etc/httpd/conf/httpd.conf
+echo 'IncludeOptional {{< param crs_install_dir >}}/plugins/*-config.conf' >> /etc/httpd/conf/httpd.conf
+echo 'IncludeOptional {{< param crs_install_dir >}}/plugins/*-before.conf' >> /etc/httpd/conf/httpd.conf
+echo 'IncludeOptional {{< param crs_install_dir >}}/rules/*.conf' >> /etc/httpd/conf/httpd.conf
+echo 'IncludeOptional {{< param crs_install_dir >}}/plugins/*-after.conf' >> /etc/httpd/conf/httpd.conf
 ```
 
-## Proceeding with the Installation
+Now that everything has been configured, it should be possible to restart and being using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "false_positives_tuning.md" >}}).
 
-The engine should support the `Include` directive out of the box. This directive tells the engine to parse *additional* files for directives. The question is where to put the CRS rules folder in order for it to be included.
-
-Looking at the CRS files, there are quite a few ".conf" files. While the names attempt to do a good job at describing what each file does, additional information is available in the [rules]({{< ref "../rules/" >}}) section.
-
-### Includes for Apache
-
-It is recommended to create a folder specifically to contain the CRS rules. In the example presented here, a folder named `modsecurity.d` has been created and placed within the root `<web server config>/` directory. When using Apache, wildcard notation can be used to vastly simplify the `Include` rules. Simply copying the cloned directory into the `modsecurity.d` folder and specifying the appropriate `Include` directives will install OWASP CRS. In the example below, the `modsecurity.conf` file has also been included, which includes recommended configurations for ModSecurity.
-
-```apache
-<IfModule security2_module>
-        Include modsecurity.d/modsecurity.conf
-        Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/crs-setup.conf
-        Include modsecurity.d/coreruleset-{{< param crs_latest_release >}}/rules/*.conf
-</IfModule>
+```bash
+systemctl restart httpd.service
 ```
 
-### Includes for Nginx
+## Alternative: Using Containers
 
-Nginx will include files from the Nginx configuration directory (`/etc/nginx` or `/usr/local/nginx/conf/`, depending on the environment). Because only one `ModSecurityConfig` directive can be specified within `nginx.conf`, it is recommended to name that file `modsec_includes.conf` and include additional files from there. In the example below, the cloned `owasp-modsecurity-crs` folder was copied into the Nginx configuration directory. From there, the appropriate include directives are specified which will include OWASP CRS when the server is restarted. In the example below, the `modsecurity.conf` file has also been included, which includes recommended configurations for ModSecurity.
+Another quick option is to use the official CRS [pre-packaged containers]({{< ref "../development/useful_tools/#official-crs-maintained-docker-images" >}}). Docker, Podman, or any compatible container engine can be used. The official CRS images are published in the Docker Hub. The image most often deployed is `owasp/modsecurity-crs`: it already has everything needed to get up and running quickly.
 
-```nginx
-include modsecurity.conf
-{{% crsfiles prefix="include coreruleset-" version="3.3.2" %}}
-``` 
+The CRS project pre-packages both Apache and Nginx web servers along with the appropriate corresponding ModSecurity engine. More engines, like [Coraza](https://coraza.io/), will be added at a later date.
+
+To protect a running web server, all that's required is to get the appropriate image and set its configuration variables to make the WAF receives requests and proxies them to your backend server.
+
+Below is an example `docker-compose` file that can be used to pull the container images. All that needs to be changed is the `BACKEND` variable so that the WAF points to the backend server in question:
+
+```docker-compose
+services:
+  modsec2-apache:
+    container_name: modsec2-apache
+    image: owasp/modsecurity-crs:apache
+    environment:
+      SERVERNAME: modsec2-apache
+      BACKEND: http://<backend server>
+      PORT: "80"
+      MODSEC_RULE_ENGINE: DetectionOnly
+      BLOCKING_PARANOIA: 2
+      TZ: "${TZ}"
+      ERRORLOG: "/var/log/error.log"
+      ACCESSLOG: "/var/log/access.log"
+      MODSEC_AUDIT_LOG_FORMAT: Native
+      MODSEC_AUDIT_LOG_TYPE: Serial
+      MODSEC_AUDIT_LOG: "/var/log/modsec_audit.log"
+      MODSEC_TMP_DIR: "/tmp"
+      MODSEC_RESP_BODY_ACCESS: "On"
+      MODSEC_RESP_BODY_MIMETYPE: "text/plain text/html text/xml application/json"
+      COMBINED_FILE_SIZES: "65535"
+    volumes:
+    ports:
+      - "80:80"
+```
+
+That's all that needs to be done. Simply starting the container described above will instantly provide the protection of the latest stable CRS release in front of a given backend server or service. There are [lots of additional variables](https://github.com/coreruleset/modsecurity-crs-docker) that can be used to configure the container image and its behavior, so be sure to read the full documentation.
+
+## Verifying that the CRS is active
+
+Always verify that CRS is installed correctly by sending a 'malicious' request to your site or application, for instance:
+
+```bash
+curl 'https://www.example.com/?foo=/etc/passwd&bar=/bin/sh'
+```
+
+Depending on your configurated thresholds, this should be detected as a malicious request. If you use blocking mode, you should receive an Error 403. The request should also be logged to the audit log, which is usually in `/var/log/modsec_audit.log`.
+
+## Upgrading
+
+### Upgrading from CRS 3.x to CRS 4
+
+The most impactful change is the removal of application exclusion packages in favor of a plugin system. If you had activated the exclusion packages in CRS 3, you should download the plugins for them and place them in the plugins subdirectory. We maintain the list of plugins in our [Plugin Registry](https://github.com/coreruleset/plugin-registry). You can find detailed information on working with plugins in our [plugins documentation]({{ ref "plugins.md" }}).
+
+In terms of changes to the detection rules, the amount of changes is smaller than in the CRS 2—3 changeover. Most rules have only evolved slightly, so it is recommended that you keep any existing custom exclusions that you have made under CRS 3.
+
+We recommend to start over by copying our `crs-setup.conf.example` to `crs-setup.conf` with a copy of your old file at hand, and re-do the customizations that you had under CRS 3.
+
+Please note that we added a large number of new detections, and any new detection brings a certain risk of false alarms. Therefore, we recommend to test first before going live.
+
+### Upgrading from CRS 2.x to CRS 3
+
+In general, you can update by unzipping our new release over your older one, and updating the `crs-setup.conf` file with any new settings.  However, CRS 3.0 is a major rewrite, incompatible with CRS 2.x. Key setup variables have changed their name, and new features have been introduced. Your former modsecurity_crs_10_setup.conf file is thus no longer usable. We recommend you to start with a fresh crs-setup.conf file from scratch.
+
+Most rule IDs have been changed to reorganize them into logical sections. This means that if you have written custom configuration with exclusion rules (e.g. `SecRuleRemoveById`, `SecRuleRemoveTargetById`, `ctl:ruleRemoveById` or `ctl:ruleRemoveTargetById`) you must renumber the rule numbers in that configuration. You can do this using the supplied utility util/id_renumbering/update.py or find the changes in util/id_renumbering/IdNumbering.csv.
+
+However, a key feature of the CRS 3 is the reduction of false positives in the default installation, and many of your old exclusion rules may no longer be necessary. Therefore, it is a good option to start fresh without your old exclusion rules.
+
+If you are experienced in writing exclusion rules for CRS 2.x, it may be worthwhile to try running CRS 3 in Paranoia Level 2 (PL2). This is a stricter mode, which blocks additional attack patterns, but brings a higher number of false positives — in many situations the false positives will be comparable with CRS 2.x. This paranoia level however will bring you a higher protection level than CRS 2.x or a CRS 3 default install, so it can be worth the investment.
