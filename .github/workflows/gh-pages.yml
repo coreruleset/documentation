@@ -81,10 +81,17 @@ jobs:
     permissions:
       contents: write # needed for triggering dispatch
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+
       - name: Dispatch to workflows
         run: |
-          curl -H 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-            -H 'Content-Type: application/json' \
-            --request POST \
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ steps.app-token.outputs.token }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
             --data '{"event_type": "documentation", "client_payload": { "updated": true}}' \
-            https://api.github.com/repos/coreruleset/website/dispatches
+            https://api.github.com/repos/$GITHUB_REPOSITORY_OWNER/website/dispatches
