@@ -86,6 +86,8 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: "documentation,website"
 
       - name: Dispatch to workflows
         run: |
