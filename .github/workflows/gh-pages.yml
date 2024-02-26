@@ -81,8 +81,8 @@ jobs:
     steps:
       - name: Dispatch to workflows
         run: |
-          curl -H "Accept: application/vnd.github.everest-preview+json" \
-            -H "Authorization: token ${{ secrets.AUTH_TOKEN }}" \
+          curl -H 'Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+            -H 'Content-Type: application/json' \
             --request POST \
             --data '{"event_type": "documentation", "client_payload": { "updated": true}}' \
             https://api.github.com/repos/coreruleset/website/dispatches
