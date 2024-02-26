@@ -87,7 +87,7 @@ jobs:
           app-id: ${{ vars.APP_ID }}
           private-key: ${{ secrets.PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-          repositories: "coreruleset/documentation,coreruleset/website"
+          repositories: "documentation,website"
 
       - name: Dispatch to workflows
         run: |
