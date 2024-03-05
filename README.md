@@ -1,6 +1,6 @@
-# Core Rule Set Documentation Repository
+# CRS Documentation Repository
 
-This repository contains the documentation for the OWASP ModSecurity Core Rule Set.
+This repository contains the documentation for the OWASP CRS.
 
 ## For users of the CRS
 

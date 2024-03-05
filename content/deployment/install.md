@@ -9,7 +9,7 @@ This guide aims to get a CRS installation up and running. This guide assumes tha
 
 ## Downloading the Rule Set
 
-The first step is to download the Core Rule Set itself. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
+The first step is to download the CRS itself. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
 
 Official CRS releases can be found at the following URL: https://github.com/coreruleset/coreruleset/releases.
 
@@ -40,7 +40,7 @@ To verify the integrity of the release:
 gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 10:05:48 2021 -03
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
-gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [unknown]
+gpg: Good signature from "OWASP CRS <security@coreruleset.org>" [unknown]
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: 3600 6F0E 0BA1 6783 2158  8211 38EE ACA1 AB8A 6E72
@@ -64,7 +64,7 @@ The result when verifying a release will then look like so:
 gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
-gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultimate]
+gpg: Good signature from "OWASP CRS <security@coreruleset.org>" [ultimate]
 ```
 
 ## Installing the Rule Set
@@ -86,7 +86,7 @@ Now all the CRS files will be located below the `{{< param crs_install_dir >}}` 
 
 ### Setting Up the Main Configuration File
 
-After extracting the rule set files, the next step is to set up the main OWASP Core Rule Set configuration file. An example configuration file is provided as part of the release package, located in the main directory: `crs-setup.conf.example`.
+After extracting the rule set files, the next step is to set up the main OWASP CRS configuration file. An example configuration file is provided as part of the release package, located in the main directory: `crs-setup.conf.example`.
 
 {{% notice note %}}
 Other aspects of ModSecurity, particularly engine-specific parameters, are controlled by the ModSecurity "recommended" configuration rules, `modsecurity.conf-recommended`. This file comes packaged with ModSecurity itself.

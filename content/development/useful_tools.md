@@ -34,7 +34,7 @@ https://github.com/coreruleset/go-ftw
 
 ## Official CRS Maintained Docker Images
 
-### ModSecurity Core Rule Set Docker Image
+### ModSecurity CRS Docker Image
 
 https://github.com/coreruleset/modsecurity-crs-docker
 

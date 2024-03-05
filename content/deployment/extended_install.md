@@ -106,7 +106,7 @@ Additionally, in the Event Viewer, under `Windows Logs\Application`, it should b
 
 At this stage, the ModSecurity on IIS setup is working and new directives can be placed in the configuration file as needed.
 
-## Downloading the OWASP Core Rule Set
+## Downloading the OWASP CRS
 
 With a compatible WAF engine installed and working, the next step is typically to download and install the OWASP CRS. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
 
@@ -139,7 +139,7 @@ To verify the integrity of the release:
 gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 10:05:48 2021 -03
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
-gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [unknown]
+gpg: Good signature from "OWASP CRS <security@coreruleset.org>" [unknown]
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: 3600 6F0E 0BA1 6783 2158  8211 38EE ACA1 AB8A 6E72
@@ -163,7 +163,7 @@ The result when verifying a release will then look like so:
 gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
-gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultimate]
+gpg: Good signature from "OWASP CRS <security@coreruleset.org>" [ultimate]
 ```
 
 With the CRS release downloaded and verified, the rest of the set up can continue.
