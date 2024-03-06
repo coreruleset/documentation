@@ -167,7 +167,7 @@ The special token `~` acts like `@` but does not allow any white space tokens to
 `~` will _not_ match:
 - `python <<< 'print("hello")'`
 
-The patterns that are used by the command line evasion processor are configurable. The default configuration for the Core Rule Set can be found in the `toolchain.yaml` in the `regex-assembly` directory of the [Core Rule Set project](https://github.com/coreruleset/coreruleset).
+The patterns that are used by the command line evasion processor are configurable. The default configuration for the CRS can be found in the `toolchain.yaml` in the `regex-assembly` directory of the [CRS project](https://github.com/coreruleset/coreruleset).
 
 The following is an example of how the command line evasion processor can be used:
 

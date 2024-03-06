@@ -9,7 +9,7 @@ The CRS project maintains a set of 'CRS with ModSecurity' Docker images.
 
 A full operational guide on how to use and deploy these images will be written in the future. In the meantime, refer to the GitHub README page for more information on how to use these official container images.
 
-## ModSecurity Core Rule Set Docker Image
+## ModSecurity CRS Docker Image
 
 https://github.com/coreruleset/modsecurity-crs-docker
 

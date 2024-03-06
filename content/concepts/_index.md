@@ -6,3 +6,5 @@ chapter: true
 ---
 
 # How CRS Works
+
+Deep dive in core concepts of the CRS in this chapter.
