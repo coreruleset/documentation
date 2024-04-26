@@ -9,20 +9,6 @@ chapter: false
 
 ## Setup
 
-### With Existing Go Environment
-
-If a current Go environment is present, simply run
-
-```bash
-go install github.com/coreruleset/crs-toolchain@latest
-```
-
-Provided that the Go binaries are on the `PATH`, the toolchain can now be run from anywhere with
-
-```bash
-crs-toolchain
-```
-
 ### With the Binary
 
 Alternatively, one of the pre-built binaries can be downloaded from GitHub. Navigate to the [latest release](https://github.com/coreruleset/crs-toolchain/releases/latest) and download the package of choice along with the `crs-toolchain-checksums.txt` file. To verify the integrity of the binary/archive, navigate to the directory where the two files are stored and verify that the checksum matches:
@@ -36,6 +22,20 @@ The output should look like the following (depending on the binary/archive downl
 
 ```bash
 crs-toolchain-1.0.0_amd64.deb: OK
+```
+
+### With Existing Go Environment
+
+If a current Go environment is present, simply run
+
+```bash
+go install github.com/coreruleset/crs-toolchain@latest
+```
+
+Provided that the Go binaries are on the `PATH`, the toolchain can now be run from anywhere with
+
+```bash
+crs-toolchain
 ```
 
 ### Test the Toolchain
