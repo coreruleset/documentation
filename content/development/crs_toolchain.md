@@ -11,7 +11,7 @@ chapter: false
 
 ### With the Binary
 
-Alternatively, one of the pre-built binaries can be downloaded from GitHub. Navigate to the [latest release](https://github.com/coreruleset/crs-toolchain/releases/latest) and download the package of choice along with the `crs-toolchain-checksums.txt` file. To verify the integrity of the binary/archive, navigate to the directory where the two files are stored and verify that the checksum matches:
+The best way to get the tool is using one of the pre-built binaries from GitHub. Navigate to the [latest release](https://github.com/coreruleset/crs-toolchain/releases/latest) and download the package of choice along with the `crs-toolchain-checksums.txt` file. To verify the integrity of the binary/archive, navigate to the directory where the two files are stored and verify that the checksum matches:
 
 ```bash
 cd ~/Downloads
@@ -25,6 +25,8 @@ crs-toolchain-1.0.0_amd64.deb: OK
 ```
 
 ### With Existing Go Environment
+
+⚠️ This might require an updated version of golang in your system.
 
 If a current Go environment is present, simply run
 
