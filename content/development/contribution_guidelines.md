@@ -451,7 +451,7 @@ In general, test URIs can be arbitrary. *Albedo* will respond with `200 OK` and 
 - `/capabilities`: describes capabilities of the used *Albedo* version
 - `/reflect`: used to specify the response that *Albedo* should return
 
-See the [Albedo documentation](https://github.com/coreruleset/albedo) fur further information on how to use `/reflect`.
+See the [Albedo documentation](https://github.com/coreruleset/albedo) for further information on how to use `/reflect`.
 
 ## Further Guidance on Rule Writing
 
