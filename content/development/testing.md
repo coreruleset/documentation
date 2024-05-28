@@ -19,21 +19,24 @@ Before you start to run tests, you should set up your environment. You can use D
 
 For testing, we use the [container images from our project](https://github.com/coreruleset/modsecurity-crs-docker). We "bind mount" the rules in the CRS Git repository to the web server container and then instruct **go-ftw** to send requests to it.
 
-To test we need two containers: the WAF itself, and a backend, provided in this case by the http://httpbin.org project. The `docker-compose.yml` in the CRS Git repository is a ready-to-run configuration for testing, to be used with the `docker compose` command.
+To test we need two containers: the WAF itself, and a backend, provided in this case by [Albedo](https://github.com/coreruleset/albedo). The `docker-compose.yml` in the CRS Git repository is a ready-to-run configuration for testing, to be used with the `docker compose` command.
 
 -> The supported platform is ModSecurity 2 with Apache httpd
 
 Let's start the containers by executing the following command:
 ```bash
 ❯ docker compose -f tests/docker-compose.yml up -d modsec2-apache
-
-Creating network "tests_default" with the default driver
-Creating tests_backend_1 ... done
-Creating modsec2-apache  ... done
+[+] Running 2/2
+ ✔ backend Pulled                                                                                                                                                               2.1s 
+   ✔ ff7dc8bdd3d5 Pull complete                                                                                                                                                 1.0s 
+[+] Running 3/3
+ ✔ Network tests_default      Created                                                                                                                                           0.0s 
+ ✔ Container tests-backend-1  Started                                                                                                                                           0.2s 
+ ✔ Container modsec2-apache   Started                                                                                                                                           0.2s 
 ❯ docker ps
-CONTAINER ID   IMAGE                              COMMAND                  CREATED          STATUS         PORTS                               NAMES
-785a6f6a3cb6   owasp/modsecurity-crs:3.3-apache   "/docker-entrypoint.…"   7 seconds ago    Up 3 seconds   0.0.0.0:80->80/tcp, :::80->80/tcp   modsec2-apache
-bb8d5a7f256d   kennethreitz/httpbin               "gunicorn -b 0.0.0.0…"   10 seconds ago   Up 7 seconds   80/tcp                              tests_backend_1
+CONTAINER ID   IMAGE                               COMMAND                  CREATED         STATUS                            PORTS                          NAMES
+0570b291c386   owasp/modsecurity-crs:apache        "/bin/sh -c '/bin/cp…"   7 seconds ago   Up 7 seconds (health: starting)   80/tcp, 0.0.0.0:80->8080/tcp   modsec2-apache
+50704d5c5762   ghcr.io/coreruleset/albedo:0.0.13   "/usr/bin/albedo --p…"   7 seconds ago   Up 7 seconds                                                     tests-backend-1
 ```
 
 Excellent, our containers are running, now we can start our tests.
@@ -46,6 +49,7 @@ If you have your own environment set up, you can configure that for testing. Ple
 
 If you want to run the complete test suite of CRS 4.0 with **go-ftw**, you need to make some modifications to your setup. This is because the test cases for 4.0 contain some extra data for responses, letting us test the `RESPONSE-*` rules too. Without the following steps these tests will fail.
 
+<!-- FIXME: @airween: how do you want to add Albedo here? -->
 To enable response handling for tests you will need the following additional packages: `python3-gunicorn`, `gunicorn` and `python3-httpbin`.
 
 #### Start `httpbin`
@@ -91,7 +95,7 @@ As you can see, the response's `data` field contains your request data. This fea
 
 ### Modify webserver's config
 
-For the response tests you need to set up your web server as a proxy, forwarding the requests to `httpbin`. The following is an example of such a proxy setup.
+For the response tests you need to set up your web server as a proxy, forwarding the requests to the backend. The following is an example of such a proxy setup.
 
 **Before you start to change your configurations, please make a backup!**
 
@@ -165,7 +169,7 @@ SecRule REQUEST_HEADERS:X-CRS-Test "@rx ^.*$" \
     msg:'%{MATCHED_VAR}'"
 ```
 
-Now, after restarting the web server all request will be sent to `httpbin`. Let's start testing.
+Now, after restarting the web server all request will be sent to the backend. Let's start testing.
 
 ## Go-ftw
 
