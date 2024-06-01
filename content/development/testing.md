@@ -233,6 +233,8 @@ Please verify that these settings are correct for your setup, especially the `po
 
 Execute the following command to run the CRS test suite with **go-ftw** against Apache httpd:
 
+⚠️  If go-ftw is installed from a pre-compiled binary, then you might have to use `ftw` instead of the `go-ftw` command.
+
 ```bash
 $ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/
 🛠️  Starting tests!
