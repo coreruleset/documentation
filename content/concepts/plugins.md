@@ -106,6 +106,46 @@ Disabling a plugin is simple. Either remove the plugin files in the plugins fold
 
 Alternatively, it is also valid to disable a plugin by renaming a plugin file from `plugin-before.conf` to `plugin-before.conf.disabled`.
 
+## Conditionally enable plugins for multi-application environments
+
+If CRS is installed on a reverse-proxy or a web server with multiple web applications, then you may wish to only enable certain plugins (such as rule exclusion plugins) for certain VirtualHosts. This ensures that rules designed for a specific web application are only enabled for the intended web application, reducing the scope of any possible bypasses within a plugin.
+
+Most plugins provide an example to disable the plugin in the file `plugin-config.conf`, you can define the WebAppID variable for each virtualhosts and then disable the plugin if the WebAppID variable doesn't equal, for example WordPress.
+
+See: https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#secwebappid
+
+Below is an example for only enabling the WordPress plugin for WordPress VirtualHosts:
+
+```
+SecRule &TX:wordpress-rule-exclusions-plugin_enabled "@eq 0" \
+    "id:9507010,\
+    phase:1,\
+    pass,\
+    nolog,\
+    ver:'wordpress-rule-exclusions-plugin/1.0.0',\
+    chain"
+    SecRule WebAppID "!@streq wordpress" \
+        "t:none,\
+        setvar:'tx.wordpress-rule-exclusions-plugin_enabled=0'"
+```
+
+⚠️ Warning: As of 05/06/2024, Coraza doesn't support the use of WebAppID, you can use the host header instead of the WebAppID variable:
+
+```
+SecRule &TX:wordpress-rule-exclusions-plugin_enabled "@eq 0" \
+    "id:9507010,\
+    phase:1,\
+    pass,\
+    nolog,\
+    ver:'wordpress-rule-exclusions-plugin/1.0.0',\
+    chain"
+    SecRule REQUEST_HEADERS:Host "!@streq wordpress.example.com" \
+        "t:none,\
+        setvar:'tx.wordpress-rule-exclusions-plugin_enabled=0'"
+```
+
+See: https://coraza.io/docs/seclang/variables/#webappid
+
 ## What Plugins are Available?
 
 All official plugins are listed on GitHub in the CRS plugin registry repository: https://github.com/coreruleset/plugin-registry.
