@@ -108,13 +108,13 @@ Alternatively, it is also valid to disable a plugin by renaming a plugin file fr
 
 ## Conditionally enable plugins for multi-application environments
 
-If CRS is installed on a reverse-proxy or a web server with multiple web applications, then you may wish to only enable certain plugins (such as rule exclusion plugins) for certain VirtualHosts. This ensures that rules designed for a specific web application are only enabled for the intended web application, reducing the scope of any possible bypasses within a plugin.
+If CRS is installed on a reverse-proxy or a web server with multiple web applications, then you may wish to only enable certain plugins (such as rule exclusion plugins) for certain `VirtualHosts`. This ensures that rules designed for a specific web application are only enabled for the intended web application, reducing the scope of any possible bypasses within a plugin.
 
-Most plugins provide an example to disable the plugin in the file `plugin-config.conf`, you can define the WebAppID variable for each virtualhosts and then disable the plugin if the WebAppID variable doesn't equal, for example WordPress.
+Most plugins provide an example to disable the plugin in the file `plugin-config.conf`, you can define the `WebAppID` variable for each `VirtualHost` and then disable the plugin when the `WebAppID` variable doesn't match.
 
 See: https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#secwebappid
 
-Below is an example for only enabling the WordPress plugin for WordPress VirtualHosts:
+Below is an example for enabling only the WordPress plugin for WordPress `VirtualHost`s:
 
 ```
 SecRule &TX:wordpress-rule-exclusions-plugin_enabled "@eq 0" \
@@ -129,7 +129,7 @@ SecRule &TX:wordpress-rule-exclusions-plugin_enabled "@eq 0" \
         setvar:'tx.wordpress-rule-exclusions-plugin_enabled=0'"
 ```
 
-⚠️ Warning: As of 05/06/2024, Coraza doesn't support the use of WebAppID, you can use the host header instead of the WebAppID variable:
+⚠️ Warning: As of 05/06/2024, Coraza doesn't support the use of WebAppID, you can use the`Host` header instead of the `WebAppID` variable:
 
 ```
 SecRule &TX:wordpress-rule-exclusions-plugin_enabled "@eq 0" \
