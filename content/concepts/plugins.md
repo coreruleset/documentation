@@ -110,11 +110,11 @@ Alternatively, it is also valid to disable a plugin by renaming a plugin file fr
 
 If CRS is installed on a reverse-proxy or a web server with multiple web applications, then you may wish to only enable certain plugins (such as rule exclusion plugins) for certain `VirtualHosts`. This ensures that rules designed for a specific web application are only enabled for the intended web application, reducing the scope of any possible bypasses within a plugin.
 
-Most plugins provide an example to disable the plugin in the file `plugin-config.conf`, you can define the `WebAppID` variable for each `VirtualHost` and then disable the plugin when the `WebAppID` variable doesn't match.
+Most plugins provide an example to disable the plugin in the file `plugin-config.conf`, you can define the `WebAppID` variable for each virtual host and then disable the plugin when the `WebAppID` variable doesn't match.
 
 See: https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#secwebappid
 
-Below is an example for enabling only the WordPress plugin for WordPress `VirtualHost`s:
+Below is an example for enabling only the WordPress plugin for WordPress virtual hosts:
 
 ```
 SecRule &TX:wordpress-rule-exclusions-plugin_enabled "@eq 0" \
