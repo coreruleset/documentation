@@ -108,7 +108,7 @@ Alternatively, it is also valid to disable a plugin by renaming a plugin file fr
 
 ## Conditionally enable plugins for multi-application environments
 
-If CRS is installed on a reverse-proxy or a web server with multiple web applications, then you may wish to only enable certain plugins (such as rule exclusion plugins) for certain `VirtualHosts`. This ensures that rules designed for a specific web application are only enabled for the intended web application, reducing the scope of any possible bypasses within a plugin.
+If CRS is installed on a reverse-proxy or a web server with multiple web applications, then you may wish to only enable certain plugins (such as rule exclusion plugins) for certain VirtualHosts (`VirtualHost` for Apache httpd, `Server` context for Nginx). This ensures that rules designed for a specific web application are only enabled for the intended web application, reducing the scope of any possible bypasses within a plugin.
 
 Most plugins provide an example to disable the plugin in the file `plugin-config.conf`, you can define the `WebAppID` variable for each virtual host and then disable the plugin when the `WebAppID` variable doesn't match.
 
