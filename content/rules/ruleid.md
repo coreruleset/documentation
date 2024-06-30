@@ -53,7 +53,7 @@ of IDs for you thank you.
 
 ID's within the OWASP CRS (CRS) have special meaning. Rules
 are assigned an ID based on their location within the ruleset. As the
-list above notes, the OWASP CRS is assigned ID's from 900,000
+list above notes, OWASP CRS is assigned ID's from 900,000
 to 999,999. This means that each rule file in CRS 3.x has 1000 IDs
 reserved for it. Currently, this is more than enough space, however, if
 at some point this becomes a problem we'll cross that bridge when we

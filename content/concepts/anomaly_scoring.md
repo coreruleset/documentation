@@ -5,11 +5,11 @@ disableToc: false
 chapter: false
 ---
 
-> The CRS 3 is designed as an anomaly scoring rule set. This page explains what anomaly scoring is and how to use it.
+> CRS 3 is designed as an anomaly scoring rule set. This page explains what anomaly scoring is and how to use it.
 
 ## Overview of Anomaly Scoring
 
-Anomaly scoring, also known as "collaborative detection", is a scoring mechanism used in the CRS. It assigns a numeric score to HTTP transactions (requests and responses), representing how 'anomalous' they appear to be. Anomaly scores can then be used to make blocking decisions. The default CRS blocking policy, for example, is to block any transaction that meets or exceeds a defined anomaly score threshold.
+Anomaly scoring, also known as "collaborative detection", is a scoring mechanism used in CRS. It assigns a numeric score to HTTP transactions (requests and responses), representing how 'anomalous' they appear to be. Anomaly scores can then be used to make blocking decisions. The default CRS blocking policy, for example, is to block any transaction that meets or exceeds a defined anomaly score threshold.
 
 ## How Anomaly Scoring Mode Works
 
@@ -99,7 +99,7 @@ An outbound anomaly score threshold of 4 (the default) will block a transaction 
 {{% notice tip %}}
 A common practice when working with a **new** CRS deployment is to start in blocking mode from the very beginning with *very high anomaly score thresholds* (even as high as 10000). The thresholds can be gradually lowered over time as an iterative process.
 
-This tuning method was developed and advocated by Christian Folini, who documented it in detail, along with examples, in a popular tutorial titled [Handling False Positives with the OWASP CRS](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/).
+This tuning method was developed and advocated by Christian Folini, who documented it in detail, along with examples, in a popular tutorial titled [Handling False Positives with OWASP CRS](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/).
 {{% /notice %}}
 
 CRS uses two anomaly score thresholds, which can be defined using the variables listed below:

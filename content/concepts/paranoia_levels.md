@@ -9,7 +9,7 @@ chapter: false
 
 ## Introduction to Paranoia Levels
 
-**The paranoia level (PL) makes it possible to define how aggressive CRS.** Paranoia level 1 (PL 1) provides a set of rules that hardly ever trigger a false alarm (ideally never, but it can happen, depending on the local setup). PL 2 provides additional rules that detect more attacks (these rules operate *in addition* to the PL 1 rules), but there's a chance that the additional rules will also trigger new false alarms over perfectly legitimate HTTP requests.
+**The paranoia level (PL) makes it possible to define how aggressive CRS is.** Paranoia level 1 (PL 1) provides a set of rules that hardly ever trigger a false alarm (ideally never, but it can happen, depending on the local setup). PL 2 provides additional rules that detect more attacks (these rules operate *in addition* to the PL 1 rules), but there's a chance that the additional rules will also trigger new false alarms over perfectly legitimate HTTP requests.
 
 This continues at PL 3, where more rules are added, namely for certain specialized attacks. This leads to even more false alarms. Then at PL 4, the rules are so aggressive that they detect almost every possible attack, yet they also flag a lot of legitimate traffic as malicious.
 
@@ -43,7 +43,7 @@ It's important to think about a service's security requirements. The difference 
 Running at  the highest paranoia level, PL 4, may seem appealing from a security standpoint, but *it could take many weeks to tune away the false positives encountered*. It is crucial to have enough time to fully deal with all false positives.
 
 {{% notice warning %}}
-Failure to properly tune an installation runs the risk of exposing users to a vast number of false positives. This can lead to a poor user experience, and might ultimately lead to a decision to completely disable the CRS. As such, **setting a high PL in blocking mode *without* adequate tuning to deal with false positives is very risky**.
+Failure to properly tune an installation runs the risk of exposing users to a vast number of false positives. This can lead to a poor user experience, and might ultimately lead to a decision to completely disable CRS. As such, **setting a high PL in blocking mode *without* adequate tuning to deal with false positives is very risky**.
 {{% /notice %}}
 
 If working in an enterprise environment, consider developing an internal policy to map the risk levels and security needs of different assets to the minimum acceptable paranoia level to be used for them, for example:

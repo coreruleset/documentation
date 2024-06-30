@@ -8,9 +8,9 @@ title: "CRS Documentation"
 Security issues regarding the CRS can be submitted via email to security [ at ] coreruleset.org.
 {{% /notice %}}
 
-## What is the CRS?
+## What is CRS?
 
-The OWASP® (Open Worldwide Application Security Project) CRS (previously Core Rule Set) is a free and open-source collection of rules that work with ModSecurity® and compatible web application firewalls (WAFs). These rules are designed to provide easy to use, generic attack detection capabilities, with a minimum of false positives (false alerts), to web applications as part of a well balanced defense-in-depth solution.
+OWASP® (Open Worldwide Application Security Project) CRS (previously Core Rule Set) is a free and open-source collection of rules that work with ModSecurity® and compatible web application firewalls (WAFs). These rules are designed to provide easy to use, generic attack detection capabilities, with a minimum of false positives (false alerts), to web applications as part of a well balanced defense-in-depth solution.
 
 ## How to Get Involved
 
@@ -32,4 +32,4 @@ This documentation has been statically generated with [Hugo](https://github.com/
 
 ## License
 
-The OWASP CRS is a free and open-source set of security rules which use the Apache License 2.0. Although it was originally developed for ModSecurity's SecRules language, the rule set can be, and often has been, freely modified, reproduced, and adapted for various commercial and non-commercial endeavors. The CRS project encourages individuals and organizations to contribute back to the OWASP CRS where possible.
+OWASP CRS is a free and open-source set of security rules which use the Apache License 2.0. Although it was originally developed for ModSecurity's SecRules language, the rule set can be, and often has been, freely modified, reproduced, and adapted for various commercial and non-commercial endeavors. The CRS project encourages individuals and organizations to contribute back to the OWASP CRS where possible.

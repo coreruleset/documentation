@@ -106,7 +106,7 @@ Additionally, in the Event Viewer, under `Windows Logs\Application`, it should b
 
 At this stage, the ModSecurity on IIS setup is working and new directives can be placed in the configuration file as needed.
 
-## Downloading the OWASP CRS
+## Downloading OWASP CRS
 
 With a compatible WAF engine installed and working, the next step is typically to download and install the OWASP CRS. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
 

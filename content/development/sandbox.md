@@ -129,7 +129,7 @@ Let’s say you are working on a vulnerability publication and want to add a par
 curl -H 'x-format-output: txt-matched-rules-extended' \
   https://sandbox.coreruleset.org/?file=/etc/passwd
 
-This payload has been tested against the OWASP CRS
+This payload has been tested against OWASP CRS
 web application firewall. The test was executed using the apache engine and CRS version 3.3.2.
 
 The payload is being detected by triggering the following rules:

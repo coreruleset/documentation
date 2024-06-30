@@ -191,7 +191,7 @@ The 'ctl' action for writing runtime rule exclusions does **not** support any us
   # Runtime rule exclusions
   ...
 
-  # Including the CRS
+  # Include CRS
   Include crs/rules/*.conf
   ```
 
@@ -364,7 +364,7 @@ The CRS project is always looking to work with other communities and individuals
 
 ## Further Reading
 
- A popular tutorial titled [Handling False Positives with the OWASP CRS](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/) by Christian Folini walks through a full CRS tuning process, with examples.
+ A popular tutorial titled [Handling False Positives with OWASP CRS](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/) by Christian Folini walks through a full CRS tuning process, with examples.
 
 Detailed reference of each of the rule exclusion mechanisms outlined above can be found in the [ModSecurity Reference Manual](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)):
 

@@ -185,7 +185,7 @@ It is sometimes necessary to match the entire input string to ensure that it _ex
 
 Other anchors apart from `^` caret and `$` dollar exist, such as `\A`, `\G`, and `\Z` in PCRE. CRS **strongly discourages** the use of other anchors for the following reasons:
 
-- Not all regular expression engines support all anchors and the OWASP CRS should be compatible with as many regular expression engines as possible.
+- Not all regular expression engines support all anchors and OWASP CRS should be compatible with as many regular expression engines as possible.
 - Their function is sometimes not trivial.
 - They aren't well known and would require additional documentation.
 - In most cases that would justify their use the regular expression can be transformed into a form that doesn't require them, or the rule can be transformed (e.g., with an additional chain rule).
@@ -240,7 +240,7 @@ Possessive quantifiers (e.g., `x++`) and atomic groups (e.g., `(?>x)`) are tools
 
 Traditional regular expression engines use backtracking to solve some additional problems, such as finding a string that is preceded or followed by another string. While this functionality can certainly come in handy and has its place in certain applications, it can also lead to performance issues and, in uncontrolled environments, open up possibilities for attacks (the term "[ReDoS](https://en.wikipedia.org/wiki/ReDoS)" is often used to describe an attack that exhausts process or system resources due to excessive backtracking).
 
-The OWASP CRS tries to be compatible with non-backtracking regular expression engines, such as RE2, because:
+OWASP CRS tries to be compatible with non-backtracking regular expression engines, such as RE2, because:
 
 - Non-backtracking engines are less vulnerable to ReDoS attacks.
 - Non-backtracking engines can often outperform backtracking engines.

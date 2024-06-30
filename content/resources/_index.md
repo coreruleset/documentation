@@ -20,7 +20,7 @@ chapter: true
 - There is an extended set of tutorials at [netnea.com](https://www.netnea.com/), that introduces the CRS integration and the handling of false positives with great detail. It is worth checking out:
   - Tutorial 6: [Embedding ModSecurity](https://www.netnea.com/cms/apache-tutorial-6_embedding-modsecurity/)
   - Tutorial 7: [Including OWASP CRS](https://www.netnea.com/cms/apache-tutorial-7_including-modsecurity-core-rules/)
-  - Tutorial 8: [Handling False Positives with the OWASP CRS](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/)
+  - Tutorial 8: [Handling False Positives with OWASP CRS](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/)
 
 
 ## Commercial Help
