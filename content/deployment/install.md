@@ -171,7 +171,7 @@ Depending on your configurated thresholds, this should be detected as a maliciou
 
 ### Upgrading from CRS 3.x to CRS 4
 
-The most impactful change is the removal of application exclusion packages in favor of a plugin system. If you had activated the exclusion packages in CRS 3, you should download the plugins for them and place them in the plugins subdirectory. We maintain the list of plugins in our [Plugin Registry](https://github.com/coreruleset/plugin-registry). You can find detailed information on working with plugins in our [plugins documentation]({{ ref "plugins.md" }}).
+The most impactful change is the removal of application exclusion packages in favor of a plugin system. If you had activated the exclusion packages in CRS 3, you should download the plugins for them and place them in the plugins subdirectory. We maintain the list of plugins in our [Plugin Registry](https://github.com/coreruleset/plugin-registry). You can find detailed information on working with plugins in our [plugins documentation]({{< ref "plugins.md" >}}).
 
 In terms of changes to the detection rules, the amount of changes is smaller than in the CRS 2—3 changeover. Most rules have only evolved slightly, so it is recommended that you keep any existing custom exclusions that you have made under CRS 3.
 
