@@ -384,7 +384,7 @@ Example of a simple *positive test*:
             Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
           method: POST
           port: 80
-          uri: "/post"
+          uri: "/"
           data: "var=` /bin/cat /etc/passwd`"
           version: HTTP/1.1
         output:
@@ -414,7 +414,7 @@ Example of a simple *negative test*:
             Host: "localhost"
             Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
           data: 'foo=ping pong tables'
-          uri: '/post'
+          uri: '/'
         output:
           no_log_contains: id "932260"
 ```
@@ -442,19 +442,16 @@ The older method of using `raw_request` is deprecated as it's difficult to maint
 
 ### Using The Correct HTTP Endpoint
 
-The CRS project uses [kennthreitz/httpbin](https://hub.docker.com/r/kennethreitz/httpbin) as the backend server for tests. This backend provides one dedicated endpoint for each HTTP method. Tests should target these endpoints to:
+The CRS project uses [Albedo](https://github.com/coreruleset/albedo) as the backend server for tests. This backend provides one dedicated endpoint for each HTTP method. Tests should target these endpoints to:
 
 - improve test throughput (prevent HTML from being returned by the backend)
-- add automatic HTTP method verification (the backend will respond with status code `405` (method not allowed) to requests whose method does not match the endpoint)
+- specify responses when testing response rules
 
-Test URIs should be structured as follows, where `<method>` must be replaced by the name of the HTTP method the test uses:
+In general, test URIs can be arbitrary. *Albedo* will respond with `200 OK` and an empty body to any requests that don't match any of the endpoints explicitly defined by *Albedo*. These are:
+- `/capabilities`: describes capabilities of the used *Albedo* version
+- `/reflect`: used to specify the response that *Albedo* should return
 
-```yaml
-#...
-          method: <method>
-          uri: /<method>/some/arbitrary/url
-#...
-```
+See the [Albedo documentation](https://github.com/coreruleset/albedo) for further information on how to use `/reflect`.
 
 ## Further Guidance on Rule Writing
 

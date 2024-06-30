@@ -7,6 +7,12 @@ chapter: false
 
 > There are many first and third party tools that help with ModSecurity and CRS development. The most useful ones are listed here. Get in touch if you think something is missing.
 
+## albedo
+
+https://github.com/coreruleset/albedo
+
+The backend server used by the CRS test suite. It is especially useful for testing response rules, as desired responses can be freely specified.
+
 ## coraza-httpbin
 
 https://github.com/jcchavezs/coraza-httpbin
