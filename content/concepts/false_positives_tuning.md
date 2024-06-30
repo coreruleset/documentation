@@ -5,11 +5,11 @@ disableToc: false
 chapter: false
 ---
 
-> When a *genuine* transaction causes a rule from the CRS to match in error it is described as a **false positive**. False positives need to be tuned away by writing *rule exclusions*, as this page explains.
+> When a *genuine* transaction causes a rule from CRS to match in error it is described as a **false positive**. False positives need to be tuned away by writing *rule exclusions*, as this page explains.
 
 ## What are False Positives?
 
-The CRS provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a *false positive*, or false alarm.
+CRS provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a *false positive*, or false alarm.
 
 False positives are particularly likely to happen when operating at higher [paranoia levels]({{< ref "paranoia_levels" >}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives.
 
@@ -81,7 +81,7 @@ There are alternative ways to deal with false positives, as described below. The
 
 #### Overview
 
-The ModSecurity WAF engine has flexible ways to tune away false positives. It provides several *rule exclusion* (RE) mechanisms which allow rules to be modified *without* directly changing the rules themselves. This makes it possible to work with third-party rule sets, like the CRS, by adapting rules as needed while leaving the rule set files intact and unmodified. This allows for easy rule set updates.
+The ModSecurity WAF engine has flexible ways to tune away false positives. It provides several *rule exclusion* (RE) mechanisms which allow rules to be modified *without* directly changing the rules themselves. This makes it possible to work with third-party rule sets, like CRS, by adapting rules as needed while leaving the rule set files intact and unmodified. This allows for easy rule set updates.
 
 Two fundamentally different types of rule exclusions are supported:
 
@@ -176,7 +176,7 @@ The 'ctl' action for writing runtime rule exclusions does **not** support any us
 - **Configure-time rule exclusions:** These must be placed **after** the CRS has been included in a configuration. For example:
 
   ```apache
-  # Include the ModSecurity CRS
+  # Include CRS
   Include crs/rules/*.conf
 
   # Configure-time rule exclusions
