@@ -5,11 +5,11 @@ disableToc: false
 chapter: false
 ---
 
-> Paranoia levels are an essential concept when working with the CRS. This page explains the concept behind paranoia levels and how to work with them on a practical level.
+> Paranoia levels are an essential concept when working with CRS. This page explains the concept behind paranoia levels and how to work with them on a practical level.
 
 ## Introduction to Paranoia Levels
 
-**The paranoia level (PL) makes it possible to define how aggressive the CRS is.** Paranoia level 1 (PL 1) provides a set of rules that hardly ever trigger a false alarm (ideally never, but it can happen, depending on the local setup). PL 2 provides additional rules that detect more attacks (these rules operate *in addition* to the PL 1 rules), but there's a chance that the additional rules will also trigger new false alarms over perfectly legitimate HTTP requests.
+**The paranoia level (PL) makes it possible to define how aggressive CRS.** Paranoia level 1 (PL 1) provides a set of rules that hardly ever trigger a false alarm (ideally never, but it can happen, depending on the local setup). PL 2 provides additional rules that detect more attacks (these rules operate *in addition* to the PL 1 rules), but there's a chance that the additional rules will also trigger new false alarms over perfectly legitimate HTTP requests.
 
 This continues at PL 3, where more rules are added, namely for certain specialized attacks. This leads to even more false alarms. Then at PL 4, the rules are so aggressive that they detect almost every possible attack, yet they also flag a lot of legitimate traffic as malicious.
 

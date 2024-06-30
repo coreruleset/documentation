@@ -191,7 +191,7 @@ The 'ctl' action for writing runtime rule exclusions does **not** support any us
   # Runtime rule exclusions
   ...
 
-  # Include the ModSecurity CRS
+  # Including the CRS
   Include crs/rules/*.conf
   ```
 

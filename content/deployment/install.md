@@ -9,7 +9,7 @@ This guide aims to get a CRS installation up and running. This guide assumes tha
 
 ## Downloading the Rule Set
 
-The first step is to download the CRS itself. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
+The first step is to download CRS. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
 
 Official CRS releases can be found at the following URL: https://github.com/coreruleset/coreruleset/releases.
 
