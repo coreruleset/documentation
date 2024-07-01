@@ -5,11 +5,11 @@ disableToc: false
 chapter: false
 ---
 
-> The Core Rule Set 3 is designed as an anomaly scoring rule set. This page explains what anomaly scoring is and how to use it.
+> CRS 3 is designed as an anomaly scoring rule set. This page explains what anomaly scoring is and how to use it.
 
 ## Overview of Anomaly Scoring
 
-Anomaly scoring, also known as "collaborative detection", is a scoring mechanism used in the Core Rule Set. It assigns a numeric score to HTTP transactions (requests and responses), representing how 'anomalous' they appear to be. Anomaly scores can then be used to make blocking decisions. The default CRS blocking policy, for example, is to block any transaction that meets or exceeds a defined anomaly score threshold.
+Anomaly scoring, also known as "collaborative detection", is a scoring mechanism used in CRS. It assigns a numeric score to HTTP transactions (requests and responses), representing how 'anomalous' they appear to be. Anomaly scores can then be used to make blocking decisions. The default CRS blocking policy, for example, is to block any transaction that meets or exceeds a defined anomaly score threshold.
 
 ## How Anomaly Scoring Mode Works
 
@@ -78,7 +78,7 @@ The following settings can be configured when using anomaly scoring mode:
 - Severity levels
 - Early blocking
 
-If using a native Core Rule Set installation on a web application firewall, these settings are defined in the file `crs-setup.conf`. If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose these settings in the GUI while other vendors require custom rules to be written which set the necessary variables. Unfortunately, there are also vendors that don't allow these settings to be configured at all.
+If using a native CRS installation on a web application firewall, these settings are defined in the file `crs-setup.conf`. If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose these settings in the GUI while other vendors require custom rules to be written which set the necessary variables. Unfortunately, there are also vendors that don't allow these settings to be configured at all.
 
 ### Anomaly Score Thresholds
 
@@ -99,7 +99,7 @@ An outbound anomaly score threshold of 4 (the default) will block a transaction 
 {{% notice tip %}}
 A common practice when working with a **new** CRS deployment is to start in blocking mode from the very beginning with *very high anomaly score thresholds* (even as high as 10000). The thresholds can be gradually lowered over time as an iterative process.
 
-This tuning method was developed and advocated by Christian Folini, who documented it in detail, along with examples, in a popular tutorial titled [Handling False Positives with the OWASP ModSecurity Core Rule Set](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/).
+This tuning method was developed and advocated by Christian Folini, who documented it in detail, along with examples, in a popular tutorial titled [Handling False Positives with OWASP CRS](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/).
 {{% /notice %}}
 
 CRS uses two anomaly score thresholds, which can be defined using the variables listed below:
@@ -209,7 +209,7 @@ If early blocking is not enabled, there's a chance that the web server will inte
 
 #### Enabling the Early Blocking Option
 
-If using a native Core Rule Set installation on a web application firewall, the early blocking option can be enabled in the file `crs-setup.conf`. This is done by uncommenting rule 900120, which sets the variable `tx.blocking_early` to 1 in order to enable early blocking. CRS otherwise gives this variable a default value of 0, meaning that early blocking is disabled by default.
+If using a native CRS installation on a web application firewall, the early blocking option can be enabled in the file `crs-setup.conf`. This is done by uncommenting rule 900120, which sets the variable `tx.blocking_early` to 1 in order to enable early blocking. CRS otherwise gives this variable a default value of 0, meaning that early blocking is disabled by default.
 
 ```apache
 SecAction \

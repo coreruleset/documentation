@@ -13,20 +13,19 @@ chapter: true
 
 ## Free and Open-Source Community Help
 
-- [Core Rule Set GitHub repository](https://github.com/coreruleset/coreruleset). Open issues for bugs, report false positives, and access the source code.
-- [Core Rule Set Slack channel](https://owasp.slack.com/archives/CBKGH8A5P). Come and talk to the CRS community. If you don't have access yet, [get your invite here](https://owasp.org/slack/invite).
+- [CRS GitHub repository](https://github.com/coreruleset/coreruleset). Open issues for bugs, report false positives, and access the source code.
+- [CRS Slack channel](https://owasp.slack.com/archives/CBKGH8A5P). Come and talk to the CRS community. If you don't have access yet, [get your invite here](https://owasp.org/slack/invite).
 - [ModSecurity Users Mailing List (SourceForge)](https://lists.sourceforge.net/lists/listinfo/mod-security-users): General discussion about ModSecurity.
 - [ModSecurity Developers Mailing List (SourceForge)](https://lists.sourceforge.net/lists/listinfo/mod-security-developers): Development discussion about ModSecurity.
 - There is an extended set of tutorials at [netnea.com](https://www.netnea.com/), that introduces the CRS integration and the handling of false positives with great detail. It is worth checking out:
   - Tutorial 6: [Embedding ModSecurity](https://www.netnea.com/cms/apache-tutorial-6_embedding-modsecurity/)
-  - Tutorial 7: [Including OWASP ModSecurity Core Rule Set](https://www.netnea.com/cms/apache-tutorial-7_including-modsecurity-core-rules/)
-  - Tutorial 8: [Handling False Positives with the OWASP ModSecurity Core Rule Set](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/)
+  - Tutorial 7: [Including OWASP CRS](https://www.netnea.com/cms/apache-tutorial-7_including-modsecurity-core-rules/)
+  - Tutorial 8: [Handling False Positives with OWASP CRS](https://www.netnea.com/cms/apache-tutorial-8_handling-false-positives-modsecurity-core-rule-set/)
 
 
 ## Commercial Help
 
-- Commercial Support through Trustwave\'s Technical Assistance Center (TAC) - <https://www3.trustwave.com/modsecurity-rules-support.php>
-- Professional Services offer by Trustwave SpiderLabs Research Team
+- TBD
 - ModSecurity Training
 
 ## Books about ModSecurity
