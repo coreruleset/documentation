@@ -131,7 +131,7 @@ If testing a CRS regular expression using a third party tool, it may be useful t
 
 ### When and Why to Anchor Regular Expressions
 
-Engines running the OWASP CRS will use regular expressions to _search_ the input string, i.e., the regular expression engine is asked to find the first match in the input string. If an expression needs to match the entire input then the expression must be anchored appropriately.
+Engines running OWASP CRS will use regular expressions to _search_ the input string, i.e., the regular expression engine is asked to find the first match in the input string. If an expression needs to match the entire input then the expression must be anchored appropriately.
 
 #### Beginning of String Anchor (^)
 

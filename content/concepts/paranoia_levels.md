@@ -56,7 +56,7 @@ If working in an enterprise environment, consider developing an internal policy 
 
 If using a native CRS installation on a web application firewall, the paranoia level is defined by setting the variable `tx.paranoia_level` in the file `crs-setup.conf`. This is done in rule 900000, but technically the variable can be set in the Apache or Nginx configuration instead.
 
-If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose the PL setting in the GUI while other vendors require a custom rule to be written that sets `tx.paranoia_level`. Unfortunately, there are also vendors that don't allow the PL to be set at all. (The CRS project considers this to be an incomplete CRS integration, since paranoia levels are a defining feature of the CRS.)
+If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose the PL setting in the GUI while other vendors require a custom rule to be written that sets `tx.paranoia_level`. Unfortunately, there are also vendors that don't allow the PL to be set at all. (The CRS project considers this to be an incomplete CRS integration, since paranoia levels are a defining feature of CRS.)
 
 ## How Paranoia Levels Relate to Anomaly Scoring
 

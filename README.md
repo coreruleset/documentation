@@ -1,6 +1,6 @@
 # CRS Documentation Repository
 
-This repository contains the documentation for the OWASP CRS.
+This repository contains the documentation for OWASP CRS.
 
 ## For users of the CRS
 
