@@ -375,20 +375,19 @@ Example of a simple *positive test*:
 - test_id: 26
   desc: "Unix command injection"
   stages:
-    - stage:
-        input:
-          dest_addr: 127.0.0.1
-          headers:
-            Host: localhost
-            User-Agent: "OWASP CRS test agent"
-            Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
-          method: POST
-          port: 80
-          uri: "/post"
-          data: "var=` /bin/cat /etc/passwd`"
-          version: HTTP/1.1
-        output:
-          expect_ids: [932230]
+    - input:
+        dest_addr: 127.0.0.1
+        headers:
+          Host: localhost
+          User-Agent: "OWASP CRS test agent"
+          Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+        method: POST
+        port: 80
+        uri: "/post"
+        data: "var=` /bin/cat /etc/passwd`"
+        version: HTTP/1.1
+      output:
+        expect_ids: [932230]
 ```
 
 This test will succeed if the log output contains `id "932230"`, which would indicate that the rule in question matched and generated an alert.
@@ -404,19 +403,18 @@ Example of a simple *negative test*:
 ```yaml
 - test_id: 4
   stages:
-    - stage:
-        input:
-          dest_addr: "127.0.0.1"
-          method: "POST"
-          port: 80
-          headers:
-            User-Agent: "OWASP CRS test agent"
-            Host: "localhost"
-            Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
-          data: 'foo=ping pong tables'
-          uri: '/post'
-        output:
-          no_expect_ids: [932260]
+    - input:
+        dest_addr: "127.0.0.1"
+        method: "POST"
+        port: 80
+        headers:
+          User-Agent: "OWASP CRS test agent"
+          Host: "localhost"
+          Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+        data: 'foo=ping pong tables'
+        uri: '/post'
+      output:
+        no_expect_ids: [932260]
 ```
 
 This test will succeed if the log output does **not** contain `id "932260"`, which would indicate that the rule in question did **not** match and so did **not** generate an alert.
