@@ -399,7 +399,7 @@ This test will succeed if the log contains an entry for rule 932230, which would
 
 It's important that tests consistently include the HTTP header fields `Host`, `User-Agent`, and `Accept`. CRS includes rules that detect if these headers are missing or empty, so these headers should be included in each test to avoid unnecessarily causing those rules to match. Ideally, *each positive test should cause* **only** *the rule in question to match*.
 
-The rule's description field, `desc`, is important. It should describe what is being tested: what *should* match, what should *not* match, etc. It is often a good idea to use the YAML literal string scalar form, as it makes it easey to write descriptions spanning multiple lines:
+The rule's description field, `desc`, is important. It should describe what is being tested: what *should* match, what should *not* match, etc. It is often a good idea to use the YAML literal string scalar form, as it makes it easy to write descriptions spanning multiple lines:
 
 ```yaml
 - test_id: 1
@@ -434,7 +434,7 @@ Example of a simple *negative test*:
         no_expect_ids: [932260]
 ```
 
-This test will succeed if the log **dose not** contain an entry for rule 932260, which would indicate that the rule in question did **not** match and so did **not** generate an alert.
+This test will succeed if the log **does not** contain an entry for rule 932260, which would indicate that the rule in question did **not** match and so did **not** generate an alert.
 
 ### Encoded Request
 
