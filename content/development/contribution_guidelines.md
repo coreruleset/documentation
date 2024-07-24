@@ -131,7 +131,7 @@ If testing a CRS regular expression using a third party tool, it may be useful t
 
 ### Vertical Tab Representation
 
-CRS uses `\x0b` to represent the vertical tab in character classes. This is necessary because most regular expressions are generated and simplified using external libraries. These libraries produce output that the generator must convert into a form that is compatible with both PCRE and RE2 compatible engines. In RE2, `\s` does not include `\v\` (which is the case in PCRE), and needs to be added. However, `\v` in PCRE expands to a list of vertical characters and is, therefore, not allowed to start range expressions. Since we only care about the vertical tab we use `\x0b`.
+CRS uses `\x0b` to represent the vertical tab in character classes. This is necessary because most regular expressions are generated and simplified using external libraries. These libraries produce output that the generator must convert into a form that is compatible with both PCRE and RE2 compatible engines. In RE2, `\s` does not include `\v` (which is the case in PCRE), and needs to be added. However, `\v` in PCRE expands to a list of vertical characters and is, therefore, not allowed to start range expressions. Since we only care about the vertical tab we use `\x0b`.
 
 ### When and Why to Anchor Regular Expressions
 
