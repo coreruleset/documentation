@@ -12,7 +12,7 @@ Welcome! This page will guide you through the process of contributing to the CRS
 
 ### 1. Prerequisites
 
-To contribute to the CRS documentation, The only thing you need is the latest [Hugo binary](https://gohugo.io/getting-started/installing/) for your OS (Windows, Linux, Mac) **(Important: You need Hugo _extended_ version >= 0.93.0.)**.
+To contribute to the CRS documentation, the only thing you need is the latest [Hugo binary](https://gohugo.io/getting-started/installing/) for your OS (Windows, Linux, Mac) **(Important: You need Hugo _extended_ version >= 0.93.0.)**.
 
 ### 2. Building the Local Environment
 
