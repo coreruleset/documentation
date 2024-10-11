@@ -1,0 +1,24 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "local>coreruleset/renovate-config"
+  ],
+  "git-submodules": {
+    "enabled": true
+  },
+  "customManagers": [
+    {
+      "description": "CRS: Latest Release",
+      "customType": "regex",
+      "fileMatch": [
+        "^config/_default/config\\.toml$"
+      ],
+      "matchStringsStrategy": "any",
+      "matchStrings": [
+        "crs_latest_release: \"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
+      ],
+      "depNameTemplate": "coreruleset/coreruleset",
+      "datasourceTemplate": "github-releases"
+    }
+  ]
+}
