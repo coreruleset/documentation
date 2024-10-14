@@ -20,7 +20,8 @@ jobs:
   syntax-check:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.124.1
+      # renovate: datasource=github-releases depName=gohugo/hugo
+      HUGO_VERSION: 0.135.0
     steps:
       - name: Install Hugo CLI
         run: |
