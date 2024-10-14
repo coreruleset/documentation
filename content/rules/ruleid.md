@@ -44,7 +44,8 @@ of IDs for you thank you.
 | 3,000,000-3,999,999 | reserved for use by Akamai |
 | 4,000,000-4,099,999 | reserved in use by AviNetworks |
 | 4,100,000-4,199,999 | reserved in use by Fastly |
-| 4,200,000-8,999,999 | unused **(available for reservation)** |
+| 4,200,000-7,999,999 | unused **(available for reservation)** |
+| 8,000,000-8,999,999 | reserved in use by Yandex |
 | 9,000,000-9,999,999 | reserved for the OWASP CRS project |
 | 10,000,000-89,999,999 | unused **(available for reservation)** |
 | 99,000,000-99,099,999 | reserved for [use by Microsoft](https://azure.microsoft.com/en-us/services/web-application-firewall/) |
