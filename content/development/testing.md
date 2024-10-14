@@ -43,7 +43,7 @@ Excellent, our containers are running, now we can start our tests.
 
 ### Using your own environment for testing {#use-own-env}
 
-If you have your own environment set up, you can configure that for testing. Please [follow these instructions]({{< ref "install.md#installing-a-compatible-waf-engine" >}}) to install the WAF server locally.
+If you have your own environment set up, you can configure that for testing. Please [follow these instructions]({{% ref "install.md#installing-a-compatible-waf-engine" %}}) to install the WAF server locally.
 
 -> The supported platform is ModSecurity 2 with Apache httpd. If you want to run the tests against nginx, you can do that too, but nginx uses libmodsecurity3, which is not fully compatible with Apache httpd + ModSecurity 2.
 
@@ -180,7 +180,7 @@ For that you will need:
 - the CRS Git repository
 - Docker (modern versions of docker already include the `compose` command, if you are running an older version you also need to have `docker-compose` installed)
   OR
-  [your own environment]({{< relref "#use-own-env" >}})
+  [your own environment]({{% relref "#use-own-env" %}})
 - your rules and tests!
 
 You can download pre-compiled binaries of **go-ftw** or build from source (requires you to have a **Go** environment). The pre-compiled binaries are available [on GitHub](https://github.com/coreruleset/go-ftw/releases). The binaries are ready to run and do not require installation.
