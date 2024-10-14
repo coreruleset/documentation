@@ -123,7 +123,7 @@ echo 'IncludeOptional {{< param crs_install_dir >}}/rules/*.conf' >> /etc/httpd/
 echo 'IncludeOptional {{< param crs_install_dir >}}/plugins/*-after.conf' >> /etc/httpd/conf/httpd.conf
 ```
 
-Now that everything has been configured, it should be possible to restart and being using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "2-how-crs-works/2-3-false-positives-and-tuning.md" >}}).
+Now that everything has been configured, it should be possible to restart and begin using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "2-how-crs-works/2-3-false-positives-and-tuning.md" >}}).
 
 ```bash
 systemctl restart httpd.service
