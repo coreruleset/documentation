@@ -11,7 +11,7 @@ chapter: false
 
 CRS provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a *false positive*, or false alarm.
 
-False positives are particularly likely to happen when operating at higher [paranoia levels]({{< ref "paranoia_levels" >}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives.
+False positives are particularly likely to happen when operating at higher [paranoia levels]({{% ref "paranoia_levels" %}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives.
 
 ### Example False Positive
 
@@ -44,7 +44,7 @@ This example log entry provides lots of information about the rule match. Some o
   `[data "Matched Data: <h1> found within ARGS:wp_post: <h1>welcome to my blog</h1>"]`
 
 {{% notice tip %}}
-CRS ships with a prebuilt *rule exclusion package* for WordPress, as well as other popular web applications, to help prevent false positives. See the section on [rule exclusion packages]({{< ref "#rule-exclusion-packages" >}}) for details. 
+CRS ships with a prebuilt *rule exclusion package* for WordPress, as well as other popular web applications, to help prevent false positives. See the section on [rule exclusion packages]({{% ref "#rule-exclusion-packages" %}}) for details. 
 {{% /notice %}}
 
 ### Why are False Positives a Problem?
@@ -102,7 +102,7 @@ In addition to the two *types* of exclusions, rules can be excluded in two diffe
 - **Exclude the entire rule/tag:** An entire rule, or entire category of rules (by specifying a tag), is removed and will not be executed by the rule engine.
 - **Exclude a specific variable from the rule/tag:** A *specific variable* will be excluded from a specific rule, or excluded from a category of rules (by specifying a tag).
 
-These two methods can also operate on multiple individual rules, or even entire rule categories (identified either [by tag]({{< ref "#rule-tags" >}}) or by using a [range of rule IDs]({{< ref "#rule-ranges" >}})). 
+These two methods can also operate on multiple individual rules, or even entire rule categories (identified either [by tag]({{% ref "#rule-tags" %}}) or by using a [range of rule IDs]({{% ref "#rule-ranges" %}})). 
 
 The combinations of rule exclusion types and methods allow for writing rule exclusions of varying granularity. Very coarse rule exclusions can be written, for example "remove all SQL injection rules" using `SecRuleRemoveByTag`. Extremely granular rule exclusions can also be written, for example "for transactions to the location 'web_app_2/function.php', exclude the query string parameter 'user_id' from rule 920280" using a SecRule and the action `ctl:ruleRemoveTargetById`.
 

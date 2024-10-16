@@ -161,7 +161,7 @@ Available plugins include:
 
 ## How to Write a Plugin
 
-For information on writing a new plugin, refer to the development documentation on [writing plugins]({{< ref "plugin_writing.md" >}}).
+For information on writing a new plugin, refer to the development documentation on [writing plugins]({{% ref "plugin_writing.md" %}}).
 
 ## Collection Timeout
 

@@ -5,7 +5,7 @@ theme = "hugo-relearn"
 
 # For search functionality
 [outputs]
-home = [ "HTML", "RSS", "JSON"]
+home = ['html', 'rss', 'print']
 
 [params]
   # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page.
@@ -13,9 +13,7 @@ home = [ "HTML", "RSS", "JSON"]
   # See the config.toml file from this documentation site to have an example.
   editURL = "https://github.com/coreruleset/documentation/blob/main/content/"
   # Author of the site, will be used in meta information
-  author = "CRS project"
-  # Description of the site, will be used in meta information
-  description = "CRS Documentation"
+  author.name = "CRS project"
   # Shows a checkmark for visited pages on the menu
   showVisitedLinks = true
   # Disable search function. It will hide search bar
