@@ -35,7 +35,7 @@ of IDs for you thank you.
 | 420,000-429,999 | reserved for ScallyWhack  |
 | 430,000--439,999 | reserved for rules published by Flameeye |
 | 440,000-599,999 | unused **(available for reservation)** |
-| 600,000-699,999 | reserved for [use by Akamai](https://www.akamai.com/products/web-application-protector) |
+| 600,000-699,999 | reserved for [use by Akamai](https://www.akamai.com/products/app-and-api-protector) |
 | 700,000-799,999 | reserved for Ivan Ristic |
 | 900,000-999,999 | reserved for the OWASP CRS project |
 | 1,000,000-1,009,999 | reserved for rules published by Redhat Security Team |
