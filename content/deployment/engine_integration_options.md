@@ -117,9 +117,7 @@ To learn more about Edgecast, read [their WAF documentation](https://docs.edgeca
 
 ### Fastly
 
-Fastly has offered CRS as part of their Fastly WAF for several years, but they have started to migrate their existing customers to the recently acquired Signal Sciences WAF. Interestingly, Fastly is transposing CRS rules into their own Varnish-based WAF engine.
-
-For more information about the Fastly CRS offering, read [their WAF documentation](https://docs.fastly.com/en/guides/fastly-waf-rule-set-updates-maintenance-legacy).
+Fastly has offered CRS as part of their Fastly WAF for several years, but they have started to migrate their existing customers to the recently acquired Signal Sciences WAF. Interestingly, Fastly is transposing CRS rules into their own Varnish-based WAF engine. Unfortunately, documentation on their legacy WAF offering has been removed.
 
 ### Google Cloud Armor
 
