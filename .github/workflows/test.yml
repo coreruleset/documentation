@@ -61,5 +61,5 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@4aa18b6ccdac05029fab067313a6a04f941e6494 # for v1.9.0
         with:
-          args: "--cookie-jar /tmp/lychee-cookies './content/**/*.md'"
+          args: "--cookie-jar /tmp/lychee-cookies './content/**/*.md'" 
           jobSummary: true
