@@ -1,7 +1,6 @@
-exclude = ["github.com/coreruleset/coreruleset/blob/?$", "https://www.akamai.com/products/app-and-api-protector"]
-user_agent = "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0"
+exclude = ["github.com/coreruleset/coreruleset/blob/?$", "https://www.akamai.com/products/app-and-api-protector", "https://www.drupal.org"]
+user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:132.0) Gecko/20100101 Firefox/132.0"
 no_progress = true
 cache = true
-verbose = "debug"
 accept = "200..=204, 429"
 exclude_all_private = true
