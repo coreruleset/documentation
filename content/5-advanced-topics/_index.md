@@ -1,5 +1,5 @@
 ---
-title: Advanced Usages
+title: Advanced Topics
 weight: 5
 pre: "<b>5. </b>"
 chapter: true
