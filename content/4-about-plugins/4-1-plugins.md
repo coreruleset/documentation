@@ -1,5 +1,5 @@
 ---
-title: What is Plugin
+title: Plugins
 weight: 41
 disableToc: false
 chapter: false

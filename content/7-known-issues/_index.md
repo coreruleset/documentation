@@ -1,6 +1,7 @@
 ---
-title: 7. Known Issues
+title: Known Issues
 weight: 7
+pre: "<b>7. </b>"
 disableToc: false
 chapter: true
 ---
