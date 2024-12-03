@@ -5,8 +5,6 @@ disableToc: false
 chapter: false
 ---
 
-# Testing for rule developers
-
 Well, you managed to write your rule, but now want to see if if can be added to the CRS? This document should help you to test it using the same tooling the project uses for its tests.
 
 CRS uses [go-ftw](https://github.com/coreruleset/go-ftw) to run test cases. **go-ftw** is the successor to the previously used test runner [ftw](https://github.com/coreruleset/ftw). The CRS project no longer uses **ftw** but it us still useful for running tests of older CRS versions.
