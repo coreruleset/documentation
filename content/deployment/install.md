@@ -5,11 +5,11 @@ disableToc: false
 chapter: false
 ---
 
-This guide aims to get a CRS installation up and running. This guide assumes that a compatible ModSecurity engine is already present and working. If unsure then refer to the [extended install]({{< ref "extended_install.md" >}}) page for full details.
+This guide aims to get a CRS installation up and running. This guide assumes that a compatible ModSecurity engine is already present and working. If unsure then refer to the [extended install]({{% ref "extended_install.md" %}}) page for full details.
 
 ## Downloading the Rule Set
 
-The first step is to download the Core Rule Set itself. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
+The first step is to download CRS. The CRS project strongly recommends using a [supported version](https://github.com/coreruleset/coreruleset/security/policy).
 
 Official CRS releases can be found at the following URL: https://github.com/coreruleset/coreruleset/releases.
 
@@ -40,7 +40,7 @@ To verify the integrity of the release:
 gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 10:05:48 2021 -03
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
-gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [unknown]
+gpg: Good signature from "OWASP CRS <security@coreruleset.org>" [unknown]
 gpg: WARNING: This key is not certified with a trusted signature!
 gpg:          There is no indication that the signature belongs to the owner.
 Primary key fingerprint: 3600 6F0E 0BA1 6783 2158  8211 38EE ACA1 AB8A 6E72
@@ -64,7 +64,7 @@ The result when verifying a release will then look like so:
 gpg --verify coreruleset-{{< param crs_latest_release >}}.tar.gz.asc v{{< param crs_latest_release >}}.tar.gz
 gpg: Signature made Wed Jun 30 15:05:48 2021 CEST
 gpg:                using RSA key 36006F0E0BA167832158821138EEACA1AB8A6E72
-gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultimate]
+gpg: Good signature from "OWASP CRS <security@coreruleset.org>" [ultimate]
 ```
 
 ## Installing the Rule Set
@@ -73,7 +73,7 @@ gpg: Good signature from "OWASP Core Rule Set <security@coreruleset.org>" [ultim
 
 Once the rule set has been downloaded and verified, extract the rule set files to a well known location on the server. This will typically be somewhere in the web server directory.
 
-The examples presented below demonstrate using Apache. For information on configuring Nginx or IIS see the [extended install]({{< ref "install.md" >}}) page.
+The examples presented below demonstrate using Apache. For information on configuring Nginx or IIS see the [extended install]({{% ref "install.md" %}}) page.
 
 Note that while it's common practice to make a new `modsecurity.d` folder, as outlined below, this isn't strictly necessary. The path scheme outlined is common on RHEL-based operating systems; the Apache path used may need to be adjusted to match the server's installation.
 
@@ -86,7 +86,7 @@ Now all the CRS files will be located below the `{{< param crs_install_dir >}}` 
 
 ### Setting Up the Main Configuration File
 
-After extracting the rule set files, the next step is to set up the main OWASP Core Rule Set configuration file. An example configuration file is provided as part of the release package, located in the main directory: `crs-setup.conf.example`.
+After extracting the rule set files, the next step is to set up the main OWASP CRS configuration file. An example configuration file is provided as part of the release package, located in the main directory: `crs-setup.conf.example`.
 
 {{% notice note %}}
 Other aspects of ModSecurity, particularly engine-specific parameters, are controlled by the ModSecurity "recommended" configuration rules, `modsecurity.conf-recommended`. This file comes packaged with ModSecurity itself.
@@ -103,7 +103,7 @@ mv crs-setup.conf.example crs-setup.conf
 
 ### Include-ing the Rule Files
 
-The last step is to tell the web server where the rules are. This is achieved by `include`-ing the rule configuration files in the `httpd.conf` file. Again, this example demonstrates using Apache, but the process is similar on other systems (see the [extended install]({{< ref "install.md" >}}) page for details).
+The last step is to tell the web server where the rules are. This is achieved by `include`-ing the rule configuration files in the `httpd.conf` file. Again, this example demonstrates using Apache, but the process is similar on other systems (see the [extended install]({{% ref "install.md" %}}) page for details).
 
 ```bash
 echo 'IncludeOptional {{< param crs_install_dir >}}/crs-setup.conf' >> /etc/httpd/conf/httpd.conf
@@ -113,7 +113,7 @@ echo 'IncludeOptional {{< param crs_install_dir >}}/rules/*.conf' >> /etc/httpd/
 echo 'IncludeOptional {{< param crs_install_dir >}}/plugins/*-after.conf' >> /etc/httpd/conf/httpd.conf
 ```
 
-Now that everything has been configured, it should be possible to restart and being using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "false_positives_tuning.md" >}}).
+Now that everything has been configured, it should be possible to restart and begin using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{% ref "false_positives_tuning.md" %}}).
 
 ```bash
 systemctl restart httpd.service
@@ -121,7 +121,7 @@ systemctl restart httpd.service
 
 ## Alternative: Using Containers
 
-Another quick option is to use the official CRS [pre-packaged containers]({{< ref "../development/useful_tools/#official-crs-maintained-docker-images" >}}). Docker, Podman, or any compatible container engine can be used. The official CRS images are published in the Docker Hub. The image most often deployed is `owasp/modsecurity-crs`: it already has everything needed to get up and running quickly.
+Another quick option is to use the official CRS [pre-packaged containers]({{% ref "../development/useful_tools/#official-crs-maintained-docker-images" %}}). Docker, Podman, or any compatible container engine can be used. The official CRS images are published in the Docker Hub. The image most often deployed is `owasp/modsecurity-crs`: it already has everything needed to get up and running quickly.
 
 The CRS project pre-packages both Apache and Nginx web servers along with the appropriate corresponding ModSecurity engine. More engines, like [Coraza](https://coraza.io/), will be added at a later date.
 
@@ -171,7 +171,7 @@ Depending on your configurated thresholds, this should be detected as a maliciou
 
 ### Upgrading from CRS 3.x to CRS 4
 
-The most impactful change is the removal of application exclusion packages in favor of a plugin system. If you had activated the exclusion packages in CRS 3, you should download the plugins for them and place them in the plugins subdirectory. We maintain the list of plugins in our [Plugin Registry](https://github.com/coreruleset/plugin-registry). You can find detailed information on working with plugins in our [plugins documentation]({{ ref "plugins.md" }}).
+The most impactful change is the removal of application exclusion packages in favor of a plugin system. If you had activated the exclusion packages in CRS 3, you should download the plugins for them and place them in the plugins subdirectory. We maintain the list of plugins in our [Plugin Registry](https://github.com/coreruleset/plugin-registry). You can find detailed information on working with plugins in our [plugins documentation]({{% ref "plugins.md" %}}).
 
 In terms of changes to the detection rules, the amount of changes is smaller than in the CRS 2—3 changeover. Most rules have only evolved slightly, so it is recommended that you keep any existing custom exclusions that you have made under CRS 3.
 

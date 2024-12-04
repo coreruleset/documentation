@@ -5,11 +5,11 @@ disableToc: false
 chapter: false
 ---
 
-> Paranoia levels are an essential concept when working with the Core Rule Set. This page explains the concept behind paranoia levels and how to work with them on a practical level.
+> Paranoia levels are an essential concept when working with CRS. This page explains the concept behind paranoia levels and how to work with them on a practical level.
 
 ## Introduction to Paranoia Levels
 
-**The paranoia level (PL) makes it possible to define how aggressive the Core Rule Set is.** Paranoia level 1 (PL 1) provides a set of rules that hardly ever trigger a false alarm (ideally never, but it can happen, depending on the local setup). PL 2 provides additional rules that detect more attacks (these rules operate *in addition* to the PL 1 rules), but there's a chance that the additional rules will also trigger new false alarms over perfectly legitimate HTTP requests.
+**The paranoia level (PL) makes it possible to define how aggressive CRS is.** Paranoia level 1 (PL 1) provides a set of rules that hardly ever trigger a false alarm (ideally never, but it can happen, depending on the local setup). PL 2 provides additional rules that detect more attacks (these rules operate *in addition* to the PL 1 rules), but there's a chance that the additional rules will also trigger new false alarms over perfectly legitimate HTTP requests.
 
 This continues at PL 3, where more rules are added, namely for certain specialized attacks. This leads to even more false alarms. Then at PL 4, the rules are so aggressive that they detect almost every possible attack, yet they also flag a lot of legitimate traffic as malicious.
 
@@ -43,7 +43,7 @@ It's important to think about a service's security requirements. The difference 
 Running at  the highest paranoia level, PL 4, may seem appealing from a security standpoint, but *it could take many weeks to tune away the false positives encountered*. It is crucial to have enough time to fully deal with all false positives.
 
 {{% notice warning %}}
-Failure to properly tune an installation runs the risk of exposing users to a vast number of false positives. This can lead to a poor user experience, and might ultimately lead to a decision to completely disable the Core Rule Set. As such, **setting a high PL in blocking mode *without* adequate tuning to deal with false positives is very risky**.
+Failure to properly tune an installation runs the risk of exposing users to a vast number of false positives. This can lead to a poor user experience, and might ultimately lead to a decision to completely disable CRS. As such, **setting a high PL in blocking mode *without* adequate tuning to deal with false positives is very risky**.
 {{% /notice %}}
 
 If working in an enterprise environment, consider developing an internal policy to map the risk levels and security needs of different assets to the minimum acceptable paranoia level to be used for them, for example:
@@ -54,9 +54,9 @@ If working in an enterprise environment, consider developing an internal policy 
 
 ## Setting the Paranoia Level
 
-If using a native Core Rule Set installation on a web application firewall, the paranoia level is defined by setting the variable `tx.paranoia_level` in the file `crs-setup.conf`. This is done in rule 900000, but technically the variable can be set in the Apache or Nginx configuration instead.
+If using a native CRS installation on a web application firewall, the paranoia level is defined by setting the variable `tx.paranoia_level` in the file `crs-setup.conf`. This is done in rule 900000, but technically the variable can be set in the Apache or Nginx configuration instead.
 
-If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose the PL setting in the GUI while other vendors require a custom rule to be written that sets `tx.paranoia_level`. Unfortunately, there are also vendors that don't allow the PL to be set at all. (The CRS project considers this to be an incomplete Core Rule Set integration, since paranoia levels are a defining feature of the Core Rule Set.)
+If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose the PL setting in the GUI while other vendors require a custom rule to be written that sets `tx.paranoia_level`. Unfortunately, there are also vendors that don't allow the PL to be set at all. (The CRS project considers this to be an incomplete CRS integration, since paranoia levels are a defining feature of CRS.)
 
 ## How Paranoia Levels Relate to Anomaly Scoring
 
@@ -78,7 +78,7 @@ There is a better solution. First, think of the paranoia level as being the "blo
 
 *Example: Blocking paranoia level of 1 and executing paranoia level of 2*
 
-![Diagram showing a scenario where the blocking paranoia level and the executing paranoia level are different. The active and inactive paranoia levels are emphasized to explain the concept.](https://coreruleset.org/assets/uploads/2021/10/executing-paranoia-level-1.png?width=25em)
+![Diagram showing a scenario where the blocking paranoia level and the executing paranoia level are different. The active and inactive paranoia levels are emphasized to explain the concept.](https://coreruleset.org/images/2021/10/executing-paranoia-level-1.png?width=25em)
 
 **The executing paranoia level allows rules from a higher paranoia level to be run, and potentially to trigger false positives, without increasing the probability of blocking legitimate users.** Any new false positives can then be tuned away using rule exclusions. Once ready and with all the new rule exclusions in place, the blocking paranoia level can then be raised to match the executing paranoia level. This approach is a flexible and secure way to raise the paranoia level on a working production system *without* the risk of new false positives blocking users in error.
 

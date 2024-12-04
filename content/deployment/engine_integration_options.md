@@ -5,7 +5,7 @@ disableToc: false
 chapter: false
 ---
 
-> The Core Rule Set runs on WAF engines that are compatible with a subset of ModSecurity's SecLang configuration language. There are several options outside of ModSecurity itself, namely cloud offerings and content delivery network (CDN) services. There is also an open-source alternative to ModSecurity in the form of the new Coraza WAF engine.
+> CRS runs on WAF engines that are compatible with a subset of ModSecurity's SecLang configuration language. There are several options outside of ModSecurity itself, namely cloud offerings and content delivery network (CDN) services. There is also an open-source alternative to ModSecurity in the form of the new Coraza WAF engine.
 
 ## Compatible Free and Open-Source WAF Engines
 
@@ -102,7 +102,7 @@ A selection of these platforms are listed below, along with links to get more in
 {{% notice note %}}
 AWS provides a rule set called the ["Core rule set (CRS) managed rule group"](https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html) which "…provides protection against… commonly occurring vulnerabilities described in OWASP publications such as OWASP Top 10."
 
-The CRS project does **not** believe that the AWS WAF "core rule set" is based on or related to the OWASP Core Rule Set.
+The CRS project does **not** believe that the AWS WAF "core rule set" is based on or related to OWASP CRS.
 {{% /notice %}}
 
 ### Cloudflare WAF
@@ -117,9 +117,7 @@ To learn more about Edgecast, read [their WAF documentation](https://docs.edgeca
 
 ### Fastly
 
-Fastly has offered CRS as part of their Fastly WAF for several years, but they have started to migrate their existing customers to the recently acquired Signal Sciences WAF. Interestingly, Fastly is transposing CRS rules into their own Varnish-based WAF engine.
-
-For more information about the Fastly CRS offering, read [their WAF documentation](https://docs.fastly.com/en/guides/fastly-waf-rule-set-updates-maintenance-legacy).
+Fastly has offered CRS as part of their Fastly WAF for several years, but they have started to migrate their existing customers to the recently acquired Signal Sciences WAF. Interestingly, Fastly is transposing CRS rules into their own Varnish-based WAF engine. Unfortunately, documentation on their legacy WAF offering has been removed.
 
 ### Google Cloud Armor
 

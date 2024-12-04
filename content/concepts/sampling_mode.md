@@ -5,11 +5,11 @@ disableToc: false
 chapter: false
 ---
 
-> Sampling mode makes it possible to apply the Core Rule Set to a limited percentage of traffic only. This may be useful in certain scenarios when enabling CRS for the first time, as this page explains.
+> Sampling mode makes it possible to apply CRS to a limited percentage of traffic only. This may be useful in certain scenarios when enabling CRS for the first time, as this page explains.
 
 ## Introduction to Sampling Mode
 
-The Core Rule Set's sampling mode mechanism was first introduced in version 3.0.0 in 2016. Although the feature has been available since then, it’s rarely used in practice, partly due to it being one of the lesser-known features of CRS.
+The CRS's sampling mode mechanism was first introduced in version 3.0.0 in 2016. Although the feature has been available since then, it’s rarely used in practice, partly due to it being one of the lesser-known features of CRS.
 
 When deploying ModSecurity and CRS in front of an existing web service for the first time, it's difficult to predict what's going to happen when CRS is turned on. A well-developed test environment can help, but it's rare to find an installation where real world traffic can be reproduced 1:1 on a test setup. As such, fully enabling ModSecurity and CRS can be something of a leap into the unknown, and potentially very disruptive. This scenario prompted the introduction of CRS 3's sampling mode.
 
@@ -37,7 +37,7 @@ To test sampling mode, set the sampling percentage to 50 (which represents 50%),
 $ curl -v http://localhost/index.html?test=/etc/passwd
 ```
 
-* If the Core Rule Set is applied to the transaction *(and the inbound anomaly threshold is set to 10 or lower)* then a `403 Forbidden` status code will be returned, since the request causes two critical rules to match, by default.
+* If CRS is applied to the transaction *(and the inbound anomaly threshold is set to 10 or lower)* then a `403 Forbidden` status code will be returned, since the request causes two critical rules to match, by default.
 * If sampling mode is triggered for the transaction (with a 50% probability) then the rule set will be bypassed and an ordinary response will be received, e.g. a `200 OK` status code.
 
 In the latter case, where sampling mode is triggered and CRS is bypassed, an alert like the following can be found in the error log:

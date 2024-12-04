@@ -20,7 +20,8 @@ jobs:
   syntax-check:
     runs-on: ubuntu-latest
     env:
-      HUGO_VERSION: 0.124.1
+      # renovate: datasource=github-releases depName=gohugoio/hugo
+      HUGO_VERSION: 0.139.3
     steps:
       - name: Install Hugo CLI
         run: |
@@ -30,13 +31,13 @@ jobs:
         run: sudo snap install dart-sass
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
         with:
           submodules: recursive
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
 
       - name: Install Node.js dependencies
         run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
@@ -58,7 +59,7 @@ jobs:
 
       - name: Link Checker
         id: lychee
-        uses: lycheeverse/lychee-action@22134d37a1fff6c2974df9c92a7c7e1e86a08f9c # for v1.9.0
+        uses: lycheeverse/lychee-action@4aa18b6ccdac05029fab067313a6a04f941e6494 # for v1.9.0
         with:
-          args: --no-progress -u "Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/81.0" -E './content/**/*.md'
+          args: "--cookie-jar /tmp/lychee-cookies './content/**/*.md'"
           jobSummary: true

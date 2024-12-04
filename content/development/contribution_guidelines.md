@@ -112,12 +112,12 @@ SecRule ARGS "foo" "id:1,phase:1,pass,t:none"
 CRS uses `\x5c` to represent the backslash `\` character in regular expressions. Some of the reasons for this are:
 
 * It's portable across web servers and WAF engines: it works with Apache, Nginx, and Coraza.
-* It works with the [crs-toolchain]({{< ref "crs_toolchain" >}}) for building optimized regular expressions.
+* It works with the [crs-toolchain]({{% ref "crs_toolchain" %}}) for building optimized regular expressions.
 
 The older style of representing a backslash using the character class `[\\\\]` must _not_ be used. This was previously used in CRS to get consistent results between Apache and Nginx, owing to a quirk with how Apache would "double un-escape" character escapes. For future reference, the decision was made to stop using this older method because:
 
 * It can be confusing and difficult to understand how it works.
-* It doesn't work with [crs-toolchain]({{< ref "crs_toolchain" >}}).
+* It doesn't work with [crs-toolchain]({{% ref "crs_toolchain" %}}).
 * It doesn't work with Coraza.
 * It isn't obvious how to use it in a character class, e.g., `[a-zA-Z<portable-backslash>]`.
 
@@ -129,9 +129,13 @@ Regular expression engines and libraries based on PCRE use the forward slash `/`
 
 If testing a CRS regular expression using a third party tool, it may be useful to change the delimiter to something other than `/` if a testing tool raises errors because a CRS pattern features unescaped forward slashes.
 
+### Vertical Tab Representation
+
+CRS uses `\x0b` to represent the vertical tab in character classes. This is necessary because most regular expressions are generated and simplified using external libraries. These libraries produce output that the generator must convert into a form that is compatible with both PCRE and RE2 compatible engines. In RE2, `\s` does not include `\v` (which is the case in PCRE), and needs to be added. However, `\v` in PCRE expands to a list of vertical characters and is, therefore, not allowed to start range expressions. Since we only care about the vertical tab we use `\x0b`.
+
 ### When and Why to Anchor Regular Expressions
 
-Engines running the OWASP Core Rule Set will use regular expressions to _search_ the input string, i.e., the regular expression engine is asked to find the first match in the input string. If an expression needs to match the entire input then the expression must be anchored appropriately.
+Engines running OWASP CRS will use regular expressions to _search_ the input string, i.e., the regular expression engine is asked to find the first match in the input string. If an expression needs to match the entire input then the expression must be anchored appropriately.
 
 #### Beginning of String Anchor (^)
 
@@ -185,7 +189,7 @@ It is sometimes necessary to match the entire input string to ensure that it _ex
 
 Other anchors apart from `^` caret and `$` dollar exist, such as `\A`, `\G`, and `\Z` in PCRE. CRS **strongly discourages** the use of other anchors for the following reasons:
 
-- Not all regular expression engines support all anchors and the OWASP Core Rule Set should be compatible with as many regular expression engines as possible.
+- Not all regular expression engines support all anchors and OWASP CRS should be compatible with as many regular expression engines as possible.
 - Their function is sometimes not trivial.
 - They aren't well known and would require additional documentation.
 - In most cases that would justify their use the regular expression can be transformed into a form that doesn't require them, or the rule can be transformed (e.g., with an additional chain rule).
@@ -240,7 +244,7 @@ Possessive quantifiers (e.g., `x++`) and atomic groups (e.g., `(?>x)`) are tools
 
 Traditional regular expression engines use backtracking to solve some additional problems, such as finding a string that is preceded or followed by another string. While this functionality can certainly come in handy and has its place in certain applications, it can also lead to performance issues and, in uncontrolled environments, open up possibilities for attacks (the term "[ReDoS](https://en.wikipedia.org/wiki/ReDoS)" is often used to describe an attack that exhausts process or system resources due to excessive backtracking).
 
-The OWASP Core Rule Set tries to be compatible with non-backtracking regular expression engines, such as RE2, because:
+OWASP CRS tries to be compatible with non-backtracking regular expression engines, such as RE2, because:
 
 - Non-backtracking engines are less vulnerable to ReDoS attacks.
 - Non-backtracking engines can often outperform backtracking engines.
@@ -258,7 +262,7 @@ To ensure compatibility with non-backtracking regular expression engines, the fo
 - conditionals (e.g., `(?(regex)then|else)`)
 - recursive calls to capture groups (e.g., `(?1)`)
 - possessive quantifiers (e.g., `(?:regex)++`)
-- atomic (or possessive) groups (e.g., `(?>regex`))
+- atomic (or possessive) groups (e.g., `(?>regex)`)
 
 This list is not exhaustive but covers the most important points. The [RE2 documentation](https://github.com/google/re2/wiki/Syntax) includes a complete list of supported and unsupported features that various engines offer.
 
@@ -270,7 +274,7 @@ Optimizing regular expressions is hard. Often, a change intended to improve the 
 mailto|mms|mumble|maven
 ```
 
-An optimized version (produced by the [crs-toolchain]({{< ref "crs_toolchain" >}})) could look like this:
+An optimized version (produced by the [crs-toolchain]({{% ref "crs_toolchain" %}})) could look like this:
 
 ```python
 m(?:a(?:ilto|ven)|umble|ms)
@@ -278,7 +282,7 @@ m(?:a(?:ilto|ven)|umble|ms)
 
 The above expression is an optimization because it reduces the number of backtracking steps when a branch fails. The regular expressions in the CRS are often comprised of lists of tens or even hundreds of words. Reading such an expression in an optimized form is difficult: even the _simple_ optimized example above is difficult to read.
 
-In general, contributors should not try to optimize contributed regular expressions and should instead strive for clarity. New regular expressions will usually be required to be submitted as a `.ra` file for the [crs-toolchain]({{< ref "crs_toolchain" >}}) to process. In such a file, the regular expression is decomposed into individual parts, making manual optimizations much harder or even impossible (and unnecessary with the `crs-toolchain`). The `crs-toolchain` performs some common optimizations automatically, such as the one shown above.
+In general, contributors should not try to optimize contributed regular expressions and should instead strive for clarity. New regular expressions will usually be required to be submitted as a `.ra` file for the [crs-toolchain]({{% ref "crs_toolchain" %}}) to process. In such a file, the regular expression is decomposed into individual parts, making manual optimizations much harder or even impossible (and unnecessary with the `crs-toolchain`). The `crs-toolchain` performs some common optimizations automatically, such as the one shown above.
 
 Whether optimizations make sense in a contribution is assessed for each case individually.
 
@@ -365,67 +369,78 @@ Rule tests also provide an excellent way to test WAF engines and implementations
 
 The rule tests are located under `tests/regression/tests`. Each CRS rule *file* has a corresponding *directory* and each individual *rule* has a corresponding *YAML file* containing all the tests for that rule. For example, the tests for rule 911100 *(Method is not allowed by policy)* are in the file `REQUEST-911-METHOD-ENFORCEMENT/911100.yaml`.
 
-Full documentation of the required formatting and available options of the YAML tests can be found at https://github.com/coreruleset/ftw/blob/main/docs/YAMLFormat.md.
+Full documentation of the required formatting and available options of the YAML tests can be found at https://github.com/coreruleset/ftw-tests-schema/blob/main/spec.
 
 ### Positive Tests
 
 Example of a simple *positive test*:
 
 ```yaml
-- test_title: 932230-26
+- test_id: 26
   desc: "Unix command injection"
   stages:
-    - stage:
-        input:
-          dest_addr: 127.0.0.1
-          headers:
-            Host: localhost
-            User-Agent: "OWASP CRS test agent"
-            Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
-          method: POST
-          port: 80
-          uri: "/"
-          data: "var=` /bin/cat /etc/passwd`"
-          version: HTTP/1.1
-        output:
-          log_contains: id "932230"
+    - input:
+      dest_addr: 127.0.0.1
+      headers:
+        Host: localhost
+        User-Agent: "OWASP CRS test agent"
+        Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+      method: POST
+      port: 80
+      uri: "/"
+      data: "var=` /bin/cat /etc/passwd`"
+      version: HTTP/1.1
+    output:
+      log:
+        expect_ids: [932230]
 ```
 
-This test will succeed if the log output contains `id "932230"`, which would indicate that the rule in question matched and generated an alert.
+This test will succeed if the log contains an entry for rule 932230, which would indicate that the rule in question matched and generated an alert.
 
 It's important that tests consistently include the HTTP header fields `Host`, `User-Agent`, and `Accept`. CRS includes rules that detect if these headers are missing or empty, so these headers should be included in each test to avoid unnecessarily causing those rules to match. Ideally, *each positive test should cause* **only** *the rule in question to match*.
 
-The rule's description field, `desc`, is important. It should describe what is being tested: what *should* match, what should *not* match, etc.
+The rule's description field, `desc`, is important. It should describe what is being tested: what *should* match, what should *not* match, etc. It is often a good idea to use the YAML literal string scalar form, as it makes it easy to write descriptions spanning multiple lines:
+
+```yaml
+- test_id: 1
+  desc: |
+    This is the first line of the description.
+    On the second line, we might see the payload.
+
+    NOTE: this is something important to take into account.
+  stages:
+  #...
+```
 
 ### Negative Tests
 
 Example of a simple *negative test*:
 
 ```yaml
-- test_title: 932260-4
+- test_id: 4
   stages:
-    - stage:
-        input:
-          dest_addr: "127.0.0.1"
-          method: "POST"
-          port: 80
-          headers:
-            User-Agent: "OWASP CRS test agent"
-            Host: "localhost"
-            Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
-          data: 'foo=ping pong tables'
-          uri: '/'
-        output:
-          no_log_contains: id "932260"
+    - input:
+      dest_addr: "127.0.0.1"
+      method: "POST"
+      port: 80
+      headers:
+        User-Agent: "OWASP CRS test agent"
+        Host: "localhost"
+        Accept: text/xml,application/xml,application/xhtml+xml,text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5
+      data: 'foo=ping pong tables'
+      uri: '/'
+    output:
+      log:
+        no_expect_ids: [932260]
 ```
 
-This test will succeed if the log output does **not** contain `id "932260"`, which would indicate that the rule in question did **not** match and so did **not** generate an alert.
+This test will succeed if the log **does not** contain an entry for rule 932260, which would indicate that the rule in question did **not** match and so did **not** generate an alert.
 
-### Encoded and Raw Requests
+### Encoded Request
 
 It is possible to *encode* an entire test request. This encapsulates the request and means that the request headers and payload don't need to be explicitly declared. This is useful when a test request needs to use unusual bytes which might break YAML parsers, or when a test request must be intentionally malformed in a way that is impossible to describe otherwise. An encoded request is sent exactly as intended.
 
-The `encoded_request` field works like so:
+The `encoded_request` field expects a complete request in base64 encoding:
 
 ```yaml
 encoded_request: <Base64 string>
@@ -437,8 +452,6 @@ encoded_request: "R0VUIFwgSFRUUA0KDQoK"
 ```
 
 where `R0VUIFwgSFRUUA0KDQoK` is the base64-encoded equivalent of `GET \ HTTP\r\n\r\n`.
-
-The older method of using `raw_request` is deprecated as it's difficult to maintain and less portable than `encoded_request`.
 
 ### Using The Correct HTTP Endpoint
 

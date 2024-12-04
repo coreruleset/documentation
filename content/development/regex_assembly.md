@@ -9,7 +9,7 @@ chapter: false
 
 ## Specification Format
 
-The files containing regular expression specifications (`.ra` suffix, under `regex-assembly`) contain one regular expression per line. These files are meant to be processed by the [crs-toolchain]({{< ref "crs_toolchain" >}}).
+The files containing regular expression specifications (`.ra` suffix, under `regex-assembly`) contain one regular expression per line. These files are meant to be processed by the [crs-toolchain]({{% ref "crs_toolchain" %}}).
 
 ### Example
 
@@ -109,7 +109,7 @@ The following example is intentionanlly simple (and meaningless) to illustrates 
 ##!<
 ```
 
-Processors are defined in the [crs-toolchain]({{< ref "crs_toolchain" >}}).
+Processors are defined in the [crs-toolchain]({{% ref "crs_toolchain" %}}).
 
 ### Nesting
 
@@ -167,7 +167,7 @@ The special token `~` acts like `@` but does not allow any white space tokens to
 `~` will _not_ match:
 - `python <<< 'print("hello")'`
 
-The patterns that are used by the command line evasion processor are configurable. The default configuration for the Core Rule Set can be found in the `toolchain.yaml` in the `regex-assembly` directory of the [Core Rule Set project](https://github.com/coreruleset/coreruleset).
+The patterns that are used by the command line evasion processor are configurable. The default configuration for the CRS can be found in the `toolchain.yaml` in the `regex-assembly` directory of the [CRS project](https://github.com/coreruleset/coreruleset).
 
 The following is an example of how the command line evasion processor can be used:
 
@@ -321,7 +321,7 @@ The exact contents of the included file, including processor directives, with su
 
 ### Description
 
-The include processor reduces repetition across assembly files. Repeated blocks can be put into a file in the `include` directory and then be included with the `include` processor comment. Include files are normal assembly files, hence include files can also contain further include directives. The only restriction is that included files must not contain the prefix or suffix markers. This is a technical limitation in the [crs-toolchain]({{< ref "crs_toolchain" >}}).
+The include processor reduces repetition across assembly files. Repeated blocks can be put into a file in the `include` directory and then be included with the `include` processor comment. Include files are normal assembly files, hence include files can also contain further include directives. The only restriction is that included files must not contain the prefix or suffix markers. This is a technical limitation in the [crs-toolchain]({{% ref "crs_toolchain" %}}).
 
 The contents of an include file could, for example, be the alternation of accepted HTTP methods:
 
@@ -357,7 +357,7 @@ it{{quotes}}s{{opt-lazy-wspace}}possible
 
 Note that the include processor does not have a body, thus the end marker is optional.
 
-Please see [Include-Except processor]({{< ref "regex_assembly#include-except-processor" >}}) for how suffix replacements work.
+Please see [Include-Except processor]({{% ref "regex_assembly#include-except-processor" %}}) for how suffix replacements work.
 
 ## Include-Except processor
 

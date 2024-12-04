@@ -129,7 +129,7 @@ Let’s say you are working on a vulnerability publication and want to add a par
 curl -H 'x-format-output: txt-matched-rules-extended' \
   https://sandbox.coreruleset.org/?file=/etc/passwd
 
-This payload has been tested against the OWASP ModSecurity Core Rule Set
+This payload has been tested against OWASP CRS
 web application firewall. The test was executed using the apache engine and CRS version 3.3.2.
 
 The payload is being detected by triggering the following rules:
@@ -150,8 +150,6 @@ CRS therefore detects this payload starting with paranoia level 1.
 ## Architecture
 
 The sandbox consists of various parts. The frontend that receives the requests runs on Openresty. It handles the incoming request, chooses and configures the backend running CRS, proxies the request to the backend, and waits for the response. Then it parses the WAF audit log and sends the matched rules back in the format chosen by the user.
-
-![CRS sandbox diagram v3.drawio.png](https://coreruleset.org/assets/uploads/2022/01/CRS_sandbox_diagram_v3.drawio.png)
 
 There is a backend container for every engine and version. For instance, one Apache with CRS 3.2.2, one with CRS 3.2.1, et cetera... These are normal webserver installations with a WAF and the CRS.
 
