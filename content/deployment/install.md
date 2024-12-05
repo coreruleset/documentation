@@ -94,6 +94,20 @@ Other aspects of ModSecurity, particularly engine-specific parameters, are contr
 
 In many scenarios, the default example CRS configuration will be a good enough starting point. It is, however, a good idea to take the time to look through the example configuration file *before* deploying it to make sure it's right for a given environment.
 
+{{% notice warning %}}
+In particular, _Response_ rules are enabled by default. You must be aware that you might DoS yourself depending on the text your
+application is sending back to the client. See [this blog
+post](https://blog.sicuranext.com/response-filter-denial-of-service-a-new-way-to-shutdown-a-website/)
+about the problems you might have.
+There is an [experimental scanner](https://github.com/edoardottt/RFDos-Scanner) that uses [nuclei](https://github.com/projectdiscovery/nuclei?tab=readme-ov-file#install-nuclei) to find out if you could be affected. So if
+you are unsure, first test your application before enabling or you will be definitely blocked.
+Response rules can be easily disabled by uncommenting the rule with id 900500 in crs-setup file,
+since CRS version 4.10.0.
+
+**The CRS team thinks that the prevalence of the RFDoS attack mentioned here at this particular moment
+(end of 2024) is less that the possible impact you might have by a webshell being embedded in your environment.**
+{{% /notice %}}
+
 Once any settings have been changed within the example configuration file, as needed, it should be renamed to remove the .example portion, like so:
 
 ```bash
