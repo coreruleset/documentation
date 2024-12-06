@@ -182,9 +182,9 @@ For that you will need:
 - your rules and tests!
 
 {{% notice style="primary" title="Installing Go-FTW" icon="fa-solid fa-lightbulb" %}}
-We strongly suggest to install a pre-compiled binaries of **go-ftw** available [on GitHub](https://github.com/coreruleset/go-ftw/releases).
+We strongly suggest to install a pre-compiled binary of **go-ftw** available [on GitHub](https://github.com/coreruleset/go-ftw/releases).
 
-The binaries are ready to run and do not require installation. In the releases page you will also find `.deb` and `.rpm` packages that can be used in some Linux OS.
+The binary is ready to run and does not require installation. On the releases page you will also find `.deb` and `.rpm` packages that can be used for installation on some GNU/Linux systems.
 
 Modern versions of `go-ftw` have also a `self-update` command that will simplify updating to newer releases for you! {{% icon icon="wand-sparkles" %}}
 {{% /notice %}}
