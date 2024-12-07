@@ -176,12 +176,18 @@ Tests are performed using [go-ftw](https://github.com/coreruleset/go-ftw). We ru
 For that you will need:
 
 - the CRS Git repository
-- Docker (modern versions of docker already include the `compose` command, if you are running an older version you also need to have `docker-compose` installed)
+- Docker compose. See [here](https://docs.docker.com/compose/install/) for installation instructions.
   OR
-  [your own environment]({{% relref "#use-own-env" %}})
+  [setup and use your own environment]({{% relref "#use-own-env" %}})
 - your rules and tests!
 
-You can download pre-compiled binaries of **go-ftw** or build from source (requires you to have a **Go** environment). The pre-compiled binaries are available [on GitHub](https://github.com/coreruleset/go-ftw/releases). The binaries are ready to run and do not require installation.
+{{% notice style="primary" title="Installing Go-FTW" icon="fa-solid fa-lightbulb" %}}
+We strongly suggest to install a pre-compiled binary of **go-ftw** available [on GitHub](https://github.com/coreruleset/go-ftw/releases).
+
+The binary is ready to run and does not require installation. On the releases page you will also find `.deb` and `.rpm` packages that can be used for installation on some GNU/Linux systems.
+
+Modern versions of `go-ftw` have also a `self-update` command that will simplify updating to newer releases for you! {{% icon icon="wand-sparkles" %}}
+{{% /notice %}}
 
 You can also install pre-compiled binaries by using `go install`, if you have a **Go** environment:
 
@@ -312,109 +318,6 @@ testoverride:
 For more information and examples, please check the [go-ftw documentation](https://github.com/coreruleset/go-ftw#example-usage).
 
 **Also please don't forget to roll back the modifications from this guide to your WAF configuration after you're done testing!**
-
-## FTW (deprecated)
-
-[ftw](https://github.com/coreruleset/ftw) is our legacy test runner, and is **deprecated** and no longer used for tests after CRS v3.2. Refer to this [GitHub workflow](https://github.com/coreruleset/coreruleset/blob/v3.2/dev/.travis.yml#L52) if you need to use the old **ftw** Python version. You can easily reproduce that locally, on your workstation.
-
-For that you will need:
-
-- the coreruleset git repository
-- docker and docker-compose (modern versions of docker already include compose functionality)
-- python3
-- your rules and tests!
-
-### Setting up the basic environment
-
-I normally use [pipenv](https://docs.pipenv.org/) whenever Python is involved. It will give you both isolation and dependencies at once. But you can use basic pip and virtualenv and the result will be the same.
-
-For installing the python tooling, just use:
-
-```bash
-❯ pipenv install -r tests/regression/requirements.txt
-Creating a virtualenv for this project...
-Pipfile: /private/tmp/coreruleset/Pipfile
-Using /usr/local/bin/python3 (3.9.5) to create virtualenv...
-⠧ Creating virtual environment...created virtual environment CPython3.9.5.final.0-64 in 392ms
-  creator CPython3Posix(dest=/Users/fzipitria/.local/share/virtualenvs/coreruleset-UNJnkEXP, clear=False, global=False)
-  seeder FromAppData(download=False, pip=bundle, setuptools=bundle, wheel=bundle, via=copy, app_data_dir=/Users/fzipitria/Library/Application Support/virtualenv)
-    added seed packages: pip==21.0.1, setuptools==56.0.0, wheel==0.36.2
-  activators BashActivator,CShellActivator,FishActivator,PowerShellActivator,PythonActivator,XonshActivator
-
-✔ Successfully created virtual environment!
-Virtualenv location: /Users/fzipitria/.local/share/virtualenvs/coreruleset-UNJnkEXP
-Creating a Pipfile for this project...
-Requirements file provided! Importing into Pipfile...
-Pipfile.lock not found, creating...
-Locking [dev-packages] dependencies...
-Locking [packages] dependencies...
-Building requirements...
-Resolving dependencies...
-✔ Success!
-Updated Pipfile.lock (02e6ae)!
-Installing dependencies from Pipfile.lock (02e6ae)...
-  🐍   ▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉▉ 17/17 — 00:00:28
-To activate this project's virtualenv, run pipenv shell.
-Alternatively, run a command inside the virtualenv with pipenv run.
-```
-
-Now we are ready to start running tests.
-
-### Running the test suite
-
-The test suite will be run by the tool `ftw`, now that we started our containers.
-
-If you used the `pipenv` tool for installing the module, now is time to enter the shell:
-```bash
-❯ py.test -vs --tb=short tests/regression/CRS_Tests.py --config=modsec2-apache --ruledir_recurse=./tests/regression/tests
-============================================================================== test session starts ===============================================================================
-platform darwin -- Python 3.9.5, pytest-4.6.0, py-1.10.0, pluggy-0.13.1 -- /Users/fzipitria/.local/share/virtualenvs/coreruleset-bLfwOI0B/bin/python
-cachedir: .pytest_cache
-rootdir: /Users/fzipitria/Workspace/OWASP/coreruleset
-plugins: ftw-1.2.4
-collected 2468 items
-
-tests/regression/CRS_Tests.py::test_crs[ruleset0-933210.yaml -- 933210-1] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset1-933210.yaml -- 933210-2] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset2-933210.yaml -- 933210-3] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset3-933210.yaml -- 933210-4] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset4-933210.yaml -- 933210-5] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset5-933210.yaml -- 933210-6] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset6-933210.yaml -- 933210-7] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset7-933210.yaml -- 933210-8] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset8-933210.yaml -- 933210-9] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset9-933210.yaml -- 933210-10] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset10-933210.yaml -- 933210-11] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset11-933210.yaml -- 933210-12] PASSED
-tests/regression/CRS_Tests.py::test_crs[ruleset12-933210.yaml -- 933210-13] PASSED
-...
-```
-
-Couple notes here:
-- using `--ruledir_recurse=./tests/regression/tests` will walk over all the tests defined below that directory
-- you can test your specific file using `--rule=./mytest.yaml`
-
-```bash
-❯ py.test -vs --tb=short tests/regression/CRS_Tests.py --config=modsec2-apache --rule=./mytest.yaml
-============================================================================== test session starts ===============================================================================
-platform darwin -- Python 3.9.5, pytest-4.6.0, py-1.10.0, pluggy-0.13.1 -- /Users/fzipitria/.local/share/virtualenvs/coreruleset-bLfwOI0B/bin/python
-cachedir: .pytest_cache
-rootdir: /Users/fzipitria/Workspace/OWASP/coreruleset
-plugins: ftw-1.2.4
-collected 1 item
-
-tests/regression/CRS_Tests.py::test_crs[ruleset0-mytest.yaml -- mytest-1] PASSED
-
-================================================================================ warnings summary ================================================================================
-/Users/fzipitria/.local/share/virtualenvs/coreruleset-bLfwOI0B/lib/python3.9/site-packages/yaml/constructor.py:126
-  /Users/fzipitria/.local/share/virtualenvs/coreruleset-bLfwOI0B/lib/python3.9/site-packages/yaml/constructor.py:126: DeprecationWarning: Using or importing the ABCs from 'collections' instead of from 'collections.abc' is deprecated since Python 3.3, and in 3.10 it will stop working
-    if not isinstance(key, collections.Hashable):
-
--- Docs: https://docs.pytest.org/en/latest/warnings.html
-====================================================================== 1 passed, 1 warnings in 0.36 seconds ======================================================================
-```
-
-That's it!
 
 ## Additional tips
 
