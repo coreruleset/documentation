@@ -17,11 +17,7 @@ ModSecurity 2.9.x passes 100% of the CRS unit tests on the Apache platform.
 
 When running ModSecurity, this is the option that is *practically guaranteed* to work with most documentation and know-how all around.
 
-ModSecurity is released under the Apache License 2.0. It is primarily developed by Spiderlabs, an entity within the company Trustwave. In summer 2021, Trustwave announced their plans to end development of ModSecurity in 2024. Attempts to convince Trustwave to hand over the project in the meantime, in the interests of guaranteeing the project's continuation, have failed. Trustwave have stated that they will not relinquish control of the project before 2024.
-
-As of this writing, there is no imminent need to leave the ModSecurity v2 platform, but such a step may become necessary in the future as the project's development stalls or new security problems can no longer be fixed. Despite these difficulties, the CRS community is confident it has the power and knowledge to provide ModSecurity patches if really needed.
-
-To learn more about the situation around ModSecurity, read [this CRS blog post](https://coreruleset.org/20211222/talking-about-modsecurity-and-the-new-coraza-waf/) discussing the matter.
+[ModSecurity](https://www.modsecurity.org) is released under the Apache License 2.0, and the project now lives under the OWASP Foundation umbrella.
 
 There is a [ModSecurity v2 / Apache Docker container](https://github.com/coreruleset/modsecurity-crs-docker) which is maintained by the CRS project.
 
@@ -43,7 +39,7 @@ There is a [ModSecurity v3 / Nginx Docker container](https://github.com/corerule
 
 ### Coraza
 
-The new [OWASP Coraza WAF](https://coraza.io/) is meant to provide an open-source alternative to the two ModSecurity release lines.
+[OWASP Coraza WAF](https://coraza.io/) is meant to provide an open-source alternative to the two ModSecurity release lines.
 
 Coraza passes 100% of the CRS v4 test suite and is thus *fully compatible with CRS*.
 
