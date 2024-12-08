@@ -1,4 +1,4 @@
-exclude = ["github.com/coreruleset/coreruleset/blob/?$", "https://www.akamai.com/products/app-and-api-protector", "https://www.drupal.org"]
+exclude = ["github.com/coreruleset.*/SECURITY.md", "github.com/coreruleset.*/.github/.*", "github.com/coreruleset/coreruleset/blob/?$", "https://www.akamai.com/products/app-and-api-protector", "https://www.drupal.org"]
 user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:132.0) Gecko/20100101 Firefox/132.0"
 no_progress = true
 cache = true
