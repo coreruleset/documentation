@@ -19,11 +19,13 @@ For testing, we use the [container images from our project](https://github.com/c
 
 To test we need two containers: the WAF itself, and a backend, provided in this case by [Albedo](https://github.com/coreruleset/albedo). The `docker-compose.yml` in the CRS Git repository is a ready-to-run configuration for testing, to be used with the `docker compose` command.
 
--> The supported platform is ModSecurity 2 with Apache httpd
+> [!IMPORTANT]
+> The supported platform is ModSecurity 2 with Apache httpd
 
 Let's start the containers by executing the following command:
+
 ```bash
-❯ docker compose -f tests/docker-compose.yml up -d modsec2-apache
+docker compose -f tests/docker-compose.yml up -d modsec2-apache
 [+] Running 2/2
  ✔ backend Pulled                                                                                                                                                               2.1s 
    ✔ ff7dc8bdd3d5 Pull complete                                                                                                                                                 1.0s 
@@ -31,7 +33,12 @@ Let's start the containers by executing the following command:
  ✔ Network tests_default      Created                                                                                                                                           0.0s 
  ✔ Container tests-backend-1  Started                                                                                                                                           0.2s 
  ✔ Container modsec2-apache   Started                                                                                                                                           0.2s 
-❯ docker ps
+```
+
+Now let's see which containers are running now, using `docker ps`:
+
+```bash
+docker ps
 CONTAINER ID   IMAGE                               COMMAND                  CREATED         STATUS                            PORTS                          NAMES
 0570b291c386   owasp/modsecurity-crs:apache        "/bin/sh -c '/bin/cp…"   7 seconds ago   Up 7 seconds (health: starting)   80/tcp, 0.0.0.0:80->8080/tcp   modsec2-apache
 50704d5c5762   ghcr.io/coreruleset/albedo:0.0.13   "/usr/bin/albedo --p…"   7 seconds ago   Up 7 seconds                                                     tests-backend-1
@@ -43,7 +50,8 @@ Excellent, our containers are running, now we can start our tests.
 
 If you have your own environment set up, you can configure that for testing. Please [follow these instructions]({{% ref "install.md#installing-a-compatible-waf-engine" %}}) to install the WAF server locally.
 
--> The supported platform is ModSecurity 2 with Apache httpd. If you want to run the tests against nginx, you can do that too, but nginx uses libmodsecurity3, which is not fully compatible with Apache httpd + ModSecurity 2.
+> [!NOTE]
+> Remember: The supported platform is ModSecurity 2 with Apache httpd. If you want to run the tests against nginx, you can do that too, but nginx uses libmodsecurity3, which is not fully compatible with Apache httpd + ModSecurity 2.
 
 If you want to run the complete test suite of CRS 4.x with **go-ftw**, you need to make some modifications to your setup. This is because the test cases for 4.x contain some extra data for responses, letting us test the `RESPONSE-*` rules too. Without the following steps these tests will fail.
 
@@ -62,7 +70,7 @@ You can start `albedo` with this command:
 As you can see the HTTP server listens on `*:8085`, you can check it using:
 
 ```bash
-❯ curl -H "Content-Type: application/json" -d '{"body":"Hello, World from albedo"}' "http://localhost:8085/reflect"
+curl -H "Content-Type: application/json" -d '{"body":"Hello, World from albedo"}' "http://localhost:8085/reflect"
 Hello, World from albedo%
 ```
 
@@ -78,41 +86,40 @@ For the response tests you need to set up your web server as a proxy, forwarding
 
 Put this snippet into your httpd's default config (eg. `/etc/apache2/sites-enabled/000-default.conf`):
 
-```apache
-        ProxyPreserveHost On
-        ProxyPass / http://127.0.0.1:8000/
-        ProxyPassReverse / http://127.0.0.1:8000/
-        ServerName localhost
+```apacheconf
+  ProxyPreserveHost On
+  ProxyPass / http://127.0.0.1:8000/
+  ProxyPassReverse / http://127.0.0.1:8000/
+  ServerName localhost
 ```
 
 #### nginx
 
 Put this snippet into the nginx default config (e.g., `/etc/nginx/conf.d/default.conf`) or replace the existing one:
 
-```
-        location / {
+```nginx
+  location / {
+          proxy_pass http://127.0.0.1:8000/;
+          proxy_set_header Host $host;
+          proxy_set_header Proxy "";
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Port $server_port;
+          proxy_set_header X-Forwarded-Proto $scheme;
 
-                proxy_pass http://127.0.0.1:8000/;
-                proxy_set_header Host $host;
-                proxy_set_header Proxy "";
-                proxy_set_header Upgrade $http_upgrade;
-                proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                proxy_set_header X-Forwarded-Port $server_port;
-                proxy_set_header X-Forwarded-Proto $scheme;
+          proxy_http_version 1.1;
+          proxy_buffering off;
+          proxy_connect_timeout 60s;
+          proxy_read_timeout 36000s;
+          proxy_redirect off;
 
-                proxy_http_version 1.1;
-                proxy_buffering off;
-                proxy_connect_timeout 60s;
-                proxy_read_timeout 36000s;
-                proxy_redirect off;
-
-                proxy_pass_header Authorization;
-        }
+          proxy_pass_header Authorization;
+  }
 ```
 
 In both cases (Apache httpd, nginx) you have to change your `modsecurity.conf` settings. Open that file and find the directive `SecResponseBodyMimeType`. Modify the arguments:
 
-```
+```apacheconf
 SecResponseBodyMimeType text/plain text/html text/xml application/json
 ```
 
@@ -120,7 +127,7 @@ Note, that the default value does not have the MIME type `application/json`.
 
 In your `crs-setup.conf` you need to add these extra rules (after the rule `900990`):
 
-```
+```apacheconf
 SecAction \
     "id:900005,\
     phase:1,\
@@ -169,25 +176,24 @@ Modern versions of `go-ftw` have also a `self-update` command that will simplify
 You can also install pre-compiled binaries by using `go install`, if you have a **Go** environment:
 
 ```bash
-$ go install github.com/coreruleset/go-ftw@latest
+go install github.com/coreruleset/go-ftw@latest
 ```
 
 This will install the binary into your `$HOME/go/bin` directory. To compile **go-ftw** from source, run the following commands:
 
 ```bash
-$ git clone https://github.com/coreruleset/go-ftw.git
-$ cd go-ftw
-$ go build
+git clone https://github.com/coreruleset/go-ftw.git
+cd go-ftw
+go build
 ```
 
 This will build the binary in the **go-ftw** repository.
 
 Now create a configuration file. Because Apache httpd and nginx use different log file paths, and, perhaps, different ports, you may want to create two different configuration files for **go-ftw**. For details please read [go-ftw's documentation](https://github.com/coreruleset/go-ftw#yaml-config-file).
 
-Example for nginx:
+Example `.ftw.nginx.yaml` file for nginx:
 
-```bash
-$ cat .ftw.nginx.yaml
+```yaml
 logfile: /var/log/nginx/error.log
 logmarkerheadername: X-CRS-TEST
 testoverride:
@@ -196,10 +202,9 @@ testoverride:
     port: 8080
 ```
 
-Example for Apache httpd:
+Example file `.ftw.apache.yaml` for Apache httpd:
 
-```bash
-$ cat .ftw.apache.yaml
+```yaml
 logfile: /var/log/apache2/error.log
 logmarkerheadername: X-CRS-TEST
 testoverride:
@@ -214,10 +219,11 @@ Please verify that these settings are correct for your setup, especially the `po
 
 Execute the following command to run the CRS test suite with **go-ftw** against Apache httpd:
 
-⚠️  If go-ftw is installed from a pre-compiled binary, then you might have to use `ftw` instead of the `go-ftw` command.
+> [!WARNING]
+> ⚠️  If go-ftw is installed from a pre-compiled binary, then you might have to use `ftw` instead of the `go-ftw` command.
 
 ```bash
-$ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/
+./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/
 🛠️  Starting tests!
 🚀 Running go-ftw!
 👉 executing tests in file 911100.yaml
@@ -241,7 +247,7 @@ $ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/test
 To run the test suite against nginx, execute the following:
 
 ```bash
-$ ./go-ftw run --config .ftw.nginx.yaml -d ../coreruleset/tests/regression/tests/
+./go-ftw run --config .ftw.nginx.yaml -d ../coreruleset/tests/regression/tests/
 🛠️  Starting tests!
 🚀 Running go-ftw!
 👉 executing tests in file 911100.yaml
@@ -262,7 +268,7 @@ $ ./go-ftw run --config .ftw.nginx.yaml -d ../coreruleset/tests/regression/tests
 If you want to run only one test, or a group of tests, you can specify that using the "include" option `-i` (or `--include`). This option takes a regular expression:
 
 ```bash
-$ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$"
+./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$"
 ```
 
 In the above case only the test case `955100-1` will be run.
@@ -270,17 +276,16 @@ In the above case only the test case `955100-1` will be run.
 If you need to see more verbose output (e.g., to look at the requests and responses sent and received by **go-ftw**) you can use the `--debug` or `--trace` options:
 
 ```bash
-$ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$" --trace
+./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$" --trace
 ```
 
-
 ```bash
-$ ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$" --debug
+./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$" --debug
 ```
 
 Please note again that `libmodsecurity3` is **not fully compatible** with ModSecurity 2, some tests can fail. If you want to ignore them, you can put the tests into a list in your config:
 
-```
+```yaml
 testoverride:
   input:
     dest_addr: "127.0.0.1"
@@ -298,12 +303,11 @@ For more information and examples, please check the [go-ftw documentation](https
 
 ## Additional tips
 
-⚠️ If your test is not matching, you can take a peek at the `modsec_audit.log` file, using: `sudo tail -200 tests/logs/modsec2-apache/modsec_audit.log`
-
-🔧 If you need to write a test that cannot be written using text (e.g. binary content), we prefer using `encoded_request` in the test, using base64 encoding
+- ⚠️ If your test is not matching, you can take a peek at the `modsec_audit.log` file, using: `sudo tail -200 tests/logs/modsec2-apache/modsec_audit.log`
+- 🔧 If you need to write a test that cannot be written using text (e.g. binary content), we prefer using `encoded_request` in the test, using base64 encoding
 
 ## Summary
 
 Tests are a core functionality in our ruleset. So whenever you write a rule, try to add some positive and negative tests so we won't have surprises in the future.
 
-Happy testing! 🎉 
+Happy testing! 🎉
