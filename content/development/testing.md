@@ -45,51 +45,28 @@ If you have your own environment set up, you can configure that for testing. Ple
 
 -> The supported platform is ModSecurity 2 with Apache httpd. If you want to run the tests against nginx, you can do that too, but nginx uses libmodsecurity3, which is not fully compatible with Apache httpd + ModSecurity 2.
 
-If you want to run the complete test suite of CRS 4.0 with **go-ftw**, you need to make some modifications to your setup. This is because the test cases for 4.0 contain some extra data for responses, letting us test the `RESPONSE-*` rules too. Without the following steps these tests will fail.
+If you want to run the complete test suite of CRS 4.x with **go-ftw**, you need to make some modifications to your setup. This is because the test cases for 4.x contain some extra data for responses, letting us test the `RESPONSE-*` rules too. Without the following steps these tests will fail.
 
-<!-- FIXME: @airween: how do you want to add Albedo here? -->
-To enable response handling for tests you will need the following additional packages: `python3-gunicorn`, `gunicorn` and `python3-httpbin`.
+To enable response handling for tests you will need to download an additional tool, [albedo](https://github.com/coreruleset/albedo). 
 
-#### Start `httpbin`
+#### Start `albedo`
 
-[`httpbin`](https://httpbin.org/) is a simple HTTP request & response service. You send a request, and it sends it back in the response.
+Albedo is a simple HTTP server used as a reverse-proxy backend in testing web application firewalls (WAFs). go-ftw relies on Albedo to test WAF rules of responses.
 
-You can start `httpbin` with this command:
-
-```bash
-/usr/bin/python3 /usr/bin/gunicorn --error-logfile - --access-logfile - --access-logformat "%(h)s %(t)s %(r)s %(s)s Content-Type: %({Content-Type}i)s" httpbin:app
-[2023-12-14 15:59:53 +0100] [4012] [INFO] Starting gunicorn 20.1.0
-[2023-12-14 15:59:53 +0100] [4012] [INFO] Listening at: http://127.0.0.1:8000 (4012)
-[2023-12-14 15:59:53 +0100] [4012] [INFO] Using worker: sync
-[2023-12-14 15:59:53 +0100] [4013] [INFO] Booting worker with pid: 4013
-```
-
-As you can see the HTTP server listens on 127.0.0.1:8000, you can check it:
+You can start `albedo` with this command:
 
 ```bash
-$ curl -X POST -H "Content-Type: application/json" -d '{"foo":"bar"}' "http://localhost:8000/anything"
-{
-  "args": {},
-  "data": "{\"foo\":\"bar\"}",
-  "files": {},
-  "form": {},
-  "headers": {
-    "Accept": "*/*",
-    "Content-Length": "13",
-    "Content-Type": "application/json",
-    "Host": "localhost:8000",
-    "User-Agent": "curl/8.4.0"
-  },
-  "json": {
-    "foo": "bar"
-  },
-  "method": "POST",
-  "origin": "127.0.0.1",
-  "url": "http://localhost:8000/anything"
-}
+./albedo -p 8085
 ```
 
-As you can see, the response's `data` field contains your request data. This feature is mandatory for testing response rules.
+As you can see the HTTP server listens on `*:8085`, you can check it using:
+
+```bash
+❯ curl -H "Content-Type: application/json" -d '{"body":"Hello, World from albedo"}' "http://localhost:8085/reflect"
+Hello, World from albedo%
+```
+
+Check for other features using the url `/capabilities` on albedo. The reflection feature is mandatory for testing response rules.
 
 ### Modify webserver's config
 
@@ -101,7 +78,7 @@ For the response tests you need to set up your web server as a proxy, forwarding
 
 Put this snippet into your httpd's default config (eg. `/etc/apache2/sites-enabled/000-default.conf`):
 
-```
+```apache
         ProxyPreserveHost On
         ProxyPass / http://127.0.0.1:8000/
         ProxyPassReverse / http://127.0.0.1:8000/
