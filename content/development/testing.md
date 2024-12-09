@@ -59,7 +59,7 @@ To enable response handling for tests you will need to download an additional to
 
 #### Start `albedo`
 
-Albedo is a simple HTTP server used as a reverse-proxy backend in testing web application firewalls (WAFs). go-ftw relies on Albedo to test WAF rules of responses.
+Albedo is a simple HTTP server used as a reverse-proxy backend in testing web application firewalls (WAFs). go-ftw relies on Albedo to test WAF response rules.
 
 You can start `albedo` with this command:
 
