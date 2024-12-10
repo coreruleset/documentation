@@ -19,7 +19,7 @@ Individual rules designed to detect specific types of attacks and malicious beha
 
 Once all of the rules that inspect *request* data have been executed, *blocking evaluation* takes place. If the anomaly score is greater than or equal to the inbound anomaly score threshold then the transaction is *denied*. Transactions that are not denied continue on their journey.
 
-![Diagram showing an example where the inbound anomaly score threshold is set to 5. A first example request accumulates an anomaly score of 2 and is allowed to pass at the blocking evaluation step. A second example request accumulates an anomaly score of 7 and is denied at the blocking evaluation step.](anomaly_scoring/as_inbound_no_fonts.svg?height=36em)
+![Diagram showing an example where the inbound anomaly score threshold is set to 5. A first example request accumulates an anomaly score of 2 and is allowed to pass at the blocking evaluation step. A second example request accumulates an anomaly score of 7 and is denied at the blocking evaluation step.](as_inbound_no_fonts.svg?height=36em)
 
 Continuing on, once all of the rules that inspect *response* data have been executed, a second round of blocking evaluation takes place. If the *outbound* anomaly score is greater than or equal to the outbound anomaly score threshold, then the response is *not returned* to the user. (Note that in this case, the request *is* fully handled by the backend or application; only the response is stopped.)
 
