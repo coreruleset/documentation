@@ -9,9 +9,25 @@ chapter: false
 
 ## What are False Positives?
 
-CRS provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a *false positive*, or false alarm.
+CRS provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. Let's describe the possible scenarios with using an image:
 
-False positives are particularly likely to happen when operating at higher [paranoia levels]({{% ref "paranoia_levels" %}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives.
+```mermaid
+%%{init: {"themeVariables": {"quadrant1Fill": "#00ff00", "quadrant2Fill": "#ff0000", "quadrant4Fill": "#ffff00"} }}%%
+quadrantChart
+    title WAF detection quadrant
+    x-axis Allowed --> Blocked
+    y-axis Normal Traffic --> Real attack
+    quadrant-1 True Positive
+    quadrant-2 False Negative 
+    quadrant-3 Business as usual
+    quadrant-4 False Positive
+```
+
+Let's begin with describing a perfect world. In theory, CRS should _allow all valid requests_. This can be seen above as `Business as usual`. Also, CRS should only block attacks. This is a `True Positive` match, and when this happens CRS is doing its job.
+
+Two additional scenarios exist. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a `False Positive`, or false alarm. The worse case is when there is a real attack, and CRS is not able to detect it. This is known as a `False Negative`.
+
+False positives are particularly likely to happen when operating at higher [paranoia levels]({{% ref "paranoia_levels" %}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. There is a natural relation between trying to get zero _false negatives_ and the increase of _false positives_. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives, while trying to have less _false negatives_.
 
 ### Example False Positive
 
@@ -81,7 +97,7 @@ There are alternative ways to deal with false positives, as described below. The
 
 #### Overview
 
-The ModSecurity WAF engine has flexible ways to tune away false positives. It provides several *rule exclusion* (RE) mechanisms which allow rules to be modified *without* directly changing the rules themselves. This makes it possible to work with third-party rule sets, like CRS, by adapting rules as needed while leaving the rule set files intact and unmodified. This allows for easy rule set updates.
+The WAF engine has flexible ways to tune away false positives. It provides several *rule exclusion* (RE) mechanisms which allow rules to be modified *without* directly changing the rules themselves. This makes it possible to work with third-party rule sets, like CRS, by adapting rules as needed while leaving the rule set files intact and unmodified. This allows for easy rule set updates.
 
 Two fundamentally different types of rule exclusions are supported:
 
@@ -337,28 +353,11 @@ CRS ships with prebuilt *rule exclusion packages* for a selection of popular web
 
 The packages should be viewed as a good *starting point* from which to build upon. Some false positives may still occur, for example if working at a high paranoia level, if using a very new or old version of the application, if using plug-ins, add-ons, or user customizations.
 
-If using a native CRS installation, rule exclusion packages can be enabled in the file `crs-setup.conf`. Modify rule 900130 to select the web applications in question, e.g. to enable the DokuWiki rule exclusion package use `setvar:tx.crs_exclusions_dokuwiki=1`, and then uncomment the rule to enable it.
+If using a native CRS installation, rule exclusion packages can be downloaded as [plugins]({{% ref "plugins.md" %}}).
 
 If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose rule exclusion packages in the GUI while other vendors require custom rules to be written which set the necessary variables. Unfortunately, there are also vendors that don't allow rule exclusion packages to be used at all.
 
-{{% notice tip %}}
-If running multiple web applications, it is highly recommended to enable a rule exclusion package only for the location where the corresponding web application resides. For example, to enable the WordPress rule exclusion package only for locations under '/wordpress', a rule like the following could be used:
-
-```apache
-SecRule REQUEST_URI "@beginsWith /wordpress/" setvar:tx.crs_exclusions_wordpress=1...
-```
-{{% /notice %}}
-
-Rule exclusion packages are currently available for the following web applications:
-
-- [cPanel](https://cpanel.net)
-- [DokuWiki](https://www.dokuwiki.org)
-- [Drupal](https://www.drupal.org)
-- [Nextcloud](https://nextcloud.com)
-- [phpBB](https://www.phpbb.com)
-- [phpMyAdmin](https://www.phpmyadmin.net)
-- [WordPress](https://wordpress.org)
-- [XenForo](https://xenforo.com)
+The list of plugins supporting rule exclusions can be found [here](https://github.com/coreruleset/plugin-registry). Take a look at the name of the plugin; it should end up in `rule-exclusions`.
 
 The CRS project is always looking to work with other communities and individuals to add support for additional web applications. Please get in touch via [GitHub](https://github.com/coreruleset/coreruleset) to discuss writing a rule exclusion package for a specific web application.
 
