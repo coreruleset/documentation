@@ -9,7 +9,7 @@ chapter: false
 
 ## What are False Positives?
 
-CRS provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. Let's describe the possible scenarios with using an image:
+CRS provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. The following image describes the possible scenarios for an individual request:
 
 ```mermaid
 %%{init: {"themeVariables": {"quadrant1Fill": "#00ff00", "quadrant2Fill": "#ff0000", "quadrant4Fill": "#ffff00"} }}%%
@@ -23,11 +23,11 @@ quadrantChart
     quadrant-4 False Positive
 ```
 
-Let's begin with describing a perfect world. In theory, CRS should _allow all valid requests_. This can be seen above as `Business as usual`. Also, CRS should only block attacks. This is a `True Positive` match, and when this happens CRS is doing its job.
+In an ideal setting, CRS would _allow all valid requests_ and _block all real attacks_. These two scenarios are depicted in the image as `Business as usual` and `True positive`.
 
-Two additional scenarios exist. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a `False Positive`, or false alarm. The worse case is when there is a real attack, and CRS is not able to detect it. This is known as a `False Negative`.
+In reality, no system is ideal and CRS will sometimes _block a valid request_ (`False Positive`) or _allow a real attack_ (`False Negative`). Obviously, false negatives are the worse of the two because of the potential repercussions of a successful intrusion.
 
-False positives are particularly likely to happen when operating at higher [paranoia levels]({{% ref "paranoia_levels" %}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. There is a natural relation between trying to get zero _false negatives_ and the increase of _false positives_. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives, while trying to have less _false negatives_.
+False positives are particularly likely to happen when operating at higher [paranoia levels]({{% ref "paranoia_levels" %}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is, the more likely it is that false positives will occur, and the more time must be invested to tune CRS to reduce false positives. There is no value to a system with a high paranoia level that produces many false positives, as it will likely be unusable by benign clients.
 
 ### Example False Positive
 
@@ -357,7 +357,7 @@ If using a native CRS installation, rule exclusion packages can be downloaded as
 
 If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose rule exclusion packages in the GUI while other vendors require custom rules to be written which set the necessary variables. Unfortunately, there are also vendors that don't allow rule exclusion packages to be used at all.
 
-The list of plugins supporting rule exclusions can be found [here](https://github.com/coreruleset/plugin-registry). Take a look at the name of the plugin; it should end up in `rule-exclusions`.
+The list of plugins supporting rule exclusions can be found [here](https://github.com/coreruleset/plugin-registry). The names of rule exclusion plugins end with `rule-exclusions`.
 
 The CRS project is always looking to work with other communities and individuals to add support for additional web applications. Please get in touch via [GitHub](https://github.com/coreruleset/coreruleset) to discuss writing a rule exclusion package for a specific web application.
 
