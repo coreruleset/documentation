@@ -176,7 +176,7 @@ At a minimum, keep in mind the following:
 
 - CRS does not configure features such as the rule engine, audit engine, logging, etc. This task is part of the initial *engine* setup and is not a job for the rule set. For ModSecurity, if not already done, see the [recommended configuration](https://github.com/owasp-modsecurity/ModSecurity/blob/master/modsecurity.conf-recommended).
 - Decide what ModSecurity should do when it detects malicious activity, e.g., drop the packet, return a *403 Forbidden* status code, issue a redirect to a custom page, etc.
-- Make sure to configure the anomaly scoring thresholds. For more information see [Anomaly]({{< ref "2-how-crs-works/2-1-anomaly_scoring.md" >}} "Anomaly").
+- Make sure to configure the anomaly scoring thresholds. For more information see [Anomaly]({{< ref "2-1-anomaly_scoring.md" >}} "Anomaly").
 - By default, the CRS rules will consider many issues with different databases and languages. If running in a specific environment, e.g., without any SQL database services present, it is probably a good idea to limit this behavior for performance reasons.
 - Make sure to add any HTTP methods, static resources, content types, or file extensions that are needed, beyond the default ones listed.
 
@@ -191,7 +191,7 @@ In addition to `crs-setup.conf.example`, there are two other ".example" files wi
 - `rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example`
 - `rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example`
 
-These files are designed to provide the rule maintainer with the ability to modify rules (see [false positives and tuning]({{< ref "2-how-crs-works/2-3-false-positives-and-tuning.md" >}}#rule-exclusions)) without breaking forward compatibility with rule set updates. These two files should be renamed by removing the `.example` suffix. This will mean that installing updates will *not* overwrite custom rule exclusions. To rename the files in Linux, use a command similar to the following:
+These files are designed to provide the rule maintainer with the ability to modify rules (see [false positives and tuning]({{< ref "2-3-false-positives-and-tuning.md" >}}#rule-exclusions)) without breaking forward compatibility with rule set updates. These two files should be renamed by removing the `.example` suffix. This will mean that installing updates will *not* overwrite custom rule exclusions. To rename the files in Linux, use a command similar to the following:
 
 ```bash
 mv rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf

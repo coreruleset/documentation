@@ -123,7 +123,7 @@ echo 'IncludeOptional {{< param crs_install_dir >}}/rules/*.conf' >> /etc/httpd/
 echo 'IncludeOptional {{< param crs_install_dir >}}/plugins/*-after.conf' >> /etc/httpd/conf/httpd.conf
 ```
 
-Now that everything has been configured, it should be possible to restart and begin using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "2-how-crs-works/2-3-false-positives-and-tuning.md" >}}).
+Now that everything has been configured, it should be possible to restart and begin using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "2-3-false-positives-and-tuning.md" >}}).
 
 ```bash
 systemctl restart httpd.service
@@ -131,7 +131,7 @@ systemctl restart httpd.service
 
 ## Alternative: Using Containers
 
-Another quick option is to use the official CRS [pre-packaged containers]({{% ref "6-development/6-6-useful_tools/#official-crs-maintained-docker-images" %}}). Docker, Podman, or any compatible container engine can be used. The official CRS images are published on [Docker Hub](https://hub.docker.com/r/owasp/modsecurity-crs/) and [GitHub Container Repository](https://github.com/coreruleset/modsecurity-crs-docker/pkgs/container/modsecurity-crs). The image most often deployed is `modsecurity-crs` (`owasp/modsecurity-crs` from Docker Hub or `ghcr.io/coreruleset/modsecurity-crs` from GHCR): it already has everything needed to get up and running quickly.
+Another quick option is to use the official CRS [pre-packaged containers]({{% ref "6-6-useful_tools/#official-crs-maintained-docker-images" %}}). Docker, Podman, or any compatible container engine can be used. The official CRS images are published on [Docker Hub](https://hub.docker.com/r/owasp/modsecurity-crs/) and [GitHub Container Repository](https://github.com/coreruleset/modsecurity-crs-docker/pkgs/container/modsecurity-crs). The image most often deployed is `modsecurity-crs` (`owasp/modsecurity-crs` from Docker Hub or `ghcr.io/coreruleset/modsecurity-crs` from GHCR): it already has everything needed to get up and running quickly.
 
 The CRS project pre-packages both Apache and Nginx web servers along with the appropriate corresponding ModSecurity engine. More engines, like [Coraza](https://coraza.io/), will be added at a later date.
 
