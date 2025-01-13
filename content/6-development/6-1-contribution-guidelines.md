@@ -96,6 +96,31 @@ instead of
 SecRule ARGS "foo" "id:1,phase:1,pass,t:none"
 ```
 
+### For CRS Documentation Contributions
+
+- Directory naming: Use lowercase letters and hyphens to separate words. For example:
+  ```
+  .
+  ├── 1-getting-started
+  │   ├── 1-1-crs-installation.md
+  │   ├── 1-2-extended_install.md
+  │   ├── 1-3-using-containers.md
+  │   ├── 1-4-engine_integration_options.md
+  │   └── _index.md
+  ...
+  ```
+- Inner-link referencing should be used with the following format:
+  ```
+  # general markdown format
+  {{</* ref "path/to/file.md" */>}}
+
+  # this will point to the directory 2-how-crs-works
+  {{</* ref "2-how-crs-works" */>}}
+
+  # this will point to the .md
+  {{</* ref "2-3-false-positives-and-tuning.md" */>}}
+  ```
+
 ## Variable Naming Conventions
 
 * Variable names should be lowercase and should use the characters a-z, 0-9, and underscores only.
