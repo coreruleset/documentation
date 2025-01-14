@@ -15,7 +15,7 @@ OWASP® (Open Worldwide Application Security Project) CRS (previously Core Rule 
 
 ## How to Get Involved
 
-For information on how to join the vibrant community of CRS developers, start by checking out the project's [GitHub repository](https://github.com/coreruleset/coreruleset). When ready to make a contribution, have a read of the project's [contribution guidelines]({{% ref "development/contribution_guidelines/" %}}) which are used to keep the project consistent, well managed, and of a high quality.
+For information on how to join the vibrant community of CRS developers, start by checking out the project's [GitHub repository](https://github.com/coreruleset/coreruleset). When ready to make a contribution, have a read of the project's [contribution guidelines]({{< ref "6-1-contribution-guidelines/" >}}) which are used to keep the project consistent, well managed, and of a high quality.
 
 ## CRS Change Policy
 
