@@ -3,6 +3,7 @@ title: Using Containers
 weight: 13
 disableToc: false
 chapter: false
+aliases: ["operations/containers.md"]
 ---
 
 The CRS project maintains a set of 'CRS with ModSecurity' Docker images.

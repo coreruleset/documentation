@@ -3,6 +3,7 @@ title: Sampling Mode
 weight: 24
 disableToc: false
 chapter: false
+aliases: ["concepts/sampling_mode"]
 ---
 
 > Sampling mode makes it possible to apply CRS to a limited percentage of traffic only. This may be useful in certain scenarios when enabling CRS for the first time, as this page explains.

@@ -3,6 +3,7 @@ title: Additional Resources
 weight: 8
 pre: "<b>8. </b>"
 chapter: true
+aliases: ["resources"]
 ---
 
 {{% notice note %}}
