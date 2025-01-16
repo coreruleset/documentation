@@ -3,6 +3,7 @@ title: Assembling Regular Expressions
 weight: 63
 disableToc: false
 chapter: false
+aliases: ["development/regex_assembly"]
 ---
 
 > The CRS team uses a custom specification format to specify how a regular expression is to be generated from its components. This format enables reuse across different files, explanation of choices and techniques with comments, and specialized processing.

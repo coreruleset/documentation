@@ -3,6 +3,7 @@ title: Plugins
 weight: 41
 disableToc: false
 chapter: false
+aliases: ["concepts/plugins"]
 ---
 
 > The CRS plugin mechanism allows the rule set to be extended in specific, experimental, or unusual ways, as this page explains.

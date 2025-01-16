@@ -3,6 +3,7 @@ title: Extended Install
 weight: 12
 disableToc: false
 chapter: false
+aliases: ["deployment/extended_install"]
 ---
 
 > All the information needed to properly install CRS is presented on this page. The installation concepts are expanded upon and presented in more detail than the [quick start guide]({{< ref "1-1-crs-installation.md" >}}).

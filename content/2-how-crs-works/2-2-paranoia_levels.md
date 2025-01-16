@@ -3,6 +3,7 @@ title: Paranoia Levels
 weight: 22
 disableToc: false
 chapter: false
+aliases: ["concepts/paranoia_levels"]
 ---
 
 > Paranoia levels are an essential concept when working with CRS. This page explains the concept behind paranoia levels and how to work with them on a practical level.

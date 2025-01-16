@@ -3,6 +3,7 @@ title: Useful Tools
 weight: 66
 disableToc: false
 chapter: false
+aliases: ["development/useful_tools"]
 ---
 
 > There are many first and third party tools that help with ModSecurity and CRS development. The most useful ones are listed here. Get in touch if you think something is missing.

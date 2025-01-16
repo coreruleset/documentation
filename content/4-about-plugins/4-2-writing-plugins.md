@@ -3,6 +3,7 @@ title: Writing Plugins
 weight: 42
 disableToc: false
 chapter: false
+aliases: ["development/plugin_writing"]
 ---
 
 > The CRS plugin mechanism allows the rule set to be extended in specific, experimental, or unusual ways. This page explains how to write a new plugin to extend CRS.
