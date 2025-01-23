@@ -3,7 +3,7 @@ title: Anomaly Scoring
 weight: 21
 disableToc: false
 chapter: false
-aliases: ["concepts/anomaly_scoring"]
+aliases: ["../concepts/anomaly_scoring"]
 ---
 
 > CRS 3 is designed as an anomaly scoring rule set. This page explains what anomaly scoring is and how to use it.

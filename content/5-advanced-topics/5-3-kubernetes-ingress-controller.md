@@ -3,7 +3,7 @@ title: Kubernetes Ingress Controllers
 weight: 53
 disableToc: false
 chapter: false
-aliases: ["operation/kubernetes_ingress"]
+aliases: ["../operation/kubernetes_ingress"]
 ---
 
 > A Kubernetes cluster can use different types of _ingress controllers_ to expose Kubernetes services outside the cluster. Some ingress controllers include built-in support for using CRS, as this page outlines.

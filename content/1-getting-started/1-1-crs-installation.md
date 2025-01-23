@@ -3,7 +3,7 @@ title: CRS Installation
 weight: 11
 disableToc: false
 chapter: false
-aliases: ["deployment/install"]
+aliases: ["../deployment/install"]
 ---
 
 This guide aims to get a CRS installation up and running. This guide assumes that a compatible ModSecurity engine is already present and working. If unsure then refer to the [extended install]({{< ref "1-2-extended_install.md" >}}) page for full details.

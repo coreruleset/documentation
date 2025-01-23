@@ -3,7 +3,7 @@ title: Engine and Integration Options
 weight: 14
 disableToc: false
 chapter: false
-aliases: ["deployment/engine_integration_options"]
+aliases: ["../deployment/engine_integration_options"]
 ---
 
 > CRS runs on WAF engines that are compatible with a subset of ModSecurity's SecLang configuration language. There are several options outside of ModSecurity itself, namely cloud offerings and content delivery network (CDN) services. There is also an open-source alternative to ModSecurity in the form of the new Coraza WAF engine.
