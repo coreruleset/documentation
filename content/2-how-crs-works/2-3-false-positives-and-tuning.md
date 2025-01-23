@@ -3,7 +3,7 @@ title: False Positives and Tuning
 weight: 23
 disableToc: false
 chapter: false
-aliases: ["concepts/false_positives_tuning"]
+aliases: ["../concepts/false_positives_tuning"]
 ---
 
 > When a *genuine* transaction causes a rule from CRS to match in error it is described as a **false positive**. False positives need to be tuned away by writing *rule exclusions*, as this page explains.

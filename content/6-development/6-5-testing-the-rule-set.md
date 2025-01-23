@@ -3,7 +3,7 @@ title: Testing the Rule Set
 weight: 65
 disableToc: false
 chapter: false
-aliases: ["development/testing"]
+aliases: ["../development/testing"]
 ---
 
 Well, you managed to write your rule, but now want to see if if can be added to the CRS? This document should help you to test it using the same tooling the project uses for its tests.

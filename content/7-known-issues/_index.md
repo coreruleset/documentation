@@ -4,7 +4,7 @@ weight: 7
 pre: "<b>7. </b>"
 disableToc: false
 chapter: true
-aliases: ["operation/known_issues"]
+aliases: ["../operation/known_issues"]
 ---
 
 > There are some *known issues* with CRS and some of its compatible WAF engines. This page describes these issues. Get in touch if you think something is missing.

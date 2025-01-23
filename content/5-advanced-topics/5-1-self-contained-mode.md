@@ -3,7 +3,7 @@ title: Self-Contained Mode
 weight: 51
 disableToc: false
 chapter: false
-aliases: ["miscellaneous/self_contained_mode"]
+aliases: ["../miscellaneous/self_contained_mode"]
 ---
 
 ## Self-Contained Mode

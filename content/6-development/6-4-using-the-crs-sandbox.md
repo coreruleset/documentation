@@ -3,7 +3,7 @@ title: Using the CRS Sandbox
 weight: 64
 disableToc: false
 chapter: false
-aliases: ["development/sandbox"]
+aliases: ["../development/sandbox"]
 ---
 
 ## Introducing the CRS Sandbox

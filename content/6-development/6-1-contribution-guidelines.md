@@ -3,7 +3,7 @@ title: Contribution Guidelines
 weight: 61
 disableToc: false
 chapter: false
-aliases: ["development/contribution_guidelines"]
+aliases: ["../development/contribution_guidelines"]
 ---
 
 > The CRS project values third party contributions. To make the contribution process as easy as possible, a helpful set of contribution guidelines are in place which all contributors and developers are asked to adhere to.
