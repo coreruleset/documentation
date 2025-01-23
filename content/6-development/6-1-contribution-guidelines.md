@@ -314,7 +314,7 @@ Whether optimizations make sense in a contribution is assessed for each case ind
 
 ## Rules Compliance with Paranoia Levels
 
-The rules in CRS are organized into **paranoia levels** (PLs) which makes it possible to define how aggressive CRS is. See the documentation on [paranoia levels](https://coreruleset.org/docs/concepts/paranoia_levels/) for an introduction and more detailed explanation.
+The rules in CRS are organized into **paranoia levels** (PLs) which makes it possible to define how aggressive CRS is. See the documentation on [paranoia levels]({{< ref "2-2-paranoia_levels" >}}) for an introduction and more detailed explanation.
 
 Each rule that is placed into a paranoia level must contain the tag `paranoia-level/N`, where *N* is the PL value, however this tag can only be added if the rule does **not** use the nolog action.
 
