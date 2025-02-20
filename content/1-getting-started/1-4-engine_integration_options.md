@@ -106,12 +106,6 @@ The CRS project does **not** believe that the AWS WAF "core rule set" is based o
 
 Cloudflare WAF supports CRS as one of its WAF rule sets. Documentation on how to use it can be found in [Cloudflare's documentation](https://developers.cloudflare.com/waf/managed-rulesets/owasp-core-ruleset/).
 
-### Edgecast
-
-Edgecast offers CRS as a managed rule set as part of their WAF service that runs on a ModSecurity re-implementation called WAFLZ.
-
-To learn more about Edgecast, read [their WAF documentation](https://docs.edgecast.com/cdn/Content/Web-Security/Managed-Rules.htm#RuleSet).
-
 ### Fastly
 
 Fastly has offered CRS as part of their Fastly WAF for several years, but they have started to migrate their existing customers to the recently acquired Signal Sciences WAF. Interestingly, Fastly is transposing CRS rules into their own Varnish-based WAF engine. Unfortunately, documentation on their legacy WAF offering has been removed.
