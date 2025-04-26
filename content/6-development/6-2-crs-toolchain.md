@@ -60,6 +60,7 @@ The output should be:
 The level of logging can be adjusted with the `--log-level` option. Accepted values are  `trace`, `debug`, `info`, `warn`, `error`, `fatal`, `panic`, and `disabled`. The default level is `info`.
 
 ## Full Documentation
+
 Read the built-in help text for the full documentation:
 
 ```bash
@@ -102,7 +103,10 @@ The `format` sub-command reports formatting violations and actively formats asse
 
 ## The `util` Command
 
-The `util` command includes sub-commands that are used from time to time and do not fit nicely into any of the other groups. Currently, the only sub-command is `renumber-tests`. `renumber-tests` is used to simplify maintenance of the regression tests. Since every test has a consecutive number within its file, adding or removing tests can disrupt numbering. `renumber-tests` will renumber all tests within each test file consecutively.
+The `util` command includes sub-commands that are used from time to time and do not fit nicely into any of the other groups. Currently, the available sub-commands are:
+
+* `renumber-tests`: Used to simplify maintenance of the regression tests. Since every test has a consecutive number within its file, adding or removing tests can disrupt numbering. `renumber-tests` will renumber all tests within each test file consecutively.
+* `fp-finder`: Takes a file as input and outputs a filtered, alphabetically sorted list of unique words that are not present in the English dictionary. This can help in identifying potential false positives by focusing on unusual or unknown words.
 
 ## The `completion` command
 
