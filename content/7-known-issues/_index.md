@@ -74,7 +74,7 @@ make install
 
   This bug is known to plague RHEL/Centos 7 below v7.4 or httpd v2.4.6 release 67 and Ubuntu 14.04 LTS users. (The original bug report can be found [here](https://bz.apache.org/bugzilla/show_bug.cgi?id=55910)).
 
-  It is advisable to upgrade an affected Apache version. If upgrading is not possible, the CRS project provides a script in the `util/join-multiline-rules` directory which converts the rules into a format that works around the bug. This script must be re-run whenever the CRS rules are modified or updated.
+  It is recommended to upgrade an affected Apache version. If upgrading is not possible, the CRS project provides a script in the `util/join-multiline-rules` directory which converts the rules into a format that works around the bug. This script must be re-run whenever the CRS rules are modified or updated.
 
 
 ## ModSecurity
@@ -86,7 +86,7 @@ make install
   ```
 
   Support for the URLENCODED body processor was only added in ModSecurity 3.0.3.
-  :warning: Please do not use such an older version of ModSecurity. Upgrade to latest and greatest.
+  :warning: Please do not use such an older version of ModSecurity. Upgrade to the latest and greatest.
 
 ## Debian
 
@@ -115,7 +115,7 @@ application/soap+xml is indicative that XML will be provided. In accordance with
 ## libmodsecurity3
 
 [There is no support](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v3.x)#secdisablebackendcompression) for the `SecDisableBackendCompression` directive at all. 
-If Nginx is acting as a proxy and the backend supports any type of compression, if the client sends an `Accept-Encoding: gzip,deflate,...` or `TE` header, the backend will return the response in a compressed format. Because of this, the engine cannot verify the response. As a workaround, you need to override the `Accept-Encoding` and `TE` headers in the proxy:
+If Nginx is acting as a proxy and the backend supports any type of compression, then if the client sends an `Accept-Encoding: gzip,deflate,...` or `TE` header, the backend will return the response in a compressed format. Because of this, the engine cannot verify the response. As a workaround, you need to override the `Accept-Encoding` and `TE` headers in the proxy:
 
    ```
     server {
