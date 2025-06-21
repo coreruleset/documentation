@@ -32,7 +32,7 @@ ModSecurity v3 fails with 2-4% of the CRS unit tests due to bugs and implementat
 
 ModSecurity v3 is used in production together with Nginx, but the CRS project recommends to use the ModSecurity v2 release line with Apache.
 
-ModSecurity is released under the Apache License 2.0. It is primarily developed by Spiderlabs, an entity within the company Trustwave. In summer 2021, Trustwave announced their plans to end development of ModSecurity in 2024. Since Jan 25th 2024, the project [transitioned to the OWASP Foundation](https://coreruleset.org/20240115/welcome-the-newest-addition-to-the-owasp-family-modsecurity/).
+ModSecurity is released under the Apache License 2.0. It was primarily developed by Spiderlabs, an entity within the company Trustwave. In summer 2021, Trustwave announced their plans to end development of ModSecurity in 2024. On Jan 25th 2024, the project was [transferred to the OWASP Foundation](https://coreruleset.org/20240115/welcome-the-newest-addition-to-the-owasp-family-modsecurity/).
 
 There is a [ModSecurity v3 / Nginx Docker container](https://github.com/coreruleset/modsecurity-crs-docker) which is maintained by the CRS project.
 
