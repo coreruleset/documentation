@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # renovate: datasource=github-releases depName=gohugoio/hugo
-      HUGO_VERSION: 0.147.8
+      HUGO_VERSION: 0.147.9
     steps:
       - name: Install Hugo CLI
         run: |
