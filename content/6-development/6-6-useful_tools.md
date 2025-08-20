@@ -67,3 +67,9 @@ An invaluable tool for testing how regular expressions behave *and perform* in b
 https://github.com/doyensec/regexploit
 
 A tool for testing and finding regular expressions that are vulnerable to regular expression denial of service attacks ([ReDoS](https://en.wikipedia.org/wiki/ReDoS)).
+
+## CrsDoc
+
+https://crsdoc.digitalwave.hu
+
+Presents CRS rules using a structured UI, allowing for filtering and searching.
