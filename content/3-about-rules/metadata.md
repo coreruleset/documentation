@@ -18,21 +18,6 @@ see a rule without a piece of metadata that you think is warranted
 please open either an [issue](https://github.com/coreruleset/coreruleset/issues) or a pull
 request.
 
-Tags about standards
---------------------
-
-We try our best to outline information about the vulnerability when each
-rule triggers. To that end we include metadata about where that
-vulnerability type can be found in various standards. These tags are
-currently prefixed with the standard type and will be capitalized. They
-will NOT start with OWASP_CRS. They consist of a the standard and then
-a slash to indicate the start of the data. The following standards are
-supported:
-
--   WASCTC
--   OWASP\_TOP\_10
--   PCI
-
 ### Tags about paranoia level
 
 Starting with version 3 we reintroduced the paranoia level concept.
