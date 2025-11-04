@@ -129,7 +129,3 @@ The Oracle WAF is a cloud-based offering that includes CRS. To learn more, read 
 ## Alternative Use Cases
 
 Outside of the narrower implementation of a WAF, CRS can also be found in different security-related setups.
-
-### Sqreen/Datadog
-
-Sqreen uses a subset of CRS as an innovative part of their RASP offering. A few pieces of information about this offering can be found in [this Sqreen blog post](https://blog.sqreen.com/sqreen-october-release/).
