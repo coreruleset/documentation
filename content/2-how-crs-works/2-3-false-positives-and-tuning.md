@@ -247,7 +247,7 @@ SecRuleUpdateTargetById 941320 "!ARGS:wp_post"
 ```
 
 {{% notice %}}
-If, for optimization purposes, you need to use dynamic variables - for example, to efficiently filter Base64 variants - be aware that this directive supports dynamic variables, like so:
+If you need to use dynamic variables for optimization purposes - for example, to effectively filter Base64 variants - note that this policy supports dynamic variables, for example:
 `SecRuleUpdateTargetById 1 "!TX:/^base64_ARGS:ttcsid_[\w]+$/"`
 {{% /notice %}}
 
