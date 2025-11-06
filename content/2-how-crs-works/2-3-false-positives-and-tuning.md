@@ -222,8 +222,9 @@ SecRuleRemoveById 933151
 **Scenario:** Several different parts of a web application are causing false positives with various SQL injection rules. None of the web services behind the WAF make use of SQL, so it is deemed safe to tune away these false positives by removing all the SQLi detection rules.
 
 {{% notice warning %}}
-This type of broad exclusion must be avoided at all costs for most standard web application use cases.
-In such contexts, you must never do this.
+This type of broad exclusion is dangerous and should only be considered if the rules are causing problems _and_ the application is not vulnerable to the specific attack, e.g., the PHP rules cause issues and no application behind the WAF uses PHP.
+
+In general, the less exclusions the better, since every rule reduces the amount of bad traffic arriving at the protected application.
 {{% /notice %}}
 
 **Rule Exclusion:**
