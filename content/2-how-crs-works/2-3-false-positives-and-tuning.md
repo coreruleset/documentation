@@ -326,8 +326,7 @@ SecRule REQUEST_URI "@rx ^/dynamic/new_post" \
 **Scenario:** The values of request cookie 'uid' are causing false positives with various SQL injection rules when trying to log in to a web service at location '/webapp/login.html'. It is decided that it is not a risk to allow SQL-like content in this specific cookie's values for the login page, however it is deemed unacceptable to disable the SQLi detection rules for anything apart from the specific request cookie in question at the login page only. It is decided to tune away these false positives by excluding only the problematic request cookie from the SQLi detection rules, and only when accessing '/webapp/login.html'.
 
 {{% notice warning %}}
-This type of broad exclusion must be avoided at all costs for most standard web application use cases.
-In such contexts, you should never do this.
+This type of broad exclusion is dangerous. Even though the decision in this example may seem trivial, rule exclusions always carry a risk. It is important to understand the risk of disabling a rule, i.e., which attack vectors become available by disabling the rule, even if only a single target is affected.
 {{% /notice %}}
 
 **Rule Exclusion:**
