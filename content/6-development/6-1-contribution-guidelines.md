@@ -138,12 +138,12 @@ SecRule ARGS "foo" "id:1,phase:1,pass,t:none"
 CRS uses `\x5c` to represent the backslash `\` character in regular expressions. Some of the reasons for this are:
 
 * It's portable across web servers and WAF engines: it works with Apache, Nginx, and Coraza.
-* It works with the [crs-toolchain]({{< ref "6-2-crs-toolchain.md" >}}) for building optimized regular expressions.
+* It works with the [crs-toolchain]({{% ref "6-2-crs-toolchain.md" %}}) for building optimized regular expressions.
 
 The older style of representing a backslash using the character class `[\\\\]` must _not_ be used. This was previously used in CRS to get consistent results between Apache and Nginx, owing to a quirk with how Apache would "double un-escape" character escapes. For future reference, the decision was made to stop using this older method because:
 
 * It can be confusing and difficult to understand how it works.
-* It doesn't work with [crs-toolchain]({{< ref "6-2-crs-toolchain.md" >}}).
+* It doesn't work with [crs-toolchain]({{% ref "6-2-crs-toolchain.md" %}}).
 * It doesn't work with Coraza.
 * It isn't obvious how to use it in a character class, e.g., `[a-zA-Z<portable-backslash>]`.
 
@@ -300,7 +300,7 @@ Optimizing regular expressions is hard. Often, a change intended to improve the 
 mailto|mms|mumble|maven
 ```
 
-An optimized version (produced by the [crs-toolchain]({{< ref "6-2-crs-toolchain.md" >}})) could look like this:
+An optimized version (produced by the [crs-toolchain]({{% ref "6-2-crs-toolchain.md" %}})) could look like this:
 
 ```python
 m(?:a(?:ilto|ven)|umble|ms)
@@ -308,13 +308,13 @@ m(?:a(?:ilto|ven)|umble|ms)
 
 The above expression is an optimization because it reduces the number of backtracking steps when a branch fails. The regular expressions in the CRS are often comprised of lists of tens or even hundreds of words. Reading such an expression in an optimized form is difficult: even the _simple_ optimized example above is difficult to read.
 
-In general, contributors should not try to optimize contributed regular expressions and should instead strive for clarity. New regular expressions will usually be required to be submitted as a `.ra` file for the [crs-toolchain]({{< ref "6-2-crs-toolchain.md" >}}) to process. In such a file, the regular expression is decomposed into individual parts, making manual optimizations much harder or even impossible (and unnecessary with the `crs-toolchain`). The `crs-toolchain` performs some common optimizations automatically, such as the one shown above.
+In general, contributors should not try to optimize contributed regular expressions and should instead strive for clarity. New regular expressions will usually be required to be submitted as a `.ra` file for the [crs-toolchain]({{% ref "6-2-crs-toolchain.md" %}}) to process. In such a file, the regular expression is decomposed into individual parts, making manual optimizations much harder or even impossible (and unnecessary with the `crs-toolchain`). The `crs-toolchain` performs some common optimizations automatically, such as the one shown above.
 
 Whether optimizations make sense in a contribution is assessed for each case individually.
 
 ## Rules Compliance with Paranoia Levels
 
-The rules in CRS are organized into **paranoia levels** (PLs) which makes it possible to define how aggressive CRS is. See the documentation on [paranoia levels]({{< ref "2-2-paranoia_levels" >}}) for an introduction and more detailed explanation.
+The rules in CRS are organized into **paranoia levels** (PLs) which makes it possible to define how aggressive CRS is. See the documentation on [paranoia levels]({{% ref "2-2-paranoia_levels" %}}) for an introduction and more detailed explanation.
 
 Each rule that is placed into a paranoia level must contain the tag `paranoia-level/N`, where *N* is the PL value, however this tag can only be added if the rule does **not** use the nolog action.
 
