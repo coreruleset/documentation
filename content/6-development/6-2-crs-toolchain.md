@@ -68,7 +68,7 @@ crs-toolchain --help
 
 ## The `regex` Command
 
-The `regex` command provides sub-commands for everything surrounding regular expressions, especially the "assembly" of regular expressions from a specification of its components (see [Assembling Regular Expressions]({{< ref "6-3-assembling-regular-expressions.md" >}}) for more details).
+The `regex` command provides sub-commands for everything surrounding regular expressions, especially the "assembly" of regular expressions from a specification of its components (see [Assembling Regular Expressions]({{% ref "6-3-assembling-regular-expressions.md" %}}) for more details).
 
 ### Example Use
 
