@@ -247,11 +247,6 @@ SecRuleRemoveByTag attack-sqli
 SecRuleUpdateTargetById 941320 "!ARGS:wp_post"
 ```
 
-{{% notice %}}
-If you need to use dynamic variables for optimization purposes - for example, to effectively filter Base64 variants - note that this policy supports dynamic variables, for example:
-`SecRuleUpdateTargetById 1 "!TX:/^base64_ARGS:ttcsid_[\w]+$/"`
-{{% /notice %}}
-
 #### Example 4 *(SecRuleUpdateTargetByTag)*
 
 *(Configure-time RE. Exclude specific variable from rule.)*
