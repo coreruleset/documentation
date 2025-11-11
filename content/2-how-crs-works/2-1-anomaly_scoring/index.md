@@ -90,7 +90,13 @@ Most detected inbound threats carry an anomaly score of 5 (by default), while sm
 Rule coverage should be taken into account when setting anomaly score thresholds. Different CRS rule categories feature different numbers of rules. SQL injection, for example, is covered by more than 50 rules. As a result, a real world SQLi attack can easily gain an anomaly score of 15, 20, or even more. On the other hand, a rare protocol attack might only be covered by a single, specific rule. If such an attack only causes the one specific rule to match then it will only gain an anomaly score of 5. If the inbound anomaly score threshold is set to anything higher than 5 then attacks like the one described will not be stopped. **As such, a CRS installation should aim for an inbound anomaly score threshold of 5.**
 
 {{% notice warning %}}
-Increasing the anomaly score thresholds may allow some attacks to bypass the CRS rules.
+Increasing the thresholds will inevitably allow certain attacks to slip through, effectively bypassing CRS protections and weakening your overall security posture.
+
+You should not set a blocking threshold higher than 10 - and ideally, you should do everything possible to block at 5.
+
+If you don't, keep in mind that you will, at the very least, neutralize most of the LFI/RFI protection, including safeguards against severe data leakage vulnerabilities, which could likely cause you serious harm.
+
+The fact that some providers - such as Cloudflare in 2025 - set a default blocking level of 60 and consider 25 a "high" value is a security nonsense.
 {{% /notice %}}
 
 {{% notice info %}}
