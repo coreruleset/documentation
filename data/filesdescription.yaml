@@ -4,7 +4,7 @@ common:
     This file is used to add LOCAL exceptions for your site. Often in this file
     we would see rules that short-circuit inspection and allow certain
     transactions to skip through inspection.
-    
+
     `Example: SecRule REMOTE_ADDR "@ipMatch 192.168.1.100" "phase:1,id:'981033',t:none,nolog,pass,ctl:ruleEngine=Off"`
   REQUEST-901-INITIALIZATION.conf: TODO
   REQUEST-913-SCANNER-DETECTION.conf: >
@@ -71,7 +71,6 @@ common:
     This file is used to add LOCAL exceptions for your site. Often in this
     file we would see rules that short-circuit inspection and allow
     certain transactions to skip through inspection.
-  RESPONSE-980-CORRELATION.conf: TODO
 
 versioned:
   "3":

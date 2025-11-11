@@ -31,7 +31,7 @@ Include ../coreruleset/rules/*.conf
 
 https://github.com/coreruleset/crs-toolchain
 
-The CRS developer's toolbelt. Documentation lives at [crs-toolchain]({{< ref "6-2-crs-toolchain.md" >}}).
+The CRS developer's toolbelt. Documentation lives at [crs-toolchain]({{% ref "6-2-crs-toolchain.md" %}}).
 
 ## Go-FTW
 
