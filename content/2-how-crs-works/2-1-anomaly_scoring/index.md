@@ -92,7 +92,7 @@ Rule coverage should be taken into account when setting anomaly score thresholds
 {{% notice warning %}}
 Increasing the thresholds will inevitably allow certain attacks to slip through, effectively bypassing CRS protections and weakening your overall security posture.
 
-You should not set a blocking threshold higher than 10 - and ideally, you should do everything possible to block at 5.
+The blocking threshold should never exceed 5, except temporarily during testing.
 
 If you don't, keep in mind that you will, at the very least, neutralize most of the LFI/RFI protection, including safeguards against severe data leakage vulnerabilities, which could likely cause you serious harm.
 
