@@ -92,7 +92,7 @@ Rule coverage should be taken into account when setting anomaly score thresholds
 {{% notice warning %}}
 Increasing the anomaly score threshold will not only allow some attacks to bypass CRS; it will also disable a substantial portion of the most critical WAF protections. In particular, thresholds higher than 5 effectively neutralize many high-severity rules - including major LFI/RFI safeguards and several protections against severe data-exfiltration vulnerabilities -
 
-The blocking threshold should NEVER exceed 5, except temporarily during testing.
+The blocking threshold should NEVER be increased beyond the default (5 for for requests, 4 for responses), except temporarily during testing.
 
 The fact that major providers - such as Cloudflare in 2025 - set a default blocking level of 60 and consider 25 a "high" value is a security nonsense.
 {{% /notice %}}
