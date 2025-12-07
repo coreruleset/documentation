@@ -90,11 +90,9 @@ Most detected inbound threats carry an anomaly score of 5 (by default), while sm
 Rule coverage should be taken into account when setting anomaly score thresholds. Different CRS rule categories feature different numbers of rules. SQL injection, for example, is covered by more than 50 rules. As a result, a real world SQLi attack can easily gain an anomaly score of 15, 20, or even more. On the other hand, a rare protocol attack might only be covered by a single, specific rule. If such an attack only causes the one specific rule to match then it will only gain an anomaly score of 5. If the inbound anomaly score threshold is set to anything higher than 5 then attacks like the one described will not be stopped. **As such, a CRS installation should aim for an inbound anomaly score threshold of 5.**
 
 {{% notice warning %}}
-Increasing the anomaly score threshold will not only allow some attacks to bypass CRS; it will also disable a substantial portion of the most critical WAF protections. In particular, thresholds higher than 5 effectively neutralize many high-severity rules - including major LFI/RFI safeguards and several protections against severe data-exfiltration vulnerabilities -
+Increasing the anomaly score threshold above the defaults (5 for requests, 4 for responses) will allow a substantial number of attacks to bypass CRS and will impede the ability of critical rules to function correctly - including major LFI/RFI safeguards and several protections against severe data-exfiltration vulnerabilities. The anomaly score threshold should only ever be increased temporarily during false-positive tuning.
 
-The blocking threshold should NEVER be increased beyond the default (5 for for requests, 4 for responses), except temporarily during testing.
-
-The fact that major providers - such as Cloudflare in 2025 - set a default blocking level of 60 and consider 25 a "high" value is a security nonsense.
+Some WAF vendors (such as Cloudflare) set the default anomaly score well above our defaults - 5 to 12 times higher than what we recommend. This is not a proper implementation of CRS, and you will neutralize entire sections of the WAF.
 {{% /notice %}}
 
 {{% notice info %}}
