@@ -92,7 +92,7 @@ Rule coverage should be taken into account when setting anomaly score thresholds
 {{% notice warning %}}
 Increasing the anomaly score threshold above the defaults (5 for requests, 4 for responses) will allow a substantial number of attacks to bypass CRS and will impede the ability of critical rules to function correctly - including major LFI/RFI safeguards and several protections against severe data-exfiltration vulnerabilities. The anomaly score threshold should only ever be increased temporarily during false-positive tuning.
 
-Some WAF vendors (such as Cloudflare) set the default anomaly score well above our defaults - 5 to 12 times higher than what we recommend. This is not a proper implementation of CRS, and you will neutralize entire sections of the WAF.
+Some WAF vendors (such as Cloudflare) set the default anomaly score well above our defaults. This is not a proper implementation of CRS, and will result in bypasses.
 {{% /notice %}}
 
 {{% notice info %}}
