@@ -5,5 +5,3 @@ pre: "<b>6. </b>"
 chapter: true
 aliases: ["development"]
 ---
-
-# Operation

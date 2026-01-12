@@ -32,9 +32,7 @@ ModSecurity v3 fails with 2-4% of the CRS unit tests due to bugs and implementat
 
 ModSecurity v3 is used in production together with Nginx, but the CRS project recommends to use the ModSecurity v2 release line with Apache.
 
-ModSecurity is released under the Apache License 2.0. It is primarily developed by Spiderlabs, an entity within the company Trustwave. In summer 2021, Trustwave announced their plans to end development of ModSecurity in 2024. Attempts to convince Trustwave to hand over the project in the meantime, in the interests of guaranteeing the project's continuation, have failed. Trustwave have stated that they will not relinquish control of the project before 2024.
-
-To learn more about the situation around ModSecurity, read [this CRS blog post](https://coreruleset.org/20211222/talking-about-modsecurity-and-the-new-coraza-waf/) discussing the matter.
+ModSecurity is released under the Apache License 2.0. It was primarily developed by Spiderlabs, an entity within the company Trustwave. In summer 2021, Trustwave announced their plans to end development of ModSecurity in 2024. On Jan 25th 2024, the project was [transferred to the OWASP Foundation](https://coreruleset.org/20240115/welcome-the-newest-addition-to-the-owasp-family-modsecurity/).
 
 There is a [ModSecurity v3 / Nginx Docker container](https://github.com/coreruleset/modsecurity-crs-docker) which is maintained by the CRS project.
 
@@ -62,6 +60,8 @@ HAProxy Technologies embeds ModSecurity v3 in three of its products via the Libm
 
 To learn more, visit the [HAProxy WAF solution page on haproxy.com](https://www.haproxy.com/solutions/web-application-firewall).
 
+There is also a [Coraza SPOA](https://github.com/corazawaf/coraza-spoa) solution that works with HAProxy.
+
 ### Kemp/Progressive LoadMaster
 
 The Kemp LoadMaster is a popular load balancer that integrates ModSecurity v2 and CRS in a typical way. It goes further than the competition with the support of most CRS features.
@@ -76,11 +76,11 @@ The load balancer appliance from Loadbalancer.org features WAF functionality bas
 
 To learn more, read [this blog post about CRS at Loadbalancer.org](https://www.loadbalancer.org/blog/simplifying-web-application-security-with-the-core-rule-set-v3/).
 
-### Avi Networks "Vantage"
+### VMware® Avi Load Balancer
 
-Avi Vantage from Avi Networks is a modern virtual load balancer and proxy with strong WAF capabilities. It's based on a fork of ModSecurity v3.
+VMware® Avi Load Balancer is a modern virtual load balancer and proxy with strong WAF capabilities.
 
-To learn more, read [Avi's WAF documentation](https://avinetworks.com/docs/21.1/waf-configuring/).
+To learn more, read [VMware Avi Load Balancer WAF documentation](https://techdocs.broadcom.com/us/en/vmware-security-load-balancing/avi-load-balancer/avi-load-balancer/30-2/vmware-avi-load-balancer-waf-guide/architecture/configuration.html)
 
 ## Existing CRS Integrations: Cloud and CDN Offerings
 
@@ -129,7 +129,3 @@ The Oracle WAF is a cloud-based offering that includes CRS. To learn more, read 
 ## Alternative Use Cases
 
 Outside of the narrower implementation of a WAF, CRS can also be found in different security-related setups.
-
-### Sqreen/Datadog
-
-Sqreen uses a subset of CRS as an innovative part of their RASP offering. A few pieces of information about this offering can be found in [this Sqreen blog post](https://blog.sqreen.com/sqreen-october-release/).

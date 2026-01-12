@@ -13,8 +13,8 @@
     {
       "description": "CRS: Latest Release",
       "customType": "regex",
-      "fileMatch": [
-        "^config/_default/config\\.toml$"
+      "managerFilePatterns": [
+        "/^config/_default/config\\.toml$/"
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
@@ -22,12 +22,6 @@
       ],
       "depNameTemplate": "coreruleset/coreruleset",
       "datasourceTemplate": "github-releases"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": ["gohugoio/hugo"],
-      "allowedVersions": "<=0.145.0"
     }
   ]
 }

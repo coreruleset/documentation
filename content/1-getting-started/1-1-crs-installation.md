@@ -6,7 +6,7 @@ chapter: false
 aliases: ["../deployment/install"]
 ---
 
-This guide aims to get a CRS installation up and running. This guide assumes that a compatible ModSecurity engine is already present and working. If unsure then refer to the [extended install]({{< ref "1-2-extended_install.md" >}}) page for full details.
+This guide aims to get a CRS installation up and running. This guide assumes that a compatible ModSecurity engine is already present and working. If unsure then refer to the [extended install]({{% ref "1-2-extended_install.md" %}}) page for full details.
 
 ## Downloading the Rule Set
 
@@ -74,7 +74,7 @@ gpg: Good signature from "OWASP CRS <security@coreruleset.org>" [ultimate]
 
 Once the rule set has been downloaded and verified, extract the rule set files to a well known location on the server. This will typically be somewhere in the web server directory.
 
-The examples presented below demonstrate using Apache. For information on configuring Nginx or IIS see the [extended install]({{< ref "1-2-extended_install.md" >}}) page.
+The examples presented below demonstrate using Apache. For information on configuring Nginx or IIS see the [extended install]({{% ref "1-2-extended_install.md" %}}) page.
 
 Note that while it's common practice to make a new `modsecurity.d` folder, as outlined below, this isn't strictly necessary. The path scheme outlined is common on RHEL-based operating systems; the Apache path used may need to be adjusted to match the server's installation.
 
@@ -114,7 +114,7 @@ mv crs-setup.conf.example crs-setup.conf
 
 ### Include-ing the Rule Files
 
-The last step is to tell the web server where the rules are. This is achieved by `include`-ing the rule configuration files in the `httpd.conf` file. Again, this example demonstrates using Apache, but the process is similar on other systems (see the [extended install]({{< ref "1-2-extended_install.md" >}}) page for details).
+The last step is to tell the web server where the rules are. This is achieved by `include`-ing the rule configuration files in the `httpd.conf` file. Again, this example demonstrates using Apache, but the process is similar on other systems (see the [extended install]({{% ref "1-2-extended_install.md" %}}) page for details).
 
 ```bash
 echo 'IncludeOptional {{< param crs_install_dir >}}/crs-setup.conf' >> /etc/httpd/conf/httpd.conf
@@ -124,7 +124,7 @@ echo 'IncludeOptional {{< param crs_install_dir >}}/rules/*.conf' >> /etc/httpd/
 echo 'IncludeOptional {{< param crs_install_dir >}}/plugins/*-after.conf' >> /etc/httpd/conf/httpd.conf
 ```
 
-Now that everything has been configured, it should be possible to restart and begin using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{< ref "2-3-false-positives-and-tuning.md" >}}).
+Now that everything has been configured, it should be possible to restart and begin using the OWASP CRS. The CRS rules typically require a bit of tuning with rule exclusions, depending on the site and web applications in question. For more information on tuning, see [false positives and tuning]({{% ref "2-3-false-positives-and-tuning.md" %}}).
 
 ```bash
 systemctl restart httpd.service
@@ -184,7 +184,7 @@ Depending on your configurated thresholds, this should be detected as a maliciou
 
 ### Upgrading from CRS 3.x to CRS 4
 
-The most impactful change is the removal of application exclusion packages in favor of a plugin system. If you had activated the exclusion packages in CRS 3, you should download the plugins for them and place them in the plugins subdirectory. We maintain the list of plugins in our [Plugin Registry](https://github.com/coreruleset/plugin-registry). You can find detailed information on working with plugins in our [plugins documentation]({{< ref "4-about-plugins/" >}}).
+The most impactful change is the removal of application exclusion packages in favor of a plugin system. If you had activated the exclusion packages in CRS 3, you should download the plugins for them and place them in the plugins subdirectory. We maintain the list of plugins in our [Plugin Registry](https://github.com/coreruleset/plugin-registry). You can find detailed information on working with plugins in our [plugins documentation]({{% ref "4-about-plugins/" %}}).
 
 In terms of changes to the detection rules, the amount of changes is smaller than in the CRS 2—3 changeover. Most rules have only evolved slightly, so it is recommended that you keep any existing custom exclusions that you have made under CRS 3.
 

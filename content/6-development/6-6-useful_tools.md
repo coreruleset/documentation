@@ -31,7 +31,7 @@ Include ../coreruleset/rules/*.conf
 
 https://github.com/coreruleset/crs-toolchain
 
-The CRS developer's toolbelt. Documentation lives at [crs-toolchain]({{< ref "6-2-crs-toolchain.md" >}}).
+The CRS developer's toolbelt. Documentation lives at [crs-toolchain]({{% ref "6-2-crs-toolchain.md" %}}).
 
 ## Go-FTW
 
@@ -67,3 +67,19 @@ An invaluable tool for testing how regular expressions behave *and perform* in b
 https://github.com/doyensec/regexploit
 
 A tool for testing and finding regular expressions that are vulnerable to regular expression denial of service attacks ([ReDoS](https://en.wikipedia.org/wiki/ReDoS)).
+
+## CrsDoc
+
+https://crsdoc.digitalwave.hu
+
+Presents CRS rules using a structured UI, allowing for filtering and searching.
+
+## Syntax Highlighters
+
+### Regex Assembly
+
+We have a syntax highlighting extension for Visual Studio Code that helps with writing assembly files. Instructions on how to install the extension can be found in the readme of the repository: https://github.com/coreruleset/regexp-assemble-syntax.
+
+### ModSecurity SecLang
+
+A community member has created an experimental syntax highlighter extension for the ModSecurity SecLang for Visual Studio Code. It has a nice documentation feature for syntax elements and variables. Both highlighting and documentation have been generated using GPT-5, so expect some issues and inaccuracies. https://github.com/louis-lau/vscode-secrule-language-plugin.
