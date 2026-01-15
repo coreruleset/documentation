@@ -123,7 +123,7 @@ This table is available as a well presented, downloadable [Rule Exclusion Cheats
 {{% /notice %}}
 
 {{% notice note %}}
-When using `SecRuleUpdateTargetById` and `ctl:ruleRemoveTargetById` with *chained rules*, target exclusions are only applied to the first rule in the chain. You can't exclude targets from other rules in the chain, you must remove the entire rule using `SecRuleRemoveById` or `ctl:ruleRemoveById`. This is a current limitation of the SecLang configuration language.
+When using `SecRuleUpdateTargetById` and `ctl:ruleRemoveTargetById` with *chained rules*, target exclusions are only applied to the first rule in the chain. You can't exclude targets from other rules in the chain, depending on how the rule is written, you may have to remove the entire rule using `SecRuleRemoveById` or `ctl:ruleRemoveById`. This is a current limitation of the SecLang configuration language.
 {{% /notice %}}
 
 {{% notice note %}}
