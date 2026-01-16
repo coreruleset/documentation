@@ -123,6 +123,10 @@ This table is available as a well presented, downloadable [Rule Exclusion Cheats
 {{% /notice %}}
 
 {{% notice note %}}
+When using `SecRuleUpdateTargetById` and `ctl:ruleRemoveTargetById` with *chained rules*, target exclusions are only applied to the first rule in the chain. You can't exclude targets from other rules in the chain, depending on how the rule is written, you may have to remove the entire rule using `SecRuleRemoveById` or `ctl:ruleRemoveById`. This is a current limitation of the SecLang configuration language.
+{{% /notice %}}
+
+{{% notice note %}}
 There's also a third group of rule exclusion directives and actions, the use of which is discouraged. As well as excluding rules "ById" and "ByTag", it's also possible to exclude "ByMsg" (`SecRuleRemoveByMsg`, `SecRuleUpdateTargetByMsg`, `ctl:ruleRemoveByMsg`, and `ctl:ruleRemoveTargetByMsg`). This excludes rules based on the message they write to the error log. These messages can be dynamic and may contain special characters. As such, trying to exclude rules by message is difficult and error-prone.
 {{% /notice %}}
 
