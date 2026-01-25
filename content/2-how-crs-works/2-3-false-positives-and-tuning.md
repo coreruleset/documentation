@@ -130,6 +130,10 @@ When using `SecRuleUpdateTargetById` and `ctl:ruleRemoveTargetById` with *chaine
 There's also a third group of rule exclusion directives and actions, the use of which is discouraged. As well as excluding rules "ById" and "ByTag", it's also possible to exclude "ByMsg" (`SecRuleRemoveByMsg`, `SecRuleUpdateTargetByMsg`, `ctl:ruleRemoveByMsg`, and `ctl:ruleRemoveTargetByMsg`). This excludes rules based on the message they write to the error log. These messages can be dynamic and may contain special characters. As such, trying to exclude rules by message is difficult and error-prone.
 {{% /notice %}}
 
+{{% notice tip %}}
+When creating a runtime rule exclusion, we recommend specifying the [t:none transformation](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#transformation-functions) to ensure you have full control over the behavior of an rule. See our docs on rule creation to get an overview on how a runtime rule works: https://coreruleset.org/docs/3-about-rules/creating/ 
+{{% /notice %}}
+
 #### Rule Tags
 
 CRS rules typically feature multiple tags, grouping them into different categories. For example, a rule might be tagged by attack type ('attack-rce', 'attack-xss', etc.), by language ('language-java', 'language-php', etc.), and by platform ('platform-apache', 'platform-unix', etc.).
@@ -272,6 +276,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/function.php" \
     "id:1000,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveById=920230"
 ```
@@ -290,6 +295,7 @@ SecRule REQUEST_URI "@beginsWith /web_app_1/content" \
     "id:1010,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveByTag=attack-sqli"
 ```
@@ -308,6 +314,7 @@ SecRule REQUEST_URI "@beginsWith /dynamic/new_post" \
     "id:1020,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveTargetById=941150;ARGS:text_input"
 ```
@@ -326,6 +333,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
     "id:1030,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveTargetByTag=attack-sqli;REQUEST_COOKIES:uid"
 ```
