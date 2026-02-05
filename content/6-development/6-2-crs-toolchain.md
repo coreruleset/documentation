@@ -338,7 +338,7 @@ crs-toolchain util fp-finder <test-file>
 This tool is particularly useful for:
 - Identifying problematic patterns before deployment
 - Testing rule changes against known good traffic
-- Validating rule modifications don't introduce new false positives
+- Validating that rule modifications don't introduce new false positives
 
 ### `self-update`
 
