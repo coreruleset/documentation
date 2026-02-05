@@ -18,7 +18,7 @@
       ],
       "matchStringsStrategy": "any",
       "matchStrings": [
-        "crs_latest_release: \"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
+        "crs_latest_release = \"(?<currentValue>\\d+\\.\\d+\\.\\d+)\""
       ],
       "depNameTemplate": "coreruleset/coreruleset",
       "datasourceTemplate": "github-releases"
