@@ -8,7 +8,7 @@ aliases: ["../development/crs_toolchain"]
 
 > The crs-toolchain is the CRS developer's utility belt — the Swiss army knife for CRS development. It provides a single point of entry and a consistent interface for a range of different tools. Its core functionality (owed to the great [rassemble-go](https://github.com/itchyny/rassemble-go), which is itself based on the brain-melting [Regexp::Assemble](https://github.com/ronsavage/Regexp-Assemble) Perl module) is to assemble individual parts of a regular expression into a single expression (with some optimizations).
 
-The current stable release is **v2.7.0** (as of December 2024).
+The current stable release is **v2.7.0** (as of December 2025).
 
 ## Setup
 
