@@ -3,6 +3,7 @@ title: Tools for Rule Writers
 weight: 67
 disableToc: false
 chapter: false
+aliases: ["../development/tools-for-rule-writers"]
 ---
 
 > This page brings together essential tools that help rule writers create better, more effective CRS rules. From testing regular expressions to understanding database behavior, these resources will help you write rules using modern techniques and best practices.
@@ -102,7 +103,7 @@ Quick URL encoding and decoding. Supports recursive decoding (up to 16 rounds) f
 
 [https://aqua-cloud.io/base64-encode-decoder](https://aqua-cloud.io/base64-encode-decoder)
 
-Real-time Base64 encoding/decoding with URL-safe encoding support. Useful for testing API credentials, JWT tokens, and Base64-encoded payloads.
+Real-time Base64 encoding/decoding with URL-safe encoding support. Useful for exploring how API credentials, JWT tokens, and other Base64-encoded payloads are structured. For security, use only anonymized or dummy data and never paste real secrets, such as live API keys or JWTs, into external online tools.
 
 ### FusionAuth URL Encoder/Decoder
 
