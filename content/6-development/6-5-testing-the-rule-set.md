@@ -49,7 +49,7 @@ Excellent, our containers are running, now we can start our tests.
 
 ### Using your own environment for testing {#use-own-env}
 
-If you have your own environment set up, you can configure that for testing. Please [follow these instructions]({{< ref "1-1-crs-installation.md#installing-a-compatible-waf-engine" >}}) to install the WAF server locally.
+If you have your own environment set up, you can configure that for testing. Please [follow these instructions]({{% ref "1-1-crs-installation.md#installing-a-compatible-waf-engine" %}}) to install the WAF server locally.
 
 > [!NOTE]
 > Remember: The supported platform is ModSecurity 2 with Apache httpd. If you want to run the tests against nginx, you can do that too, but nginx uses libmodsecurity3, which is not fully compatible with Apache httpd + ModSecurity 2.

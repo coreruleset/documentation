@@ -90,7 +90,9 @@ Most detected inbound threats carry an anomaly score of 5 (by default), while sm
 Rule coverage should be taken into account when setting anomaly score thresholds. Different CRS rule categories feature different numbers of rules. SQL injection, for example, is covered by more than 50 rules. As a result, a real world SQLi attack can easily gain an anomaly score of 15, 20, or even more. On the other hand, a rare protocol attack might only be covered by a single, specific rule. If such an attack only causes the one specific rule to match then it will only gain an anomaly score of 5. If the inbound anomaly score threshold is set to anything higher than 5 then attacks like the one described will not be stopped. **As such, a CRS installation should aim for an inbound anomaly score threshold of 5.**
 
 {{% notice warning %}}
-Increasing the anomaly score thresholds may allow some attacks to bypass the CRS rules.
+Increasing the anomaly score threshold above the defaults (5 for requests, 4 for responses), will allow a substantial number of attacks to bypass CRS and will impede the ability of critical rules to function correctly, such as LFI, RFI, RCE, and data-exfiltration rules. The anomaly score threshold should only ever be increased temporarily during false-positive tuning.
+
+Some WAF vendors (such as Cloudflare) set the default anomaly score well above our defaults. This is not a proper implementation of CRS, and will result in bypasses.
 {{% /notice %}}
 
 {{% notice info %}}

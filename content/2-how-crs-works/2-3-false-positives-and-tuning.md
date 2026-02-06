@@ -12,7 +12,7 @@ aliases: ["../concepts/false_positives_tuning"]
 
 CRS provides _generic_ attack detection capabilities. A fresh CRS deployment has no awareness of the web services that may be running behind it, or the quirks of how those services work. It is possible that *genuine* transactions may cause some CRS rules to match in error, if the transactions happen to match one of the generic attack behaviors or patterns that are being detected. Such a match is referred to as a *false positive*, or false alarm.
 
-False positives are particularly likely to happen when operating at higher [paranoia levels]({{< ref "2-2-paranoia_levels.md" >}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives.
+False positives are particularly likely to happen when operating at higher [paranoia levels]({{% ref "2-2-paranoia_levels.md" %}} "Page describing paranoia levels."). While paranoia level 1 is designed to cause few, ideally zero, false positives, higher paranoia levels are increasingly likely to cause false positives. Each successive paranoia level introduces additional rules, with *higher* paranoia levels adding *more aggressive* rules. As such, the higher the paranoia level is the more likely it is that false positives will occur. That is the cost of the higher security provided by higher paranoia levels: the additional time it takes to tune away the increasing number of false positives.
 
 ### Example False Positive
 
@@ -123,7 +123,15 @@ This table is available as a well presented, downloadable [Rule Exclusion Cheats
 {{% /notice %}}
 
 {{% notice note %}}
+When using `SecRuleUpdateTargetById` and `ctl:ruleRemoveTargetById` with *chained rules*, target exclusions are only applied to the first rule in the chain. You can't exclude targets from other rules in the chain, depending on how the rule is written, you may have to remove the entire rule using `SecRuleRemoveById` or `ctl:ruleRemoveById`. This is a current limitation of the SecLang configuration language.
+{{% /notice %}}
+
+{{% notice note %}}
 There's also a third group of rule exclusion directives and actions, the use of which is discouraged. As well as excluding rules "ById" and "ByTag", it's also possible to exclude "ByMsg" (`SecRuleRemoveByMsg`, `SecRuleUpdateTargetByMsg`, `ctl:ruleRemoveByMsg`, and `ctl:ruleRemoveTargetByMsg`). This excludes rules based on the message they write to the error log. These messages can be dynamic and may contain special characters. As such, trying to exclude rules by message is difficult and error-prone.
+{{% /notice %}}
+
+{{% notice tip %}}
+When creating a runtime rule exclusion, we recommend specifying the [t:none transformation](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#transformation-functions) to ensure you have full control over the behavior of an rule. See our docs on rule creation to get an overview on how a runtime rule works: https://coreruleset.org/docs/3-about-rules/creating/ 
 {{% /notice %}}
 
 #### Rule Tags
@@ -268,6 +276,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/function.php" \
     "id:1000,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveById=920230"
 ```
@@ -286,6 +295,7 @@ SecRule REQUEST_URI "@beginsWith /web_app_1/content" \
     "id:1010,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveByTag=attack-sqli"
 ```
@@ -304,6 +314,7 @@ SecRule REQUEST_URI "@beginsWith /dynamic/new_post" \
     "id:1020,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveTargetById=941150;ARGS:text_input"
 ```
@@ -322,6 +333,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
     "id:1030,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveTargetByTag=attack-sqli;REQUEST_COOKIES:uid"
 ```
