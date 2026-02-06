@@ -71,12 +71,6 @@ Excellent for testing how different database systems interpret commands, handle 
 
 Simple interface for running SQL queries against SQLite, MySQL, and PostgreSQL. Includes sample queries and makes it easy to share test cases with others.
 
-### SQL Fiddle
-
-[https://sqlfiddle.com](https://sqlfiddle.com)
-
-Supports a wide range of SQL databases including Oracle, PostgreSQL, MySQL, and SQLite. Useful for testing queries across different database platforms to understand behavior differences.
-
 ### PostgreSQL Playground (Aiven)
 
 [https://aiven.io/tools/pg-playground](https://aiven.io/tools/pg-playground)
@@ -148,18 +142,6 @@ Modern, user-friendly command-line HTTP client. More intuitive than curl with JS
 [https://hurl.dev](https://hurl.dev)
 
 Lightweight HTTP testing tool built on libcurl. Allows you to run and test HTTP requests with a simple plain-text format. Excellent for creating repeatable test scenarios.
-
-### ReqBin
-
-[https://reqbin.com/curl](https://reqbin.com/curl)
-
-Online tool for running curl commands without local installation. Useful for quick HTTP request testing and sharing test cases.
-
-### HTTP Header Checker (KeyCDN)
-
-[https://tools.keycdn.com/curl](https://tools.keycdn.com/curl)
-
-Online curl test tool that analyzes HTTP response headers. Useful for understanding how servers respond to different requests and how CRS processes them.
 
 ## CRS-Specific Development Tools
 
@@ -264,7 +246,6 @@ If you know of other useful tools for rule writers, please open an issue or subm
 - [SQLite Online](https://sqliteonline.com/)
 - [OneCompiler](https://onecompiler.com/)
 - [DB Fiddle](https://www.db-fiddle.com/)
-- [SQL Fiddle](https://sqlfiddle.com/)
 - [PostgreSQL Playground](https://aiven.io/tools/pg-playground)
 - [RunSQL](https://runsql.com/)
 - [URL Encoder](https://www.urlencoder.org/)
@@ -275,5 +256,3 @@ If you know of other useful tools for rule writers, please open an issue or subm
 - [LRQA XSS Payload Generator](https://www.lrqa.com/en/cyber-labs/cross-site-scripting-xss-payload-generator/)
 - [HTTPie](https://httpie.io/)
 - [Hurl](https://hurl.dev/)
-- [ReqBin](https://reqbin.com/curl)
-- [KeyCDN HTTP Header Checker](https://tools.keycdn.com/curl)
