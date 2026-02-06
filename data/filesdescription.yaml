@@ -39,7 +39,7 @@ common:
     Execution exploits.
   REQUEST-933-APPLICATION-ATTACK-PHP.conf: >
     These rules provide protection against PHP injection attacks. The
-    rules detect PHP open tags (such as "<?php" and "<?"), PHP functions
+    rules detect PHP open tags (such as "&lt;?php" and "&lt;?"), PHP functions
     commonly used in exploits, and various PHP-based attack patterns that
     could lead to remote code execution or application compromise.
   REQUEST-934-APPLICATION-ATTACK-GENERIC.conf: >
@@ -156,7 +156,7 @@ versioned:
       SSL pinger, Apache internal dummy connections, and other legitimate
       traffic that should bypass CRS inspection.
     REQUEST-911-METHOD-ENFORCEMENT.conf: >
-      These rules enforce allowed HTTP methods policy. Requests using HTTP
+      These rules enforce the configured allowed HTTP methods policy. Requests using HTTP
       methods not explicitly permitted in the configuration (defined in
       tx.allowed_methods) will be blocked to prevent potential attacks
       using uncommon or dangerous HTTP methods.
@@ -164,7 +164,7 @@ versioned:
       These rules protect against multipart-related attacks and address the
       3UWMWA6W vulnerability. They enforce strict policies on multipart
       content, including charset definitions and content-type headers.
-      Requires ModSecurity version 2.9.6 or 3.0.8 or newer.
+      Requires ModSecurity version 2.9.6 or newer, or 3.0.8 or newer.
     REQUEST-999-COMMON-EXCEPTIONS-AFTER.conf: >
       This file contains common exception rules that remove false positives
       for well-known applications and services, such as Google Analytics
