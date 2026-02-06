@@ -13,42 +13,45 @@ aliases: ["../operation/known_issues"]
 
   False positives from paranoia level 2 and higher are considered to be less interesting, as it is expected that users will write exclusion rules for their alerts in the higher paranoia levels. Nevertheless, false positives from higher paranoia levels can still be reported and the CRS project will try to find a generic solution for them.
 
-## ModSecurity's `--enable-request-early`
+## ModSecurity's `--disable-request-early`
 
-> **Enable early execution of phase 1 rules**  
-> By default, ModSecurity does **not** activate this flag. Phase 1 rules run **after** the request headers are fully read. This flag allows certain phase 1 rules to trigger *earlier*, potentially before the full header set is available.
+> **Warning: Disabling early execution of phase 1 rules**
+> By default, ModSecurity **enables** early request processing, allowing phase 1 rules to execute during the early stages of request handling. Using the `--disable-request-early` compilation flag **disables** this behavior and can cause serious compatibility issues with CRS 4.0+.
 
 ### ⚙️ Motivation
 
-- During the [CRS Monthly Chat on **May 5, 2025**](https://github.com/coreruleset/coreruleset/issues/4116), the development team agreed to officially document this flag following concerns that enabling it may lead to unexpected behavior, particularly with rule ordering and header processing in certain webserver contexts.
-- This setting is disabled by default and can trigger issues aligned with discussion in CRS issue https://github.com/coreruleset/coreruleset/issues/3696.
+- During the [CRS Monthly Chat on **May 5, 2025**](https://github.com/coreruleset/coreruleset/issues/4116), the development team agreed to officially document this flag following reports that disabling it leads to unexpected behavior, particularly with rule initialization and processing in certain webserver contexts.
+- Early request processing is **enabled by default**. Disabling it with `--disable-request-early` can trigger critical issues as documented in [CRS issue #3696](https://github.com/coreruleset/coreruleset/issues/3696) and [ModSecurity issue #3362](https://github.com/owasp-modsecurity/ModSecurity/issues/3362).
 
 ### 🧩 How it works
 
-- Without the flag, all phase 1 rules run once the full request headers have been received.
-- With `--enable-request-early`, some phase 1 rules may run sooner—immediately after preliminary parts of header parsing, before the complete header set is finalized.
+- With the default behavior (early request processing **enabled**), phase 1 rules execute during the early request hook, ensuring proper initialization of CRS variables and thresholds.
+- When compiled with `--disable-request-early`, phase 1 rules are moved to a later hook. This prevents proper initialization in certain contexts (such as Apache's `RedirectMatch` at virtual host scope), causing CRS to malfunction.
 
-> 💡 Note: Historically introduced in the 2.x version of ModSecurity but **not fully documented** in `./configure --help`
+> 💡 Note: Historically introduced in the 2.x version of ModSecurity. The default is to have early request processing **enabled**, and this should not be changed for CRS 4.0+ compatibility.
 
 ### 🔐 Risks and Trade‑offs
 
 | Potential Issue | Details |
 |-----------------|---------|
-| **Header fragmentation** | Running rules early may miss later header fields or trigger unwanted matches on partial header state. |
-| **Ordering issues** | Rule evaluation may happen in a different order than intended, throwing off downstream logic or causing false positives/negatives. |
-| **Context mismatch** | In certain environments (e.g., Nginx, Apache with `Location` context), early execution may break assumptions about available variables or phase structure. |
+| **Initialization failure** | Phase 1 rules may not execute in all request contexts (e.g., Apache redirects), leaving CRS variables uninitialized and causing 403 errors or bypasses. |
+| **CRS 4.0+ incompatibility** | CRS 4.0 and later versions rely on early request processing for proper anomaly score threshold initialization. Disabling this breaks core functionality. |
+| **Context mismatch** | In Apache with `RedirectMatch` or similar directives at virtual host scope, phase 1 may be completely skipped, rendering CRS non-functional. |
 
-These were precisely the unintended behaviors noted during the CRS chat.
+These issues were reported by users who compiled ModSecurity with `--disable-request-early` and subsequently experienced CRS failures.
 
 ### 🧭 Recommendations
 
-- **Keep it disabled** (default). Only enable it if you fully understand rule timing and are crafting a custom setup that specifically requires early matching.
-- Thoroughly **test your CRS configuration** under various edge cases and server contexts before enabling this flag in production.
+- **Do NOT use `--disable-request-early`** when compiling ModSecurity. Keep the default behavior (early request processing enabled).
+- If you are experiencing issues with CRS 4.0+, verify that your ModSecurity installation was not compiled with `--disable-request-early`.
+- CRS 4.0 and later versions **require** early request processing to function correctly.
 
-### 🛠️ Enabling the flag
+### 🛠️ Verifying your ModSecurity configuration
+
+If you suspect your ModSecurity was compiled with early request processing disabled, you will need to recompile it with the default settings:
 
 ```bash
-./configure --enable-request-early
+./configure  # Do NOT use --disable-request-early
 make
 make install
 ```
@@ -69,12 +72,12 @@ make install
 
   ```plaintext
   Error parsing actions: Unknown action: \\
-  Action 'configtest' failed.`
+  Action 'configtest' failed.
   ```
 
   This bug is known to plague RHEL/Centos 7 below v7.4 or httpd v2.4.6 release 67 and Ubuntu 14.04 LTS users. (The original bug report can be found [here](https://bz.apache.org/bugzilla/show_bug.cgi?id=55910)).
 
-  It is recommended to upgrade an affected Apache version. If upgrading is not possible, the CRS project provides a script in the `util/join-multiline-rules` directory which converts the rules into a format that works around the bug. This script must be re-run whenever the CRS rules are modified or updated.
+  It is recommended to upgrade an affected Apache version. If upgrading is not possible, the CRS project provided a script in older versions (CRS v3.x) which converts the rules into a format that works around the bug. This script must be re-run whenever the CRS rules are modified or updated.
 
 
 ## ModSecurity
@@ -82,7 +85,7 @@ make install
 👉 versions **3.0.0-3.0.2** will give an error:
 
   ```
-  Expecting an action, got: ctl:requestBodyProcessor=URLENCODED"`
+  Expecting an action, got: ctl:requestBodyProcessor=URLENCODED"
   ```
 
   Support for the URLENCODED body processor was only added in ModSecurity 3.0.3.
@@ -114,8 +117,8 @@ application/soap+xml is indicative that XML will be provided. In accordance with
 
 ## libmodsecurity3
 
-[There is no support](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v3.x)#secdisablebackendcompression) for the `SecDisableBackendCompression` directive at all. 
-If Nginx is acting as a proxy and the backend supports any type of compression, then if the client sends an `Accept-Encoding: gzip,deflate,...` or `TE` header, the backend will return the response in a compressed format. Because of this, the engine cannot verify the response. As a workaround, you need to override the `Accept-Encoding` and `TE` headers in the proxy:
+[There is no support](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v3.x)#secdisablebackendcompression) for the `SecDisableBackendCompression` directive at all.
+If Nginx is acting as a proxy and the backend supports any type of compression, then if the client sends an `Accept-Encoding: gzip,deflate,...` or `TE` header, then the backend will return the response in a compressed format. Because of this, the engine cannot verify the response. As a workaround, you need to override the `Accept-Encoding` and `TE` headers in the proxy:
 
    ```
     server {
