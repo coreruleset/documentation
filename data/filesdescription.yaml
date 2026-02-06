@@ -4,9 +4,12 @@ common:
     This file is used to add LOCAL exceptions for your site. Often in this file
     we would see rules that short-circuit inspection and allow certain
     transactions to skip through inspection.
-
-    `Example: SecRule REMOTE_ADDR "@ipMatch 192.168.1.100" "phase:1,id:'981033',t:none,nolog,pass,ctl:ruleEngine=Off"`
-  REQUEST-901-INITIALIZATION.conf: TODO
+  REQUEST-901-INITIALIZATION.conf: >
+    This file initializes the Core Rules and performs preparatory actions.
+    It also fixes errors and omissions of variable definitions in the
+    crs-setup.conf file. The crs-setup.conf can and should be edited by
+    the user, but this file is part of the CRS installation and should
+    not be altered.
   REQUEST-913-SCANNER-DETECTION.conf: >
     These rules are concentrated around detecting security tools and
     scanners.
@@ -27,10 +30,30 @@ common:
     remote resource into the web application that will be executed.
     Exploiting this type of attack can lead to the web application or
     server being compromised.
-  REQUEST-932-APPLICATION-ATTACK-RCE.conf: TODO
-  REQUEST-933-APPLICATION-ATTACK-PHP.conf: TODO
-  REQUEST-934-APPLICATION-ATTACK-GENERIC.conf: TODO
-  REQUEST-941-APPLICATION-ATTACK-XSS.conf: TODO
+  REQUEST-932-APPLICATION-ATTACK-RCE.conf: >
+    These rules detect Unix and Windows command injection attacks. Command
+    injections occur when an application executes shell commands without
+    proper input escaping or validation. Attackers can exploit this by
+    inserting command separators and additional commands into user input.
+    This file also protects against Oracle WebLogic Remote Command
+    Execution exploits.
+  REQUEST-933-APPLICATION-ATTACK-PHP.conf: >
+    These rules provide protection against PHP injection attacks. The
+    rules detect PHP open tags (such as "&lt;?php" and "&lt;?"), PHP functions
+    commonly used in exploits, and various PHP-based attack patterns that
+    could lead to remote code execution or application compromise.
+  REQUEST-934-APPLICATION-ATTACK-GENERIC.conf: >
+    These rules detect generic application attacks including NodeJS
+    insecure deserialization vulnerabilities and generic Remote Code
+    Execution (RCE) signatures. This includes patterns like eval(),
+    function constructors, String.fromCharCode(), and insecure
+    deserialization markers used by node-serialize and funcster libraries.
+  REQUEST-941-APPLICATION-ATTACK-XSS.conf: >
+    These rules provide protection against Cross-Site Scripting (XSS)
+    attacks by detecting malicious scripts, HTML tags, and JavaScript
+    code in user input. The rules also detect path-based XSS exploits and
+    include performance optimizations to minimize false positives while
+    maintaining strong protection.
   REQUEST-942-APPLICATION-ATTACK-SQLI.conf: >
     Within this configuration file we provide rules that protect against
     SQL injection attacks. SQLi attackers occur when an attacker passes
@@ -41,7 +64,12 @@ common:
   REQUEST-943-APPLICATION-ATTACK-SESSION-FIXATION.conf: >
     These rules focus around providing protection against Session Fixation
     attacks.
-  REQUEST-944-APPLICATION-ATTACK-JAVA.conf: TODO
+  REQUEST-944-APPLICATION-ATTACK-JAVA.conf: >
+    These rules detect Java-based attacks including Remote Command
+    Execution exploits targeting Java classes. The rules provide
+    protection against Apache Struts vulnerabilities (CVE-2017-5638,
+    CVE-2017-9791, CVE-2017-9805) and Oracle WebLogic Remote Command
+    Execution exploits (CVE-2017-10271).
   REQUEST-949-BLOCKING-EVALUATION.conf: >
     These rules provide the anomaly based blocking for a given request. If
     you are in anomaly detection mode this file must not be deleted.
@@ -74,17 +102,83 @@ common:
 
 versioned:
   "3":
-    REQUEST-903.9001-DRUPAL-EXCLUSION-RULES.conf: TODO
-    REQUEST-903.9002-WORDPRESS-EXCLUSION-RULES.conf: TODO
-    REQUEST-903.9003-NEXTCLOUD-EXCLUSION-RULES.conf: TODO
-    REQUEST-903.9004-DOKUWIKI-EXCLUSION-RULES.conf: TODO
-    REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf: TODO
-    REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf: TODO
+    REQUEST-903.9001-DRUPAL-EXCLUSION-RULES.conf: >
+      These exclusion rules remedy false positives in a default Drupal
+      installation. They disable CRS checks on well-known parameter fields
+      that often trigger false alarms, including session cookies, password
+      fields, and article/node bodies. The exclusions are only active if
+      crs_exclusions_drupal=1 is set in crs-setup.conf.
+    REQUEST-903.9002-WORDPRESS-EXCLUSION-RULES.conf: >
+      These exclusion rules remedy false positives in a default WordPress
+      installation. They provide exceptions for WordPress login forms,
+      admin panels, and other WordPress-specific functionality. The
+      exclusions are only active if crs_exclusions_wordpress=1 is set in
+      crs-setup.conf. Note that WordPress comment fields are NOT excluded
+      from checking due to security concerns.
+    REQUEST-903.9003-NEXTCLOUD-EXCLUSION-RULES.conf: >
+      These exclusion rules remedy false positives in a default NextCloud
+      installation. They likely work with OwnCloud as well. The rules
+      provide exceptions for file uploads, WebDAV operations, and other
+      NextCloud-specific functionality. The exclusions are only active if
+      crs_exclusions_nextcloud=1 is set in crs-setup.conf.
+    REQUEST-903.9004-DOKUWIKI-EXCLUSION-RULES.conf: >
+      These exclusion rules remedy false positives in a default DokuWiki
+      installation. They provide exceptions for wiki page editing, autosave
+      functionality, and file uploads. The exclusions are only active if
+      crs_exclusions_dokuwiki=1 is set in crs-setup.conf.
+    REQUEST-903.9005-CPANEL-EXCLUSION-RULES.conf: >
+      These exclusion rules remedy false positives in a default cPanel
+      environment. They provide exceptions for cPanel WHM server status
+      requests and other cPanel-specific functionality. The exclusions are
+      only active if crs_exclusions_cpanel=1 is set in crs-setup.conf.
+    REQUEST-903.9006-XENFORO-EXCLUSION-RULES.conf: >
+      These exclusion rules remedy false positives in a default XenForo
+      forum installation. They provide exceptions for forum posts, image
+      proxies, and other XenForo-specific functionality. The exclusions are
+      only active if crs_exclusions_xenforo=1 is set in crs-setup.conf.
     REQUEST-910-IP-REPUTATION.conf: >
-      These rules deal with detecting traffic from IPs that have
-      previously been involved with malicious activity, either on our local site or globally.
+      These rules detect and block traffic from IP addresses that have
+      previously been involved with malicious activity based on traffic
+      violations detected in previous requests. When a client IP is
+      flagged, subsequent requests from that IP are blocked during a
+      timeout period.
     REQUEST-912-DOS-PROTECTION.conf: >
-      The rules in this file will attempt to detect some level 7 DoS (Denial of Service) attacks against your server.
+      These anti-automation rules detect application layer (Layer 7) Denial
+      of Service attacks. The rules track request rates per IP address and
+      identify burst patterns. When an IP exceeds the configured thresholds,
+      it is temporarily blocked. The DoS counter tracks requests to
+      non-static resources and raises blocking flags when limits are
+      exceeded.
   "4":
-    REQUEST-905-COMMON-EXCEPTIONS.conf: TODO
-    RESPONSE-955-WEB-SHELLS.conf: TODO
+    REQUEST-905-COMMON-EXCEPTIONS.conf: >
+      This file is used as an exception mechanism to remove common false
+      positives that may be encountered. It includes exceptions for Apache
+      SSL pinger, Apache internal dummy connections, and other legitimate
+      traffic that should bypass CRS inspection.
+    REQUEST-911-METHOD-ENFORCEMENT.conf: >
+      These rules enforce the configured allowed HTTP methods policy. Requests using HTTP
+      methods not explicitly permitted in the configuration (defined in
+      tx.allowed_methods) will be blocked to prevent potential attacks
+      using uncommon or dangerous HTTP methods.
+    REQUEST-922-MULTIPART-ATTACK.conf: >
+      These rules protect against multipart-related attacks and address the
+      3UWMWA6W vulnerability. They enforce strict policies on multipart
+      content, including charset definitions and content-type headers.
+      Requires ModSecurity version 2.9.6 or newer, or 3.0.8 or newer.
+    REQUEST-999-COMMON-EXCEPTIONS-AFTER.conf: >
+      This file contains common exception rules that remove false positives
+      for well-known applications and services, such as Google Analytics
+      cookies, Google Ads cookies, and other legitimate third-party
+      services. This file must be loaded after all the request rules have
+      been created.
+    RESPONSE-955-WEB-SHELLS.conf: >
+      These rules provide detection and blocking of web shells in response
+      bodies. Web shells are malicious scripts uploaded to web servers that
+      provide attackers with remote command execution capabilities. The
+      rules detect PHP, JSP, ASP, and other types of web shells that may
+      indicate a successful server compromise.
+    RESPONSE-956-DATA-LEAKAGES-RUBY.conf: >
+      These rules provide protection against data leakages that may occur
+      from Ruby applications. The rules detect Ruby error messages and stack
+      traces in response bodies that could reveal sensitive information
+      about the application's internal structure.
