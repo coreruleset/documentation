@@ -59,7 +59,7 @@ jobs:
 
       - name: Link Checker
         id: lychee
-        uses: lycheeverse/lychee-action@631725aa742da9b8eb5e3541942ab992832223e3
+        uses: lycheeverse/lychee-action@c6e7911b99c9aec72bbd07b92c99d2c76417e260
         with:
           args: "--cookie-jar /tmp/lychee-cookies './content/**/*.md'"
           jobSummary: true
