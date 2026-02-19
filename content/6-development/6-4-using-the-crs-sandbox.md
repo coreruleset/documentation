@@ -6,6 +6,10 @@ chapter: false
 aliases: ["../development/sandbox"]
 ---
 
+{{% notice style="info" icon="flask" %}}
+The CRS Sandbox is a shared public resource. Please review the [CRS Sandbox Security Policy]({{% ref "6-7-crs-sandbox-security-policy.md" %}}) before use.
+{{% /notice %}}
+
 ## Introducing the CRS Sandbox
 
 We have set up a public **CRS Sandbox** which you can use to send attacks at the CRS. You can choose between various WAF engines and CRS versions. The sandbox parses audit logs and returns our detections in an easy and useful format.
@@ -65,7 +69,7 @@ x-backend: apache-3.3.2
 It’s useful to know that you can tweak the sandbox in various ways. If you don’t send any `X-` headers, the sandbox will use the following defaults.
 
 - The default backend is _Apache 2 with ModSecurity 2.9_.
-- The default CRS version is the _latest release version_, currently 3.3.2.
+- The default CRS version is the _latest release version_, currently 4.22.0.
 - The default Paranoia Level is 1, which is the least strict setting.
 - By default, the response is the full audit log from the WAF, which is verbose and includes unnecessary information, hence why `X-Format-Output: txt-matched-rules` is useful.
 
@@ -73,7 +77,7 @@ It’s useful to know that you can tweak the sandbox in various ways. If you don
 
 Let’s say you want to try your payload on different WAF engines or CRS versions, or like the output in a different format for automated usage. You can do this by adding the following HTTP headers to your request:
 
-- `x-crs-version`: will pick another CRS version. Available values are `3.3.2` (default), `3.2.1`, `nightly` (which has the latest changes which are not released) and `3.4.0-dev-log4j` (which contains an experimental rule against Log4j attacks).
+- `x-crs-version`: will pick another CRS version. Available values are `4.22.0` (default) and `3.3.8`.
 - `x-crs-paranoia-level`: will run CRS in a given paranoia level. Available values are `1` (default), `2`, `3`, `4`.
 - `x-crs-mode`: can be changed to return the http status code from the backend WAF. Default value is blocking (`On`), and can be changed using `detection` (will set engine to `DetectionOnly`). Values are case insensitive.
 - `x-crs-inbound-anomaly-score-threshold`: defines the inbound anomaly score threshold. Valid values are any integer > 0, with `5` being the CRS default. ⚠️ Anything different than a positive integer will be taken as 0, so it will be ignored. This only makes sense if `blocking` mode is enabled (the default now).
@@ -81,7 +85,6 @@ Let’s say you want to try your payload on different WAF engines or CRS version
 - `x-backend` allows you to select the specific backend web server
   - `apache` (default) will send the request to **Apache 2 + ModSecurity 2.9**.
   - `nginx` will send the request to **Nginx + ModSecurity 3**.
-  - `coraza-caddy` will send the request to **Caddy + Coraza WAF**.
 - `x-format-output` formats the response to your use-case (human or automation). Available values are:
   -  omitted/default: the WAF’s audit log is returned unmodified as JSON
   - `txt-matched-rules`: human-readable list of CRS rule matches, one rule per line
@@ -91,7 +94,9 @@ Let’s say you want to try your payload on different WAF engines or CRS version
 
 The header names are case-insensitive.
 
-Tip: if you work with JSON output (either unmodified or matched rules), `jq` is a useful tool to work with the output, for example you can add `| jq .` to get a pretty-printed JSON, or use `jq` to filter and modify the output.
+{{% notice style="tip" icon="terminal" %}}
+If you work with JSON output (either unmodified or matched rules), `jq` is a useful tool to work with the output, for example you can add `| jq .` to get a pretty-printed JSON, or use `jq` to filter and modify the output.
+{{% /notice %}}
 
 ### Advanced examples
 
@@ -148,11 +153,15 @@ CRS therefore detects this payload starting with paranoia level 1.
 - Please do not send more than 10 requests per second.
 - We will try to scale in response to demand.
 
+## Data and privacy
+
+All requests sent to the sandbox are logged and processed by the sandbox infrastructure. **Do not send real personal data, credentials, API keys, or any sensitive information** in your requests. By using the sandbox, you acknowledge that submitted request content may be retained and analyzed by the OWASP CRS Team for the purpose of improving CRS rules and sandbox infrastructure. See the [CRS Sandbox Security Policy]({{% ref "6-7-crs-sandbox-security-policy.md" %}}) for full details.
+
 ## Architecture
 
 The sandbox consists of various parts. The frontend that receives the requests runs on Openresty. It handles the incoming request, chooses and configures the backend running CRS, proxies the request to the backend, and waits for the response. Then it parses the WAF audit log and sends the matched rules back in the format chosen by the user.
 
-There is a backend container for every engine and version. For instance, one Apache with CRS 3.2.2, one with CRS 3.2.1, et cetera... These are normal webserver installations with a WAF and the CRS.
+There is a backend container for every engine and version. For instance, one Apache with CRS 4.22.0, one with CRS 3.3.8, et cetera... These are normal webserver installations with a WAF and the CRS.
 
 The backend writes their JSON logs to a volume to be read by a collector script and sent to S3 bucket and Elasticsearch.
 

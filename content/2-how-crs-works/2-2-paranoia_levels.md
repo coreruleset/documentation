@@ -20,7 +20,7 @@ A higher paranoia level makes it harder for an attacker to go undetected. Yet th
 
 When false positives occur they need to be tuned away. In ModSecurity parlance: rule exclusions need to be written. A rule exclusion is a rule that disables another rule, either disabled completely or disabled partially only for certain parameters or for certain URIs. This means **the rule set remains intact** yet the CRS installation is no longer affected by the false positives.
 
-{{% notice note %}}
+{{% notice style="note" icon="sliders" %}}
 Depending on the complexity of the service (web application) in question and on the paranoia level, the process of writing rule exclusions can be a *substantial* amount of work.
 
 This page won't explore the problem of handling false positives further: for more information on this topic, see the appropriate chapter or refer to the [tutorials at netnea.com](https://www.netnea.com/cms/apache-tutorials/).
