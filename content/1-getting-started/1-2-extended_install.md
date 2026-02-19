@@ -39,7 +39,7 @@ ModSecurity is frequently pre-packaged and is available from several major Linux
 
 For Windows, get the latest MSI package from https://github.com/owasp-modsecurity/ModSecurity/releases.
 
-{{% notice warning %}}
+{{% notice style="warning" icon="box-open" %}}
 **Distributions might not update their ModSecurity releases frequently.** 
 
 As a result, it is quite likely that a distribution's version of ModSecurity may be missing important features or **may even contain security vulnerabilities**. Additionally, depending on the package and package manager used, the ModSecurity configuration will be laid out slightly differently.
@@ -117,7 +117,7 @@ For *production* environments, it is recommended to use the latest release, whic
 
 ### Verifying Releases
 
-{{% notice note %}}
+{{% notice style="note" icon="key" %}}
 Releases are signed using the CRS project's [GPG key](https://coreruleset.org/security.asc) (fingerprint: 3600 6F0E 0BA1 6783 2158 8211 38EE ACA1 AB8A 6E72). Releases can be verified using GPG/PGP compatible tooling.
 
 To retrieve the CRS project's public key from public key servers using `gpg`, execute: `gpg --keyserver pgp.mit.edu --recv 0x38EEACA1AB8A6E72` (this ID should be equal to the last sixteen hex characters in the fingerprint).
@@ -233,6 +233,6 @@ Nginx will include files from the Nginx configuration directory (`/etc/nginx` or
   Include {{< param crs_install_dir >}}/plugins/*-after.conf
 ```
 
-{{% notice note %}}
+{{% notice style="note" icon="puzzle-piece" %}}
 You will also need to include the plugins you want along with your CRS installation.
 {{% /notice %}}

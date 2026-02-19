@@ -44,7 +44,7 @@ This example log entry provides lots of information about the rule match. Some o
 
   `[data "Matched Data: <h1> found within ARGS:wp_post: <h1>welcome to my blog</h1>"]`
 
-{{% notice tip %}}
+{{% notice style="tip" icon="puzzle-piece" %}}
 CRS ships with a prebuilt *rule exclusion package* for WordPress, as well as other popular web applications, to help prevent false positives. See the section on [rule exclusion packages]({{% ref "#rule-exclusion-packages" %}}) for details. 
 {{% /notice %}}
 
@@ -68,7 +68,7 @@ When working in strict blocking mode, false positives can cause legitimate user 
 
 ### Directly Modifying CRS Rules
 
-{{% notice warning %}}
+{{% notice style="warning" icon="ban" %}}
 Making direct modifications to CRS rule files is a bad idea and is strongly discouraged.
 {{% /notice %}}
 
@@ -118,11 +118,11 @@ The different rule exclusion types and methods are summarized in the table below
 
 *\*\*Can also exclude ranges of rules (not currently supported in ModSecurity v3).*
 
-{{% notice tip %}}
+{{% notice style="tip" icon="file-arrow-down" %}}
 This table is available as a well presented, downloadable [Rule Exclusion Cheatsheet](https://www.netnea.com/cms/rule-exclusion-cheatsheet-download) from Christian Folini.
 {{% /notice %}}
 
-{{% notice note %}}
+{{% notice style="note" icon="link" %}}
 When using `SecRuleUpdateTargetById` and `ctl:ruleRemoveTargetById` with *chained rules*, target exclusions are only applied to the first rule in the chain. You can't exclude targets from other rules in the chain, depending on how the rule is written, you may have to remove the entire rule using `SecRuleRemoveById` or `ctl:ruleRemoveById`. This is a current limitation of the SecLang configuration language.
 {{% /notice %}}
 
@@ -206,7 +206,7 @@ The 'ctl' action for writing runtime rule exclusions does **not** support any us
 
   Runtime rule exclusions *modify* rules in some way. If a rule is to be modified then this should occur before the rule is executed (modifying a rule *after* it has been executed has no effect). As such, this type of rule exclusion must appear *before* the CRS and all its rules have been included.
 
-{{% notice tip %}}
+{{% notice style="tip" icon="folder-open" %}}
 CRS ships with the files `REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example` and `RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example`. After dropping the ".example" suffix, these files can be used to house "BEFORE-CRS" (i.e. runtime) and "AFTER-CRS" (i.e. configure-time) rule exclusions in their correct places relative to the CRS rules. These files also contain example rule exclusions to copy and learn from.
 {{% /notice %}}
 
@@ -338,7 +338,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
     ctl:ruleRemoveTargetByTag=attack-sqli;REQUEST_COOKIES:uid"
 ```
 
-{{% notice tip %}}
+{{% notice style="tip" icon="code-branch" %}}
 It's possible to write a conditional rule exclusion that tests something other than just the request URI. Conditions can be built which test, for example, the source IP address, HTTP request method, HTTP headers, and even the day of the week.
 
 Multiple conditions can also be chained together to create a logical AND by using ModSecurity's [chain](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#chain) action. This allows for creating powerful rule logic like "for transactions that are from source IP address 10.0.0.1 AND that are for location '/login.html', exclude the query string parameter 'user_id' from rule 920280". Extremely granular and specific rule exclusions can be written, in this way.
@@ -354,7 +354,7 @@ If using a native CRS installation, rule exclusion packages can be enabled in th
 
 If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose rule exclusion packages in the GUI while other vendors require custom rules to be written which set the necessary variables. Unfortunately, there are also vendors that don't allow rule exclusion packages to be used at all.
 
-{{% notice tip %}}
+{{% notice style="tip" icon="location-dot" %}}
 If running multiple web applications, it is highly recommended to enable a rule exclusion package only for the location where the corresponding web application resides. For example, to enable the WordPress rule exclusion package only for locations under '/wordpress', a rule like the following could be used:
 
 ```apache
