@@ -17,7 +17,9 @@ home = ['html', 'rss', 'print']
   # Shows a checkmark for visited pages on the menu
   showVisitedLinks = true
   # Logo image displayed in the sidebar
-  logo = { src = '/images/logo.png', direction = 'column' }
+  logo = { direction = 'column' }
+  # Text below the logo in the sidebar
+  linkTitle = ''
   # Disable search function. It will hide search bar
   search.disable = false
   # Javascript and CSS cache are automatically busted when new version of site is generated.
