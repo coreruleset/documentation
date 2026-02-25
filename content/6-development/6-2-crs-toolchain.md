@@ -36,7 +36,7 @@ crs-toolchain-2.7.0_amd64.deb: OK
 
 ### Method 2: Install with Go
 
-{{% notice note %}}
+{{% notice style="note" icon="code" %}}
 This method requires Go 1.19 or higher installed on your system.
 {{% /notice %}}
 
@@ -156,7 +156,7 @@ crs-toolchain <command> --help    # Show help for a specific command
 - Removed mage build tool dependency
 - Restricted evasion modifiers usage
 
-{{% notice tip %}}
+{{% notice style="tip" icon="code-branch" %}}
 To see the full release history and detailed changelogs, visit the [releases page](https://github.com/coreruleset/crs-toolchain/releases) on GitHub.
 {{% /notice %}}
 
@@ -244,7 +244,7 @@ The output will show:
 
 Updates rule files directly with newly generated expressions. This command modifies the actual CRS rule configuration files.
 
-{{% notice warning %}}
+{{% notice style="warning" icon="file-pen" %}}
 This command modifies files in place. Make sure you have committed your changes or have a backup before running update commands.
 {{% /notice %}}
 
@@ -418,7 +418,7 @@ crs-toolchain completion fish > ~/.config/fish/completions/crs-toolchain.fish
 crs-toolchain completion powershell | Out-String | Invoke-Expression
 ```
 
-{{% notice tip %}}
+{{% notice style="tip" icon="terminal" %}}
 After installing shell completion, you may need to restart your shell or source your shell configuration file for the changes to take effect.
 {{% /notice %}}
 

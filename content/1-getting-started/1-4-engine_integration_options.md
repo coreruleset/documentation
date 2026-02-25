@@ -88,7 +88,7 @@ Most big cloud providers and CDNs provide a CRS offering. While originally these
 
 The CRS project has some insight into some of these platforms and is in touch with most of these providers. The *exact specifics* are not really known, however, but what *is* known is that almost all of these integrators compromised and provide a *subset* of CRS rules and a *subset* of features, in the interests of ease of integration and operation.
 
-{{% notice info %}}
+{{% notice style="info" icon="cloud" %}}
 The [CRS Status page project](https://github.com/coreruleset/coreruleset/wiki/DevRetreat21StatusPage) will be testing cloud and CDN offerings. As part of this effort, the CRS project will be documenting the results and even publishing code on how to quickly get started using CRS in CDN/cloud providers. This status page project is in development as of spring 2022.
 {{% /notice %}}
 
@@ -96,7 +96,7 @@ A selection of these platforms are listed below, along with links to get more in
 
 ### AWS WAF
 
-{{% notice note %}}
+{{% notice style="note" icon="cloud" %}}
 AWS provides a rule set called the ["Core rule set (CRS) managed rule group"](https://docs.aws.amazon.com/waf/latest/developerguide/aws-managed-rule-groups-baseline.html) which "…provides protection against… commonly occurring vulnerabilities described in OWASP publications such as OWASP Top 10."
 
 The CRS project does **not** believe that the AWS WAF "core rule set" is based on or related to OWASP CRS.

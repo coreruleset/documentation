@@ -5,7 +5,7 @@ description: "CRS Documentation"
 
 > OWASP CRS provides documentation for many of the aspects surrounding the project. This page provides an overview of the project and its documentation.
 
-{{% notice info %}}
+{{% notice style="info" icon="shield-halved" %}}
 Security issues regarding CRS can be submitted via email to security [ at ] coreruleset.org.
 {{% /notice %}}
 
