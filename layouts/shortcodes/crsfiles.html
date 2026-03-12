@@ -1,8 +1,9 @@
-{{- $urlPre := "https://api.github.com" -}}
 {{- $crsversion := .Site.Param "crs_latest_release" -}}
 {{- $prefix := .Site.Param "crs_install_dir" -}}
 {{- $prepend := .Get "prepend" | default "" -}}
-{{- $filesJ := getJSON $urlPre (printf "/repos/coreruleset/coreruleset/git/trees/v%s" $crsversion) "?recursive=1" -}}
+{{- $url := printf "https://api.github.com/repos/coreruleset/coreruleset/git/trees/v%s?recursive=1" $crsversion -}}
+{{- $resource := resources.GetRemote $url -}}
+{{- $filesJ := $resource | transform.Unmarshal -}}
 {{- $text := slice -}}
 {{- range $idx, $file := $filesJ.tree -}}
   {{- if eq $file.type "blob" -}}
