@@ -89,7 +89,7 @@ Most detected inbound threats carry an anomaly score of 5 (by default), while sm
 
 Rule coverage should be taken into account when setting anomaly score thresholds. Different CRS rule categories feature different numbers of rules. SQL injection, for example, is covered by more than 50 rules. As a result, a real world SQLi attack can easily gain an anomaly score of 15, 20, or even more. On the other hand, a rare protocol attack might only be covered by a single, specific rule. If such an attack only causes the one specific rule to match then it will only gain an anomaly score of 5. If the inbound anomaly score threshold is set to anything higher than 5 then attacks like the one described will not be stopped. **As such, a CRS installation should aim for an inbound anomaly score threshold of 5.**
 
-{{% notice warning %}}
+{{% notice style="warning" %}}
 Increasing the anomaly score threshold above the defaults (5 for requests, 4 for responses), will allow a substantial number of attacks to bypass CRS and will impede the ability of critical rules to function correctly, such as LFI, RFI, RCE, and data-exfiltration rules. The anomaly score threshold should only ever be increased temporarily during false-positive tuning.
 
 Some WAF vendors (such as Cloudflare) set the default anomaly score well above our defaults. This is not a proper implementation of CRS, and will result in bypasses.
@@ -198,7 +198,7 @@ Early blocking makes this possible by inserting **two additional rounds of block
 More information about processing phases can be found in the [processing phases section](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#processing-phases) of the ModSecurity Reference Manual.
 {{% /notice %}}
 
-{{% notice warning %}}
+{{% notice style="warning" icon="eye-slash" %}}
 The early blocking option has a major drawback to be aware of: **it can cause potential alerts to be hidden**.
 
 If a transaction is blocked early then its body is not inspected. For example, if a transaction is blocked early at the end of phase 1 (the request headers phase) then the body of the request is never inspected. If the early blocking option is *not* enabled, it's possible that such a transaction would proceed to cause phase 2 rules to match. Early blocking hides these potential alerts. The same applies to responses that trigger an early block: it's possible that some phase 4 rules would match if early blocking were not enabled.
@@ -206,7 +206,7 @@ If a transaction is blocked early then its body is not inspected. For example, i
 Using the early blocking option results in having less information to work with, due to fewer rules being executed. This may mean that the full picture is not present in log files when looking back at attacks and malicious traffic. It can also be a problem when dealing with false positives: tuning away a false positive in phase 1 will allow the same request to proceed to the next phase the next time it's issued (instead of being blocked at the end of phase 1). The problem is that now, with the request making it past phase 1, more, previously "hidden" false positives may appear in phase 2.
 {{% /notice %}}
 
-{{% notice warning %}}
+{{% notice style="warning" icon="bolt" %}}
 If early blocking is not enabled, there's a chance that the web server will interfere with the handling of a request between phases 1 and 2. Take the example where the Apache web server issues a redirect to a new location. With a request that violates CRS rules in phase 1, this may mean that the request has a higher anomaly score than the defined threshold but it gets redirected away before blocking evaluation happens.
 {{% /notice %}}
 
