@@ -20,6 +20,120 @@ The sandbox is useful for:
 - exploit developers/researchers: if you have devised a payload, you can test beforehand if it will be blocked by the CRS and by which versions;
 - CRS developers/rule writers: you can quickly check if the CRS catches a (variant of an) exploit without the hassle of setting up your own CRS instance.
 
+## Quick reference
+
+{{< tabs title="Sandbox Headers" >}}
+{{% tab title="Backend" %}}
+**Header:** `x-backend`
+
+| Value | Engine |
+|-------|--------|
+| `apache` (default) | Apache 2 + ModSecurity 2.9 |
+| `nginx` | Nginx + ModSecurity 3 |
+| `coraza` | Coraza WAF on Caddy |
+
+```bash
+curl -H "x-backend: coraza" \
+  -H "x-format-output: txt-matched-rules" \
+  'https://sandbox.coreruleset.org/?file=/etc/passwd'
+```
+{{% /tab %}}
+{{% tab title="CRS Version" %}}
+**Header:** `x-crs-version`
+
+| Value | Description |
+|-------|-------------|
+| `latest` (default) | Latest release |
+| `3.3.9`, `4.x.x`, ... | Specific semver version |
+
+```bash
+curl -H "x-crs-version: 3.3.9" \
+  -H "x-format-output: txt-matched-rules" \
+  'https://sandbox.coreruleset.org/?file=/etc/passwd'
+```
+{{% /tab %}}
+{{% tab title="Paranoia Level" %}}
+**Header:** `x-crs-paranoia-level`
+
+| Value | Description |
+|-------|-------------|
+| `1` (default) | Least strict |
+| `2` | Moderate |
+| `3` | Strict |
+| `4` | Most strict |
+
+```bash
+curl -H "x-crs-paranoia-level: 3" \
+  -H "x-format-output: txt-matched-rules" \
+  'https://sandbox.coreruleset.org/?file=/etc/passwd'
+```
+{{% /tab %}}
+{{% tab title="Mode & Thresholds" %}}
+**Header:** `x-crs-mode`
+
+| Value | Description |
+|-------|-------------|
+| `On` (default) | Blocking mode |
+| `detection` | Detection only |
+
+**Header:** `x-crs-inbound-anomaly-score-threshold` (default: `5`)
+
+**Header:** `x-crs-outbound-anomaly-score-threshold` (default: `4`)
+
+```bash
+curl -H "x-crs-mode: detection" \
+  -H "x-crs-inbound-anomaly-score-threshold: 10" \
+  -H "x-format-output: txt-matched-rules" \
+  'https://sandbox.coreruleset.org/?file=/etc/passwd'
+```
+{{% /tab %}}
+{{% tab title="Output Format" %}}
+**Header:** `x-format-output`
+
+| Value | Description |
+|-------|-------------|
+| _(omitted)_ | Full audit log as JSON |
+| `txt-matched-rules` | Human-readable matched rules |
+| `txt-matched-rules-extended` | Extended text with explanation |
+| `json-matched-rules` | JSON formatted |
+| `csv-matched-rules` | CSV formatted |
+| `html-matched-rules` | HTML table |
+
+```bash
+curl -H "x-format-output: json-matched-rules" \
+  'https://sandbox.coreruleset.org/?file=/etc/passwd' | jq .
+```
+{{% /tab %}}
+{{% tab title="Full Examples" %}}
+**Apache** with text output and CRS 4.x:
+
+```bash
+curl -H "x-backend: apache" \
+  -H "x-crs-version: 4.25.0" \
+  -H "x-format-output: txt-matched-rules" \
+  'https://sandbox.coreruleset.org/?file=/etc/passwd'
+```
+
+**Nginx** with JSON output and CRS 3.3.9:
+
+```bash
+curl -H "x-backend: nginx" \
+  -H "x-crs-version: 3.3.9" \
+  -H "x-format-output: json-matched-rules" \
+  'https://sandbox.coreruleset.org/?q=<script>alert(1)</script>' | jq .
+```
+
+**Coraza** with extended text output and latest CRS:
+
+```bash
+curl -H "x-backend: coraza" \
+  -H "x-crs-version: latest" \
+  -H "x-format-output: txt-matched-rules-extended" \
+  'https://sandbox.coreruleset.org/?cmd=cat+/etc/shadow'
+```
+{{% /tab %}}
+{{< /tabs >}}
+
 ## Basic usage
 
 The sandbox is located at https://sandbox.coreruleset.org/.
@@ -78,7 +192,7 @@ It's useful to know that you can tweak the sandbox in various ways. If you don't
 
 Let's say you want to try your payload on different WAF engines or CRS versions, or like the output in a different format for automated usage. You can do this by adding the following HTTP headers to your request:
 
-- `x-crs-version`: will pick another CRS version. Available values are `latest` (default, currently the latest release) and any supported semver version (e.g. `3.3.8`).
+- `x-crs-version`: will pick another CRS version. Available values are `latest` (default, currently the latest release) and any supported semver version (e.g. `3.3.9`).
 - `x-crs-paranoia-level`: will run CRS in a given paranoia level. Available values are `1` (default), `2`, `3`, `4`.
 - `x-crs-mode`: can be changed to return the http status code from the backend WAF. Default value is blocking (`On`), and can be changed using `detection` (will set engine to `DetectionOnly`). Values are case insensitive.
 - `x-crs-inbound-anomaly-score-threshold`: defines the inbound anomaly score threshold. Valid values are any integer > 0, with `5` being the CRS default. ⚠️ Anything different than a positive integer will be taken as 0, so it will be ignored. This only makes sense if `blocking` mode is enabled (the default now).
@@ -105,13 +219,13 @@ If you work with JSON output (either unmodified or matched rules), `jq` is a use
 
 ### Advanced examples
 
-Let's say you want to send a payload to CRS version **3.3.8** and choose **Nginx + ModSecurity 3** as a backend, because this is what you are interested in. You want to get the output in JSON because you want to process the results with a script. (For now, we use `jq` to pretty-print it.)
+Let's say you want to send a payload to CRS version **3.3.9** and choose **Nginx + ModSecurity 3** as a backend, because this is what you are interested in. You want to get the output in JSON because you want to process the results with a script. (For now, we use `jq` to pretty-print it.)
 
 The command would look like:
 
 ```bash
 curl -H "x-backend: nginx" \
-  -H "x-crs-version: 3.3.8" \
+  -H "x-crs-version: 3.3.9" \
   -H "x-format-output: json-matched-rules" \
   https://sandbox.coreruleset.org/?file=/etc/passwd | jq .
 
@@ -173,14 +287,15 @@ All requests sent to the sandbox are logged and processed by the sandbox infrast
 
 ## Architecture
 
-The sandbox consists of various parts. The frontend that receives the requests runs on OpenResty (Nginx with Lua). It handles the incoming request, selects and configures the backend running CRS based on the request headers, proxies the request to the backend, and waits for the response. Then it parses the WAF audit log and sends the matched rules back in the format chosen by the user.
+The sandbox consists of various parts. An NLB (Network Load Balancer) sits in front of the frontend and distributes incoming traffic. The frontend that receives the requests runs on OpenResty (Nginx with Lua). It handles the incoming request, selects and configures the backend running CRS based on the request headers, proxies the request to the backend, and waits for the response. Then it parses the WAF audit log and sends the matched rules back in the format chosen by the user.
 
-```text
-Client → OpenResty (Lua routing) → WAF Backend → Mirror Backend
-                                        ↓
-                                  ModSecurity/Coraza CRS
-                                        ↓
-                                  Audit Logs → Filebeat → Elasticsearch/S3
+```mermaid
+graph LR
+  Client --> NLB[NLB]
+  NLB --> OpenResty[OpenResty<br>Lua routing]
+  OpenResty --> WAF[WAF Backend]
+  WAF --> Mirror[Mirror Backend]
+  WAF --> CRS[ModSecurity /<br>Coraza CRS]
 ```
 
 There is a backend container for every engine and version. The current backends are:
