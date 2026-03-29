@@ -27,6 +27,8 @@ home = ['html', 'rss', 'print']
   disableAssetsBusting = false
   # Set this to true to disable copy-to-clipboard button for inline code.
   disableInlineCopyToClipBoard = false
+  # Always show copy-to-clipboard button for block code (not just on hover).
+  disableHoverBlockCopyToClipBoard = true
   # A title for shortcuts in menu is set by default. Set this to true to disable it.
   disableShortcutsTitle = false
   # When using mulitlingual website, disable the switch language button.
