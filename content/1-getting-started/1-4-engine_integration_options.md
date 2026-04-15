@@ -112,7 +112,7 @@ Fastly has offered CRS as part of their Fastly WAF for several years, but they h
 
 ### Google Cloud Armor
 
-Google integrates CRS into its Cloud Armor WAF offering. Google runs the CRS rules on their own WAF engine. As of fall 2022, Google offers version 3.3.2 of CRS.
+Google integrates CRS into its Cloud Armor WAF offering. Google runs the CRS rules on their own WAF engine. As of April 2026, Google offers version 4.22 of CRS.
 
 To learn more about CRS on Google's Cloud Armor, read [this document from Google](https://cloud.google.com/armor/docs/rule-tuning).
 
