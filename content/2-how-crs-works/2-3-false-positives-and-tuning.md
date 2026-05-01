@@ -359,6 +359,16 @@ If running multiple web applications, it is highly recommended to enable a rule 
 
 ```apache
 SecRule REQUEST_URI "@beginsWith /wordpress/" setvar:tx.crs_exclusions_wordpress=1...
+
+Or if CRS is running on an reverse-proxy with multiple apps, you can enable plugins per domain using either [SecWebAppID](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#user-content-SecWebAppId) (Unsupported on Coraza):
+```apache
+SecRule WebAppID "@streq wordpress" setvar:tx.crs_exclusions_wordpress=1...
+```
+
+or the Host header:
+```apache
+SecRule REQUEST_HEADERS:Host "@streq wordpress.example.com" setvar:tx.crs_exclusions_wordpress=1...
+
 ```
 {{% /notice %}}
 
