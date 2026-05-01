@@ -338,6 +338,33 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
     ctl:ruleRemoveTargetByTag=attack-sqli;REQUEST_COOKIES:uid"
 ```
 
+#### Example 9 Content Type
+
+*(Runtime RE. Selectively allowing Content Type.)*
+
+**Scenario**: A POST request with a Content Type of `text/plain` is being sent to `/webapp/login.html`, this request is blocked because `text/plain` is not in the list of allowed Content Types for rule `920420`. CRS only allows Content Types it knows the WAF can safely parse. It is decided to allow the `text/plain` Content Type only for `/webapp/login.html` and to enable the approate body parser, which is JSON for this example. A chain rule it utilized to ensure the JSON body processor is only switched on for the `text/plain` Content Type.
+
+**Rule Exclusion:**
+
+```apache
+# CRS Rule Exclusion: Allow text/plain Content Type and switch on JSON body processor
+SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
+    "id:1040,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    chain"
+    SecRule REQUEST_HEADERS:Content-Type "@beginsWith text/plain" \
+        "t:none,\
+        ctl:requestBodyProcessor=JSON,\
+        setvar:'tx.allowed_request_content_type=%{tx.allowed_request_content_type} |text/plain|'"
+```
+
+{{% notice style="warning" icon="ban" %}}
+ModSecurity/Coraza relies on the Content Type to correctly parse a request body, allowing additional Content Types may result in a complete WAF bypass if the correct body parser has not been activated. The example provided here should be safe.
+{{% /notice %}}
+
 {{% notice style="tip" icon="code-branch" %}}
 It's possible to write a conditional rule exclusion that tests something other than just the request URI. Conditions can be built which test, for example, the source IP address, HTTP request method, HTTP headers, and even the day of the week.
 
