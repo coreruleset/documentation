@@ -83,10 +83,6 @@ server {
 }
 ```
 
-### Anomaly Mode Doesn't Work
-
-Sometimes on IIS or Nginx users run into an instance where anomaly mode doesn't work as expected. In fact upon careful inspection of logs one would notice that rules don't fire in the order we would expect. In general this is a result of using the `'*'` operator within these environments as it does not act the same way as in Apache. In general within both Apache and IIS one should expliticly include the various files present within the OWASP CRS instead of using the `'*'`.
-
 ### Webserver returns error after CRS install
 
 This is likley due to a rule triggering. For instance in some cases a rule is enabled that prohibits access via an IP address. Depending on your [SecDefaultAction](<https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#SecDefaultAction>) and [SecRuleEngine](<https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#SecRuleEngine>) configurations, this may result in a redirect loop or a status code. If this is the problem you are experiencing you should consult your error.log (or event viewer for IIS). From this location you candetermine the offending rule and add an exception if neccessary see [false positives and tuning]({{< ref "../concepts/false_positives_tuning.md" >}}).
