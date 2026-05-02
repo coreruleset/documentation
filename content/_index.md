@@ -5,7 +5,7 @@ description: "CRS Documentation"
 
 > OWASP CRS provides documentation for many of the aspects surrounding the project. This page provides an overview of the project and its documentation.
 
-{{% notice info %}}
+{{% notice style="info" icon="shield-halved" %}}
 Security issues regarding CRS can be submitted via email to security [ at ] coreruleset.org.
 {{% /notice %}}
 
@@ -15,7 +15,7 @@ OWASP® (Open Worldwide Application Security Project) CRS (previously Core Rule 
 
 ## How to Get Involved
 
-For information on how to join the vibrant community of CRS developers, start by checking out the project's [GitHub repository](https://github.com/coreruleset/coreruleset). When ready to make a contribution, have a read of the project's [contribution guidelines]({{% ref "development/contribution_guidelines/" %}}) which are used to keep the project consistent, well managed, and of a high quality.
+For information on how to join the vibrant community of CRS developers, start by checking out the project's [GitHub repository](https://github.com/coreruleset/coreruleset). When ready to make a contribution, have a read of the project's [contribution guidelines]({{% ref "6-1-contribution-guidelines/" %}}) which are used to keep the project consistent, well managed, and of a high quality.
 
 ## CRS Change Policy
 
@@ -23,7 +23,7 @@ The project endeavors not to make breaking changes in **minor releases** (i.e., 
 
 New functionality and breaking changes are made in **major releases** (i.e., 3.3).
 
-For information about what has changed in recent versions of the software, refer to the project's [CHANGES](https://github.com/coreruleset/coreruleset/blob/v4.0/dev/CHANGES.md) file on GitHub.
+For information about what has changed in recent versions of the software, refer to the project's [CHANGES](https://github.com/coreruleset/coreruleset/blob/main/CHANGES.md) file on GitHub.
 
 ## Documentation Source
 
