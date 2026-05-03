@@ -401,14 +401,14 @@ SecRule REQUEST_HEADERS:Host "@streq wordpress.example.com" setvar:tx.crs_exclus
 
 Rule exclusion packages are currently available for the following web applications:
 
-- [cPanel](https://cpanel.net)
-- [DokuWiki](https://www.dokuwiki.org)
-- [Drupal](https://www.drupal.org)
-- [Nextcloud](https://nextcloud.com)
-- [phpBB](https://www.phpbb.com)
-- [phpMyAdmin](https://www.phpmyadmin.net)
-- [WordPress](https://wordpress.org)
-- [XenForo](https://xenforo.com)
+- [cPanel](https://github.com/coreruleset/cpanel-rule-exclusions-plugin)
+- [DokuWiki](https://github.com/coreruleset/dokuwiki-rule-exclusions-plugin)
+- [Drupal](https://github.com/coreruleset/drupal-rule-exclusions-plugin)
+- [Nextcloud](https://github.com/coreruleset/nextcloud-rule-exclusions-plugin)
+- [phpBB](https://github.com/coreruleset/phpbb-rule-exclusions-plugin)
+- [phpMyAdmin](https://github.com/coreruleset/phpmyadmin-rule-exclusions-plugin)
+- [WordPress](https://github.com/coreruleset/wordpress-rule-exclusions-plugin)
+- [XenForo](https://github.com/coreruleset/xenforo-rule-exclusions-plugin)
 
 The CRS project is always looking to work with other communities and individuals to add support for additional web applications. Please get in touch via [GitHub](https://github.com/coreruleset/coreruleset) to discuss writing a rule exclusion package for a specific web application.
 
