@@ -49,7 +49,7 @@ In the latter case, where sampling mode is triggered and CRS is bypassed, an ale
 
 Here, CRS reports that it disabled the rule engine because the random number was above the sampling limit. The sampling percentage is set at the desired level, the rule set generates a random integer in the range 0-99 per-transaction, and if it’s *above* the sampling percentage then the WAF is disabled for the remainder of the transaction.
 
-{{% notice warning %}}
+{{% notice style="warning" icon="percent" %}}
 As sampling mode works by selectively disabling the ModSecurity WAF engine, if *other rule sets* are installed then they will be bypassed too.
 {{% /notice %}}
 

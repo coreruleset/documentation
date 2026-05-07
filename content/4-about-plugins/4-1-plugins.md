@@ -8,7 +8,7 @@ aliases: ["../concepts/plugins"]
 
 > The CRS plugin mechanism allows the rule set to be extended in specific, experimental, or unusual ways, as this page explains.
 
-{{% notice note %}}
+{{% notice style="note" icon="puzzle-piece" %}}
 Plugins are not part of the CRS 3.3.x release line. They are released officially with CRS 4.0. In the meantime, plugins _can_ be used with one of the stable releases by following the instructions presented below.
 {{% /notice %}}
 
@@ -73,7 +73,7 @@ crs/plugins/empty-after.conf
 
 These empty rule files ensure that the web server does not fail when `Include`-ing `*.conf` if there are no plugin files present.
 
-{{% notice info %}}
+{{% notice style="info" icon="server" %}}
 Apache supports the `IncludeOptional` directive, but that is not available on *all* web servers, so `Include` is used here in the interests of having consistent and simple documentation.
 {{% /notice %}}
 

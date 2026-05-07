@@ -44,7 +44,7 @@ This example log entry provides lots of information about the rule match. Some o
 
   `[data "Matched Data: <h1> found within ARGS:wp_post: <h1>welcome to my blog</h1>"]`
 
-{{% notice tip %}}
+{{% notice style="tip" icon="puzzle-piece" %}}
 CRS ships with a prebuilt *rule exclusion package* for WordPress, as well as other popular web applications, to help prevent false positives. See the section on [rule exclusion packages]({{% ref "#rule-exclusion-packages" %}}) for details. 
 {{% /notice %}}
 
@@ -68,7 +68,7 @@ When working in strict blocking mode, false positives can cause legitimate user 
 
 ### Directly Modifying CRS Rules
 
-{{% notice warning %}}
+{{% notice style="warning" icon="ban" %}}
 Making direct modifications to CRS rule files is a bad idea and is strongly discouraged.
 {{% /notice %}}
 
@@ -118,12 +118,20 @@ The different rule exclusion types and methods are summarized in the table below
 
 *\*\*Can also exclude ranges of rules (not currently supported in ModSecurity v3).*
 
-{{% notice tip %}}
+{{% notice style="tip" icon="file-arrow-down" %}}
 This table is available as a well presented, downloadable [Rule Exclusion Cheatsheet](https://www.netnea.com/cms/rule-exclusion-cheatsheet-download) from Christian Folini.
+{{% /notice %}}
+
+{{% notice style="note" icon="link" %}}
+When using `SecRuleUpdateTargetById` and `ctl:ruleRemoveTargetById` with *chained rules*, target exclusions are only applied to the first rule in the chain. You can't exclude targets from other rules in the chain, depending on how the rule is written, you may have to remove the entire rule using `SecRuleRemoveById` or `ctl:ruleRemoveById`. This is a current limitation of the SecLang configuration language.
 {{% /notice %}}
 
 {{% notice note %}}
 There's also a third group of rule exclusion directives and actions, the use of which is discouraged. As well as excluding rules "ById" and "ByTag", it's also possible to exclude "ByMsg" (`SecRuleRemoveByMsg`, `SecRuleUpdateTargetByMsg`, `ctl:ruleRemoveByMsg`, and `ctl:ruleRemoveTargetByMsg`). This excludes rules based on the message they write to the error log. These messages can be dynamic and may contain special characters. As such, trying to exclude rules by message is difficult and error-prone.
+{{% /notice %}}
+
+{{% notice tip %}}
+When creating a runtime rule exclusion, we recommend specifying the [t:none transformation](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#transformation-functions) to ensure you have full control over the behavior of an rule. See our docs on rule creation to get an overview on how a runtime rule works: https://coreruleset.org/docs/3-about-rules/creating/ 
 {{% /notice %}}
 
 #### Rule Tags
@@ -198,7 +206,7 @@ The 'ctl' action for writing runtime rule exclusions does **not** support any us
 
   Runtime rule exclusions *modify* rules in some way. If a rule is to be modified then this should occur before the rule is executed (modifying a rule *after* it has been executed has no effect). As such, this type of rule exclusion must appear *before* the CRS and all its rules have been included.
 
-{{% notice tip %}}
+{{% notice style="tip" icon="folder-open" %}}
 CRS ships with the files `REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example` and `RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example`. After dropping the ".example" suffix, these files can be used to house "BEFORE-CRS" (i.e. runtime) and "AFTER-CRS" (i.e. configure-time) rule exclusions in their correct places relative to the CRS rules. These files also contain example rule exclusions to copy and learn from.
 {{% /notice %}}
 
@@ -274,6 +282,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/function.php" \
     "id:1000,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveById=920230"
 ```
@@ -292,6 +301,7 @@ SecRule REQUEST_URI "@beginsWith /web_app_1/content" \
     "id:1010,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveByTag=attack-sqli"
 ```
@@ -310,6 +320,7 @@ SecRule REQUEST_URI "@rx ^/dynamic/new_post" \
     "id:1020,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveTargetById=941150;ARGS:text_input"
 ```
@@ -332,11 +343,39 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
     "id:1030,\
     phase:1,\
     pass,\
+    t:none,\
     nolog,\
     ctl:ruleRemoveTargetByTag=attack-sqli;REQUEST_COOKIES:uid"
 ```
 
-{{% notice tip %}}
+#### Example 9 Content Type
+
+*(Runtime RE. Selectively allowing Content Type.)*
+
+**Scenario**: A POST request with a Content Type of `text/plain` is being sent to `/webapp/login.html`, this request is blocked because `text/plain` is not in the list of allowed Content Types for rule `920420`. CRS only allows Content Types it knows the WAF can safely parse. It is decided to allow the `text/plain` Content Type only for `/webapp/login.html` and to enable the approate body parser, which is JSON for this example. A chain rule it utilized to ensure the JSON body processor is only switched on for the `text/plain` Content Type.
+
+**Rule Exclusion:**
+
+```apache
+# CRS Rule Exclusion: Allow text/plain Content Type and switch on JSON body processor
+SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
+    "id:1040,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    chain"
+    SecRule REQUEST_HEADERS:Content-Type "@beginsWith text/plain" \
+        "t:none,\
+        ctl:requestBodyProcessor=JSON,\
+        setvar:'tx.allowed_request_content_type=%{tx.allowed_request_content_type} |text/plain|'"
+```
+
+{{% notice style="warning" icon="ban" %}}
+ModSecurity/Coraza relies on the Content Type to correctly parse a request body, allowing additional Content Types may result in a complete WAF bypass if the correct body parser has not been activated. The example provided here should be safe.
+{{% /notice %}}
+
+{{% notice style="tip" icon="code-branch" %}}
 It's possible to write a conditional rule exclusion that tests something other than just the request URI. Conditions can be built which test, for example, the source IP address, HTTP request method, HTTP headers, and even the day of the week.
 
 Multiple conditions can also be chained together to create a logical AND by using ModSecurity's [chain](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#chain) action. This allows for creating powerful rule logic like "for transactions that are from source IP address 10.0.0.1 AND that are for location '/login.html', exclude the query string parameter 'user_id' from rule 920280". Extremely granular and specific rule exclusions can be written, in this way.
@@ -352,7 +391,7 @@ If using a native CRS installation, rule exclusion packages can be enabled in th
 
 If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose rule exclusion packages in the GUI while other vendors require custom rules to be written which set the necessary variables. Unfortunately, there are also vendors that don't allow rule exclusion packages to be used at all.
 
-{{% notice tip %}}
+{{% notice style="tip" icon="location-dot" %}}
 If running multiple web applications, it is highly recommended to enable a rule exclusion package only for the location where the corresponding web application resides. For example, to enable the WordPress rule exclusion package only for locations under '/wordpress', a rule like the following could be used:
 
 ```apache
@@ -362,14 +401,14 @@ SecRule REQUEST_URI "@beginsWith /wordpress/" setvar:tx.crs_exclusions_wordpress
 
 Rule exclusion packages are currently available for the following web applications:
 
-- [cPanel](https://cpanel.net)
-- [DokuWiki](https://www.dokuwiki.org)
-- [Drupal](https://www.drupal.org)
-- [Nextcloud](https://nextcloud.com)
-- [phpBB](https://www.phpbb.com)
-- [phpMyAdmin](https://www.phpmyadmin.net)
-- [WordPress](https://wordpress.org)
-- [XenForo](https://xenforo.com)
+- [cPanel](https://github.com/coreruleset/cpanel-rule-exclusions-plugin)
+- [DokuWiki](https://github.com/coreruleset/dokuwiki-rule-exclusions-plugin)
+- [Drupal](https://github.com/coreruleset/drupal-rule-exclusions-plugin)
+- [Nextcloud](https://github.com/coreruleset/nextcloud-rule-exclusions-plugin)
+- [phpBB](https://github.com/coreruleset/phpbb-rule-exclusions-plugin)
+- [phpMyAdmin](https://github.com/coreruleset/phpmyadmin-rule-exclusions-plugin)
+- [WordPress](https://github.com/coreruleset/wordpress-rule-exclusions-plugin)
+- [XenForo](https://github.com/coreruleset/xenforo-rule-exclusions-plugin)
 
 The CRS project is always looking to work with other communities and individuals to add support for additional web applications. Please get in touch via [GitHub](https://github.com/coreruleset/coreruleset) to discuss writing a rule exclusion package for a specific web application.
 

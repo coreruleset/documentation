@@ -22,7 +22,7 @@ Refer to the [upstream installation guide](https://github.com/kubernetes/ingress
 
 The upstream project provides [many examples](https://github.com/kubernetes/ingress-nginx/tree/main/docs/examples) of how to configure the controller. These are a good starting point.
 
-{{% notice info %}}
+{{% notice style="info" icon="dharmachakra" %}}
 All of the configuration is done via the ConfigMap. All options for ModSecurity and CRS can be found in the [annotations list](https://github.com/kubernetes/ingress-nginx/blob/main/docs/user-guide/nginx-configuration/annotations.md#modsecurity).
 {{% /notice %}}
 

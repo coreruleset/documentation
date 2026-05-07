@@ -5,7 +5,7 @@ disableToc: false
 chapter: false
 ---
 
-{{% notice note %}}
+{{% notice style="note" icon="clock-rotate-left" %}}
 **The content on this page may be outdated.** We are currently in the process of rewriting all of our documentation: please bear with us while we update our older content.
 {{% /notice %}}
 

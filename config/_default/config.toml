@@ -16,13 +16,19 @@ home = ['html', 'rss', 'print']
   author.name = "CRS project"
   # Shows a checkmark for visited pages on the menu
   showVisitedLinks = true
+  # Logo image displayed in the sidebar
+  logo = { direction = 'column' }
+  # Text below the logo in the sidebar
+  linkTitle = ''
   # Disable search function. It will hide search bar
-  disableSearch = false
+  search.disable = false
   # Javascript and CSS cache are automatically busted when new version of site is generated.
   # Set this to true to disable this behavior (some proxies don't handle well this optimization)
   disableAssetsBusting = false
   # Set this to true to disable copy-to-clipboard button for inline code.
   disableInlineCopyToClipBoard = false
+  # Always show copy-to-clipboard button for block code (not just on hover).
+  disableHoverBlockCopyToClipBoard = true
   # A title for shortcuts in menu is set by default. Set this to true to disable it.
   disableShortcutsTitle = false
   # When using mulitlingual website, disable the switch language button.
@@ -39,7 +45,7 @@ home = ['html', 'rss', 'print']
   #custom_css = ["css/foo.css", "css/bar.css"]
 
   # CRS related parameters
-  crs_latest_release = "4.0.0"
+  crs_latest_release = "4.25.0"
   crs_dev_branch = "main"
   crs_install_dir = "/etc/crs4"
 

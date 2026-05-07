@@ -18,7 +18,7 @@ For *production* environments, it is recommended to use the latest release, whic
 
 ### Verifying Releases
 
-{{% notice note %}}
+{{% notice style="note" icon="key" %}}
 Releases are signed using the CRS project's [GPG key](https://coreruleset.org/security.asc) (fingerprint: 3600 6F0E 0BA1 6783 2158 8211 38EE ACA1 AB8A 6E72). Releases can be verified using GPG/PGP compatible tooling.
 
 To retrieve the CRS project's public key from public key servers using `gpg`, execute: `gpg --keyserver pgp.mit.edu --recv 0x38EEACA1AB8A6E72` (this ID should be equal to the last sixteen hex characters in the fingerprint).
@@ -95,7 +95,7 @@ Other aspects of ModSecurity, particularly engine-specific parameters, are contr
 
 In many scenarios, the default example CRS configuration will be a good enough starting point. It is, however, a good idea to take the time to look through the example configuration file *before* deploying it to make sure it's right for a given environment.
 
-{{% notice warning %}}
+{{% notice style="warning" icon="shield-halved" %}}
 In particular, _Response_ rules are enabled by default. You must be aware that you may be vulnerable to RFDoS attacks, depending on the responses your application is sending back to the client. You could be vulnerable, if your responses from your application can contain user input. If an attacker can submit user input that is returned as part of a response, the attacker can craft the input in such a way that the response rules of the WAF will block responses containing that input _for all_ clients. For example, a blog post might no longer be accessible because of the contents of a comment on the post. See [this blog post](https://blog.sicuranext.com/response-filter-denial-of-service-a-new-way-to-shutdown-a-website/) about the problems you could face.
 There is an [experimental scanner](https://github.com/edoardottt/RFDos-Scanner) that uses [nuclei](https://github.com/projectdiscovery/nuclei?tab=readme-ov-file#install-nuclei) to find out if are affected. So if
 you are unsure, first test your application before enabling the response rules, or risk accidentally blocking some valid responses.

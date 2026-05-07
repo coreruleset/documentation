@@ -18,7 +18,7 @@ crs-setup.conf file usees the pass action:
 SecDefaultAction "phase:2,pass,log"
 ```
 
-{{% notice warning %}}
+{{% notice style="warning" icon="rotate-left" %}}
 From version 3.0 onwards, Anomaly Scoring is the default detection mode. Traditional detection mode is discouraged.
 {{% /notice %}}
 
