@@ -221,7 +221,7 @@ SecAction \
   nolog,\
   pass,\
   t:none,\
-  setvar:tx.blocking_early=1"
+  setvar:tx.early_blocking=1"
 ```
 
 If running CRS where it has been integrated into a commercial product or CDN then support for the early blocking option varies. Some vendors may allow it to be enabled through the GUI, through a custom rule, or they might not allow it to be enabled at all.
