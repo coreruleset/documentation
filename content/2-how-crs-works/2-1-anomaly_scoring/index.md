@@ -212,7 +212,7 @@ If early blocking is not enabled, there's a chance that the web server will inte
 
 #### Enabling the Early Blocking Option
 
-If using a native CRS installation on a web application firewall, the early blocking option can be enabled in the file `crs-setup.conf`. This is done by uncommenting rule 900120, which sets the variable `tx.blocking_early` to 1 in order to enable early blocking. CRS otherwise gives this variable a default value of 0, meaning that early blocking is disabled by default.
+If using a native CRS installation on a web application firewall, the early blocking option can be enabled in the file `crs-setup.conf`. This is done by uncommenting rule 900120, which sets the variable `tx.early_blocking` to 1 in order to enable early blocking. CRS otherwise gives this variable a default value of 0, meaning that early blocking is disabled by default.
 
 ```apache
 SecAction \
