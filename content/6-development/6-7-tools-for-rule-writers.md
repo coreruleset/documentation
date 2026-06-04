@@ -251,7 +251,7 @@ If you know of other useful tools for rule writers, please open an issue or subm
 - [URL Encoder](https://www.urlencoder.org/)
 - [Aqua Cloud Base64 Encoder](https://aqua-cloud.io/base64-encode-decoder/)
 - [FusionAuth URL Encoder](https://fusionauth.io/dev-tools/url-encoder-decoder)
-- [Toolquix Encode/Decode](https://toolquix.com/encode-decode)
+- [CyberChef](https://gchq.github.io/CyberChef)
 - [PortSwigger XSS Cheat Sheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet)
 - [LRQA XSS Payload Generator](https://www.lrqa.com/en/cyber-labs/cross-site-scripting-xss-payload-generator/)
 - [HTTPie](https://httpie.io/)
