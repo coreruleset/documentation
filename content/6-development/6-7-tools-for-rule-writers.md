@@ -241,6 +241,7 @@ If you know of other useful tools for rule writers, please open an issue or subm
 **Sources:**
 - [regex101](https://regex101.com/)
 - [RegExr](https://regexr.com/)
+- [CyberChef](https://gchq.github.io/CyberChef)
 - [Debuggex](https://www.debuggex.com/)
 - [ExtendsClass Regex Tester](https://extendsclass.com/regex-tester.html)
 - [SQLite Online](https://sqliteonline.com/)
@@ -251,7 +252,6 @@ If you know of other useful tools for rule writers, please open an issue or subm
 - [URL Encoder](https://www.urlencoder.org/)
 - [Aqua Cloud Base64 Encoder](https://aqua-cloud.io/base64-encode-decoder/)
 - [FusionAuth URL Encoder](https://fusionauth.io/dev-tools/url-encoder-decoder)
-- [Toolquix Encode/Decode](https://toolquix.com/encode-decode)
 - [PortSwigger XSS Cheat Sheet](https://portswigger.net/web-security/cross-site-scripting/cheat-sheet)
 - [LRQA XSS Payload Generator](https://www.lrqa.com/en/cyber-labs/cross-site-scripting-xss-payload-generator/)
 - [HTTPie](https://httpie.io/)
