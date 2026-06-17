@@ -107,7 +107,7 @@ Encode and decode URL parameters with instant conversion. Helps understand safe 
 
 ### Toolquix Encode/Decode
 
-[https://toolquix.com/encode-decode](https://toolquix.com/encode-decode)
+[https://toolquix.com/tools/encode-decode](https://toolquix.com/tools/encode-decode)
 
 Multi-format encoding tool supporting ASCII to hex, Base32, ROT13, and more. Useful for testing various encoding transformations that attackers might use.
 
