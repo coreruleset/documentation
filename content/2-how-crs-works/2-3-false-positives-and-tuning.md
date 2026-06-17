@@ -342,7 +342,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
 
 *(Runtime RE. Selectively allowing Content Type.)*
 
-**Scenario**: A POST request with a Content Type of `text/plain` is being sent to `/webapp/login.html`, this request is blocked because `text/plain` is not in the list of allowed Content Types for rule `920420`. CRS only allows Content Types it knows the WAF can safely parse. It is decided to allow the `text/plain` Content Type only for `/webapp/login.html` and to enable the approate body parser, which is JSON for this example. A chain rule it utilized to ensure the JSON body processor is only switched on for the `text/plain` Content Type.
+**Scenario**: A POST request with a Content Type of `text/plain` is being sent to `/webapp/login.html`, this request is blocked because `text/plain` is not in the list of allowed Content Types for rule `920420`. CRS only allows Content Types it knows the WAF can safely parse. It is decided to allow the `text/plain` Content Type only for `/webapp/login.html` and to enable the approate body parser, which is JSON for this example. A chain rule is utilized to ensure the JSON body processor is only switched on for the `text/plain` Content Type.
 
 **Rule Exclusion:**
 
@@ -362,7 +362,7 @@ SecRule REQUEST_URI "@beginsWith /webapp/login.html" \
 ```
 
 {{% notice style="warning" icon="ban" %}}
-ModSecurity/Coraza relies on the Content Type to correctly parse a request body, allowing additional Content Types may result in a complete WAF bypass if the correct body parser has not been activated. The example provided here should be safe.
+ModSecurity/Coraza relies on the Content Type to correctly parse a request body, allowing additional Content Types may result in a complete WAF bypass if the correct body parser has not been activated.
 {{% /notice %}}
 
 {{% notice style="tip" icon="code-branch" %}}
@@ -386,7 +386,7 @@ If running multiple web applications, it is highly recommended to enable a rule 
 
 ```apache
 SecRule REQUEST_URI "@beginsWith /wordpress/" setvar:tx.crs_exclusions_wordpress=1...
-
+```
 Or if CRS is running on an reverse-proxy with multiple apps, you can enable plugins per domain using either [SecWebAppID](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#user-content-SecWebAppId) (Unsupported on Coraza):
 ```apache
 SecRule WebAppID "@streq wordpress" setvar:tx.crs_exclusions_wordpress=1...
