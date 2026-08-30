@@ -58,15 +58,15 @@ SecRule REQUEST_HEADERS:Content-Length "!@rx ^\d+$" \
     tag:'paranoia-level/1',\
     tag:'OWASP_CRS',\
     tag:'capec/1000/210/272',\
-    ver:'OWASP_CRS/3.4.0-dev',\
+    ver:'OWASP_CRS/4.28.0',\
     severity:'CRITICAL',\
-    setvar:'tx.anomaly_score_pl1=+%{tx.critical_anomaly_score}'"
+    setvar:'tx.inbound_anomaly_score_pl1=+%{tx.critical_anomaly_score}'"
 ```
 
 {{% notice info %}}
 Notice that the anomaly score variable name has the suffix `pl1`. Internally, CRS keeps track of anomaly scores on a *per* [*paranoia level*]({{< ref "2-2-paranoia_levels" >}} "Page describing paranoia levels.") basis. The individual paranoia level anomaly scores are added together before each round of blocking evaluation takes place, allowing the total combined inbound or outbound score to be compared to the relevant anomaly score threshold.
 
-Tracking the anomaly score per paranoia level allows for clever scoring mechanisms to be employed, such as the [executing paranoia level]({{< ref "2-2-paranoia_levels#moving-to-a-higher-paranoia-level" >}} "Section describing the executing paranoia level feature.") feature.
+Tracking the anomaly score per paranoia level allows for clever scoring mechanisms to be employed, such as the [detection paranoia level]({{< ref "2-2-paranoia_levels#moving-to-a-higher-paranoia-level" >}} "Section describing the detection paranoia level feature.") feature.
 {{% /notice %}}
 
 The rules files `REQUEST-949-BLOCKING-EVALUATION.conf` and `RESPONSE-959-BLOCKING-EVALUATION.conf` are responsible for executing the inbound (request) and outbound (response) rounds of blocking evaluation, respectively. The rules in these files calculate the total inbound or outbound transactional anomaly score and then make a blocking decision, by comparing the result to the defined threshold and taking blocking action if required.

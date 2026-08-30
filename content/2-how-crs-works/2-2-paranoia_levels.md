@@ -55,9 +55,9 @@ If working in an enterprise environment, consider developing an internal policy 
 
 ## Setting the Paranoia Level
 
-If using a native CRS installation on a web application firewall, the paranoia level is defined by setting the variable `tx.paranoia_level` in the file `crs-setup.conf`. This is done in rule 900000, but technically the variable can be set in the Apache or Nginx configuration instead.
+If using a native CRS installation on a web application firewall, the paranoia level is defined by setting the variable `tx.blocking_paranoia_level` in the file `crs-setup.conf`. This is done in rule 900000, but technically the variable can be set in the Apache or Nginx configuration instead.
 
-If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose the PL setting in the GUI while other vendors require a custom rule to be written that sets `tx.paranoia_level`. Unfortunately, there are also vendors that don't allow the PL to be set at all. (The CRS project considers this to be an incomplete CRS integration, since paranoia levels are a defining feature of CRS.)
+If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose the PL setting in the GUI while other vendors require a custom rule to be written that sets `tx.blocking_paranoia_level`. Unfortunately, there are also vendors that don't allow the PL to be set at all. (The CRS project considers this to be an incomplete CRS integration, since paranoia levels are a defining feature of CRS.)
 
 ## How Paranoia Levels Relate to Anomaly Scoring
 
@@ -69,19 +69,19 @@ This is *technically* correct but it overlooks the fact that there are attack ca
 
 ## Moving to a Higher Paranoia Level
 
-### Introducing the *Executing Paranoia Level*
+### Introducing the *Detection Paranoia Level*
 
 Consider an example successful CRS installation: it operates at paranoia level 1, a handful of rule exclusions are in place to deal with false positives, and the inbound anomaly score threshold is set to 5 which blocks would-be attackers immediately. Things are running smoothly at paranoia level 1, but imagine that there's now a requirement to increase the level of security by raising the paranoia level to 2. Moving to PL 2 will *almost certainly* cause new false positives: given the strict anomaly score threshold of 5, these will likely cause legitimate users to be blocked.
 
 There's a simple, but **risky**, way to raise the paranoia level of a working and tuned CRS installation: raise the anomaly score threshold for a period of time, in order to account for the additional false positives that are anticipated. Raising the anomaly score threshold will allow through attacks that would have been blocked previously. The idea of *decreasing* security in order to *improve* it is counter-intuitive, as well as being bad practice.
 
-There is a better solution. First, think of the paranoia level as being the "blocking paranoia level". The rules enabled in the blocking paranoia level count towards the anomaly score threshold, which is used to determine whether or not to block a given request. Now introduce an *additional* paranoia level: the "executing paranoia level". By default, the executing paranoia level is automatically set to be equal to the blocking paranoia level. If, however, the executing paranoia level is set to be *higher* than the blocking paranoia level then the additional rules from the higher paranoia level are *executed* but will never count towards the anomaly score threshold used to make the blocking decision.
+There is a better solution. First, think of the paranoia level as being the "blocking paranoia level". The rules enabled in the blocking paranoia level count towards the anomaly score threshold, which is used to determine whether or not to block a given request. Now introduce an *additional* paranoia level: the "detection paranoia level", set with the variable `tx.detection_paranoia_level` in rule 900001 of `crs-setup.conf`. By default, the detection paranoia level is automatically set to be equal to the blocking paranoia level. If, however, the detection paranoia level is set to be *higher* than the blocking paranoia level then the additional rules from the higher paranoia level are *executed* but will never count towards the anomaly score threshold used to make the blocking decision.
 
-*Example: Blocking paranoia level of 1 and executing paranoia level of 2*
+*Example: Blocking paranoia level of 1 and detection paranoia level of 2*
 
-![Diagram showing a scenario where the blocking paranoia level and the executing paranoia level are different. The active and inactive paranoia levels are emphasized to explain the concept.](https://coreruleset.org/images/2021/10/executing-paranoia-level-1.png?width=25em)
+![Diagram showing a scenario where the blocking paranoia level and the detection paranoia level are different. The active and inactive paranoia levels are emphasized to explain the concept.](https://coreruleset.org/images/2021/10/executing-paranoia-level-1.png?width=25em)
 
-**The executing paranoia level allows rules from a higher paranoia level to be run, and potentially to trigger false positives, without increasing the probability of blocking legitimate users.** Any new false positives can then be tuned away using rule exclusions. Once ready and with all the new rule exclusions in place, the blocking paranoia level can then be raised to match the executing paranoia level. This approach is a flexible and secure way to raise the paranoia level on a working production system *without* the risk of new false positives blocking users in error.
+**The detection paranoia level allows rules from a higher paranoia level to be run, and potentially to trigger false positives, without increasing the probability of blocking legitimate users.** Any new false positives can then be tuned away using rule exclusions. Once ready and with all the new rule exclusions in place, the blocking paranoia level can then be raised to match the detection paranoia level. This approach is a flexible and secure way to raise the paranoia level on a working production system *without* the risk of new false positives blocking users in error.
 
 ## Moving to a Lower Paranoia Level
 

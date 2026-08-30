@@ -373,30 +373,16 @@ Multiple conditions can also be chained together to create a logical AND by usin
 
 #### Rule Exclusion Packages
 
-CRS ships with prebuilt *rule exclusion packages* for a selection of popular web applications. These packages contain application-specific rule exclusions designed to prevent false positives from occurring when CRS is put in front of one of these web applications.
+*Rule exclusion packages* provide application-specific rule exclusions for a selection of popular web applications, designed to prevent false positives from occurring when CRS is put in front of one of these web applications.
 
 The packages should be viewed as a good *starting point* from which to build upon. Some false positives may still occur, for example if working at a high paranoia level, if using a very new or old version of the application, if using plug-ins, add-ons, or user customizations.
 
-If using a native CRS installation, rule exclusion packages can be enabled in the file `crs-setup.conf`. Modify rule 900130 to select the web applications in question, e.g. to enable the DokuWiki rule exclusion package use `setvar:tx.crs_exclusions_dokuwiki=1`, and then uncomment the rule to enable it.
+As of CRS 4, rule exclusion packages are no longer part of the rule set itself: each one is distributed as a separate plugin. To use one, install the plugin for the web application in question as described on the [plugins]({{% ref "4-about-plugins/" %}}) page. Once installed, a plugin is enabled by default.
 
 If running CRS where it has been integrated into a commercial product or CDN then support varies. Some vendors expose rule exclusion packages in the GUI while other vendors require custom rules to be written which set the necessary variables. Unfortunately, there are also vendors that don't allow rule exclusion packages to be used at all.
 
 {{% notice style="tip" icon="location-dot" %}}
-If running multiple web applications, it is highly recommended to enable a rule exclusion package only for the location where the corresponding web application resides. For example, to enable the WordPress rule exclusion package only for locations under '/wordpress', a rule like the following could be used:
-
-```apache
-SecRule REQUEST_URI "@beginsWith /wordpress/" setvar:tx.crs_exclusions_wordpress=1...
-```
-Or if CRS is running on an reverse-proxy with multiple apps, you can enable plugins per domain using either [SecWebAppID](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#user-content-SecWebAppId) (Unsupported on Coraza):
-```apache
-SecRule WebAppID "@streq wordpress" setvar:tx.crs_exclusions_wordpress=1...
-```
-
-or the Host header:
-```apache
-SecRule REQUEST_HEADERS:Host "@streq wordpress.example.com" setvar:tx.crs_exclusions_wordpress=1...
-
-```
+If running multiple web applications, it is highly recommended to enable a rule exclusion package only for the application it belongs to. Plugins can be limited to a single location, `WebAppID`, or hostname, as described under [conditionally enable plugins for multi-application environments]({{% ref "4-about-plugins/4-1-plugins#conditionally-enable-plugins-for-multi-application-environments" %}}).
 {{% /notice %}}
 
 Rule exclusion packages are currently available for the following web applications:

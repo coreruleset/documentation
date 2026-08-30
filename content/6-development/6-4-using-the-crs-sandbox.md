@@ -149,8 +149,8 @@ curl -H "x-format-output: txt-matched-rules" https://sandbox.coreruleset.org/?fi
 
 930120 PL1 OS File Access Attempt
 932160 PL1 Remote Command Execution: Unix Shell Code Found
-949110 PL1 Inbound Anomaly Score Exceeded (Total Score: 10)
-980130 PL1 Inbound Anomaly Score Exceeded (Total Inbound Score: 10 - SQLI=0,XSS=0,RFI=0,LFI=5,RCE=5,PHPI=0,HTTP=0,SESS=0): individual paranoia level scores: 10, 0, 0, 0
+949110 PL? Inbound Anomaly Score Exceeded (Total Score: 10)
+980170 PL? Anomaly Scores: (Inbound Scores: blocking=10, detection=10, per_pl=10-0-0-0, threshold=5) - (Outbound Scores: blocking=0, detection=0, per_pl=0-0-0-0, threshold=4) - (SQLI=0, XSS=0, RFI=0, LFI=5, RCE=5, PHPI=0, HTTP=0, SESS=0, COMBINED_SCORE=10)
 ```
 
 In this example, we sent `?file=/etc/passwd` as a GET payload. The CRS should catch the string `/etc/passwd` which is on our blocklist. Try out the command in a terminal now if you like!
@@ -165,18 +165,18 @@ The sandbox also adds a `X-Unique-Id` header to the response. It contains a uniq
 
 ```bash
 curl -i -H 'x-format-output: txt-matched-rules' \
-  'https://sandbox.coreruleset.org/?test=posix_uname()'
-HTTP/1.1 200 OK
-Date: Tue, 25 Jan 2022 13:53:07 GMT
-Content-Type: text/plain
+  'https://sandbox.coreruleset.org/?test=system()'
+HTTP/1.1 403 Forbidden
+Date: Sun, 30 Aug 2026 15:55:39 GMT
+Content-Type: text/plain; charset=iso-8859-1
 Transfer-Encoding: chunked
 Connection: keep-alive
-X-Unique-ID: YfAAw3Gq8uf24wZCMjHTcAAAANE
-x-backend: apache-latest
+X-Unique-ID: apRSe3-zbbw7NqPHTKoqQwAAAI8
+x-backend: apache-v4-lts
 
-933150 PL1 PHP Injection Attack: High-Risk PHP Function Name Found
-949110 PL1 Inbound Anomaly Score Exceeded (Total Score: 5)
-980130 PL1 Inbound Anomaly Score Exceeded (Total Inbound Score: 5 - SQLI=0,XSS=0,RFI=0,LFI=0,RCE=0,PHPI=5,HTTP=0,SESS=0): individual paranoia level scores: 5, 0, 0, 0
+933160 PL1 PHP Injection Attack: High-Risk PHP Function Call Found
+949110 PL? Inbound Anomaly Score Exceeded (Total Score: 5)
+980170 PL? Anomaly Scores: (Inbound Scores: blocking=5, detection=5, per_pl=5-0-0-0, threshold=5) - (Outbound Scores: blocking=0, detection=0, per_pl=0-0-0-0, threshold=4) - (SQLI=0, XSS=0, RFI=0, LFI=0, RCE=0, PHPI=5, HTTP=0, SESS=0, COMBINED_SCORE=5)
 ```
 
 ## Default options
@@ -270,8 +270,8 @@ The payload is being detected by triggering the following rules:
 
 930120 PL1 OS File Access Attempt
 932160 PL1 Remote Command Execution: Unix Shell Code Found
-949110 PL1 Inbound Anomaly Score Exceeded (Total Score: 10)
-980130 PL1 Inbound Anomaly Score Exceeded (Total Inbound Score: 10 - SQLI=0,XSS=0,RFI=0,LFI=5,RCE=5,PHPI=0,HTTP=0,SESS=0): individual paranoia level scores: 10, 0, 0, 0
+949110 PL? Inbound Anomaly Score Exceeded (Total Score: 10)
+980170 PL? Anomaly Scores: (Inbound Scores: blocking=10, detection=10, per_pl=10-0-0-0, threshold=5) - (Outbound Scores: blocking=0, detection=0, per_pl=0-0-0-0, threshold=4) - (SQLI=0, XSS=0, RFI=0, LFI=5, RCE=5, PHPI=0, HTTP=0, SESS=0, COMBINED_SCORE=10)
 
 CRS therefore detects this payload starting with paranoia level 1.
 ```
