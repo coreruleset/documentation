@@ -116,7 +116,7 @@ The different rule exclusion types and methods are summarized in the table below
 
 *\*Can also exclude ranges of rules or multiple space separated rules.*
 
-*\*\*Can also exclude ranges of rules (not currently supported in ModSecurity v3).*
+*\*\*Can also exclude ranges of rules.*
 
 {{% notice style="tip" icon="file-arrow-down" %}}
 This table is available as a well presented, downloadable [Rule Exclusion Cheatsheet](https://www.netnea.com/cms/rule-exclusion-cheatsheet-download) from Christian Folini.
@@ -153,6 +153,15 @@ SecRuleRemoveById "913000-913999"
 ```
 
 Excluding rules using rule ranges may be more useful than excluding using tags in situations where tags are less relevant or where tags vary across the rules in question. For example, a rule range may be the most appropriate solution if the goal is to remove all rules contained in a single file, regardless of how the rules are tagged.
+
+Support for rule ranges is not identical across all directives/actions and engines. The table below summarizes current behavior when a rule **range** is used with `ById` exclusions:
+
+| Directive / action             | ModSecurity v2 | ModSecurity v3 | Coraza |
+| ------------------------------ | -------------- | -------------- | ------ |
+| `SecRuleRemoveById`            | ✅ Full range   | ✅ Full range   | ✅ Full range |
+| `ctl:ruleRemoveById`           | ✅ Full range   | ✅ Full range   | ✅ Full range |
+| `SecRuleUpdateTargetById`      | ⚠️ First ID only | ⚠️ First ID only | ✅ Full range |
+| `ctl:ruleRemoveTargetById`     | ⚠️ First ID only | ⚠️ First ID only | ✅ Full range |
 
 #### Support for Regular Expressions
 
