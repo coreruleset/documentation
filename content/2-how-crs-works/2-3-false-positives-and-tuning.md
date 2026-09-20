@@ -229,6 +229,12 @@ SecRuleRemoveById 933151
 
 **Scenario:** Several different parts of a web application are causing false positives with various SQL injection rules. None of the web services behind the WAF make use of SQL, so it is deemed safe to tune away these false positives by removing all the SQLi detection rules.
 
+{{% notice warning %}}
+This type of broad exclusion is dangerous and should only be considered if the rules are causing problems _and_ the application is not vulnerable to the specific attack, e.g., the PHP rules cause issues and no application behind the WAF uses PHP.
+
+In general, the less exclusions the better, since every rule reduces the amount of bad traffic arriving at the protected application.
+{{% /notice %}}
+
 **Rule Exclusion:**
 
 ```apache
@@ -310,7 +316,7 @@ SecRule REQUEST_URI "@beginsWith /web_app_1/content" \
 
 ```apache
 # CRS Rule Exclusion: 941150 - XSS Filter - Category 5: Disallowed HTML Attributes
-SecRule REQUEST_URI "@beginsWith /dynamic/new_post" \
+SecRule REQUEST_URI "@rx ^/dynamic/new_post" \
     "id:1020,\
     phase:1,\
     pass,\
@@ -324,6 +330,10 @@ SecRule REQUEST_URI "@beginsWith /dynamic/new_post" \
 *(Runtime RE. Exclude specific variable from rule.)*
 
 **Scenario:** The values of request cookie 'uid' are causing false positives with various SQL injection rules when trying to log in to a web service at location '/webapp/login.html'. It is decided that it is not a risk to allow SQL-like content in this specific cookie's values for the login page, however it is deemed unacceptable to disable the SQLi detection rules for anything apart from the specific request cookie in question at the login page only. It is decided to tune away these false positives by excluding only the problematic request cookie from the SQLi detection rules, and only when accessing '/webapp/login.html'.
+
+{{% notice warning %}}
+This type of broad exclusion is dangerous. Even though the decision in this example may seem trivial, rule exclusions always carry a risk. It is important to understand the risk of disabling a rule, i.e., which attack vectors become available by disabling the rule, even if only a single target is affected.
+{{% /notice %}}
 
 **Rule Exclusion:**
 
