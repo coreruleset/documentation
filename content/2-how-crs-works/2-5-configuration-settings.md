@@ -98,7 +98,7 @@ The default basic list blocks headers that let a client alter how the request is
 | Rule | Variable | Default | Purpose |
 |------|----------|---------|---------|
 | 900010 | `tx.enforce_bodyproc_urlencoded` | 0 | Set to 1 to force the URLENCODED body processor on requests whose content type did not activate any processor. Closes a bypass at the cost of parsing bodies that may not be form data |
-| 900950 | `tx.crs_validate_utf8_encoding` | 1 | Validates that request contents are valid UTF-8 (rule 920250). Enabled by default since CRS 4.28.0. Set to 0 if your site uses a different encoding, otherwise expect false positives |
+| 900950 | `tx.crs_validate_utf8_encoding` | 1 | Validates that `REQUEST_FILENAME`, `ARGS`, and `ARGS_NAMES` are valid UTF-8 (rule 920250). Enabled by default since CRS 4.28.0. Set to 0 if your site uses a different encoding, otherwise expect false positives |
 
 ## Argument and Upload Limits
 
