@@ -10,12 +10,17 @@ aliases: ["../miscellaneous/self_contained_mode"]
 
 ### Traditional Detection Mode (deprecated)
 
-The default mode in CRS 3.x is Anomaly Scoring mode, you can verify this
-is your mode by checking that the SecDefaultAction line in the
-crs-setup.conf file usees the pass action:
+The default mode in CRS is Anomaly Scoring mode. You can verify this
+is your mode by checking that the SecDefaultAction lines in the
+crs-setup.conf file use the pass action. Since CRS 4.28.0 a default is set
+for every phase:
 
 ```apache
-SecDefaultAction "phase:2,pass,log"
+SecDefaultAction "phase:1,log,auditlog,pass"
+SecDefaultAction "phase:2,log,auditlog,pass"
+SecDefaultAction "phase:3,log,auditlog,pass"
+SecDefaultAction "phase:4,log,auditlog,pass"
+SecDefaultAction "phase:5,log,auditlog,pass"
 ```
 
 {{% notice style="warning" icon="rotate-left" %}}
@@ -34,18 +39,21 @@ execute any disruptive/logging actions specified on the current rule.
 ### Configuring Traditional Mode
 
 If you want to run the CRS in Traditional mode, you can do this easily
-by modifying the SecDefaultAction directive in the crs-setup.conf file
-to use a disruptive action other than the default \'pass\', such as
-deny:
+by modifying the SecDefaultAction directives in the crs-setup.conf file
+to use a disruptive action other than the default `pass`, such as
+deny. Change the request phases (1 and 2) together; the response phases
+can stay on `pass` or be changed in the same way:
 
 ```apache
 # Default (Anomaly Mode)
-SecDefaultAction "phase:2,pass,log"
+SecDefaultAction "phase:1,log,auditlog,pass"
+SecDefaultAction "phase:2,log,auditlog,pass"
 ```
 
 ```apache
 # Updated To Enable Traditional Mode
-SecDefaultAction "phase:2,deny,status:403,log"
+SecDefaultAction "phase:1,log,auditlog,deny,status:403"
+SecDefaultAction "phase:2,log,auditlog,deny,status:403"
 ```
 
 ### Pros and Cons of Traditional Detection Mode
