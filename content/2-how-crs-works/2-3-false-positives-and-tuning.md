@@ -160,8 +160,8 @@ Support for rule ranges is not identical across all directives/actions and engin
 | ------------------------------ | -------------- | -------------- | ------ |
 | `SecRuleRemoveById`            | ✅ Full range   | ✅ Full range   | ✅ Full range |
 | `ctl:ruleRemoveById`           | ✅ Full range   | ✅ Full range   | ✅ Full range |
-| `SecRuleUpdateTargetById`      | ⚠️ First ID only | ⚠️ First ID only | ✅ Full range |
-| `ctl:ruleRemoveTargetById`     | ⚠️ First ID only | ⚠️ First ID only | ✅ Full range |
+| `SecRuleUpdateTargetById`      | ✅ Full range   | ⚠️ First ID only | ✅ Full range |
+| `ctl:ruleRemoveTargetById`     | ✅ Full range   | ⚠️ First ID only | ✅ Full range |
 
 #### Support for Regular Expressions
 
