@@ -41,7 +41,7 @@ execute any disruptive/logging actions specified on the current rule.
 If you want to run the CRS in Traditional mode, you can do this easily
 by modifying the SecDefaultAction directives in the crs-setup.conf file
 to use a disruptive action other than the default `pass`, such as
-deny. Change the request phases (1 and 2) together; the response phases
+`deny`. Change the request phases (1 and 2) together; the response phases
 can stay on `pass` or be changed in the same way:
 
 ```apache

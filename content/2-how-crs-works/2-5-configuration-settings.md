@@ -109,7 +109,7 @@ Enforced by rules 920360 to 920410 at paranoia level 1.
 | 900300 | `tx.max_num_args` | 255 | Maximum number of request arguments |
 | 900310 | `tx.arg_name_length` | 100 | Maximum length of an argument name |
 | 900320 | `tx.arg_length` | 400 | Maximum length of an argument value |
-| 900330 | `tx.total_arg_length` | 64000 | Maximum combined length of all arguments |
+| 900330 | `tx.total_arg_length` | 64000 | Maximum combined length of all arguments (sum of argument name and value lengths, excluding files) |
 | 900340 | `tx.max_file_size` | 1048576 | Maximum size of a single uploaded file in bytes |
 | 900350 | `tx.combined_file_sizes` | 1048576 | Maximum combined size of all uploaded files in bytes |
 
