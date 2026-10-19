@@ -20,7 +20,7 @@ rulesets, like OWASP CRS. Because CRS can be used with other rule sets
 for instance) it is important that no two rulesets have overlapping ID
 ranges. To aid in this process the project maintains a list of reserved
 ID spaces. If you are planning on publishing rules or a ruleset please
-reach out to security\[ at \]modsecurity.org and we can reserve a range
+reach out to modsecurity\[ at \]owasp.org and we can reserve a range
 of IDs for you thank you.
 
 ### ID Reservations
