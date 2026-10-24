@@ -44,19 +44,6 @@ ModSecurity: JSON support was not enabled.
 JSON support was enabled in Debian's package version 2.8.0-4 (Nov 2014). To resolve this, it is possible to either use `backports.debian.org` to install the latest ModSecurity
 release or to disable the rule with ID 200001.
 
-### Apache 2.4 prior to 2.4.11
-
-Apache versions prior to 2.4.11 are affected by a bug in parsing multi-line configuration directives, which causes Apache to fail during startup with an error such as:
-
-```plaintext
-Error parsing actions: Unknown action: \\
-Action 'configtest' failed.`
-```
-
-This bug is known to plague RHEL/Centos 7 below v7.4 or httpd v2.4.6 release 67 and Ubuntu 14.04 LTS users. (The original bug report can be found at <https://bz.apache.org/bugzilla/show_bug.cgi?id=55910\>).
-
-By now you should not be using such an old web server. It is advisable to upgrade your Apache version. If upgrading is not possible, the CRS project provides a script in the `util/join-multiline-rules` directory which converts the rules into a format that works around the bug. This script must be re-run whenever the CRS rules are modified or updated.
-
 ### Support for `application/soap+xml`
 
 As of CRS version 3.0.1, support has been added for the `application/soap+xml` MIME type by default, as specified in RFC 3902. **OF IMPORTANCE:** application/soap+xml is indicative that XML will be provided. In accordance with this, ModSecurity's XML request body processor should also be configured to support this MIME type. Within the ModSecurity project, [commit 5e4e2af](https://github.com/owasp-modsecurity/ModSecurity/commit/5e4e2af7a6f07854fee6ed36ef4a381d4e03960e) has been merged to support this endeavor. However, if running a modified or preexisting version of the modsecurity.conf file provided by this repository, it is a good idea to upgrade rule '200000' accordingly. The rule now appears as follows:
