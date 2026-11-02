@@ -100,7 +100,7 @@ to remember.
     implied.
 3.  Every SecRule must have an ACTION. The only required action is id,
     however, several actions are implied by SecDefaultAction (default
-    phase:2,log,auditlog,pass)
+    `log,auditlog,pass` for phases 1 through 5, as set in crs-setup.conf)
 4.  Every SecRule must have an phase ACTION, this tells the rule when to
     fire. If no phase is included the default is phase:2.
 5.  Every SecRule must have a disruptive ACTION. This is an action that

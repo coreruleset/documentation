@@ -375,6 +375,10 @@ ModSecurity/Coraza relies on the Content Type to correctly parse a request body,
 {{% /notice %}}
 
 {{% notice style="tip" icon="code-branch" %}}
+Since CRS 4.30.0, no exclusion is needed for `application/*+json` Content Types (for example `application/ld+json` or `application/vnd.api+json`) or for the AWS `application/x-amz-json-1.0` and `application/x-amz-json-1.1` types. Rules 901370 and 901360 allow them and switch on the JSON body processor automatically. See [configuration settings]({{% ref "2-5-configuration-settings.md" %}}) for the full list of allowed Content Types.
+{{% /notice %}}
+
+{{% notice style="tip" icon="code-branch" %}}
 It's possible to write a conditional rule exclusion that tests something other than just the request URI. Conditions can be built which test, for example, the source IP address, HTTP request method, HTTP headers, and even the day of the week.
 
 Multiple conditions can also be chained together to create a logical AND by using ModSecurity's [chain](https://github.com/owasp-modsecurity/ModSecurity/wiki/Reference-Manual-(v2.x)#chain) action. This allows for creating powerful rule logic like "for transactions that are from source IP address 10.0.0.1 AND that are for location '/login.html', exclude the query string parameter 'user_id' from rule 920280". Extremely granular and specific rule exclusions can be written, in this way.
