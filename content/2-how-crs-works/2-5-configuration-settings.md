@@ -65,7 +65,7 @@ These settings feed the protocol enforcement rules in `REQUEST-920-PROTOCOL-ENFO
 
 | Rule | Variable | Default | Purpose |
 |------|----------|---------|---------|
-| 900200 | `tx.allowed_methods` | `GET HEAD POST OPTIONS` | HTTP methods accepted by rule 911100 |
+| 900200 | `tx.allowed_methods` | `GET HEAD POST OPTIONS QUERY` (before 4.31.0: `GET HEAD POST OPTIONS`) | HTTP methods accepted by rule 911100. `QUERY` ([RFC 10008](https://www.rfc-editor.org/rfc/rfc10008.html)) is safe and idempotent like `GET`, but carries the query in the request body, so the request body rules and `tx.allowed_request_content_type` apply to it. To keep blocking it, set this without `QUERY` |
 | 900210 | `tx.allow_method_override_parameter` | 0 | Set to 1 to allow the `_method` request parameter used by some frameworks to override the HTTP method. Rule 920650 blocks it at paranoia level 2 and above |
 | 900220 | `tx.allowed_request_content_type` | see below | Request content types accepted by rule 920420 |
 | 900230 | `tx.allowed_http_versions` | `HTTP/1.0 HTTP/1.1 HTTP/2 HTTP/2.0 HTTP/3 HTTP/3.0` | Protocol versions accepted by rule 920430. HTTP/0.9 is no longer supported |
