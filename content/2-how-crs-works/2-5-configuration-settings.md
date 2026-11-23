@@ -61,18 +61,37 @@ See [paranoia levels]({{% ref "2-2-paranoia_levels.md" %}}) for the concepts.
 
 ## HTTP Policy
 
-These settings feed the protocol enforcement rules in `REQUEST-920-PROTOCOL-ENFORCEMENT.conf`. Lists use a delimiter around each entry so that the `@within` operator matches exactly: pipes for content types and charsets, slashes for file extensions and headers, spaces for methods and versions.
+These settings feed the protocol enforcement rules in `REQUEST-920-PROTOCOL-ENFORCEMENT.conf`. Lists use a delimiter around each entry so that the `@within` operator matches exactly: pipes for methods, HTTP versions, content types and charsets, slashes for file extensions and headers.
 
 | Rule | Variable | Default | Purpose |
 |------|----------|---------|---------|
-| 900200 | `tx.allowed_methods` | `GET HEAD POST OPTIONS` | HTTP methods accepted by rule 911100 |
+| 900200 | `tx.allowed_methods` | `\|GET\| \|HEAD\| \|POST\| \|OPTIONS\|` | HTTP methods accepted by rule 911100 |
 | 900210 | `tx.allow_method_override_parameter` | 0 | Set to 1 to allow the `_method` request parameter used by some frameworks to override the HTTP method. Rule 920650 blocks it at paranoia level 2 and above |
 | 900220 | `tx.allowed_request_content_type` | see below | Request content types accepted by rule 920420 |
-| 900230 | `tx.allowed_http_versions` | `HTTP/1.0 HTTP/1.1 HTTP/2 HTTP/2.0 HTTP/3 HTTP/3.0` | Protocol versions accepted by rule 920430. HTTP/0.9 is no longer supported |
+| 900230 | `tx.allowed_http_versions` | `\|HTTP/1.0\| \|HTTP/1.1\| \|HTTP/2\| \|HTTP/2.0\| \|HTTP/3\| \|HTTP/3.0\|` | Protocol versions accepted by rule 920430. HTTP/0.9 is no longer supported |
 | 900240 | `tx.restricted_extensions` | long list | File extensions blocked by rule 920440: backups, configuration files, keys, logs, shell scripts, and similar |
 | 900250 | `tx.restricted_headers_basic` | see below | Request headers blocked by rule 920450 at paranoia level 1 |
 | 900255 | `tx.restricted_headers_extended` | `/accept-charset/` | Additional headers blocked by rule 920451 at paranoia level 2 |
 | 900280 | `tx.allowed_request_content_type_charset` | `utf-8`, `iso-8859-1`, `iso-8859-15`, `windows-1252` | Charsets accepted in the `Content-Type` header by rule 920480 |
+
+{{% notice style="warning" title="Breaking change in CRS 4.31.0" %}}
+Since CRS 4.31.0, methods and HTTP versions are enclosed in pipes, like content types. Rules 911100 and 920430 now compare whole entries; before, `@within` checked for a substring, so for example `POS` was accepted because it is part of `POST`.
+
+If you set `tx.allowed_methods` (900200) or `tx.allowed_http_versions` (900230) in your `crs-setup.conf`, switch to the new format when you upgrade:
+
+```
+# before
+setvar:'tx.allowed_methods=GET HEAD POST OPTIONS PUT'
+# since CRS 4.31.0
+setvar:'tx.allowed_methods=|GET| |HEAD| |POST| |OPTIONS| |PUT|'
+```
+
+With a list in the old format, nothing matches, and **every request** is flagged by 911100 or 920430. If you never changed these two settings, there is nothing to do.
+{{% /notice %}}
+
+### Plugins and the HTTP Policy Lists
+
+Since CRS 4.31.0, plugins can add entries to the lists above (methods, HTTP versions, content types, charsets, restricted extensions and headers) without overwriting your settings. CRS first applies your values or the defaults, then rules 901600 to 901660 in `REQUEST-901-INITIALIZATION.conf` append the entries that plugins have registered. Your settings in `crs-setup.conf` stay in place. Plugins can only add entries, not remove them. See [Writing Plugins]({{% ref "4-2-writing-plugins.md" %}}) for details.
 
 ### Allowed Content Types
 
