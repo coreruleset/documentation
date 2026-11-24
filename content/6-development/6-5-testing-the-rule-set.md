@@ -286,19 +286,36 @@ If you need to see more verbose output (e.g., to look at the requests and respon
 ./go-ftw run --config .ftw.apache.yaml -d ../coreruleset/tests/regression/tests/ -i "955100-1$" --debug
 ```
 
-Please note again that `libmodsecurity3` is **not fully compatible** with ModSecurity 2, some tests can fail. If you want to ignore them, you can put the tests into a list in your config:
+Please note again that `libmodsecurity3` is **not fully compatible** with ModSecurity 2, some tests can fail. If you know that a test does not work on your platform, you can override its result by putting the test into a list in your config:
 
 ```yaml
 testoverride:
   input:
     dest_addr: "127.0.0.1"
     port: 8080
-  ignore:
+  forcepass:
     # text comes from our friends at https://github.com/digitalwave/ftwrunner
     '941190-3$': 'known MSC bug - PR #2023 (Cookie without value)'
     '941330-1$': 'know MSC bug - #2148 (double escape)'
     ...
+  forcefail:
+    '123456-01$': 'must fail until the rule has been fixed'
 ```
+
+Overridden tests are **always run**. **go-ftw** reports the actual result as well as the forced result, so you will notice when the behavior of a test changes (e.g. when a bug has been fixed):
+
+```
+running 941190-3: forced to pass (actual: failed) - known MSC bug - PR #2023 (Cookie without value)
+running 941330-1: forced to pass (actual: passed) - know MSC bug - #2148 (double escape)
+...
+- 1 stale override(s): ["941330-1"] (set stale_overrides: warn to only report)
+```
+
+An override that does not change anything any more (a test that is forced to pass passes anyway, or a test that is forced to fail fails anyway) is *stale*. By default, stale overrides fail the test run, so that they get removed from the configuration. If you prefer to only get a report, set `stale_overrides: warn` in `testoverride`.
+
+{{% notice note %}}
+Earlier versions of **go-ftw** skipped tests that were listed under `ignore`, `forcepass` and `forcefail`, or excluded with the `exclude` option, and did not report on them. `ignore` is deprecated and treated like `forcepass` (the tests are run). The `exclude` option is no longer supported in the configuration file; use the `--exclude` command line option to skip tests for a single run, and platform overrides (`--overrides`) to describe how a platform behaves differently.
+{{% /notice %}}
 
 For more information and examples, please check the [go-ftw documentation](https://github.com/coreruleset/go-ftw#example-usage).
 
