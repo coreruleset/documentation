@@ -67,12 +67,13 @@ SecRule REQUEST_FILENAME "@rx /(?:remote|public)\.php/dav/" \
     setvar:'tx.plugin_allowed_methods_9508190=|PROPFIND| |PROPPATCH| |MKCOL| |MOVE| |COPY| |LOCK| |UNLOCK| |REPORT|'"
 ```
 
-After the defaults are set, CRS collects all these variables and appends them to the lists (rules 901600 to 901660). So plugins don't overwrite each other, and the CRS defaults and the user's settings stay in place.
+After the defaults are set, CRS collects all these variables and appends them to the lists (rules 901600 to 901660). So plugins that follow the contract don't overwrite each other, and the CRS defaults and the user's settings stay in place.
 
 The most important rules:
 
 * Set the variables in the *Before-File* and in phase 1.
 * Use the format of the list: `|METHOD|`, `|HTTP/x|`, `|type/subtype|`, `|charset|`, `.ext/` or `/header-name/`.
+* Write content types, charsets, extensions and header names in lowercase. Methods and HTTP versions use the exact case that is sent. An entry in the wrong case never matches, and no error is reported.
 * Limit additions to where they are needed, for example to a path.
 * When adding a content type, also select the matching body processor (`JSON`, `XML` or `URLENCODED`) for exactly these requests. Otherwise the body is not parsed, and CRS can't see attacks in it.
 * Plugins can only add entries. To allow something that a `restricted_*` list blocks, a plugin still needs a rule exclusion.
@@ -80,7 +81,12 @@ The most important rules:
 The [plugin contract](https://github.com/coreruleset/coreruleset/blob/main/PLUGIN-CONTRACT.md) lists all supported lists, their formats and the guarantees CRS gives.
 
 {{% notice note %}}
-CRS releases before 4.31.0 ignore the `tx.plugin_*` variables. As long as a plugin also supports these releases (for example the current LTS), it may set `tx.allowed_methods` and `tx.allowed_http_versions` directly, but only in the pipe format (`|GET| |HEAD| |POST| |OPTIONS|`). This format works with old and new CRS releases. A list in the old space-separated format blocks every request on CRS 4.31.0 and later. See section 9.3 of the contract.
+CRS releases before 4.31.0 ignore the `tx.plugin_*` variables. As long as a plugin also supports these releases (for example the current LTS), it may set any of the CRS lists directly, with two conditions:
+
+* It must use the format of the list, both for the copy of the CRS default and for the entries it appends. For methods and HTTP versions, this is the pipe format (`|GET| |HEAD| |POST| |OPTIONS|`), which works with old and new CRS releases. A list in the old space-separated format blocks every request on CRS 4.31.0 and later.
+* It must limit the direct change to the requests that need it, for example to the plugin's paths. A direct assignment replaces the whole list for that request, including the list the user set in `crs-setup.conf`.
+
+This is temporary. As soon as a plugin no longer supports CRS releases before 4.31.0, it must use the `tx.plugin_*` variables. See section 9.3 of the contract.
 {{% /notice %}}
 
 ### Plugin Use of Persistent Collections: ModSecurity SecCollectionTimeout

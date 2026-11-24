@@ -91,7 +91,7 @@ With a list in the old format, nothing matches, and **every request** is flagged
 
 ### Plugins and the HTTP Policy Lists
 
-Since CRS 4.31.0, plugins can add entries to the lists above (methods, HTTP versions, content types, charsets, restricted extensions and headers) without overwriting your settings. CRS first applies your values or the defaults, then rules 901600 to 901660 in `REQUEST-901-INITIALIZATION.conf` append the entries that plugins have registered. Your settings in `crs-setup.conf` stay in place. Plugins can only add entries, not remove them. See [Writing Plugins]({{% ref "4-2-writing-plugins.md" %}}) for details.
+Since CRS 4.31.0, plugins can add entries to the lists above (methods, HTTP versions, content types, charsets, restricted extensions and headers). CRS first applies your values or the defaults, then rules 901600 to 901660 in `REQUEST-901-INITIALIZATION.conf` append the entries that plugins have registered. Plugins that follow the [plugin contract](https://github.com/coreruleset/coreruleset/blob/main/PLUGIN-CONTRACT.md) keep your settings in `crs-setup.conf` in place. During a transition period, plugins that also support older CRS releases may still set a list directly, limited to the requests that need it; on these requests, the plugin's list replaces yours. Plugins can only add entries, not remove them. See [Writing Plugins]({{% ref "4-2-writing-plugins.md" %}}) for details.
 
 ### Allowed Content Types
 
