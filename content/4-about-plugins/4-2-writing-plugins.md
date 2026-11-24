@@ -41,6 +41,54 @@ What to do is as follows:
 * **Scoring in phase 1:** Put in the plugin's *After-File* (and be aware that early blocking won't work).
 * **Scoring in phase 2:** Put in the plugin's *Before-File*.
 
+### Adding Entries to CRS Lists
+
+Some plugins need to allow more than CRS does by default, for example the WebDAV methods `PROPFIND` and `MKCOL`, or an additional content type. Since CRS 4.31.0, plugins do this with their own variables, following the [plugin contract](https://github.com/coreruleset/coreruleset/blob/main/PLUGIN-CONTRACT.md).
+
+A plugin must not set `tx.allowed_methods` or the other CRS lists directly. Plugins are loaded before `REQUEST-901-INITIALIZATION.conf`, and CRS only sets a default when the variable does not exist yet. A plugin that sets the list itself either skips the CRS defaults or has to copy them, and the copy gets outdated when CRS changes a default.
+
+Instead, each plugin rule writes its additions to its own variable, named after the list and the rule ID:
+
+```
+tx.plugin_<list>_<rule id>
+```
+
+For example, the Nextcloud plugin allows the WebDAV methods only for its WebDAV endpoints:
+
+```apache
+# nextcloud-rule-exclusions-before.conf
+SecRule REQUEST_FILENAME "@rx /(?:remote|public)\.php/dav/" \
+    "id:9508190,\
+    phase:1,\
+    pass,\
+    t:none,\
+    nolog,\
+    ver:'nextcloud-rule-exclusions-plugin/x.y.z',\
+    setvar:'tx.plugin_allowed_methods_9508190=|PROPFIND| |PROPPATCH| |MKCOL| |MOVE| |COPY| |LOCK| |UNLOCK| |REPORT|'"
+```
+
+After the defaults are set, CRS collects all these variables and appends them to the lists (rules 901600 to 901660). So plugins that follow the contract don't overwrite each other, and the CRS defaults and the user's settings stay in place.
+
+The most important rules:
+
+* Set the variables in the *Before-File* and in phase 1.
+* Use the format of the list: `|METHOD|`, `|HTTP/x|`, `|type/subtype|`, `|charset|`, `.ext/` or `/header-name/`.
+* Write content types, charsets, extensions and header names in lowercase. Methods and HTTP versions use the exact case that is sent. An entry in the wrong case never matches, and no error is reported.
+* Limit additions to where they are needed, for example to a path.
+* When adding a content type, also select the matching body processor (`JSON`, `XML` or `URLENCODED`) for exactly these requests. Otherwise the body is not parsed, and CRS can't see attacks in it.
+* Plugins can only add entries. To allow something that a `restricted_*` list blocks, a plugin still needs a rule exclusion.
+
+The [plugin contract](https://github.com/coreruleset/coreruleset/blob/main/PLUGIN-CONTRACT.md) lists all supported lists, their formats and the guarantees CRS gives.
+
+{{% notice note %}}
+CRS releases before 4.31.0 ignore the `tx.plugin_*` variables. As long as a plugin also supports these releases (for example the current LTS), it may set any of the CRS lists directly, with two conditions:
+
+* It must use the format of the list, both for the copy of the CRS default and for the entries it appends. For methods and HTTP versions, this is the pipe format (`|GET| |HEAD| |POST| |OPTIONS|`), which works with old and new CRS releases. A list in the old space-separated format blocks every request on CRS 4.31.0 and later.
+* It must limit the direct change to the requests that need it, for example to the plugin's paths. A direct assignment replaces the whole list for that request, including the list the user set in `crs-setup.conf`.
+
+This is temporary. As soon as a plugin no longer supports CRS releases before 4.31.0, it must use the `tx.plugin_*` variables. See section 9.3 of the contract.
+{{% /notice %}}
+
 ### Plugin Use of Persistent Collections: ModSecurity SecCollectionTimeout
 If a plugin uses persistent collections (stores stateful information across multiple requests, e.g., to implement DoS protection functionality), it is important to note that CRS does not change the default value (`3600`) for the ModSecurity `SecCollectionTimeout` directive. Plugin authors must instruct users to set the directive to an appropriate value if the plugin requires a value that differs from the default. A plugin should never actively set `SecCollectionTimeout`, as other plugins may specify different values for the directive and the choice for the effective value must be made by the user.
 
